@@ -12,8 +12,13 @@ export * from './hooks/theme/useThemeDetection'
 export * from './hooks/theme/useThemePersistence'
 export * from './hooks/theme/useThemeUtils'
 
+// Layouts //
+export * from './layouts'
+
 // Types //
 export * from './types/theme'
+
+// Ui //
 
 // Utils //
 export * from './utils/themeUtils'

@@ -2,6 +2,7 @@ import { RouteConfig, RouteGroup } from '@core/types/router'
 import { MainLayout } from '@shared'
 
 import { HomePage } from '@pages'
+import { NotFoundPage } from '@/pages/NotFound'
 
 export const appRoutes: (RouteConfig | RouteGroup)[] = [
   {
@@ -13,5 +14,10 @@ export const appRoutes: (RouteConfig | RouteGroup)[] = [
         title: 'Home'
       }
     ]
+  },
+  {
+    path: '/404',
+    element: NotFoundPage,
+    title: 'Página não encontrada'
   }
 ]

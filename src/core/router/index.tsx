@@ -18,7 +18,7 @@ const processRoutes = (configs: (RouteConfig | RouteGroup)[]) => {
 
 export const AppRouter: React.FC<AppRouterProps> = ({
   routes,
-  fallback = '/'
+  fallback = '/404' // Mudança aqui: ao invés de '/', vai para '/404'
 }) => {
   const processedRoutes = processRoutes(routes)
 

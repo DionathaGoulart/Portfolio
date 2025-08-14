@@ -1,0 +1,91 @@
+:root {
+  // Variáveis CSS serão injetadas dinamicamente pelo ThemeProvider
+
+  // Transições suaves para mudanças de tema
+  --transition-theme:
+    background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+// Classes utilitárias para usar com Tailwind
+.theme-bg-primary {
+  background-color: var(--color-primary);
+}
+.theme-bg-secondary {
+  background-color: var(--color-secondary);
+}
+.theme-bg-accent {
+  background-color: var(--color-accent);
+}
+.theme-bg-background {
+  background-color: var(--color-background);
+}
+.theme-bg-surface {
+  background-color: var(--color-surface);
+}
+
+.theme-text-primary {
+  color: var(--color-text);
+}
+.theme-text-secondary {
+  color: var(--color-textSecondary);
+}
+.theme-text-accent {
+  color: var(--color-accent);
+}
+.theme-text-error {
+  color: var(--color-error);
+}
+.theme-text-success {
+  color: var(--color-success);
+}
+.theme-text-warning {
+  color: var(--color-warning);
+}
+
+.theme-border {
+  border-color: var(--color-border);
+}
+
+.theme-transition {
+  transition: var(--transition-theme);
+}
+
+// Classes base para elementos principais
+.theme-container {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: var(--transition-theme);
+}
+
+.theme-surface {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  transition: var(--transition-theme);
+}
+
+// Scrollbar personalizada
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary);
+}
+
+// Override do Tailwind para dark mode
+.dark {
+  color-scheme: dark;
+}
+
+.light {
+  color-scheme: light;
+}

@@ -1,60 +1,26 @@
 import React from 'react'
+import {
+  Align,
+  alignClasses,
+  colorClasses,
+  Size,
+  sizeStyles,
+  TextElement,
+  ThemeColor
+} from '../types/ui'
 
-// Tipos para os elementos de texto
-type TextElement = 'p' | 'span'
+// ============================================================================
+// TEXT COMPONENT - Harmonizado
+// ============================================================================
 
-// Tipos para tamanhos
-type TextSize = 'pequeno' | 'medio' | 'grande'
-
-// Tipos para alinhamento
-type TextAlign = 'start' | 'center' | 'end'
-
-// Tipos para as cores do tema
-type ThemeColor =
-  | 'primary'
-  | 'secondary'
-  | 'accent'
-  | 'text'
-  | 'text-secondary'
-  | 'error'
-  | 'success'
-  | 'warning'
-
-// Interface das props do componente
 interface TextProps {
   as?: TextElement
-  size?: TextSize
-  align?: TextAlign
+  size?: Size
+  align?: Align
   color?: ThemeColor
   children: React.ReactNode
   className?: string
   id?: string
-}
-
-// Mapeamento dos tamanhos para classes do Tailwind
-const sizeStyles: Record<TextSize, string> = {
-  pequeno: 'text-sm', // Pequeno
-  medio: 'text-lg', // Médio (base conforme solicitado)
-  grande: 'text-xl' // Grande
-}
-
-// Mapeamento das cores do tema
-const colorClasses: Record<ThemeColor, string> = {
-  primary: 'theme-text-primary',
-  secondary: 'theme-text-secondary',
-  accent: 'theme-text-accent',
-  text: 'theme-text-primary',
-  'text-secondary': 'theme-text-secondary',
-  error: 'theme-text-error',
-  success: 'theme-text-success',
-  warning: 'theme-text-warning'
-}
-
-// Mapeamento do alinhamento
-const alignClasses: Record<TextAlign, string> = {
-  start: 'text-left',
-  center: 'text-center',
-  end: 'text-right'
 }
 
 export const Text: React.FC<TextProps> = ({
@@ -72,7 +38,6 @@ export const Text: React.FC<TextProps> = ({
     sizeStyles[size],
     colorClasses[color],
     alignClasses[align],
-    // inline-block e width full para spans para que o alinhamento funcione
     as === 'span' ? 'inline-block w-full' : '',
     'theme-transition',
     className

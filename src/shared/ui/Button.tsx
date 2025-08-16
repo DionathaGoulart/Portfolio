@@ -1,30 +1,14 @@
 import React from 'react'
+import { Align, ButtonVariant, Size, ThemeColor } from '../types/ui'
 
-// Tipos para tamanhos
-type ButtonSize = 'pequeno' | 'medio' | 'grande'
+// ============================================================================
+// BUTTON COMPONENT - Otimizado
+// ============================================================================
 
-// Tipos para alinhamento/posição
-type ButtonAlign = 'start' | 'center' | 'end'
-
-// Tipos para as cores de fundo
-type ButtonColor =
-  | 'primary'
-  | 'secondary'
-  | 'accent'
-  | 'text'
-  | 'text-secondary'
-  | 'error'
-  | 'success'
-  | 'warning'
-
-// Tipos para variantes do botão
-type ButtonVariant = 'solid' | 'outline' | 'ghost'
-
-// Interface das props do componente
 interface ButtonProps {
-  size?: ButtonSize
-  align?: ButtonAlign
-  color?: ButtonColor
+  size?: Size
+  align?: Align
+  color?: ThemeColor
   variant?: ButtonVariant
   onClick?: () => void
   disabled?: boolean
@@ -34,22 +18,20 @@ interface ButtonProps {
   id?: string
 }
 
-// Mapeamento dos tamanhos para classes do Tailwind
-const sizeStyles: Record<ButtonSize, string> = {
+// Padding específico para botões (mais generoso que texto)
+const buttonSizeStyles: Record<Size, string> = {
   pequeno: 'text-sm px-3 py-1.5',
-  medio: 'text-lg px-4 py-2', // Padrão
+  medio: 'text-base px-4 py-2', // Harmonizado com text-base
   grande: 'text-xl px-6 py-3'
 }
 
-// Mapeamento do alinhamento (aplicado ao container)
-const alignClasses: Record<ButtonAlign, string> = {
+const buttonAlignClasses: Record<Align, string> = {
   start: 'justify-start',
   center: 'justify-center',
   end: 'justify-end'
 }
 
-// Mapeamento das cores para variante solid
-const solidColorClasses: Record<ButtonColor, string> = {
+const solidColorClasses: Record<ThemeColor, string> = {
   primary: 'bg-theme-primary hover:opacity-90 text-white',
   secondary: 'bg-theme-secondary hover:opacity-90 text-white',
   accent: 'bg-theme-accent hover:opacity-90 text-white',
@@ -60,8 +42,7 @@ const solidColorClasses: Record<ButtonColor, string> = {
   warning: 'bg-theme-warning hover:opacity-90 text-white'
 }
 
-// Mapeamento das cores para variante outline
-const outlineColorClasses: Record<ButtonColor, string> = {
+const outlineColorClasses: Record<ThemeColor, string> = {
   primary:
     'border-2 border-theme-primary theme-text-primary hover:bg-theme-primary hover:text-white',
   secondary:
@@ -79,8 +60,7 @@ const outlineColorClasses: Record<ButtonColor, string> = {
     'border-2 border-theme-warning theme-text-warning hover:bg-theme-warning hover:text-white'
 }
 
-// Mapeamento das cores para variante ghost
-const ghostColorClasses: Record<ButtonColor, string> = {
+const ghostColorClasses: Record<ThemeColor, string> = {
   primary: 'theme-text-primary hover:bg-theme-primary hover:bg-opacity-10',
   secondary:
     'theme-text-secondary hover:bg-theme-secondary hover:bg-opacity-10',
@@ -105,8 +85,7 @@ export const Button: React.FC<ButtonProps> = ({
   className = '',
   id
 }) => {
-  // Seleciona as classes de cor baseado na variante
-  const getColorClasses = () => {
+  const getColorClasses = (): string => {
     switch (variant) {
       case 'outline':
         return outlineColorClasses[color]
@@ -117,9 +96,8 @@ export const Button: React.FC<ButtonProps> = ({
     }
   }
 
-  // Classes do botão
   const buttonClasses = [
-    sizeStyles[size],
+    buttonSizeStyles[size],
     getColorClasses(),
     'rounded-md font-medium transition-all duration-200',
     'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-primary',
@@ -129,8 +107,7 @@ export const Button: React.FC<ButtonProps> = ({
     .filter(Boolean)
     .join(' ')
 
-  // Classes do container (para alinhamento)
-  const containerClasses = ['flex', alignClasses[align]].join(' ')
+  const containerClasses = ['flex', buttonAlignClasses[align]].join(' ')
 
   return (
     <div className={containerClasses}>

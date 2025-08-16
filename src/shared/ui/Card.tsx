@@ -1,48 +1,63 @@
 import React from 'react'
+
 import { Title } from './Title'
-import { P, Span } from './Text'
+import { P } from './Text'
 import { Tag } from './Tag'
+import { Align, Size, TitleLevel } from '../types/ui'
+
+// ============================================================================
+// CARD COMPONENT - Otimizado e harmonizado
+// ============================================================================
 
 type CardLayout = 'horizontal' | 'with-icon' | 'varied'
-type HorizontalCardSize = 'pequeno' | 'medio' | 'grande'
-type CardAlign = 'start' | 'center' | 'end'
 
 interface CardProps {
   layout: CardLayout
   title: string
   subtitle?: string
-  align?: CardAlign
+  align?: Align
   className?: string
   onClick?: () => void
-  size?: HorizontalCardSize
+  size?: Size
   icon?: React.ReactNode
   date?: string
   description?: string
   tags?: string[]
+  children?: React.ReactNode
 }
 
-const horizontalSizeStyles = {
+// Tamanhos harmonizados para cards horizontais
+const horizontalSizeStyles: Record<
+  Size,
+  {
+    container: string
+    titleLevel: TitleLevel
+    subtitleSize: Size
+    padding: string
+  }
+> = {
   pequeno: {
     container: 'min-h-16',
-    titleLevel: 'h4' as 'h4',
-    subtitleLevel: 'h5' as 'h5',
+    titleLevel: 'h5',
+    subtitleSize: 'pequeno',
     padding: 'p-3'
   },
   medio: {
     container: 'min-h-20',
-    titleLevel: 'h3' as 'h3',
-    subtitleLevel: 'h4' as 'h4',
+    titleLevel: 'h4',
+    subtitleSize: 'pequeno',
     padding: 'p-4'
   },
   grande: {
     container: 'min-h-24',
-    titleLevel: 'h2' as 'h2',
-    subtitleLevel: 'h3' as 'h3',
+    titleLevel: 'h3',
+    subtitleSize: 'medio',
     padding: 'p-5'
   }
 }
 
-const alignClasses: Record<CardAlign, string> = {
+// Classes de alinhamento para cards
+const cardAlignClasses: Record<Align, string> = {
   start: 'text-left items-start',
   center: 'text-center items-center',
   end: 'text-right items-end'
@@ -53,7 +68,7 @@ export const Card: React.FC<CardProps> = ({
   title,
   subtitle,
   align = 'start',
-  className,
+  className = '',
   onClick,
   size = 'medio',
   icon,
@@ -61,22 +76,28 @@ export const Card: React.FC<CardProps> = ({
   description,
   tags
 }) => {
-  const baseClasses = `theme-bg-surface theme-border border rounded-lg p-6 theme-transition ${onClick ? 'cursor-pointer hover:theme-bg-surface-hover hover:shadow-md' : ''}`
+  const baseClasses = [
+    'theme-bg-surface theme-border border rounded-lg theme-transition',
+    onClick ? 'cursor-pointer hover:theme-bg-surface-hover hover:shadow-md' : ''
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   switch (layout) {
     case 'horizontal': {
-      const { container, titleLevel, subtitleLevel, padding } =
+      const { container, titleLevel, subtitleSize, padding } =
         horizontalSizeStyles[size]
+
       return (
         <div
           onClick={onClick}
-          className={`${baseClasses} flex flex-col justify-center ${alignClasses[align]} ${container} ${padding} ${className}`}
+          className={`${baseClasses} flex flex-col justify-center ${cardAlignClasses[align]} ${container} ${padding} ${className}`}
         >
           <Title level={titleLevel} className="theme-text-primary">
             {title}
           </Title>
           {subtitle && (
-            <P size="pequeno" className="theme-text-secondary mt-1">
+            <P size={subtitleSize} className="theme-text-secondary mt-1">
               {subtitle}
             </P>
           )}
@@ -86,7 +107,7 @@ export const Card: React.FC<CardProps> = ({
 
     case 'with-icon':
       return (
-        <div onClick={onClick} className={`${baseClasses} ${className}`}>
+        <div onClick={onClick} className={`${baseClasses} p-6 ${className}`}>
           <div className="flex items-center gap-2 mb-2">
             {icon && <span>{icon}</span>}
             <Title level="h4" className="font-semibold theme-text-primary">
@@ -105,7 +126,7 @@ export const Card: React.FC<CardProps> = ({
       return (
         <div
           onClick={onClick}
-          className={`${baseClasses} rounded-2xl relative ${className}`}
+          className={`${baseClasses} p-6 rounded-2xl relative ${className}`}
         >
           {date && (
             <div className="absolute top-4 right-4">
@@ -113,14 +134,11 @@ export const Card: React.FC<CardProps> = ({
             </div>
           )}
           <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-              <Title level="h3" color="text" className="font-semibold">
-                {title}
-              </Title>
-              {/* Removido o Span de data daqui */}
-            </div>
+            <Title level="h3" color="text" className="font-semibold">
+              {title}
+            </Title>
             {subtitle && (
-              <P size="pequeno" color="text-secondary" className="mt-1">
+              <P size="pequeno" color="text-secondary">
                 {subtitle}
               </P>
             )}

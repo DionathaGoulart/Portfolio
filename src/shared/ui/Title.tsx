@@ -1,58 +1,32 @@
 import React from 'react'
+import {
+  TitleLevel,
+  Align,
+  ThemeColor,
+  colorClasses,
+  alignClasses
+} from '../types/ui'
 
-// Tipos para os elementos de título
-type TitleLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
+// ============================================================================
+// TITLE COMPONENT - Otimizado com escalas mais harmoniosas
+// ============================================================================
 
-// Tipos para alinhamento
-type TitleAlign = 'start' | 'center' | 'end'
-
-// Tipos para as cores do tema
-type ThemeColor =
-  | 'primary'
-  | 'secondary'
-  | 'accent'
-  | 'text'
-  | 'text-secondary'
-  | 'error'
-  | 'success'
-  | 'warning'
-
-// Interface das props do componente
 interface TitleProps {
   level?: TitleLevel
-  align?: TitleAlign
+  align?: Align
   color?: ThemeColor
   children: React.ReactNode
   className?: string
   id?: string
 }
 
-// Mapeamento dos níveis para classes do Tailwind
+// Escala tipográfica mais harmoniosa e consistente
 const levelStyles: Record<TitleLevel, string> = {
-  h1: 'text-8xl font-bold',
-  h2: 'text-5xl font-semibold',
-  h3: 'text-xl font-medium',
-  h4: 'text-base font-medium',
-  h5: 'text-sm font-normal'
-}
-
-// Mapeamento das cores do tema
-const colorClasses: Record<ThemeColor, string> = {
-  primary: 'theme-text-primary',
-  secondary: 'theme-text-secondary',
-  accent: 'theme-text-accent',
-  text: 'theme-text-primary',
-  'text-secondary': 'theme-text-secondary',
-  error: 'theme-text-error',
-  success: 'theme-text-success',
-  warning: 'theme-text-warning'
-}
-
-// Mapeamento do alinhamento
-const alignClasses: Record<TitleAlign, string> = {
-  start: 'text-left',
-  center: 'text-center',
-  end: 'text-right'
+  h1: 'text-4xl font-bold', // Reduzido de text-8xl (muito grande)
+  h2: 'text-3xl font-semibold', // Reduzido de text-5xl
+  h3: 'text-2xl font-semibold', // Aumentado de text-xl
+  h4: 'text-xl font-medium', // Aumentado de text-base
+  h5: 'text-lg font-medium' // Aumentado de text-sm
 }
 
 export const Title: React.FC<TitleProps> = ({

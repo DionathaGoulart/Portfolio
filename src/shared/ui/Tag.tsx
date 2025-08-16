@@ -1,22 +1,19 @@
 import React from 'react'
+import { ThemeColor, Size } from '../types/ui'
 
-type TagColor =
-  | 'primary'
-  | 'secondary'
-  | 'accent'
-  | 'text'
-  | 'text-secondary'
-  | 'error'
-  | 'success'
-  | 'warning'
+// ============================================================================
+// TAG COMPONENT - Harmonizado
+// ============================================================================
 
 interface TagProps {
   children: React.ReactNode
-  color?: TagColor
+  color?: ThemeColor
+  size?: Size // Adicionado suporte a tamanhos
   className?: string
 }
 
-const colorClasses: Record<TagColor, string> = {
+// Classes de cor harmonizadas para tags
+const tagColorClasses: Record<ThemeColor, string> = {
   primary: 'theme-bg-primary-muted theme-text-primary',
   secondary: 'theme-bg-secondary-muted theme-text-secondary',
   accent: 'theme-bg-accent-muted theme-text-accent',
@@ -27,14 +24,23 @@ const colorClasses: Record<TagColor, string> = {
   warning: 'theme-bg-warning-muted theme-text-warning'
 }
 
+// Tamanhos específicos para tags
+const tagSizeStyles: Record<Size, string> = {
+  pequeno: 'text-xs px-2 py-0.5',
+  medio: 'text-sm px-3 py-1', // Padrão anterior
+  grande: 'text-base px-4 py-1.5'
+}
+
 export const Tag: React.FC<TagProps> = ({
   children,
   color = 'primary',
+  size = 'medio',
   className = ''
 }) => {
   const combinedClasses = [
-    'text-sm font-medium px-3 py-1 rounded-full',
-    colorClasses[color],
+    'font-medium rounded-full',
+    tagSizeStyles[size],
+    tagColorClasses[color],
     className
   ].join(' ')
 

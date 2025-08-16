@@ -1,4 +1,0 @@
-Type '{ children: Element; title: string; layout: "varied"; description: string; }' is not assignable to type 'IntrinsicAttributes & CardProps'.
-  Property 'children' does not exist on type 'IntrinsicAttributes & CardProps'.ts(2322)
-(alias) const Card: React.FC<CardProps>
-import Card

@@ -1,9 +1,9 @@
 import React from 'react'
 import {
-  alignClasses,
-  colorClasses,
+  TextProps,
   sizeStyles,
-  TextProps
+  colorClasses,
+  alignClasses
 } from '@shared/types'
 
 export const Text: React.FC<TextProps> = ({

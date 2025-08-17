@@ -3,7 +3,7 @@ import {
   ButtonProps,
   getButtonClasses,
   getButtonContainerClasses
-} from '@shared/types'
+} from '../types/ui'
 
 export const Button: React.FC<ButtonProps> = ({
   size = 'medio',

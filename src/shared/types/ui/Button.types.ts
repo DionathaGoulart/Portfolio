@@ -1,4 +1,8 @@
-import { Align, Size, ThemeColor } from './global.types'
+import { Align, Size, ThemeColor } from '@shared/types'
+
+// ============================================================================
+// TYPES ESPECÍFICOS DO BUTTON
+// ============================================================================
 
 export type ButtonVariant = 'solid' | 'outline' | 'ghost'
 
@@ -18,34 +22,34 @@ export interface ButtonProps {
 }
 
 // ============================================================================
-// CLASSES SIMPLIFICADAS - Agora usando as classes do SCSS
+// ESTILOS ESPECÍFICOS DO BUTTON
 // ============================================================================
 
-// Mapeamento dos tamanhos (agora usa classes do SCSS)
-export const buttonSizeClasses: Record<Size, string> = {
+// Tamanhos específicos do botão (padding diferente dos textos globais)
+const buttonSizeClasses: Record<Size, string> = {
   pequeno: 'px-3 py-1.5 text-xs sm:text-sm',
   medio: 'px-4 py-2 text-sm sm:text-base',
   grande: 'px-6 py-3 text-base sm:text-lg'
 }
 
-// Função para gerar classe de cor baseada na variante
-export const getButtonColorClass = (
-  variant: ButtonVariant,
-  color: ThemeColor
-): string => {
-  return `btn-${variant}-${color}`
-}
-
-// Classes de alinhamento do container
-export const buttonContainerClasses: Record<Align, string> = {
+// Classes de alinhamento do container do botão
+const buttonContainerClasses: Record<Align, string> = {
   start: 'btn-container-start',
   center: 'btn-container-center',
   end: 'btn-container-end'
 }
 
 // ============================================================================
-// UTILITÁRIOS
+// UTILITÁRIOS ESPECÍFICOS DO BUTTON
 // ============================================================================
+
+// Função para gerar classe de cor baseada na variante
+const getButtonColorClass = (
+  variant: ButtonVariant,
+  color: ThemeColor
+): string => {
+  return `btn-${variant}-${color}`
+}
 
 // Função para gerar todas as classes do botão
 export const getButtonClasses = (

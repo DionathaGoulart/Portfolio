@@ -1,10 +1,10 @@
 import React from 'react'
 import {
-  colorClasses,
-  alignClasses,
   TitleProps,
+  levelStyles,
   fontWeightClasses,
-  levelStyles
+  colorClasses,
+  alignClasses
 } from '@shared/types'
 
 export const Title: React.FC<TitleProps> = ({
@@ -18,7 +18,6 @@ export const Title: React.FC<TitleProps> = ({
   uppercase = false,
   weight = 'bold'
 }) => {
-  // Define o elemento HTML a ser usado
   const Element = element || level
 
   const combinedClasses = [

@@ -1,5 +1,9 @@
 import { Align, Size, ThemeColor } from './global.types'
 
+// ============================================================================
+// TYPES ESPECÍFICOS DO TEXT
+// ============================================================================
+
 export type TextElement = 'p' | 'span'
 
 export interface TextProps {

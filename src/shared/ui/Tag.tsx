@@ -1,5 +1,5 @@
 import React from 'react'
-import { tagSizeStyles, tagColorClasses, TagProps } from '@shared/types'
+import { TagProps, tagSizeStyles, tagColorClasses } from '@shared/types'
 
 export const Tag: React.FC<TagProps> = ({
   children,

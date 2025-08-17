@@ -2,14 +2,11 @@ import React from 'react'
 import { Title } from './Title'
 import { P } from './Text'
 import { Tag } from './Tag'
-import { Align, Size, TitleLevel } from '../types/ui/global.types'
 import {
-  CardLayout,
-  ColorVariant,
+  CardProps,
   cardColorVariants,
   cardHorizontalSizeStyles,
-  cardAlignClasses,
-  CardProps
+  cardAlignClasses
 } from '@shared/types'
 
 export const Card: React.FC<CardProps> = ({
@@ -27,10 +24,7 @@ export const Card: React.FC<CardProps> = ({
   color = 'default',
   borderColor
 }) => {
-  // Pega o esquema de cores baseado na prop color
   const colorScheme = cardColorVariants[color]
-
-  // Se não especificar borderColor, usa a border do esquema da cor principal
   const finalBorderColor = borderColor
     ? cardColorVariants[borderColor].border
     : colorScheme.border

@@ -1,11 +1,14 @@
-// ============================================================================
-// TYPES DE COMPONENTES - Card
-// ============================================================================
+import {
+  Align,
+  Size,
+  ColorVariant,
+  TitleLevel,
+  colorVariants
+} from './global.types'
 
-import { Align, Size, ThemeColor, TitleLevel } from './global.types'
-
-// Variantes de cores para componentes específicos (inclui 'default')
-export type ColorVariant = ThemeColor | 'default'
+// ============================================================================
+// TYPES ESPECÍFICOS DO CARD
+// ============================================================================
 
 export type CardLayout = 'horizontal' | 'with-icon' | 'varied'
 
@@ -27,71 +30,18 @@ export interface CardProps {
 }
 
 // ============================================================================
-// CONSTANTES DE ESTILOS - PADRONIZADAS para Cards
+// ESTILOS ESPECÍFICOS DO CARD
 // ============================================================================
 
-// Classes de alinhamento para cards
+// Classes de alinhamento específicas para cards (inclui flex)
 export const cardAlignClasses: Record<Align, string> = {
   start: 'text-left items-start',
   center: 'text-center items-center',
   end: 'text-right items-end'
 }
 
-// Classes de cores para cards
-export const cardColorVariants: Record<
-  ColorVariant,
-  {
-    background: string
-    border: string
-    hover: string
-  }
-> = {
-  default: {
-    background: 'bg-theme-surface',
-    border: 'border-theme-border',
-    hover: 'hover:bg-theme-surface'
-  },
-  primary: {
-    background: 'bg-theme-primary/10',
-    border: 'border-theme-primary/30',
-    hover: 'hover:bg-theme-primary/15'
-  },
-  secondary: {
-    background: 'bg-theme-secondary/10',
-    border: 'border-theme-secondary/30',
-    hover: 'hover:bg-theme-secondary/15'
-  },
-  accent: {
-    background: 'bg-theme-accent/10',
-    border: 'border-theme-accent/30',
-    hover: 'hover:bg-theme-accent/15'
-  },
-  success: {
-    background: 'bg-theme-success/10',
-    border: 'border-theme-success/30',
-    hover: 'hover:bg-theme-success/15'
-  },
-  error: {
-    background: 'bg-theme-error/10',
-    border: 'border-theme-error/30',
-    hover: 'hover:bg-theme-error/15'
-  },
-  warning: {
-    background: 'bg-theme-warning/10',
-    border: 'border-theme-warning/30',
-    hover: 'hover:bg-theme-warning/15'
-  },
-  text: {
-    background: 'bg-theme-text/10',
-    border: 'border-theme-text/30',
-    hover: 'hover:bg-theme-text/15'
-  },
-  textSecondary: {
-    background: 'bg-theme-text-secondary/10',
-    border: 'border-theme-text-secondary/30',
-    hover: 'hover:bg-theme-text-secondary/15'
-  }
-}
+// Reutiliza as cores globais para cards
+export const cardColorVariants = colorVariants
 
 // Configurações específicas para cards horizontais
 export const cardHorizontalSizeStyles: Record<

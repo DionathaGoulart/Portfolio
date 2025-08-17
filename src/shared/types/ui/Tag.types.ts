@@ -1,4 +1,8 @@
-import { Size, ThemeColor } from './global.types'
+import { Size, ThemeColor, colorVariants } from './global.types'
+
+// ============================================================================
+// TYPES ESPECÍFICOS DO TAG
+// ============================================================================
 
 export interface TagProps {
   children: React.ReactNode
@@ -7,21 +11,25 @@ export interface TagProps {
   className?: string
 }
 
-// Tamanhos para tags
+// ============================================================================
+// ESTILOS ESPECÍFICOS DO TAG
+// ============================================================================
+
+// Tamanhos específicos para tags (padding diferente dos textos globais)
 export const tagSizeStyles: Record<Size, string> = {
   pequeno: 'text-xs px-2 py-0.5',
   medio: 'text-sm px-3 py-1',
   grande: 'text-base px-4 py-1.5'
 }
 
-// Classes de cores para tags
+// Classes de cores específicas para tags (usando o esquema global)
 export const tagColorClasses: Record<ThemeColor, string> = {
-  primary: 'theme-bg-primary-muted theme-text-primary',
-  secondary: 'theme-bg-secondary-muted theme-text-secondary',
-  accent: 'theme-bg-accent-muted theme-text-accent',
-  text: 'theme-bg-text-muted theme-text-primary',
-  textSecondary: 'theme-bg-text-secondary-muted theme-text-secondary',
-  error: 'theme-bg-error-muted theme-text-error',
-  success: 'theme-bg-success-muted theme-text-success',
-  warning: 'theme-bg-warning-muted theme-text-warning'
+  primary: `${colorVariants.primary.background} ${colorVariants.primary.text}`,
+  secondary: `${colorVariants.secondary.background} ${colorVariants.secondary.text}`,
+  accent: `${colorVariants.accent.background} ${colorVariants.accent.text}`,
+  text: `${colorVariants.text.background} ${colorVariants.text.text}`,
+  textSecondary: `${colorVariants.textSecondary.background} ${colorVariants.textSecondary.text}`,
+  error: `${colorVariants.error.background} ${colorVariants.error.text}`,
+  success: `${colorVariants.success.background} ${colorVariants.success.text}`,
+  warning: `${colorVariants.warning.background} ${colorVariants.warning.text}`
 }

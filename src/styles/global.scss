@@ -5,6 +5,8 @@
 // 1. PRIMEIRO: Todas as regras @use devem vir antes de qualquer outra coisa
 @use './theme.scss';
 @use './ui/button.scss';
+@use './ui/card.scss';
+@use './ui/tag.scss';
 
 // 2. Depois importamos o Tailwind
 @tailwind base;

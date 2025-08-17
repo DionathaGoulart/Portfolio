@@ -4,9 +4,8 @@ import { P } from './Text'
 import { Tag } from './Tag'
 import {
   CardProps,
-  cardColorVariants,
-  cardHorizontalSizeStyles,
-  cardAlignClasses
+  getCardClasses,
+  cardHorizontalSizeStyles
 } from '@shared/types'
 
 export const Card: React.FC<CardProps> = ({
@@ -22,29 +21,43 @@ export const Card: React.FC<CardProps> = ({
   description,
   tags,
   color = 'default',
-  borderColor
+  borderColor,
+  disabled = false,
+  loading = false,
+  elevated = false,
+  compact = false
 }) => {
-  const colorScheme = cardColorVariants[color]
-  const finalBorderColor = borderColor
-    ? cardColorVariants[borderColor].border
-    : colorScheme.border
+  const cardClasses = getCardClasses(
+    layout,
+    color,
+    size,
+    align,
+    onClick,
+    disabled,
+    loading,
+    elevated,
+    compact,
+    borderColor,
+    className
+  )
 
-  const baseClasses = [
-    `${colorScheme.background} border ${finalBorderColor} rounded-lg transition-theme`,
-    onClick ? `cursor-pointer ${colorScheme.hover} hover:shadow-md` : ''
-  ]
-    .filter(Boolean)
-    .join(' ')
+  const handleClick = () => {
+    if (!disabled && !loading && onClick) {
+      onClick()
+    }
+  }
 
   switch (layout) {
     case 'horizontal': {
-      const { container, titleLevel, subtitleSize, padding } =
-        cardHorizontalSizeStyles[size]
+      const { titleLevel, subtitleSize } = cardHorizontalSizeStyles[size]
 
       return (
         <div
-          onClick={onClick}
-          className={`${baseClasses} flex flex-col justify-center ${cardAlignClasses[align]} ${container} ${padding} ${className}`}
+          onClick={handleClick}
+          className={cardClasses}
+          tabIndex={onClick && !disabled ? 0 : undefined}
+          role={onClick ? 'button' : undefined}
+          aria-disabled={disabled}
         >
           <Title level={titleLevel} className="text-theme-text">
             {title}
@@ -60,9 +73,15 @@ export const Card: React.FC<CardProps> = ({
 
     case 'with-icon':
       return (
-        <div onClick={onClick} className={`${baseClasses} p-6 ${className}`}>
-          <div className="flex items-center gap-2 mb-2">
-            {icon && <span>{icon}</span>}
+        <div
+          onClick={handleClick}
+          className={cardClasses}
+          tabIndex={onClick && !disabled ? 0 : undefined}
+          role={onClick ? 'button' : undefined}
+          aria-disabled={disabled}
+        >
+          <div className="card-icon-header">
+            {icon && <span className="card-icon">{icon}</span>}
             <Title level="h4" className="font-semibold text-theme-text">
               {title}
             </Title>
@@ -78,15 +97,18 @@ export const Card: React.FC<CardProps> = ({
     case 'varied':
       return (
         <div
-          onClick={onClick}
-          className={`${baseClasses} p-6 rounded-2xl relative ${className}`}
+          onClick={handleClick}
+          className={cardClasses}
+          tabIndex={onClick && !disabled ? 0 : undefined}
+          role={onClick ? 'button' : undefined}
+          aria-disabled={disabled}
         >
           {date && (
-            <div className="absolute top-4 right-4">
+            <div className="card-date-badge">
               <Tag color="secondary">{date}</Tag>
             </div>
           )}
-          <div className="space-y-4">
+          <div className="card-content">
             <Title level="h3" className="font-semibold text-theme-text">
               {title}
             </Title>
@@ -97,7 +119,7 @@ export const Card: React.FC<CardProps> = ({
             )}
             {description && <P size="pequeno">{description}</P>}
             {tags && tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-4">
+              <div className="card-tags">
                 {tags.map((tag, index) => (
                   <Tag key={index}>{tag}</Tag>
                 ))}

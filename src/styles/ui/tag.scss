@@ -1,0 +1,455 @@
+// ============================================================================
+// TAG STYLES - SCSS + Vite + Tailwind
+// ============================================================================
+
+// ============================================================================
+// VARIÁVEIS E CONFIGURAÇÕES
+// ============================================================================
+$tag-scale: 1.05;
+$tag-opacity: 0.1;
+
+// Lista das cores do tema
+$theme-colors:
+  primary, secondary, accent, text, textSecondary, error, success, warning;
+
+// Lista dos tamanhos
+$sizes: pequeno, medio, grande;
+
+// Lista das variantes
+$variants: solid, outline, ghost;
+
+// ============================================================================
+// MIXINS BASE
+// ============================================================================
+
+// Mixin para transição básica da tag
+@mixin tag-base-animation {
+  @apply transform transition-all duration-200 ease-in-out;
+
+  &.tag-interactive:hover {
+    transform: scale($tag-scale);
+  }
+}
+
+// Mixin para focus ring das tags interativas
+@mixin tag-focus($color) {
+  outline: none;
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 2px rgb(var(--color-background)),
+      0 0 0 4px rgb(var(--color-#{$color}) / 0.5);
+  }
+}
+
+// ============================================================================
+// TAMANHOS
+// ============================================================================
+.tag-size-pequeno {
+  @apply text-xs px-2 py-0.5;
+}
+
+.tag-size-medio {
+  @apply text-sm px-3 py-1;
+}
+
+.tag-size-grande {
+  @apply text-base px-4 py-1.5;
+}
+
+// ============================================================================
+// VARIANTE SOLID
+// ============================================================================
+@mixin tag-solid($color) {
+  @include tag-base-animation;
+  @include tag-focus($color);
+
+  background-color: rgb(var(--color-#{$color}));
+  color: rgb(var(--color-text));
+  border: 1px solid rgb(var(--color-#{$color}));
+
+  &.tag-interactive:hover {
+    background-color: rgb(var(--color-#{$color}) / 0.8);
+  }
+}
+
+// Casos especiais para solid
+@mixin tag-solid-text {
+  @include tag-base-animation;
+  @include tag-focus(text);
+
+  background-color: rgb(var(--color-text));
+  color: rgb(var(--color-background));
+  border: 1px solid rgb(var(--color-text));
+
+  &.tag-interactive:hover {
+    background-color: rgb(var(--color-text) / 0.8);
+  }
+}
+
+@mixin tag-solid-text-secondary {
+  @include tag-base-animation;
+  @include tag-focus(textSecondary);
+
+  background-color: rgb(var(--color-textSecondary));
+  color: rgb(var(--color-text));
+  border: 1px solid rgb(var(--color-textSecondary));
+
+  &.tag-interactive:hover {
+    background-color: rgb(var(--color-textSecondary) / 0.8);
+  }
+}
+
+// Gerar classes solid
+@each $color in $theme-colors {
+  .tag-solid-#{$color} {
+    @if $color == text {
+      @include tag-solid-text;
+    } @else if $color == textSecondary {
+      @include tag-solid-text-secondary;
+    } @else {
+      @include tag-solid($color);
+    }
+  }
+}
+
+// ============================================================================
+// VARIANTE OUTLINE
+// ============================================================================
+@mixin tag-outline($color) {
+  @include tag-base-animation;
+  @include tag-focus($color);
+
+  background-color: transparent;
+  color: rgb(var(--color-#{$color}));
+  border: 1px solid rgb(var(--color-#{$color}));
+
+  &.tag-interactive:hover {
+    background-color: rgb(var(--color-#{$color}) / 0.1);
+  }
+}
+
+// Casos especiais para outline
+@mixin tag-outline-text {
+  @include tag-base-animation;
+  @include tag-focus(text);
+
+  background-color: transparent;
+  color: rgb(var(--color-text));
+  border: 1px solid rgb(var(--color-text));
+
+  &.tag-interactive:hover {
+    background-color: rgb(var(--color-text) / 0.1);
+  }
+}
+
+@mixin tag-outline-text-secondary {
+  @include tag-base-animation;
+  @include tag-focus(textSecondary);
+
+  background-color: transparent;
+  color: rgb(var(--color-textSecondary));
+  border: 1px solid rgb(var(--color-textSecondary));
+
+  &.tag-interactive:hover {
+    background-color: rgb(var(--color-textSecondary) / 0.1);
+  }
+}
+
+// Gerar classes outline
+@each $color in $theme-colors {
+  .tag-outline-#{$color} {
+    @if $color == text {
+      @include tag-outline-text;
+    } @else if $color == textSecondary {
+      @include tag-outline-text-secondary;
+    } @else {
+      @include tag-outline($color);
+    }
+  }
+}
+
+// ============================================================================
+// VARIANTE GHOST
+// ============================================================================
+@mixin tag-ghost($color) {
+  @include tag-base-animation;
+  @include tag-focus($color);
+
+  background-color: rgb(var(--color-#{$color}) / 0.1);
+  color: rgb(var(--color-#{$color}));
+  border: 1px solid transparent;
+
+  &.tag-interactive:hover {
+    background-color: rgb(var(--color-#{$color}) / 0.2);
+  }
+}
+
+// Casos especiais para ghost
+@mixin tag-ghost-text {
+  @include tag-base-animation;
+  @include tag-focus(text);
+
+  background-color: rgb(var(--color-text) / 0.1);
+  color: rgb(var(--color-text));
+  border: 1px solid transparent;
+
+  &.tag-interactive:hover {
+    background-color: rgb(var(--color-text) / 0.2);
+  }
+}
+
+@mixin tag-ghost-text-secondary {
+  @include tag-base-animation;
+  @include tag-focus(textSecondary);
+
+  background-color: rgb(var(--color-textSecondary) / 0.1);
+  color: rgb(var(--color-textSecondary));
+  border: 1px solid transparent;
+
+  &.tag-interactive:hover {
+    background-color: rgb(var(--color-textSecondary) / 0.2);
+  }
+}
+
+// Gerar classes ghost
+@each $color in $theme-colors {
+  .tag-ghost-#{$color} {
+    @if $color == text {
+      @include tag-ghost-text;
+    } @else if $color == textSecondary {
+      @include tag-ghost-text-secondary;
+    } @else {
+      @include tag-ghost($color);
+    }
+  }
+}
+
+// ============================================================================
+// CLASSES BASE E UTILITÁRIAS
+// ============================================================================
+
+// Classe base para todas as tags
+.tag-base {
+  @apply inline-flex items-center justify-center font-medium rounded-full;
+  transition: all 0.2s ease-in-out;
+
+  // Estado interativo (clicável)
+  &.tag-interactive {
+    @apply cursor-pointer;
+  }
+
+  // Estado desabilitado
+  &.tag-disabled {
+    @apply opacity-50 cursor-not-allowed;
+
+    &:hover {
+      transform: none !important;
+    }
+  }
+}
+
+// ============================================================================
+// CLASSES COMPOSTAS - SOLID
+// ============================================================================
+
+// Primary Solid
+.tag-primary-solid-pequeno {
+  @extend .tag-base, .tag-solid-primary, .tag-size-pequeno;
+}
+.tag-primary-solid-medio {
+  @extend .tag-base, .tag-solid-primary, .tag-size-medio;
+}
+.tag-primary-solid-grande {
+  @extend .tag-base, .tag-solid-primary, .tag-size-grande;
+}
+
+// Secondary Solid
+.tag-secondary-solid-pequeno {
+  @extend .tag-base, .tag-solid-secondary, .tag-size-pequeno;
+}
+.tag-secondary-solid-medio {
+  @extend .tag-base, .tag-solid-secondary, .tag-size-medio;
+}
+.tag-secondary-solid-grande {
+  @extend .tag-base, .tag-solid-secondary, .tag-size-grande;
+}
+
+// Accent Solid
+.tag-accent-solid-pequeno {
+  @extend .tag-base, .tag-solid-accent, .tag-size-pequeno;
+}
+.tag-accent-solid-medio {
+  @extend .tag-base, .tag-solid-accent, .tag-size-medio;
+}
+.tag-accent-solid-grande {
+  @extend .tag-base, .tag-solid-accent, .tag-size-grande;
+}
+
+// Error, Success, Warning Solid
+.tag-error-solid-medio {
+  @extend .tag-base, .tag-solid-error, .tag-size-medio;
+}
+.tag-success-solid-medio {
+  @extend .tag-base, .tag-solid-success, .tag-size-medio;
+}
+.tag-warning-solid-medio {
+  @extend .tag-base, .tag-solid-warning, .tag-size-medio;
+}
+
+// ============================================================================
+// CLASSES COMPOSTAS - OUTLINE
+// ============================================================================
+
+// Primary Outline
+.tag-primary-outline-pequeno {
+  @extend .tag-base, .tag-outline-primary, .tag-size-pequeno;
+}
+.tag-primary-outline-medio {
+  @extend .tag-base, .tag-outline-primary, .tag-size-medio;
+}
+.tag-primary-outline-grande {
+  @extend .tag-base, .tag-outline-primary, .tag-size-grande;
+}
+
+// Secondary Outline
+.tag-secondary-outline-pequeno {
+  @extend .tag-base, .tag-outline-secondary, .tag-size-pequeno;
+}
+.tag-secondary-outline-medio {
+  @extend .tag-base, .tag-outline-secondary, .tag-size-medio;
+}
+.tag-secondary-outline-grande {
+  @extend .tag-base, .tag-outline-secondary, .tag-size-grande;
+}
+
+// Accent Outline
+.tag-accent-outline-pequeno {
+  @extend .tag-base, .tag-outline-accent, .tag-size-pequeno;
+}
+.tag-accent-outline-medio {
+  @extend .tag-base, .tag-outline-accent, .tag-size-medio;
+}
+.tag-accent-outline-grande {
+  @extend .tag-base, .tag-outline-accent, .tag-size-grande;
+}
+
+// ============================================================================
+// CLASSES COMPOSTAS - GHOST
+// ============================================================================
+
+// Primary Ghost
+.tag-primary-ghost-pequeno {
+  @extend .tag-base, .tag-ghost-primary, .tag-size-pequeno;
+}
+.tag-primary-ghost-medio {
+  @extend .tag-base, .tag-ghost-primary, .tag-size-medio;
+}
+.tag-primary-ghost-grande {
+  @extend .tag-base, .tag-ghost-primary, .tag-size-grande;
+}
+
+// Secondary Ghost
+.tag-secondary-ghost-pequeno {
+  @extend .tag-base, .tag-ghost-secondary, .tag-size-pequeno;
+}
+.tag-secondary-ghost-medio {
+  @extend .tag-base, .tag-ghost-secondary, .tag-size-medio;
+}
+.tag-secondary-ghost-grande {
+  @extend .tag-base, .tag-ghost-secondary, .tag-size-grande;
+}
+
+// Accent Ghost
+.tag-accent-ghost-pequeno {
+  @extend .tag-base, .tag-ghost-accent, .tag-size-pequeno;
+}
+.tag-accent-ghost-medio {
+  @extend .tag-base, .tag-ghost-accent, .tag-size-medio;
+}
+.tag-accent-ghost-grande {
+  @extend .tag-base, .tag-ghost-accent, .tag-size-grande;
+}
+
+// ============================================================================
+// ESTADOS E CUSTOMIZAÇÕES
+// ============================================================================
+
+// Tag com ícone
+.tag-with-icon {
+  @apply gap-1;
+
+  .icon {
+    @apply w-3 h-3 flex-shrink-0;
+  }
+
+  &.tag-size-pequeno .icon {
+    @apply w-2.5 h-2.5;
+  }
+  &.tag-size-grande .icon {
+    @apply w-4 h-4;
+  }
+}
+
+// Tag removível (com X)
+.tag-removable {
+  @apply pr-1;
+
+  .remove-btn {
+    @apply ml-1 hover:bg-black/10 rounded-full p-0.5 transition-colors;
+
+    .icon {
+      @apply w-3 h-3;
+    }
+  }
+}
+
+// Tag com badge/contador
+.tag-with-badge {
+  @apply relative;
+
+  .badge {
+    @apply absolute -top-1 -right-1 min-w-4 h-4 flex items-center justify-center;
+    @apply text-xs rounded-full bg-theme-error text-white px-1;
+  }
+}
+
+// Grupo de tags
+.tag-group {
+  @apply flex flex-wrap gap-2;
+
+  &-compact {
+    @apply gap-1;
+  }
+}
+
+// Tag de status específicas
+.tag-status-online {
+  @extend .tag-base, .tag-ghost-success, .tag-size-pequeno;
+  @apply relative;
+
+  &::before {
+    content: '';
+    @apply w-2 h-2 bg-theme-success rounded-full mr-1;
+  }
+}
+
+.tag-status-offline {
+  @extend .tag-base, .tag-ghost-error, .tag-size-pequeno;
+  @apply relative;
+
+  &::before {
+    content: '';
+    @apply w-2 h-2 bg-theme-error rounded-full mr-1;
+  }
+}
+
+.tag-status-pending {
+  @extend .tag-base, .tag-ghost-warning, .tag-size-pequeno;
+  @apply relative;
+
+  &::before {
+    content: '';
+    @apply w-2 h-2 bg-theme-warning rounded-full mr-1;
+  }
+}

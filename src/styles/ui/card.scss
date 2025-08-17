@@ -1,0 +1,435 @@
+// ============================================================================
+// CARD STYLES - SCSS + Vite + Tailwind
+// ============================================================================
+
+// ============================================================================
+// VARIÁVEIS E CONFIGURAÇÕES
+// ============================================================================
+$card-scale: 1.02;
+$card-shadow-opacity: 0.1;
+$card-border-width: 1px;
+
+// Lista das cores do tema
+$theme-colors:
+  primary, secondary, accent, text, textSecondary, error, success, warning;
+
+// Lista dos tamanhos
+$sizes: pequeno, medio, grande;
+
+// Lista dos layouts
+$layouts: horizontal, with-icon, varied;
+
+// Lista dos alinhamentos
+$aligns: start, center, end;
+
+// ============================================================================
+// MIXINS BASE
+// ============================================================================
+
+// Mixin para transição e animação básica do card
+@mixin card-base-animation {
+  @apply transform transition-all duration-200 ease-in-out;
+
+  &.card-clickable:hover {
+    transform: scale(#{$card-scale});
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, $card-shadow-opacity);
+  }
+}
+
+// Mixin para focus ring dos cards clicáveis
+@mixin card-focus($color) {
+  outline: none;
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 2px rgb(var(--color-background)),
+      0 0 0 4px rgb(var(--color-#{$color}) / 0.5);
+  }
+}
+
+// ============================================================================
+// CORES DO CARD
+// ============================================================================
+@mixin card-color($color) {
+  @if $color == default {
+    @apply bg-theme-surface border-theme-border;
+
+    &.card-clickable:hover {
+      @apply bg-opacity-90;
+    }
+  } @else {
+    background-color: rgb(var(--color-#{$color}) / 0.05);
+    border-color: rgb(var(--color-#{$color}) / 0.2);
+
+    &.card-clickable:hover {
+      background-color: rgb(var(--color-#{$color}) / 0.1);
+    }
+  }
+}
+
+// Gerar classes de cores
+@each $color in $theme-colors {
+  .card-color-#{$color} {
+    @include card-color($color);
+  }
+}
+
+.card-color-default {
+  @include card-color(default);
+}
+
+// ============================================================================
+// CORES DE BORDA CUSTOMIZADAS
+// ============================================================================
+@each $color in $theme-colors {
+  .card-border-#{$color} {
+    border-color: rgb(var(--color-#{$color}) / 0.3) !important;
+  }
+}
+
+// ============================================================================
+// TAMANHOS PARA CARDS HORIZONTAIS
+// ============================================================================
+.card-horizontal-pequeno {
+  @apply min-h-12 sm:min-h-16 p-2 sm:p-3;
+}
+
+.card-horizontal-medio {
+  @apply min-h-16 sm:min-h-20 p-3 sm:p-4;
+}
+
+.card-horizontal-grande {
+  @apply min-h-20 sm:min-h-24 p-4 sm:p-5;
+}
+
+// ============================================================================
+// ALINHAMENTOS
+// ============================================================================
+.card-align-start {
+  @apply text-left items-start;
+}
+
+.card-align-center {
+  @apply text-center items-center;
+}
+
+.card-align-end {
+  @apply text-right items-end;
+}
+
+// ============================================================================
+// LAYOUTS BASE
+// ============================================================================
+
+// Layout Horizontal
+.card-layout-horizontal {
+  @apply flex flex-col justify-center;
+}
+
+// Layout With Icon
+.card-layout-with-icon {
+  @apply p-6;
+
+  .card-icon-header {
+    @apply flex items-center gap-2 mb-2;
+
+    .card-icon {
+      @apply flex-shrink-0;
+    }
+  }
+}
+
+// Layout Varied
+.card-layout-varied {
+  @apply p-6 rounded-2xl relative;
+
+  .card-date-badge {
+    @apply absolute top-4 right-4;
+  }
+
+  .card-content {
+    @apply space-y-4;
+  }
+
+  .card-tags {
+    @apply flex flex-wrap gap-2 mt-4;
+  }
+}
+
+// ============================================================================
+// CLASSES BASE E UTILITÁRIAS
+// ============================================================================
+
+// Classe base para todos os cards
+.card-base {
+  @include card-base-animation;
+  @apply border rounded-lg transition-theme;
+
+  // Estado clicável
+  &.card-clickable {
+    @apply cursor-pointer;
+    @include card-focus(primary);
+  }
+
+  // Estado desabilitado
+  &.card-disabled {
+    @apply opacity-50 cursor-not-allowed;
+
+    &:hover {
+      transform: none !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+// ============================================================================
+// CLASSES COMPOSTAS - HORIZONTAL
+// ============================================================================
+
+// Primary Horizontal
+.card-primary-horizontal-pequeno {
+  @extend .card-base,
+    .card-layout-horizontal,
+    .card-color-primary,
+    .card-horizontal-pequeno;
+}
+.card-primary-horizontal-medio {
+  @extend .card-base,
+    .card-layout-horizontal,
+    .card-color-primary,
+    .card-horizontal-medio;
+}
+.card-primary-horizontal-grande {
+  @extend .card-base,
+    .card-layout-horizontal,
+    .card-color-primary,
+    .card-horizontal-grande;
+}
+
+// Secondary Horizontal
+.card-secondary-horizontal-pequeno {
+  @extend .card-base,
+    .card-layout-horizontal,
+    .card-color-secondary,
+    .card-horizontal-pequeno;
+}
+.card-secondary-horizontal-medio {
+  @extend .card-base,
+    .card-layout-horizontal,
+    .card-color-secondary,
+    .card-horizontal-medio;
+}
+.card-secondary-horizontal-grande {
+  @extend .card-base,
+    .card-layout-horizontal,
+    .card-color-secondary,
+    .card-horizontal-grande;
+}
+
+// Accent Horizontal
+.card-accent-horizontal-pequeno {
+  @extend .card-base,
+    .card-layout-horizontal,
+    .card-color-accent,
+    .card-horizontal-pequeno;
+}
+.card-accent-horizontal-medio {
+  @extend .card-base,
+    .card-layout-horizontal,
+    .card-color-accent,
+    .card-horizontal-medio;
+}
+.card-accent-horizontal-grande {
+  @extend .card-base,
+    .card-layout-horizontal,
+    .card-color-accent,
+    .card-horizontal-grande;
+}
+
+// Default Horizontal
+.card-default-horizontal-pequeno {
+  @extend .card-base,
+    .card-layout-horizontal,
+    .card-color-default,
+    .card-horizontal-pequeno;
+}
+.card-default-horizontal-medio {
+  @extend .card-base,
+    .card-layout-horizontal,
+    .card-color-default,
+    .card-horizontal-medio;
+}
+.card-default-horizontal-grande {
+  @extend .card-base,
+    .card-layout-horizontal,
+    .card-color-default,
+    .card-horizontal-grande;
+}
+
+// ============================================================================
+// CLASSES COMPOSTAS - WITH-ICON
+// ============================================================================
+
+// Primary With-Icon
+.card-primary-with-icon {
+  @extend .card-base, .card-layout-with-icon, .card-color-primary;
+}
+
+// Secondary With-Icon
+.card-secondary-with-icon {
+  @extend .card-base, .card-layout-with-icon, .card-color-secondary;
+}
+
+// Accent With-Icon
+.card-accent-with-icon {
+  @extend .card-base, .card-layout-with-icon, .card-color-accent;
+}
+
+// Default With-Icon
+.card-default-with-icon {
+  @extend .card-base, .card-layout-with-icon, .card-color-default;
+}
+
+// Error, Success, Warning With-Icon
+.card-error-with-icon {
+  @extend .card-base, .card-layout-with-icon, .card-color-error;
+}
+.card-success-with-icon {
+  @extend .card-base, .card-layout-with-icon, .card-color-success;
+}
+.card-warning-with-icon {
+  @extend .card-base, .card-layout-with-icon, .card-color-warning;
+}
+
+// ============================================================================
+// CLASSES COMPOSTAS - VARIED
+// ============================================================================
+
+// Primary Varied
+.card-primary-varied {
+  @extend .card-base, .card-layout-varied, .card-color-primary;
+}
+
+// Secondary Varied
+.card-secondary-varied {
+  @extend .card-base, .card-layout-varied, .card-color-secondary;
+}
+
+// Accent Varied
+.card-accent-varied {
+  @extend .card-base, .card-layout-varied, .card-color-accent;
+}
+
+// Default Varied
+.card-default-varied {
+  @extend .card-base, .card-layout-varied, .card-color-default;
+}
+
+// Error, Success, Warning Varied
+.card-error-varied {
+  @extend .card-base, .card-layout-varied, .card-color-error;
+}
+.card-success-varied {
+  @extend .card-base, .card-layout-varied, .card-color-success;
+}
+.card-warning-varied {
+  @extend .card-base, .card-layout-varied, .card-color-warning;
+}
+
+// ============================================================================
+// ESTADOS E CUSTOMIZAÇÕES
+// ============================================================================
+
+// Card com loading state
+.card-loading {
+  @apply relative overflow-hidden;
+
+  &::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    animation: shimmer 2s infinite;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// Card com elevação
+.card-elevated {
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  &.card-clickable:hover {
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+}
+
+// Card compacto (remove alguns paddings)
+.card-compact {
+  .card-layout-with-icon {
+    @apply p-4;
+  }
+
+  .card-layout-varied {
+    @apply p-4;
+  }
+}
+
+// ============================================================================
+// UTILIDADES ESPECÍFICAS PARA CARDS
+// ============================================================================
+
+// Container para grupos de cards
+.cards-grid {
+  @apply grid gap-4;
+
+  &-1 {
+    @apply grid-cols-1;
+  }
+  &-2 {
+    @apply grid-cols-1 sm:grid-cols-2;
+  }
+  &-3 {
+    @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
+  }
+  &-4 {
+    @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-4;
+  }
+}
+
+// Lista de cards (vertical)
+.cards-list {
+  @apply space-y-4;
+
+  &-compact {
+    @apply space-y-2;
+  }
+}
+
+// Card responsivo que muda de layout
+.card-responsive {
+  @apply flex-col sm:flex-row;
+
+  .card-content {
+    @apply flex-1;
+  }
+
+  .card-actions {
+    @apply mt-4 sm:mt-0 sm:ml-4 flex-shrink-0;
+  }
+}

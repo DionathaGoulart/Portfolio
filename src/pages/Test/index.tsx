@@ -181,7 +181,7 @@ export function TestPage() {
             <div className="flex justify-between items-center">
               <div>
                 <Title level="h1">Dashboard</Title>
-                <P color="text-secondary" className="mt-1">
+                <P color="textSecondary" className="mt-1">
                   Visão geral do sistema e componentes
                 </P>
               </div>
@@ -447,7 +447,7 @@ export function TestPage() {
                     >
                       {user.status}
                     </Tag>
-                    <P size="pequeno" color="text-secondary">
+                    <P size="pequeno" color="textSecondary">
                       {user.role}
                     </P>
                   </div>
@@ -517,7 +517,7 @@ export function TestPage() {
               >
                 <div className="space-y-4 mt-4">
                   <div>
-                    <P size="pequeno" color="text-secondary" className="mb-1">
+                    <P size="pequeno" color="textSecondary" className="mb-1">
                       Nome completo
                     </P>
                     <input
@@ -528,7 +528,7 @@ export function TestPage() {
                   </div>
 
                   <div>
-                    <P size="pequeno" color="text-secondary" className="mb-1">
+                    <P size="pequeno" color="textSecondary" className="mb-1">
                       Email
                     </P>
                     <input
@@ -595,7 +595,7 @@ export function TestPage() {
             {/* Formulário do Modal */}
             <form onSubmit={handleFormSubmit} className="space-y-4">
               <div>
-                <P size="pequeno" color="text-secondary" className="mb-1">
+                <P size="pequeno" color="textSecondary" className="mb-1">
                   Nome
                 </P>
                 <input
@@ -609,7 +609,7 @@ export function TestPage() {
               </div>
 
               <div>
-                <P size="pequeno" color="text-secondary" className="mb-1">
+                <P size="pequeno" color="textSecondary" className="mb-1">
                   Email
                 </P>
                 <input
@@ -623,7 +623,7 @@ export function TestPage() {
               </div>
 
               <div>
-                <P size="pequeno" color="text-secondary" className="mb-1">
+                <P size="pequeno" color="textSecondary" className="mb-1">
                   Mensagem (Opcional)
                 </P>
                 <textarea
@@ -654,7 +654,7 @@ export function TestPage() {
       <footer className="theme-background border-t mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex justify-between items-center">
-            <P color="text-secondary">
+            <P color="textSecondary">
               © 2024 TestApp. Todos os direitos reservados.
             </P>
             <div className="flex gap-4">

@@ -104,21 +104,21 @@ export const cardHorizontalSizeStyles: Record<
   }
 > = {
   pequeno: {
-    container: 'min-h-16',
+    container: 'min-h-12 sm:min-h-16',
     titleLevel: 'h5',
     subtitleSize: 'pequeno',
-    padding: 'p-3'
+    padding: 'p-2 sm:p-3'
   },
   medio: {
-    container: 'min-h-20',
+    container: 'min-h-16 sm:min-h-20',
     titleLevel: 'h4',
     subtitleSize: 'pequeno',
-    padding: 'p-4'
+    padding: 'p-3 sm:p-4'
   },
   grande: {
-    container: 'min-h-24',
+    container: 'min-h-20 sm:min-h-24',
     titleLevel: 'h3',
     subtitleSize: 'medio',
-    padding: 'p-5'
+    padding: 'p-4 sm:p-5'
   }
 }

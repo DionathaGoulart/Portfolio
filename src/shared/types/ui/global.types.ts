@@ -31,9 +31,9 @@ export type TitleLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
 
 // Tamanhos base
 export const sizeStyles: Record<Size, string> = {
-  pequeno: 'text-sm',
-  medio: 'text-base',
-  grande: 'text-xl'
+  pequeno: 'text-xs sm:text-sm',
+  medio: 'text-sm sm:text-base',
+  grande: 'text-base sm:text-lg md:text-xl'
 }
 
 // Classes de alinhamento

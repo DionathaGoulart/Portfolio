@@ -1,91 +1,178 @@
+// ============================================================================
+// THEME STYLES - Sistema de cores e temas
+// ============================================================================
+
 :root {
   // Variáveis CSS serão injetadas dinamicamente pelo ThemeProvider
-
   // Transições suaves para mudanças de tema
   --transition-theme:
     background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+  // Valores padrão para fallback (tema light)
+  --color-primary: 59 130 246;
+  --color-secondary: 100 116 139;
+  --color-accent: 139 92 246;
+  --color-background: 255 255 255;
+  --color-surface: 248 250 252;
+  --color-text: 15 23 42;
+  --color-textSecondary: 248 250 252;
+  --color-border: 226 232 240;
+  --color-error: 239 68 68;
+  --color-success: 34 197 94;
+  --color-warning: 245 158 11;
 }
 
-// Classes utilitárias para usar com Tailwind
+// ============================================================================
+// CLASSES UTILITÁRIAS PARA USAR COM TAILWIND
+// ============================================================================
+
+// Backgrounds
 .theme-bg-primary {
-  background-color: var(--color-primary);
+  background-color: rgb(var(--color-primary));
 }
 .theme-bg-secondary {
-  background-color: var(--color-secondary);
+  background-color: rgb(var(--color-secondary));
 }
 .theme-bg-accent {
-  background-color: var(--color-accent);
+  background-color: rgb(var(--color-accent));
 }
 .theme-bg-background {
-  background-color: var(--color-background);
+  background-color: rgb(var(--color-background));
 }
 .theme-bg-surface {
-  background-color: var(--color-surface);
+  background-color: rgb(var(--color-surface));
 }
 
+// Text colors
 .theme-text-primary {
-  color: var(--color-text);
+  color: rgb(var(--color-text));
 }
 .theme-text-secondary {
-  color: var(--color-textSecondary);
+  color: rgb(var(--color-textSecondary));
 }
 .theme-text-accent {
-  color: var(--color-accent);
+  color: rgb(var(--color-accent));
 }
 .theme-text-error {
-  color: var(--color-error);
+  color: rgb(var(--color-error));
 }
 .theme-text-success {
-  color: var(--color-success);
+  color: rgb(var(--color-success));
 }
 .theme-text-warning {
-  color: var(--color-warning);
+  color: rgb(var(--color-warning));
 }
 
+// Border
 .theme-border {
-  border-color: var(--color-border);
+  border-color: rgb(var(--color-border));
 }
 
+// Transition
 .theme-transition {
   transition: var(--transition-theme);
 }
 
-// Classes base para elementos principais
+// ============================================================================
+// CLASSES BASE PARA ELEMENTOS PRINCIPAIS
+// ============================================================================
+
+// Container principal
 .theme-container {
-  background-color: var(--color-background);
-  color: var(--color-text);
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-text));
   transition: var(--transition-theme);
 }
 
+// Superfícies/cards
 .theme-surface {
-  background-color: var(--color-surface);
-  border-color: var(--color-border);
+  background-color: rgb(var(--color-surface));
+  border-color: rgb(var(--color-border));
   transition: var(--transition-theme);
 }
 
-// Scrollbar personalizada
+// ============================================================================
+// SCROLLBAR PERSONALIZADA
+// ============================================================================
+
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-surface);
+  background: rgb(var(--color-surface));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
+  background: rgb(var(--color-border));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-secondary);
+  background: rgb(var(--color-secondary));
 }
 
-// Override do Tailwind para dark mode
+// Para Firefox
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--color-border)) rgb(var(--color-surface));
+}
+
+// ============================================================================
+// OVERRIDE DO TAILWIND PARA DARK MODE
+// ============================================================================
+
 .dark {
   color-scheme: dark;
+
+  // Ensure dark mode variables override
+  --color-primary: 96 165 250;
+  --color-secondary: 148 163 184;
+  --color-accent: 167 139 250;
+  --color-background: 15 23 42;
+  --color-surface: 30 41 59;
+  --color-text: 248 250 252;
+  --color-textSecondary: 15 23 42;
+  --color-border: 51 65 85;
+  --color-error: 248 113 113;
+  --color-success: 74 222 128;
+  --color-warning: 251 191 36;
 }
 
 .light {
   color-scheme: light;
+}
+
+// ============================================================================
+// UTILIDADES EXTRAS PARA COMPONENTES
+// ============================================================================
+
+// Classe para elementos que precisam responder ao tema
+.theme-responsive {
+  transition: var(--transition-theme);
+}
+
+// Sombras com tema
+.theme-shadow {
+  box-shadow:
+    0 4px 6px -1px rgb(var(--color-border) / 0.1),
+    0 2px 4px -1px rgb(var(--color-border) / 0.06);
+}
+
+.theme-shadow-lg {
+  box-shadow:
+    0 10px 15px -3px rgb(var(--color-border) / 0.1),
+    0 4px 6px -2px rgb(var(--color-border) / 0.05);
+}
+
+// Estados de hover/focus usando variáveis do tema
+.theme-hover-bg:hover {
+  background-color: rgb(var(--color-surface));
+}
+
+.theme-focus {
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(var(--color-primary) / 0.5);
+  }
 }

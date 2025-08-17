@@ -1,3 +1,66 @@
+// ============================================================================
+// GLOBAL STYLES - @use deve vir PRIMEIRO
+// ============================================================================
+
+// 1. PRIMEIRO: Todas as regras @use devem vir antes de qualquer outra coisa
+@use './theme.scss';
+@use './ui/button.scss';
+
+// 2. Depois importamos o Tailwind
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+// ============================================================================
+// ESTILOS GLOBAIS ADICIONAIS
+// ============================================================================
+
+// Reset básico para garantir consistência
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply theme-container;
+  margin: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Garantir que o root container ocupe toda a tela
+#root {
+  min-height: 100vh;
+  @apply theme-transition;
+}
+
+// Classes utilitárias extras
+.full-height {
+  min-height: 100vh;
+}
+
+.center-content {
+  @apply flex items-center justify-center;
+}
+
+// Correções para elementos de formulário
+input,
+textarea,
+select {
+  @apply theme-transition;
+}
+
+// Links com tema
+a {
+  @apply theme-text-accent theme-transition;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

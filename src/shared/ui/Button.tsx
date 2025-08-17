@@ -1,18 +1,8 @@
 import React from 'react'
 import {
-  Align,
-  Size,
-  ThemeColor,
-  flexAlignClasses
-} from '../types/ui/global.types'
-import {
-  ButtonVariant,
-  buttonOutlineColorClasses,
-  buttonGhostColorClasses,
-  buttonSolidColorClasses,
-  buttonSizeStyles,
-  buttonFocusRingClasses,
-  ButtonProps
+  ButtonProps,
+  getButtonClasses,
+  getButtonContainerClasses
 } from '@shared/types'
 
 export const Button: React.FC<ButtonProps> = ({
@@ -22,46 +12,47 @@ export const Button: React.FC<ButtonProps> = ({
   variant = 'solid',
   onClick,
   disabled = false,
+  loading = false,
   type = 'button',
   children,
   className = '',
+  icon,
   id
 }) => {
-  const getColorClasses = (): string => {
-    switch (variant) {
-      case 'outline':
-        return buttonOutlineColorClasses[color]
-      case 'ghost':
-        return buttonGhostColorClasses[color]
-      default:
-        return buttonSolidColorClasses[color]
-    }
-  }
+  const hasIcon = Boolean(icon)
 
-  const buttonClasses = [
-    buttonSizeStyles[size],
-    getColorClasses(),
-    'rounded-md font-medium transition-all duration-200',
-    'focus:outline-none focus:ring-2 focus:ring-offset-2',
-    buttonFocusRingClasses[color],
-    disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer',
+  const buttonClasses = getButtonClasses(
+    size,
+    variant,
+    color,
+    disabled,
+    loading,
+    hasIcon,
     className
-  ]
-    .filter(Boolean)
-    .join(' ')
+  )
 
-  const containerClasses = ['flex', flexAlignClasses[align]].join(' ')
+  const containerClasses = getButtonContainerClasses(align)
 
   return (
     <div className={containerClasses}>
       <button
         type={type}
-        onClick={disabled ? undefined : onClick}
-        disabled={disabled}
+        onClick={disabled || loading ? undefined : onClick}
+        disabled={disabled || loading}
         className={buttonClasses}
         id={id}
       >
-        {children}
+        {loading ? (
+          <>
+            <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
+            Carregando...
+          </>
+        ) : (
+          <>
+            {icon && <span className="icon">{icon}</span>}
+            {children}
+          </>
+        )}
       </button>
     </div>
   )

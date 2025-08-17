@@ -1,0 +1,391 @@
+// ============================================================================
+// BUTTON STYLES - SCSS + Vite + Tailwind (VERSÃO CORRIGIDA)
+// ============================================================================
+
+// ============================================================================
+// VARIÁVEIS E CONFIGURAÇÕES
+// ============================================================================
+$button-scale: 1.05;
+$button-opacity: 0.1;
+$button-border-width: 2px;
+
+// Lista das cores do tema
+$theme-colors:
+  primary, secondary, accent, text, textSecondary, error, success, warning;
+
+// ============================================================================
+// MIXINS BASE
+// ============================================================================
+
+// Mixin para transição e scale básico
+@mixin button-base-animation {
+  @apply transform transition-all duration-200 ease-in-out;
+
+  &:hover:not(:disabled) {
+    transform: scale(#{$button-scale});
+  }
+}
+
+// Mixin para focus ring (usando CSS customizado)
+@mixin button-focus($color) {
+  outline: none;
+
+  &:focus {
+    box-shadow:
+      0 0 0 2px rgb(var(--color-background)),
+      0 0 0 4px rgb(var(--color-#{$color}) / 0.5);
+  }
+}
+
+// ============================================================================
+// TAMANHOS
+// ============================================================================
+.btn-size-pequeno {
+  @apply text-sm px-3 py-1.5;
+}
+
+.btn-size-medio {
+  @apply text-base px-4 py-2;
+}
+
+.btn-size-grande {
+  @apply text-xl px-6 py-3;
+}
+
+// ============================================================================
+// VARIANTE SOLID
+// ============================================================================
+@mixin button-solid($color) {
+  @include button-base-animation;
+  @include button-focus($color);
+
+  background-color: rgb(var(--color-#{$color}));
+  color: rgb(var(--color-text));
+  border: 2px solid transparent;
+
+  &:hover:not(:disabled) {
+    background-color: transparent;
+    color: rgb(var(--color-#{$color}));
+    border-color: rgb(var(--color-#{$color}));
+  }
+}
+
+// Casos especiais para solid
+@mixin button-solid-text {
+  @include button-base-animation;
+  @include button-focus(text);
+
+  background-color: rgb(var(--color-text));
+  color: rgb(var(--color-textSecondary));
+  border: 2px solid transparent;
+
+  &:hover:not(:disabled) {
+    background-color: transparent;
+    color: rgb(var(--color-text));
+    border-color: rgb(var(--color-text));
+  }
+}
+
+@mixin button-solid-text-secondary {
+  @include button-base-animation;
+  @include button-focus(textSecondary);
+
+  background-color: rgb(var(--color-textSecondary));
+  color: rgb(var(--color-text));
+  border: 2px solid rgb(var(--color-text));
+
+  &:hover:not(:disabled) {
+    background-color: rgb(var(--color-text));
+    color: rgb(var(--color-textSecondary));
+  }
+}
+
+// Gerar classes solid
+@each $color in $theme-colors {
+  .btn-solid-#{$color} {
+    @if $color == text {
+      @include button-solid-text;
+    } @else if $color == textSecondary {
+      @include button-solid-text-secondary;
+    } @else {
+      @include button-solid($color);
+    }
+  }
+}
+
+// ============================================================================
+// VARIANTE OUTLINE
+// ============================================================================
+@mixin button-outline($color) {
+  @include button-base-animation;
+  @include button-focus($color);
+
+  background-color: transparent;
+  color: rgb(var(--color-#{$color}));
+  border: 2px solid rgb(var(--color-#{$color}));
+
+  &:hover:not(:disabled) {
+    background-color: rgb(var(--color-#{$color}));
+    color: rgb(var(--color-text));
+  }
+}
+
+// Casos especiais para outline
+@mixin button-outline-text {
+  @include button-base-animation;
+  @include button-focus(text);
+
+  background-color: transparent;
+  color: rgb(var(--color-text));
+  border: 2px solid rgb(var(--color-text));
+
+  &:hover:not(:disabled) {
+    background-color: rgb(var(--color-text));
+    color: rgb(var(--color-background));
+  }
+}
+
+@mixin button-outline-text-secondary {
+  @include button-base-animation;
+  @include button-focus(textSecondary);
+
+  background-color: transparent;
+  color: rgb(var(--color-text));
+  border: 2px solid rgb(var(--color-text));
+
+  &:hover:not(:disabled) {
+    background-color: rgb(var(--color-text));
+    color: rgb(var(--color-textSecondary));
+  }
+}
+
+// Gerar classes outline
+@each $color in $theme-colors {
+  .btn-outline-#{$color} {
+    @if $color == text {
+      @include button-outline-text;
+    } @else if $color == textSecondary {
+      @include button-outline-text-secondary;
+    } @else {
+      @include button-outline($color);
+    }
+  }
+}
+
+// ============================================================================
+// VARIANTE GHOST
+// ============================================================================
+@mixin button-ghost($color) {
+  @include button-base-animation;
+  @include button-focus($color);
+
+  background-color: transparent;
+  color: rgb(var(--color-#{$color}));
+  border: 2px solid transparent;
+
+  &:hover:not(:disabled) {
+    background-color: rgb(var(--color-#{$color}) / 0.1);
+  }
+}
+
+// Gerar classes ghost
+@each $color in $theme-colors {
+  .btn-ghost-#{$color} {
+    @include button-ghost($color);
+  }
+}
+
+// ============================================================================
+// CLASSES BASE E UTILITÁRIAS
+// ============================================================================
+
+// Classe base para todos os botões
+.btn-base {
+  @apply rounded-md font-medium cursor-pointer inline-flex items-center justify-center;
+  transition: all 0.2s ease-in-out;
+
+  &:disabled {
+    @apply opacity-50 cursor-not-allowed;
+
+    &:hover {
+      transform: none !important;
+    }
+  }
+}
+
+// Classes de container para alinhamento
+.btn-container {
+  @apply flex;
+
+  &-start {
+    @apply justify-start;
+  }
+  &-center {
+    @apply justify-center;
+  }
+  &-end {
+    @apply justify-end;
+  }
+}
+
+// ============================================================================
+// CLASSES COMPOSTAS - Principais combinações
+// ============================================================================
+
+// Primary
+.btn-primary-solid-pequeno {
+  @extend .btn-base, .btn-solid-primary, .btn-size-pequeno;
+}
+.btn-primary-solid-medio {
+  @extend .btn-base, .btn-solid-primary, .btn-size-medio;
+}
+.btn-primary-solid-grande {
+  @extend .btn-base, .btn-solid-primary, .btn-size-grande;
+}
+
+.btn-primary-outline-pequeno {
+  @extend .btn-base, .btn-outline-primary, .btn-size-pequeno;
+}
+.btn-primary-outline-medio {
+  @extend .btn-base, .btn-outline-primary, .btn-size-medio;
+}
+.btn-primary-outline-grande {
+  @extend .btn-base, .btn-outline-primary, .btn-size-grande;
+}
+
+.btn-primary-ghost-pequeno {
+  @extend .btn-base, .btn-ghost-primary, .btn-size-pequeno;
+}
+.btn-primary-ghost-medio {
+  @extend .btn-base, .btn-ghost-primary, .btn-size-medio;
+}
+.btn-primary-ghost-grande {
+  @extend .btn-base, .btn-ghost-primary, .btn-size-grande;
+}
+
+// Secondary
+.btn-secondary-solid-pequeno {
+  @extend .btn-base, .btn-solid-secondary, .btn-size-pequeno;
+}
+.btn-secondary-solid-medio {
+  @extend .btn-base, .btn-solid-secondary, .btn-size-medio;
+}
+.btn-secondary-solid-grande {
+  @extend .btn-base, .btn-solid-secondary, .btn-size-grande;
+}
+
+.btn-secondary-outline-pequeno {
+  @extend .btn-base, .btn-outline-secondary, .btn-size-pequeno;
+}
+.btn-secondary-outline-medio {
+  @extend .btn-base, .btn-outline-secondary, .btn-size-medio;
+}
+.btn-secondary-outline-grande {
+  @extend .btn-base, .btn-outline-secondary, .btn-size-grande;
+}
+
+.btn-secondary-ghost-pequeno {
+  @extend .btn-base, .btn-ghost-secondary, .btn-size-pequeno;
+}
+.btn-secondary-ghost-medio {
+  @extend .btn-base, .btn-ghost-secondary, .btn-size-medio;
+}
+.btn-secondary-ghost-grande {
+  @extend .btn-base, .btn-ghost-secondary, .btn-size-grande;
+}
+
+// Accent
+.btn-accent-solid-pequeno {
+  @extend .btn-base, .btn-solid-accent, .btn-size-pequeno;
+}
+.btn-accent-solid-medio {
+  @extend .btn-base, .btn-solid-accent, .btn-size-medio;
+}
+.btn-accent-solid-grande {
+  @extend .btn-base, .btn-solid-accent, .btn-size-grande;
+}
+
+.btn-accent-outline-pequeno {
+  @extend .btn-base, .btn-outline-accent, .btn-size-pequeno;
+}
+.btn-accent-outline-medio {
+  @extend .btn-base, .btn-outline-accent, .btn-size-medio;
+}
+.btn-accent-outline-grande {
+  @extend .btn-base, .btn-outline-accent, .btn-size-grande;
+}
+
+.btn-accent-ghost-pequeno {
+  @extend .btn-base, .btn-ghost-accent, .btn-size-pequeno;
+}
+.btn-accent-ghost-medio {
+  @extend .btn-base, .btn-ghost-accent, .btn-size-medio;
+}
+.btn-accent-ghost-grande {
+  @extend .btn-base, .btn-ghost-accent, .btn-size-grande;
+}
+
+// Error, Success, Warning (adicione conforme necessário)
+.btn-error-solid-medio {
+  @extend .btn-base, .btn-solid-error, .btn-size-medio;
+}
+.btn-success-solid-medio {
+  @extend .btn-base, .btn-solid-success, .btn-size-medio;
+}
+.btn-warning-solid-medio {
+  @extend .btn-base, .btn-solid-warning, .btn-size-medio;
+}
+
+// ============================================================================
+// ESTADOS E CUSTOMIZAÇÕES
+// ============================================================================
+
+// Botão com loading state
+.btn-loading {
+  @apply relative;
+
+  &::after {
+    content: '';
+    @apply absolute inset-0 rounded-md;
+    background: rgba(255, 255, 255, 0.1);
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+// Botão com ícone
+.btn-with-icon {
+  @apply gap-2;
+
+  .icon {
+    @apply w-4 h-4 flex-shrink-0;
+  }
+
+  &.btn-size-pequeno .icon {
+    @apply w-3 h-3;
+  }
+  &.btn-size-grande .icon {
+    @apply w-5 h-5;
+  }
+}
+
+// Grupo de botões
+.btn-group {
+  @apply flex;
+
+  .btn-base {
+    @apply rounded-none;
+    border-right: none;
+
+    &:first-child {
+      @apply rounded-l-md;
+    }
+    &:last-child {
+      @apply rounded-r-md;
+      border-right: 2px solid;
+    }
+    &:only-child {
+      @apply rounded-md;
+      border-right: 2px solid;
+    }
+  }
+}

@@ -62,7 +62,7 @@ const Header: React.FC = () => {
               className={
                 activeSection === link.id
                   ? 'theme-text-primary font-medium'
-                  : 'theme-text-secondary hover:theme-text-primary transition-colors'
+                  : 'theme-text-primary hover:theme-text-primary transition-colors'
               }
             >
               {link.label}
@@ -74,7 +74,7 @@ const Header: React.FC = () => {
         <div className="flex items-center space-x-2">
           <button
             onClick={toggleTheme}
-            className="p-2 theme-text-secondary hover:theme-text-primary transition-colors"
+            className="p-2 theme-text-primary hover:theme-text-primary transition-colors"
             aria-label="Alternar tema"
           >
             {theme === 'light' ? '🌙' : '☀️'}
@@ -83,7 +83,7 @@ const Header: React.FC = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 theme-text-secondary hover:theme-text-primary"
+            className="md:hidden p-2 theme-text-primary hover:theme-text-primary"
             aria-label="Menu"
           >
             {isMobileMenuOpen ? '✕' : '☰'}
@@ -102,7 +102,7 @@ const Header: React.FC = () => {
                 className={`block w-full text-left py-2 px-3 rounded ${
                   activeSection === link.id
                     ? 'theme-text-primary bg-theme-accent bg-opacity-10'
-                    : 'theme-text-secondary hover:theme-text-primary hover:bg-theme-accent hover:bg-opacity-5'
+                    : 'theme-text-primary hover:theme-text-primary hover:bg-theme-accent hover:bg-opacity-5'
                 }`}
               >
                 {link.label}

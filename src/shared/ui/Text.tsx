@@ -9,10 +9,6 @@ import {
   ThemeColor
 } from '../types/ui'
 
-// ============================================================================
-// TEXT COMPONENT - Harmonizado
-// ============================================================================
-
 interface TextProps {
   as?: TextElement
   size?: Size
@@ -52,7 +48,7 @@ export const Text: React.FC<TextProps> = ({
   )
 }
 
-// Componentes específicos para facilitar o uso
+// Componentes específicos
 export const P: React.FC<Omit<TextProps, 'as'>> = (props) => (
   <Text as="p" {...props} />
 )

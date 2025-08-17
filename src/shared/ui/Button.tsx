@@ -1,10 +1,6 @@
 import React from 'react'
 import { Align, ButtonVariant, Size, ThemeColor } from '../types/ui'
 
-// ============================================================================
-// BUTTON COMPONENT - Otimizado
-// ============================================================================
-
 interface ButtonProps {
   size?: Size
   align?: Align
@@ -18,10 +14,10 @@ interface ButtonProps {
   id?: string
 }
 
-// Padding específico para botões (mais generoso que texto)
+// Padding específico para botões
 const buttonSizeStyles: Record<Size, string> = {
   pequeno: 'text-sm px-3 py-1.5',
-  medio: 'text-base px-4 py-2', // Harmonizado com text-base
+  medio: 'text-base px-4 py-2',
   grande: 'text-xl px-6 py-3'
 }
 
@@ -68,15 +64,21 @@ const outlineColorClasses: Record<ThemeColor, string> = {
 }
 
 const ghostColorClasses: Record<ThemeColor, string> = {
-  primary: 'text-theme-primary hover:bg-theme-primary hover:bg-opacity-10',
-  secondary: 'text-theme-primary hover:bg-theme-secondary hover:bg-opacity-10',
-  accent: 'text-theme-accent hover:bg-theme-accent hover:bg-opacity-10',
-  text: 'text-theme-primary hover:bg-theme-text hover:bg-opacity-10',
+  primary:
+    'text-theme-primary transform transition hover:scale-105 hover:bg-theme-primary hover:bg-opacity-10',
+  secondary:
+    'text-theme-secondary transform transition hover:scale-105 hover:bg-theme-secondary hover:bg-opacity-10',
+  accent:
+    'text-theme-accent transform transition hover:scale-105 hover:bg-theme-accent hover:bg-opacity-10',
+  text: 'text-theme-text transform transition hover:scale-105 hover:bg-theme-text hover:bg-opacity-10',
   textSecondary:
-    'text-theme-secondary hover:bg-theme-text-secondary hover:bg-opacity-10',
-  error: 'text-theme-error hover:bg-theme-error hover:bg-opacity-10',
-  success: 'text-theme-success hover:bg-theme-success hover:bg-opacity-10',
-  warning: 'text-theme-warning hover:bg-theme-warning hover:bg-opacity-10'
+    'text-theme-text-secondary transform transition hover:scale-105 hover:bg-theme-text-secondary hover:bg-opacity-10',
+  error:
+    'text-theme-error transform transition hover:scale-105 hover:bg-theme-error hover:bg-opacity-10',
+  success:
+    'text-theme-success transform transition hover:scale-105 hover:bg-theme-success hover:bg-opacity-10',
+  warning:
+    'text-theme-warning transform transition hover:scale-105 hover:bg-theme-warning hover:bg-opacity-10'
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -102,11 +104,35 @@ export const Button: React.FC<ButtonProps> = ({
     }
   }
 
+  const getFocusRingColor = (): string => {
+    switch (color) {
+      case 'primary':
+        return 'focus:ring-theme-primary'
+      case 'secondary':
+        return 'focus:ring-theme-secondary'
+      case 'accent':
+        return 'focus:ring-theme-accent'
+      case 'error':
+        return 'focus:ring-theme-error'
+      case 'success':
+        return 'focus:ring-theme-success'
+      case 'warning':
+        return 'focus:ring-theme-warning'
+      case 'text':
+        return 'focus:ring-theme-text'
+      case 'textSecondary':
+        return 'focus:ring-theme-text-secondary'
+      default:
+        return 'focus:ring-theme-primary'
+    }
+  }
+
   const buttonClasses = [
     buttonSizeStyles[size],
     getColorClasses(),
     'rounded-md font-medium transition-all duration-200',
-    'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-primary',
+    'focus:outline-none focus:ring-2 focus:ring-offset-2',
+    getFocusRingColor(),
     disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer',
     className
   ]

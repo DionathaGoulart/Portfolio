@@ -4,11 +4,6 @@ import { P } from './Text'
 import { Tag } from './Tag'
 import { Align, Size, TitleLevel } from '../types/ui'
 
-// ============================================================================
-// CARD COMPONENT - Com suporte a cores via props
-// ============================================================================
-
-// Definindo as cores disponíveis como tipo
 type ColorVariant =
   | 'primary'
   | 'secondary'
@@ -39,7 +34,7 @@ interface CardProps {
   borderColor?: ColorVariant
 }
 
-// Mapeamento das classes CSS usando suas classes customizadas
+// Mapeamento das classes
 const colorVariants: Record<
   ColorVariant,
   {
@@ -85,7 +80,7 @@ const colorVariants: Record<
   }
 }
 
-// Tamanhos harmonizados para cards horizontais
+// Tamanhos
 const horizontalSizeStyles: Record<
   Size,
   {
@@ -115,7 +110,7 @@ const horizontalSizeStyles: Record<
   }
 }
 
-// Classes de alinhamento para cards
+// Classes de alinhamento
 const cardAlignClasses: Record<Align, string> = {
   start: 'text-left items-start',
   center: 'text-center items-center',

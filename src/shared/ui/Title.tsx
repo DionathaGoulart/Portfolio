@@ -7,26 +7,22 @@ import {
   alignClasses
 } from '../types/ui'
 
-// ============================================================================
-// TITLE COMPONENT - Otimizado com escalas mais harmoniosas + novas props
-// ============================================================================
-
 type FontWeight = 'bold' | 'semibold' | 'normal'
 type ElementType = TitleLevel | 'span'
 
 interface TitleProps {
   level?: TitleLevel
-  element?: ElementType // Nova prop para escolher o elemento HTML
+  element?: ElementType
   align?: Align
   color?: ThemeColor
   children: React.ReactNode
   className?: string
   id?: string
-  uppercase?: boolean // Nova prop para uppercase
-  weight?: FontWeight // Nova prop para peso da fonte
+  uppercase?: boolean
+  weight?: FontWeight
 }
 
-// Escala tipográfica mais harmoniosa e consistente
+// Escala tipográfica
 const levelStyles: Record<TitleLevel, string> = {
   h1: 'text-8xl',
   h2: 'text-5xl',
@@ -57,11 +53,11 @@ export const Title: React.FC<TitleProps> = ({
   const Element = element || level
 
   const combinedClasses = [
-    levelStyles[level], // Tamanho baseado no level
-    fontWeightClasses[weight], // Peso da fonte
+    levelStyles[level],
+    fontWeightClasses[weight],
     colorClasses[color],
     alignClasses[align],
-    uppercase ? 'uppercase' : '', // Uppercase condicional
+    uppercase ? 'uppercase' : '',
     'theme-transition',
     className
   ]

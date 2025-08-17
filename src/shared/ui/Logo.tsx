@@ -1,6 +1,5 @@
 import React from 'react'
 
-// SVG Component para o logo GD
 export const GDLogo: React.FC = () => (
   <div className="flex items-center justify-center">
     <svg

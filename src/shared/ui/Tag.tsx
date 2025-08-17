@@ -1,10 +1,6 @@
 import React from 'react'
 import { ThemeColor, Size } from '../types/ui'
 
-// ============================================================================
-// TAG COMPONENT - Harmonizado
-// ============================================================================
-
 interface TagProps {
   children: React.ReactNode
   color?: ThemeColor
@@ -12,7 +8,7 @@ interface TagProps {
   className?: string
 }
 
-// Classes de cor harmonizadas para tags
+// Classes de cor
 const tagColorClasses: Record<ThemeColor, string> = {
   primary: 'theme-bg-primary-muted theme-text-primary',
   secondary: 'theme-bg-secondary-muted theme-text-secondary',
@@ -24,7 +20,7 @@ const tagColorClasses: Record<ThemeColor, string> = {
   warning: 'theme-bg-warning-muted theme-text-warning'
 }
 
-// Tamanhos específicos para tags
+// Tamanhos
 const tagSizeStyles: Record<Size, string> = {
   pequeno: 'text-xs px-2 py-0.5',
   medio: 'text-sm px-3 py-1',

@@ -2,18 +2,16 @@ import React from 'react'
 import { Title } from './Title'
 import { P } from './Text'
 import { Tag } from './Tag'
-import { Align, Size, TitleLevel } from '../types/ui'
-
-type ColorVariant =
-  | 'primary'
-  | 'secondary'
-  | 'accent'
-  | 'success'
-  | 'error'
-  | 'warning'
-  | 'default'
-
-type CardLayout = 'horizontal' | 'with-icon' | 'varied'
+import {
+  Align,
+  Size,
+  TitleLevel,
+  ColorVariant,
+  CardLayout,
+  cardAlignClasses,
+  cardColorVariants,
+  cardHorizontalSizeStyles
+} from '../types/ui'
 
 interface CardProps {
   layout: CardLayout
@@ -28,93 +26,8 @@ interface CardProps {
   description?: string
   tags?: string[]
   children?: React.ReactNode
-
-  // Props de cor
   color?: ColorVariant
   borderColor?: ColorVariant
-}
-
-// Mapeamento das classes
-const colorVariants: Record<
-  ColorVariant,
-  {
-    background: string
-    border: string
-    hover: string
-  }
-> = {
-  default: {
-    background: 'bg-theme-surface',
-    border: 'border-theme-border',
-    hover: 'hover:bg-theme-surface'
-  },
-  primary: {
-    background: 'bg-theme-primary/10',
-    border: 'border-theme-primary/30',
-    hover: 'hover:bg-theme-primary/15'
-  },
-  secondary: {
-    background: 'bg-theme-secondary/10',
-    border: 'border-theme-secondary/30',
-    hover: 'hover:bg-theme-secondary/15'
-  },
-  accent: {
-    background: 'bg-theme-accent/10',
-    border: 'border-theme-accent/30',
-    hover: 'hover:bg-theme-accent/15'
-  },
-  success: {
-    background: 'bg-theme-success/10',
-    border: 'border-theme-success/30',
-    hover: 'hover:bg-theme-success/15'
-  },
-  error: {
-    background: 'bg-theme-error/10',
-    border: 'border-theme-error/30',
-    hover: 'hover:bg-theme-error/15'
-  },
-  warning: {
-    background: 'bg-theme-warning/10',
-    border: 'border-theme-warning/30',
-    hover: 'hover:bg-theme-warning/15'
-  }
-}
-
-// Tamanhos
-const horizontalSizeStyles: Record<
-  Size,
-  {
-    container: string
-    titleLevel: TitleLevel
-    subtitleSize: Size
-    padding: string
-  }
-> = {
-  pequeno: {
-    container: 'min-h-16',
-    titleLevel: 'h5',
-    subtitleSize: 'pequeno',
-    padding: 'p-3'
-  },
-  medio: {
-    container: 'min-h-20',
-    titleLevel: 'h4',
-    subtitleSize: 'pequeno',
-    padding: 'p-4'
-  },
-  grande: {
-    container: 'min-h-24',
-    titleLevel: 'h3',
-    subtitleSize: 'medio',
-    padding: 'p-5'
-  }
-}
-
-// Classes de alinhamento
-const cardAlignClasses: Record<Align, string> = {
-  start: 'text-left items-start',
-  center: 'text-center items-center',
-  end: 'text-right items-end'
 }
 
 export const Card: React.FC<CardProps> = ({
@@ -133,11 +46,11 @@ export const Card: React.FC<CardProps> = ({
   borderColor
 }) => {
   // Pega o esquema de cores baseado na prop color
-  const colorScheme = colorVariants[color]
+  const colorScheme = cardColorVariants[color]
 
   // Se não especificar borderColor, usa a border do esquema da cor principal
   const finalBorderColor = borderColor
-    ? colorVariants[borderColor].border
+    ? cardColorVariants[borderColor].border
     : colorScheme.border
 
   const baseClasses = [
@@ -150,7 +63,7 @@ export const Card: React.FC<CardProps> = ({
   switch (layout) {
     case 'horizontal': {
       const { container, titleLevel, subtitleSize, padding } =
-        horizontalSizeStyles[size]
+        cardHorizontalSizeStyles[size]
 
       return (
         <div

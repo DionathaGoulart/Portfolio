@@ -38,7 +38,6 @@ const HomeSection: React.FC = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button
-                color="accent"
                 variant="solid"
                 size="grande"
                 onClick={handleVerTrabalhos}

@@ -5,7 +5,7 @@ import {
   ThemeColor,
   colorClasses,
   alignClasses
-} from '../types/ui'
+} from '@shared/types'
 
 type FontWeight = 'bold' | 'semibold' | 'normal'
 type ElementType = TitleLevel | 'span'

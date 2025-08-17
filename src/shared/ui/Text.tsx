@@ -1,23 +1,10 @@
 import React from 'react'
 import {
-  Align,
   alignClasses,
   colorClasses,
-  Size,
   sizeStyles,
-  TextElement,
-  ThemeColor
-} from '../types/ui'
-
-interface TextProps {
-  as?: TextElement
-  size?: Size
-  align?: Align
-  color?: ThemeColor
-  children: React.ReactNode
-  className?: string
-  id?: string
-}
+  TextProps
+} from '@shared/types'
 
 export const Text: React.FC<TextProps> = ({
   as = 'p',

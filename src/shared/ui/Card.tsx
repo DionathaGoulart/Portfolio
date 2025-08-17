@@ -2,33 +2,15 @@ import React from 'react'
 import { Title } from './Title'
 import { P } from './Text'
 import { Tag } from './Tag'
+import { Align, Size, TitleLevel } from '../types/ui/global.types'
 import {
-  Align,
-  Size,
-  TitleLevel,
-  ColorVariant,
   CardLayout,
-  cardAlignClasses,
+  ColorVariant,
   cardColorVariants,
-  cardHorizontalSizeStyles
-} from '../types/ui'
-
-interface CardProps {
-  layout: CardLayout
-  title: string
-  subtitle?: string
-  align?: Align
-  className?: string
-  onClick?: () => void
-  size?: Size
-  icon?: React.ReactNode
-  date?: string
-  description?: string
-  tags?: string[]
-  children?: React.ReactNode
-  color?: ColorVariant
-  borderColor?: ColorVariant
-}
+  cardHorizontalSizeStyles,
+  cardAlignClasses,
+  CardProps
+} from '@shared/types'
 
 export const Card: React.FC<CardProps> = ({
   layout,

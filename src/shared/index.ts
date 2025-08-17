@@ -16,7 +16,7 @@ export * from './hooks/theme/useThemeUtils'
 export * from './layouts'
 
 // Types //
-export * from './types/theme'
+export * from './types/theme.types'
 
 // Ui //
 

@@ -1,29 +1,19 @@
 import React from 'react'
 import {
   Align,
-  ButtonVariant,
   Size,
   ThemeColor,
-  buttonSizeStyles,
-  flexAlignClasses,
-  buttonSolidColorClasses,
+  flexAlignClasses
+} from '../types/ui/global.types'
+import {
+  ButtonVariant,
   buttonOutlineColorClasses,
   buttonGhostColorClasses,
-  buttonFocusRingClasses
-} from '../types/ui'
-
-interface ButtonProps {
-  size?: Size
-  align?: Align
-  color?: ThemeColor
-  variant?: ButtonVariant
-  onClick?: () => void
-  disabled?: boolean
-  type?: 'button' | 'submit' | 'reset'
-  children: React.ReactNode
-  className?: string
-  id?: string
-}
+  buttonSolidColorClasses,
+  buttonSizeStyles,
+  buttonFocusRingClasses,
+  ButtonProps
+} from '@shared/types'
 
 export const Button: React.FC<ButtonProps> = ({
   size = 'medio',

@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
@@ -8,18 +7,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Cores dinâmicas usando CSS variables
-        'theme-primary': 'var(--color-primary)',
-        'theme-secondary': 'var(--color-secondary)',
-        'theme-accent': 'var(--color-accent)',
-        'theme-background': 'var(--color-background)',
-        'theme-surface': 'var(--color-surface)',
-        'theme-text': 'var(--color-text)',
-        'theme-text-secondary': 'var(--color-textSecondary)',
-        'theme-border': 'var(--color-border)',
-        'theme-error': 'var(--color-error)',
-        'theme-success': 'var(--color-success)',
-        'theme-warning': 'var(--color-warning)',
+        // Cores com suporte a alpha
+        'theme-primary': 'rgb(var(--color-primary) / <alpha-value>)',
+        'theme-secondary': 'rgb(var(--color-secondary) / <alpha-value>)',
+        'theme-accent': 'rgb(var(--color-accent) / <alpha-value>)',
+        'theme-background': 'rgb(var(--color-background) / <alpha-value>)',
+        'theme-surface': 'rgb(var(--color-surface) / <alpha-value>)',
+        'theme-text': 'rgb(var(--color-text) / <alpha-value>)',
+        'theme-text-secondary': 'rgb(var(--color-textSecondary) / <alpha-value>)',
+        'theme-border': 'rgb(var(--color-border) / <alpha-value>)',
+        'theme-error': 'rgb(var(--color-error) / <alpha-value>)',
+        'theme-success': 'rgb(var(--color-success) / <alpha-value>)',
+        'theme-warning': 'rgb(var(--color-warning) / <alpha-value>)',
       },
       transitionProperty: {
         'theme': 'background-color, color, border-color',

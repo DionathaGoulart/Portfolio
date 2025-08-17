@@ -9,7 +9,7 @@ export type ThemeColor =
   | 'secondary'
   | 'accent'
   | 'text'
-  | 'text-secondary'
+  | 'textSecondary'
   | 'error'
   | 'success'
   | 'warning'
@@ -38,12 +38,12 @@ export const alignClasses: Record<Align, string> = {
 
 // Classes de cores do tema
 export const colorClasses: Record<ThemeColor, string> = {
-  primary: 'theme-text-primary',
-  secondary: 'theme-text-secondary',
-  accent: 'theme-text-accent',
-  text: 'theme-text-primary',
-  'text-secondary': 'theme-text-secondary',
-  error: 'theme-text-error',
-  success: 'theme-text-success',
-  warning: 'theme-text-warning'
+  primary: 'text-theme-primary',
+  secondary: 'text-theme-secondary',
+  accent: 'text-theme-accent',
+  text: 'text-theme-text',
+  textSecondary: 'text-theme-text-secondary',
+  error: 'text-theme-error',
+  success: 'text-theme-success',
+  warning: 'text-theme-warning'
 }

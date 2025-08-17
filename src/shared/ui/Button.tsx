@@ -32,45 +32,51 @@ const buttonAlignClasses: Record<Align, string> = {
 }
 
 const solidColorClasses: Record<ThemeColor, string> = {
-  primary: 'bg-theme-primary hover:opacity-90 text-white',
-  secondary: 'bg-theme-secondary hover:opacity-90 text-white',
-  accent: 'bg-theme-accent hover:opacity-90 text-white',
-  text: 'bg-theme-text hover:opacity-90 text-theme-background',
-  'text-secondary': 'bg-theme-text-secondary hover:opacity-90 text-white',
-  error: 'bg-theme-error hover:opacity-90 text-white',
-  success: 'bg-theme-success hover:opacity-90 text-white',
-  warning: 'bg-theme-warning hover:opacity-90 text-white'
+  primary:
+    'bg-theme-primary text-theme-text transform transition hover:scale-105 hover:bg-transparent hover:text-theme-primary hover:border-2  hover:border-theme-primary',
+  secondary:
+    'bg-theme-secondary text-theme-text transform transition hover:scale-105 hover:bg-transparent hover:text-theme-secondary hover:border-2  hover:border-theme-secondary',
+  accent:
+    'bg-theme-accent text-theme-text transform transition hover:scale-105 hover:bg-transparent hover:text-theme-accent hover:border-2  hover:border-theme-accent',
+  error:
+    'bg-theme-error text-theme-text transform transition hover:scale-105 hover:bg-transparent hover:text-theme-error hover:border-2  hover:border-theme-error',
+  success:
+    'bg-theme-success text-theme-text transform transition hover:scale-105 hover:bg-transparent hover:text-theme-success hover:border-2  hover:border-theme-success',
+  text: 'bg-theme-text text-theme-text-secondary transform transition hover:scale-105 hover:bg-transparent hover:text-theme-text hover:border-2  hover:border-theme-text',
+  textSecondary:
+    'bg-theme-text-secondary border-2 border-theme-text text-theme-text transform transition hover:scale-105 hover:bg-theme-text hover:text-theme-text-secondary',
+  warning:
+    'bg-theme-warning text-theme-text transform transition hover:scale-105 hover:bg-transparent hover:text-theme-warning hover:border-2  hover:border-theme-warning'
 }
 
 const outlineColorClasses: Record<ThemeColor, string> = {
   primary:
-    'border-2 border-theme-primary theme-text-primary hover:bg-theme-primary hover:text-white',
+    'border-2 border-theme-primary text-theme-primary transform transition hover:scale-105 hover:bg-theme-primary hover:text-theme-text',
   secondary:
-    'border-2 border-theme-secondary theme-text-secondary hover:bg-theme-secondary hover:text-white',
+    'border-2 border-theme-secondary text-theme-secondary transform transition hover:scale-105 hover:bg-theme-secondary hover:text-theme-text',
   accent:
-    'border-2 border-theme-accent theme-text-accent hover:bg-theme-accent hover:text-white',
-  text: 'border-2 border-theme-text theme-text-primary hover:bg-theme-text hover:text-theme-background',
-  'text-secondary':
-    'border-2 border-theme-text-secondary theme-text-secondary hover:bg-theme-text-secondary hover:text-white',
+    'border-2 border-theme-accent text-theme-accent transform transition hover:scale-105 hover:bg-theme-accent hover:text-theme-text',
+  text: 'border-2 border-theme-text text-theme-text transform transition hover:scale-105 hover:bg-theme-text hover:text-theme-background',
+  textSecondary:
+    'border-2 border-theme-text text-theme-text transform transition hover:scale-105 hover:bg-theme-text hover:text-theme-text-secondary',
   error:
-    'border-2 border-theme-error theme-text-error hover:bg-theme-error hover:text-white',
+    'border-2 border-theme-error text-theme-error hover:bg-theme-error transform transition hover:scale-105 hover:text-theme-text',
   success:
-    'border-2 border-theme-success theme-text-success hover:bg-theme-success hover:text-white',
+    'border-2 border-theme-success text-theme-success hover:bg-theme-success transform transition hover:scale-105 hover:text-theme-text',
   warning:
-    'border-2 border-theme-warning theme-text-warning hover:bg-theme-warning hover:text-white'
+    'border-2 border-theme-warning text-theme-warning hover:bg-theme-warning transform transition hover:scale-105 hover:text-theme-text'
 }
 
 const ghostColorClasses: Record<ThemeColor, string> = {
-  primary: 'theme-text-primary hover:bg-theme-primary hover:bg-opacity-10',
-  secondary:
-    'theme-text-secondary hover:bg-theme-secondary hover:bg-opacity-10',
-  accent: 'theme-text-accent hover:bg-theme-accent hover:bg-opacity-10',
-  text: 'theme-text-primary hover:bg-theme-text hover:bg-opacity-10',
-  'text-secondary':
-    'theme-text-secondary hover:bg-theme-text-secondary hover:bg-opacity-10',
-  error: 'theme-text-error hover:bg-theme-error hover:bg-opacity-10',
-  success: 'theme-text-success hover:bg-theme-success hover:bg-opacity-10',
-  warning: 'theme-text-warning hover:bg-theme-warning hover:bg-opacity-10'
+  primary: 'text-theme-primary hover:bg-theme-primary hover:bg-opacity-10',
+  secondary: 'text-theme-primary hover:bg-theme-secondary hover:bg-opacity-10',
+  accent: 'text-theme-accent hover:bg-theme-accent hover:bg-opacity-10',
+  text: 'text-theme-primary hover:bg-theme-text hover:bg-opacity-10',
+  textSecondary:
+    'text-theme-secondary hover:bg-theme-text-secondary hover:bg-opacity-10',
+  error: 'text-theme-error hover:bg-theme-error hover:bg-opacity-10',
+  success: 'text-theme-success hover:bg-theme-success hover:bg-opacity-10',
+  warning: 'text-theme-warning hover:bg-theme-warning hover:bg-opacity-10'
 }
 
 export const Button: React.FC<ButtonProps> = ({

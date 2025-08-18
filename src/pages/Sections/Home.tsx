@@ -1,15 +1,12 @@
-// HomeSection.tsx
 import { Button } from '@/shared/ui/Button'
 import { GDLogo } from '@/shared/ui/Logo'
-import { Span, P } from '@/shared/ui/Text'
+import { P } from '@/shared/ui/Text'
 import { Title } from '@/shared/ui/Title'
 
-// Adicionar a interface para as props
 interface HomeSectionProps {
-  id?: string // Tornamos o ID opcional, se precisar
+  id?: string
 }
 
-// Atualizar o componente para receber a prop 'id'
 const HomeSection: React.FC<HomeSectionProps> = ({ id = 'inicio' }) => {
   const handleVerTrabalhos = () => {
     console.log('Ver trabalhos clicado')
@@ -20,19 +17,16 @@ const HomeSection: React.FC<HomeSectionProps> = ({ id = 'inicio' }) => {
   }
 
   return (
-    // Usar o ID da prop aqui
-    <section id={id} className="min-h-screen flex items-center py-20">
-      <div className="grid lg:grid-cols-2 gap-12 items-center w-full">
+    <section id={id}>
+      <div className="grid lg:grid-cols-2">
         {/* Lado esquerdo - Textos */}
         <div className="space-y-6">
-          <div className="space-y-2">
-            <Title variant="hero" level="h1" uppercase>
-              dionatha <br />
-              <Title variant="hero" level="h1" element="span" color="primary">
-                goulart
-              </Title>
+          <Title variant="hero" level="h1" uppercase>
+            dionatha <br />
+            <Title variant="hero" level="h1" element="span" color="primary">
+              goulart
             </Title>
-          </div>
+          </Title>
           <Title level="h3" className="font-normal">
             desenvolvedor fullstack
           </Title>

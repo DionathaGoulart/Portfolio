@@ -1,24 +1,32 @@
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { RouteRenderer } from './components/RouteRenderer'
-import { AppRouterProps, RouteConfig, RouteGroup } from '../types/router'
+import { RouteConfig, RouteGroup, FlattenedRouteConfig } from '../types/router'
 
-const processRoutes = (configs: (RouteConfig | RouteGroup)[]) => {
+const processRoutes = (
+  configs: (RouteConfig | RouteGroup)[]
+): FlattenedRouteConfig[] => {
   return configs.flatMap((config) => {
     if ('routes' in config) {
       return config.routes.map((route) => ({
         ...route,
         path: (config.prefix || '') + route.path,
-        layout: route.layout || config.layout
+        layout: config.layout,
+        layoutProps: config.layoutProps
       }))
     }
-    return config
+    return config as FlattenedRouteConfig
   })
+}
+
+interface AppRouterProps {
+  routes: (RouteConfig | RouteGroup)[]
+  fallback?: string
 }
 
 export const AppRouter: React.FC<AppRouterProps> = ({
   routes,
-  fallback = '/404' // Mudança aqui: ao invés de '/', vai para '/404'
+  fallback = '/404'
 }) => {
   const processedRoutes = processRoutes(routes)
 
@@ -28,7 +36,13 @@ export const AppRouter: React.FC<AppRouterProps> = ({
         <Route
           key={route.path}
           path={route.path}
-          element={<RouteRenderer route={route} />}
+          element={
+            <RouteRenderer
+              route={route}
+              layout={route.layout}
+              layoutProps={route.layoutProps}
+            />
+          }
         />
       ))}
       <Route path="*" element={<Navigate to={fallback} replace />} />

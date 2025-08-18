@@ -1,23 +1,26 @@
+import { MainLayout } from '@/shared'
 import { RouteConfig, RouteGroup } from '@core/types/router'
-import { MainLayout } from '@shared'
-
 import { HomePage, NotFoundPage, TestPage } from '@pages'
 
 export const appRoutes: (RouteConfig | RouteGroup)[] = [
   {
     layout: MainLayout,
+    layoutProps: {
+      pageTitle: 'Dionatha',
+      containerSize: 'lg'
+    },
     routes: [
       {
         path: '/',
         element: HomePage,
-        title: 'Home'
-      },
-      {
-        path: '/test',
-        element: TestPage,
-        title: 'Home'
+        title: 'Dionatha'
       }
     ]
+  },
+  {
+    path: '/test',
+    element: TestPage,
+    title: 'Test'
   },
   {
     path: '/404',

@@ -10,7 +10,7 @@ interface HomeSectionProps {
 }
 
 // Atualizar o componente para receber a prop 'id'
-const HomeSection: React.FC<HomeSectionProps> = ({ id = 'inicio' }) => {
+const SobreSection: React.FC<HomeSectionProps> = ({ id = 'inicio' }) => {
   const handleVerTrabalhos = () => {
     console.log('Ver trabalhos clicado')
   }
@@ -68,4 +68,4 @@ const HomeSection: React.FC<HomeSectionProps> = ({ id = 'inicio' }) => {
   )
 }
 
-export default HomeSection
+export default SobreSection

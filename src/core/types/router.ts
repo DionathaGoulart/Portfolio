@@ -1,19 +1,30 @@
-import React from 'react'
+import { ComponentType } from 'react'
+
+export interface PageLayoutSetters {
+  setSections: (sections: any[]) => void
+  setPageTitle: (title: string) => void
+}
 
 export interface RouteConfig {
   path: string
-  element: React.ComponentType
-  layout?: React.ComponentType<{ children: React.ReactNode }>
-  title?: string
+  element: ComponentType<PageLayoutSetters>
+  title: string
+}
+
+export interface FlattenedRouteConfig extends RouteConfig {
+  layout?: ComponentType<any>
+  layoutProps?: Record<string, any>
+}
+
+export interface PageWithLayoutProps {
+  path: string
+  element: ComponentType<PageLayoutSetters>
+  title: string
 }
 
 export interface RouteGroup {
+  layout: ComponentType<any>
+  layoutProps?: Record<string, any>
+  routes: PageWithLayoutProps[]
   prefix?: string
-  layout?: React.ComponentType<{ children: React.ReactNode }>
-  routes: RouteConfig[]
-}
-
-export interface AppRouterProps {
-  routes: (RouteConfig | RouteGroup)[]
-  fallback?: string
 }

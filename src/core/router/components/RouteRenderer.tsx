@@ -1,19 +1,42 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, ComponentType } from 'react'
 import { RouteConfig } from '@/core/types/router'
+import { SectionConfig } from '@/shared'
 
 interface Props {
   route: RouteConfig
+  layout?: ComponentType<any>
+  layoutProps?: Record<string, any>
 }
 
-export const RouteRenderer: React.FC<Props> = ({ route }) => {
-  const { element: Element, layout: Layout, title } = route
+export const RouteRenderer: React.FC<Props> = ({
+  route,
+  layout: Layout,
+  layoutProps = {}
+}) => {
+  const { element: Element, title } = route
 
-  // Define o título da página se especificado
+  const [sections, setSections] = useState<SectionConfig[]>(
+    layoutProps.sections || []
+  )
+  const [pageTitle, setPageTitle] = useState(
+    layoutProps.pageTitle || title || ''
+  )
+
   useEffect(() => {
-    if (title) document.title = title
-  }, [title])
+    if (pageTitle) {
+      document.title = pageTitle
+    }
+  }, [pageTitle])
 
-  const content = <Element />
+  const content = (
+    <Element setSections={setSections} setPageTitle={setPageTitle} />
+  )
 
-  return Layout ? <Layout>{content}</Layout> : content
+  return Layout ? (
+    <Layout {...layoutProps} sections={sections} pageTitle={pageTitle}>
+      {content}
+    </Layout>
+  ) : (
+    content
+  )
 }

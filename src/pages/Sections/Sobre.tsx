@@ -1,61 +1,90 @@
-import { Button } from '@/shared/ui/Button'
-import { GDLogo } from '@/shared/ui/Logo'
-import { P } from '@/shared/ui/Text'
+import React from 'react'
 import { Title } from '@/shared/ui/Title'
+import { Text } from '@/shared/ui/Text'
+import { Card, CardsContainer } from '@/shared/ui/Card'
 
-interface SobreSectionProps {
+// ============================================================================
+// INTERFACE
+// ============================================================================
+
+interface SobreProps {
   id?: string
 }
 
-const SobreSection: React.FC<SobreSectionProps> = ({ id = 'inicio' }) => {
-  const handleVerTrabalhos = () => {
-    console.log('Ver trabalhos clicado')
-  }
+// ============================================================================
+// DADOS DAS TECNOLOGIAS
+// ============================================================================
 
-  const handleContato = () => {
-    console.log('Contato clicado')
-  }
+const tecnologias = [
+  { title: 'React', subtitle: 'Frontend' },
+  { title: 'Node.js', subtitle: 'Backend' },
+  { title: 'TypeScript', subtitle: 'Language' },
+  { title: 'Next.js', subtitle: 'Framework' },
+  { title: 'PostgreSQL', subtitle: 'Database' },
+  { title: 'Docker', subtitle: 'DevOps' }
+]
 
+// ============================================================================
+// COMPONENTE PRINCIPAL
+// ============================================================================
+
+const SobreSection: React.FC<SobreProps> = ({ id = 'sobre' }) => {
   return (
     <section id={id}>
-      <div className="grid lg:grid-cols-2">
-        {/* Lado esquerdo - Textos */}
-        <div className="space-y-6">
-          <Title variant="hero" level="h1" uppercase>
-            dionatha <br />
-            <Title variant="hero" level="h1" element="span" color="primary">
-              goulart
-            </Title>
-          </Title>
-          <Title level="h3" className="font-normal">
-            desenvolvedor fullstack
-          </Title>
-          <P size="grande" className="max-w-lg leading-relaxed">
-            Desenvolvedor apaixonado por criar soluções digitais inovadoras,
-            combinando design elegante com código limpo e funcional.
-          </P>
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <Button
-              variant="solid"
-              size="grande"
-              onClick={handleVerTrabalhos}
-              className="w-full sm:w-auto"
-            >
-              ver trabalhos
-            </Button>
-            <Button
-              variant="outline"
-              size="grande"
-              onClick={handleContato}
-              className="w-full sm:w-auto"
-            >
-              contato
-            </Button>
+      <div className="grid lg:grid-cols-2 gap-16">
+        {/* Coluna esquerda - Texto */}
+        <div className="flex flex-col justify-center space-y-6">
+          <Title level="h2">Sobre Mim</Title>
+
+          <div className="space-y-4">
+            <Text size="medio">
+              Desenvolvedor fullstack apaixonado por tecnologia e inovação, com
+              mais de 5 anos de experiência criando soluções digitais que fazem
+              a diferença.
+            </Text>
+
+            <Text size="medio">
+              Especializado em arquiteturas modernas, sempre buscando as
+              melhores práticas para entregar produtos de alta qualidade.
+              Acredito que o código deve ser elegante, performático e
+              sustentável.
+            </Text>
+
+            <Text size="medio">
+              Quando não estou codando, gosto de contribuir com projetos open
+              source, estudar novas tecnologias e compartilhar conhecimento com
+              a comunidade.
+            </Text>
           </div>
         </div>
-        {/* Lado direito - Logo GD - Oculto no mobile */}
-        <div className="hidden lg:flex justify-end">
-          <GDLogo />
+
+        {/* Coluna direita - Foto e tecnologias */}
+        <div className="space-y-8">
+          {/* Foto */}
+          <div className="flex justify-center">
+            <img
+              src="/path/to/your/photo.jpg"
+              alt="Foto do desenvolvedor"
+              className="w-64 h-64 rounded-xl border-4 border-primary object-cover"
+            />
+          </div>
+
+          {/* Tecnologias */}
+          <div className="space-y-4">
+            <Title level="h3">Principais Tecnologias</Title>
+
+            <CardsContainer type="grid" columns={2} compact={true}>
+              {tecnologias.map((tech, index) => (
+                <Card
+                  key={index}
+                  layout="horizontal"
+                  title={tech.title}
+                  subtitle={tech.subtitle}
+                  size="pequeno"
+                />
+              ))}
+            </CardsContainer>
+          </div>
         </div>
       </div>
     </section>

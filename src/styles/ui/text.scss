@@ -1,0 +1,237 @@
+// ============================================================================
+// TEXT COMPONENT STYLES
+// ============================================================================
+
+// ============================================================================
+// VARIÁVEIS
+// ============================================================================
+$theme-colors:
+  primary, secondary, accent, text, textSecondary, error, success, warning;
+$text-sizes: pequeno, medio, grande;
+$aligns: start, center, end;
+
+// ============================================================================
+// MIXINS
+// ============================================================================
+@mixin text-transition {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+@mixin text-interactive {
+  @include text-transition;
+  @apply cursor-pointer;
+
+  &:hover {
+    @apply opacity-80;
+  }
+
+  &:focus {
+    @apply outline-none ring-2 ring-theme-primary ring-offset-2 rounded;
+  }
+}
+
+// ============================================================================
+// BASE CLASS
+// ============================================================================
+.text {
+  @include text-transition;
+
+  // Estados
+  &--interactive {
+    @include text-interactive;
+  }
+
+  &--disabled {
+    @apply opacity-50 cursor-not-allowed pointer-events-none;
+  }
+}
+
+// ============================================================================
+// ELEMENTOS
+// ============================================================================
+.text {
+  &--p {
+    @apply block;
+  }
+
+  &--span {
+    @apply inline-block w-full;
+  }
+}
+
+// ============================================================================
+// TAMANHOS
+// ============================================================================
+.text {
+  &--pequeno {
+    @apply text-sm leading-relaxed;
+  }
+
+  &--medio {
+    @apply text-base leading-relaxed;
+  }
+
+  &--grande {
+    @apply text-lg leading-relaxed;
+  }
+}
+
+// ============================================================================
+// CORES
+// ============================================================================
+@each $color in $theme-colors {
+  .text--#{$color} {
+    color: rgb(var(--color-#{$color}));
+  }
+}
+
+// ============================================================================
+// ALINHAMENTOS
+// ============================================================================
+.text {
+  &--start {
+    @apply text-left;
+  }
+
+  &--center {
+    @apply text-center;
+  }
+
+  &--end {
+    @apply text-right;
+  }
+}
+
+// ============================================================================
+// PESOS DE FONTE
+// ============================================================================
+.text {
+  &--light {
+    @apply font-light;
+  }
+
+  &--normal {
+    @apply font-normal;
+  }
+
+  &--medium {
+    @apply font-medium;
+  }
+
+  &--semibold {
+    @apply font-semibold;
+  }
+
+  &--bold {
+    @apply font-bold;
+  }
+}
+
+// ============================================================================
+// ESTILOS DE TEXTO
+// ============================================================================
+.text {
+  &--italic {
+    @apply italic;
+  }
+
+  &--underline {
+    @apply underline;
+  }
+
+  &--line-through {
+    @apply line-through;
+  }
+
+  &--uppercase {
+    @apply uppercase;
+  }
+
+  &--lowercase {
+    @apply lowercase;
+  }
+
+  &--capitalize {
+    @apply capitalize;
+  }
+}
+
+// ============================================================================
+// ESPAÇAMENTOS DE LINHA
+// ============================================================================
+.text {
+  &--leading-tight {
+    @apply leading-tight;
+  }
+
+  &--leading-normal {
+    @apply leading-normal;
+  }
+
+  &--leading-relaxed {
+    @apply leading-relaxed;
+  }
+
+  &--leading-loose {
+    @apply leading-loose;
+  }
+}
+
+// ============================================================================
+// COMPORTAMENTOS DE TEXTO
+// ============================================================================
+.text {
+  &--truncate {
+    @apply truncate;
+  }
+
+  &--break-words {
+    @apply break-words;
+  }
+
+  &--break-all {
+    @apply break-all;
+  }
+}
+
+// ============================================================================
+// MODIFICADORES VISUAIS
+// ============================================================================
+.text {
+  &--highlight {
+    @apply bg-theme-accent/20 px-1 rounded;
+  }
+
+  &--code {
+    @apply font-mono text-sm bg-theme-surface px-1.5 py-0.5 rounded border;
+  }
+
+  &--gradient {
+    @apply bg-gradient-to-r from-theme-primary to-theme-accent bg-clip-text text-transparent;
+  }
+
+  &--shadow {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  &--shadow-strong {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// ============================================================================
+// VARIANTES RESPONSIVAS
+// ============================================================================
+.text {
+  &--responsive-small {
+    @apply text-sm md:text-base lg:text-lg;
+  }
+
+  &--responsive-medium {
+    @apply text-base md:text-lg lg:text-xl;
+  }
+
+  &--responsive-large {
+    @apply text-lg md:text-xl lg:text-2xl;
+  }
+}

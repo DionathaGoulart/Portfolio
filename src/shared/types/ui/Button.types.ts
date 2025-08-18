@@ -1,79 +1,38 @@
-import { Align, Size, ThemeColor } from '@shared/types'
+import { ReactNode } from 'react'
+import { Align, ColorVariant, Size } from './global.types'
 
 // ============================================================================
-// TYPES ESPECÍFICOS DO BUTTON
+// TYPES BASE
 // ============================================================================
 
 export type ButtonVariant = 'solid' | 'outline' | 'ghost'
+export type ButtonType = 'button' | 'submit' | 'reset'
 
+// ============================================================================
+// INTERFACE PRINCIPAL
+// ============================================================================
 export interface ButtonProps {
+  // Conteúdo
+  children: ReactNode
+
+  // Aparência
   size?: Size
-  align?: Align
-  color?: ThemeColor
+  color?: ColorVariant
   variant?: ButtonVariant
+
+  // Layout
+  align?: Align
+
+  // Funcionalidade
   onClick?: () => void
+  type?: ButtonType
   disabled?: boolean
-  type?: 'button' | 'submit' | 'reset'
-  children: React.ReactNode
+  loading?: boolean
+
+  // Elementos adicionais
+  icon?: ReactNode
+
+  // HTML attributes
   className?: string
   id?: string
-  loading?: boolean
-  icon?: React.ReactNode
-}
-
-// ============================================================================
-// ESTILOS ESPECÍFICOS DO BUTTON
-// ============================================================================
-
-// Tamanhos específicos do botão (padding diferente dos textos globais)
-const buttonSizeClasses: Record<Size, string> = {
-  pequeno: 'px-3 py-1.5 text-xs sm:text-sm',
-  medio: 'px-4 py-2 text-sm sm:text-base',
-  grande: 'px-6 py-3 text-base sm:text-lg'
-}
-
-// Classes de alinhamento do container do botão
-const buttonContainerClasses: Record<Align, string> = {
-  start: 'btn-container-start',
-  center: 'btn-container-center',
-  end: 'btn-container-end'
-}
-
-// ============================================================================
-// UTILITÁRIOS ESPECÍFICOS DO BUTTON
-// ============================================================================
-
-// Função para gerar classe de cor baseada na variante
-const getButtonColorClass = (
-  variant: ButtonVariant,
-  color: ThemeColor
-): string => {
-  return `btn-${variant}-${color}`
-}
-
-// Função para gerar todas as classes do botão
-export const getButtonClasses = (
-  size: Size = 'medio',
-  variant: ButtonVariant = 'solid',
-  color: ThemeColor = 'primary',
-  disabled: boolean = false,
-  loading: boolean = false,
-  hasIcon: boolean = false,
-  customClassName: string = ''
-): string => {
-  const classes = [
-    'btn-base',
-    buttonSizeClasses[size],
-    getButtonColorClass(variant, color),
-    loading && 'btn-loading',
-    hasIcon && 'btn-with-icon',
-    customClassName
-  ].filter(Boolean)
-
-  return classes.join(' ')
-}
-
-// Função para gerar classes do container
-export const getButtonContainerClasses = (align: Align = 'start'): string => {
-  return `btn-container ${buttonContainerClasses[align]}`
 }

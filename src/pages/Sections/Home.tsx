@@ -19,9 +19,9 @@ const HomeSection: React.FC = () => {
           {/* Lado esquerdo - Textos */}
           <div className="space-y-6">
             <div className="space-y-2">
-              <Title level="h1" className="leading-tight" uppercase>
+              <Title variant="hero" level="h1" uppercase>
                 dionatha <br />
-                <Title level="h1" element="span" color="primary">
+                <Title variant="hero" level="h1" element="span" color="primary">
                   goulart
                 </Title>
               </Title>

@@ -1,5 +1,16 @@
 import React from 'react'
-import { TagProps, getTagClasses } from '@shared/types'
+import {
+  TagProps,
+  TagGroupProps,
+  StatusTagProps,
+  buildTagClasses,
+  buildTagGroupClasses,
+  buildStatusTagClasses
+} from '@shared/types'
+
+// ============================================================================
+// MAIN TAG COMPONENT
+// ============================================================================
 
 export const Tag: React.FC<TagProps> = ({
   children,
@@ -8,24 +19,25 @@ export const Tag: React.FC<TagProps> = ({
   variant = 'solid',
   className = '',
   onClick,
+  interactive = false,
   disabled = false,
   icon,
   removable = false,
   onRemove,
-  badge,
-  interactive = false
+  badge
 }) => {
-  const tagClasses = getTagClasses(
+  const tagClasses = buildTagClasses({
     color,
     size,
     variant,
     onClick,
-    disabled,
     interactive,
+    disabled,
     icon,
     removable,
+    badge,
     className
-  )
+  })
 
   const handleClick = (e: React.MouseEvent) => {
     if (!disabled && onClick) {
@@ -56,19 +68,20 @@ export const Tag: React.FC<TagProps> = ({
     }
   }
 
+  const isInteractive = onClick || interactive
+  const needsKeyHandler = isInteractive || removable
+
   return (
     <span
-      className={`${tagClasses} ${badge ? 'tag-with-badge' : ''}`}
-      onClick={onClick || interactive ? handleClick : undefined}
-      onKeyDown={
-        onClick || interactive || removable ? handleKeyDown : undefined
-      }
-      tabIndex={(onClick || interactive) && !disabled ? 0 : undefined}
-      role={onClick || interactive ? 'button' : undefined}
+      className={tagClasses}
+      onClick={isInteractive ? handleClick : undefined}
+      onKeyDown={needsKeyHandler ? handleKeyDown : undefined}
+      tabIndex={isInteractive && !disabled ? 0 : undefined}
+      role={isInteractive ? 'button' : undefined}
       aria-disabled={disabled}
     >
       {/* Ícone */}
-      {icon && <span className="icon">{icon}</span>}
+      {icon && <span className="tag--with-icon__icon">{icon}</span>}
 
       {/* Conteúdo */}
       {children}
@@ -77,17 +90,45 @@ export const Tag: React.FC<TagProps> = ({
       {removable && onRemove && (
         <button
           type="button"
-          className="remove-btn"
+          className="tag--removable__remove-btn"
           onClick={handleRemove}
           disabled={disabled}
           aria-label="Remover tag"
         >
-          <span className="icon">×</span>
+          <span className="tag--removable__remove-btn-icon">×</span>
         </button>
       )}
 
       {/* Badge */}
-      {badge && <span className="badge">{badge}</span>}
+      {badge && <span className="tag--with-badge__badge">{badge}</span>}
     </span>
   )
+}
+
+// ============================================================================
+// TAG GROUP COMPONENT
+// ============================================================================
+
+export const TagGroup: React.FC<TagGroupProps> = ({
+  children,
+  compact = false,
+  className = ''
+}) => {
+  const groupClasses = buildTagGroupClasses({ compact, className })
+
+  return <div className={groupClasses}>{children}</div>
+}
+
+// ============================================================================
+// STATUS TAG COMPONENT
+// ============================================================================
+
+export const StatusTag: React.FC<StatusTagProps> = ({
+  status,
+  children,
+  className = ''
+}) => {
+  const statusClasses = buildStatusTagClasses({ status, className })
+
+  return <span className={statusClasses}>{children}</span>
 }

@@ -1,13 +1,8 @@
-import {
-  Align,
-  Size,
-  ColorVariant,
-  TitleLevel,
-  colorVariants
-} from './global.types'
+import { Align, Size, ColorVariant } from './global.types'
+import { TitleLevel } from './Title.types'
 
 // ============================================================================
-// TYPES ESPECÍFICOS DO CARD
+// CARD TYPES
 // ============================================================================
 
 export type CardLayout = 'horizontal' | 'with-icon' | 'varied'
@@ -16,161 +11,128 @@ export interface CardProps {
   layout: CardLayout
   title: string
   subtitle?: string
-  align?: Align
-  className?: string
-  onClick?: () => void
-  size?: Size
+  description?: string
   icon?: React.ReactNode
   date?: string
-  description?: string
   tags?: string[]
   children?: React.ReactNode
+
+  // Styling
   color?: ColorVariant
   borderColor?: ColorVariant
+  size?: Size
+  align?: Align
+
+  // States
   disabled?: boolean
   loading?: boolean
   elevated?: boolean
   compact?: boolean
+
+  // Behavior
+  onClick?: () => void
+  className?: string
 }
 
 // ============================================================================
-// ESTILOS ESPECÍFICOS DO CARD
+// SIZE CONFIG FOR HORIZONTAL CARDS
 // ============================================================================
 
-// Classes de alinhamento específicas para cards
-const cardAlignClasses: Record<Align, string> = {
-  start: 'card-align-start',
-  center: 'card-align-center',
-  end: 'card-align-end'
+export interface CardHorizontalConfig {
+  titleLevel: TitleLevel
+  subtitleSize: Size
 }
 
-// Classes de layout
-const cardLayoutClasses: Record<CardLayout, string> = {
-  horizontal: 'card-layout-horizontal',
-  'with-icon': 'card-layout-with-icon',
-  varied: 'card-layout-varied'
-}
-
-// Classes de tamanho para layout horizontal
-const cardHorizontalSizeClasses: Record<Size, string> = {
-  pequeno: 'card-horizontal-pequeno',
-  medio: 'card-horizontal-medio',
-  grande: 'card-horizontal-grande'
-}
-
-// Reutiliza as cores globais para cards
-export const cardColorVariants = colorVariants
-
-// Configurações específicas para cards horizontais (para uso no React)
-export const cardHorizontalSizeStyles: Record<
-  Size,
-  {
-    container: string
-    titleLevel: TitleLevel
-    subtitleSize: Size
-    padding: string
-  }
-> = {
+export const CARD_HORIZONTAL_CONFIGS: Record<Size, CardHorizontalConfig> = {
   pequeno: {
-    container: 'min-h-12 sm:min-h-16',
     titleLevel: 'h5',
-    subtitleSize: 'pequeno',
-    padding: 'p-2 sm:p-3'
+    subtitleSize: 'pequeno'
   },
   medio: {
-    container: 'min-h-16 sm:min-h-20',
     titleLevel: 'h4',
-    subtitleSize: 'pequeno',
-    padding: 'p-3 sm:p-4'
+    subtitleSize: 'pequeno'
   },
   grande: {
-    container: 'min-h-20 sm:min-h-24',
     titleLevel: 'h3',
-    subtitleSize: 'medio',
-    padding: 'p-4 sm:p-5'
+    subtitleSize: 'medio'
   }
 }
 
 // ============================================================================
-// UTILITÁRIOS ESPECÍFICOS DO CARD
+// CONTAINER TYPES
 // ============================================================================
 
-// Função para gerar classe de cor baseada no layout
-const getCardColorClass = (layout: CardLayout, color: ColorVariant): string => {
-  return `card-${color}-${layout}`
+export interface CardsContainerProps {
+  type?: 'grid' | 'list'
+  columns?: 1 | 2 | 3 | 4
+  compact?: boolean
+  className?: string
+  children: React.ReactNode
 }
 
-// Função para gerar classe de tamanho para horizontal
-const getCardSizeClass = (layout: CardLayout, size: Size): string => {
-  if (layout === 'horizontal') {
-    return cardHorizontalSizeClasses[size]
-  }
-  return '' // outros layouts não precisam de classe de tamanho específica
-}
+// ============================================================================
+// CLASS BUILDERS (integrados no types)
+// ============================================================================
 
-// Função para gerar classes de borda customizada
-const getCardBorderClass = (borderColor?: ColorVariant): string => {
-  return borderColor ? `card-border-${borderColor}` : ''
-}
-
-// Função para gerar todas as classes do card
-export const getCardClasses = (
-  layout: CardLayout = 'horizontal',
-  color: ColorVariant = 'default',
-  size: Size = 'medio',
-  align: Align = 'start',
-  onClick?: () => void,
-  disabled: boolean = false,
-  loading: boolean = false,
-  elevated: boolean = false,
-  compact: boolean = false,
-  borderColor?: ColorVariant,
-  customClassName: string = ''
-): string => {
+export const buildCardClasses = ({
+  layout = 'horizontal',
+  color = 'default',
+  size = 'medio',
+  align = 'start',
+  onClick,
+  disabled = false,
+  loading = false,
+  elevated = false,
+  compact = false,
+  borderColor,
+  className = ''
+}: Partial<CardProps>): string => {
   const classes = [
-    // Classe base
-    'card-base',
+    // Base
+    'card',
 
-    // Layout e cor
-    getCardColorClass(layout, color),
+    // Layout
+    `card--${layout}`,
 
-    // Tamanho (apenas para horizontal)
-    getCardSizeClass(layout, size),
+    // Color
+    `card--${color}`,
 
-    // Alinhamento
-    cardAlignClasses[align],
+    // Size (apenas para horizontal)
+    layout === 'horizontal' && `card--${size}`,
 
-    // Estados
-    onClick && !disabled && 'card-clickable',
-    disabled && 'card-disabled',
-    loading && 'card-loading',
-    elevated && 'card-elevated',
-    compact && 'card-compact',
+    // Alignment
+    `card--align-${align}`,
 
-    // Borda customizada
-    getCardBorderClass(borderColor),
+    // States
+    onClick && !disabled && 'card--clickable',
+    disabled && 'card--disabled',
+    loading && 'card--loading',
+    elevated && 'card--elevated',
+    compact && 'card--compact',
 
-    // Classe customizada
-    customClassName
+    // Border color
+    borderColor && `card--border-${borderColor}`,
+
+    // Custom
+    className
   ].filter(Boolean)
 
   return classes.join(' ')
 }
 
-// Função para gerar classes específicas do alinhamento (para uso direto)
-export const getCardAlignClasses = (align: Align = 'start'): string => {
-  return cardAlignClasses[align]
-}
-
-// Função para gerar classes de container/grid de cards
-export const getCardsContainerClasses = (
-  type: 'grid' | 'list' = 'grid',
-  columns: 1 | 2 | 3 | 4 = 2,
-  compact: boolean = false
-): string => {
+export const buildCardsContainerClasses = ({
+  type = 'grid',
+  columns = 2,
+  compact = false,
+  className = ''
+}: Partial<CardsContainerProps>): string => {
   if (type === 'list') {
-    return compact ? 'cards-list-compact' : 'cards-list'
+    return [compact ? 'cards-list--compact' : 'cards-list', className]
+      .filter(Boolean)
+      .join(' ')
   }
 
-  return `cards-grid cards-grid-${columns}`
+  return ['cards-grid', `cards-grid--${columns}`, className]
+    .filter(Boolean)
+    .join(' ')
 }

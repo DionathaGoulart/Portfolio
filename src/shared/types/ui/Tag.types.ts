@@ -1,124 +1,117 @@
-import { Size, ThemeColor, colorVariants } from './global.types'
+import { Size, ColorVariant } from './global.types'
 
 // ============================================================================
-// TYPES ESPECÍFICOS DO TAG
+// TAG TYPES
 // ============================================================================
 
 export type TagVariant = 'solid' | 'outline' | 'ghost'
+export type TagStatus = 'online' | 'offline' | 'pending'
 
 export interface TagProps {
   children: React.ReactNode
-  color?: ThemeColor
+  color?: ColorVariant
   size?: Size
   variant?: TagVariant
   className?: string
+
+  // Behavior
   onClick?: () => void
+  interactive?: boolean
   disabled?: boolean
+
+  // Features
   icon?: React.ReactNode
   removable?: boolean
   onRemove?: () => void
   badge?: string | number
-  interactive?: boolean
 }
 
 // ============================================================================
-// ESTILOS ESPECÍFICOS DO TAG
+// CONTAINER TYPES
 // ============================================================================
 
-// Tamanhos específicos para tags
-const tagSizeClasses: Record<Size, string> = {
-  pequeno: 'tag-size-pequeno',
-  medio: 'tag-size-medio',
-  grande: 'tag-size-grande'
-}
-
-// Reutiliza as cores globais para tags (para compatibilidade)
-export const tagColorClasses: Record<ThemeColor, string> = {
-  primary: `${colorVariants.primary.background} ${colorVariants.primary.text}`,
-  secondary: `${colorVariants.secondary.background} ${colorVariants.secondary.text}`,
-  accent: `${colorVariants.accent.background} ${colorVariants.accent.text}`,
-  text: `${colorVariants.text.background} ${colorVariants.text.text}`,
-  textSecondary: `${colorVariants.textSecondary.background} ${colorVariants.textSecondary.text}`,
-  error: `${colorVariants.error.background} ${colorVariants.error.text}`,
-  success: `${colorVariants.success.background} ${colorVariants.success.text}`,
-  warning: `${colorVariants.warning.background} ${colorVariants.warning.text}`
-}
-
-// Estilos de tamanho para compatibilidade
-export const tagSizeStyles: Record<Size, string> = {
-  pequeno: 'text-xs px-2 py-0.5',
-  medio: 'text-sm px-3 py-1',
-  grande: 'text-base px-4 py-1.5'
+export interface TagGroupProps {
+  children: React.ReactNode
+  compact?: boolean
+  className?: string
 }
 
 // ============================================================================
-// UTILITÁRIOS ESPECÍFICOS DO TAG
+// STATUS TAG PROPS
 // ============================================================================
 
-// Função para gerar classe de cor baseada na variante
-const getTagColorClass = (variant: TagVariant, color: ThemeColor): string => {
-  return `tag-${variant}-${color}`
+export interface StatusTagProps {
+  status: TagStatus
+  children: React.ReactNode
+  className?: string
 }
 
-// Função para gerar classe de tamanho
-const getTagSizeClass = (size: Size): string => {
-  return tagSizeClasses[size]
-}
+// ============================================================================
+// CLASS BUILDERS
+// ============================================================================
 
-// Função para gerar todas as classes da tag
-export const getTagClasses = (
-  color: ThemeColor = 'primary',
-  size: Size = 'medio',
-  variant: TagVariant = 'solid',
-  onClick?: () => void,
-  disabled: boolean = false,
-  interactive: boolean = false,
-  icon?: React.ReactNode,
-  removable: boolean = false,
-  customClassName: string = ''
-): string => {
+export const buildTagClasses = ({
+  color = 'primary',
+  size = 'medio',
+  variant = 'solid',
+  onClick,
+  interactive = false,
+  disabled = false,
+  icon,
+  removable = false,
+  badge,
+  className = ''
+}: Partial<TagProps>): string => {
+  const sizeMap = {
+    pequeno: 'small',
+    medio: 'medium',
+    grande: 'large'
+  }
+
   const classes = [
-    // Classe base
-    'tag-base',
+    // Base
+    'tag',
 
-    // Tamanho
-    getTagSizeClass(size),
+    // Size
+    `tag--${sizeMap[size || 'medio']}`,
 
-    // Cor e variante
-    getTagColorClass(variant, color),
+    // Color + Variant
+    `tag--${variant}-${color}`,
 
-    // Estados
-    (onClick || interactive) && !disabled && 'tag-interactive',
-    disabled && 'tag-disabled',
+    // States
+    (onClick || interactive) && !disabled && 'tag--interactive',
+    disabled && 'tag--disabled',
 
-    // Modificadores
-    icon && 'tag-with-icon',
-    removable && 'tag-removable',
+    // Features
+    icon && 'tag--with-icon',
+    removable && 'tag--removable',
+    badge && 'tag--with-badge',
 
-    // Classe customizada
-    customClassName
+    // Custom
+    className
   ].filter(Boolean)
 
   return classes.join(' ')
 }
 
-// Função para gerar classes de container/grupo de tags
-export const getTagGroupClasses = (compact: boolean = false): string => {
-  return compact ? 'tag-group tag-group-compact' : 'tag-group'
+export const buildTagGroupClasses = ({
+  compact = false,
+  className = ''
+}: Partial<TagGroupProps>): string => {
+  const classes = [
+    'tag-group',
+    compact && 'tag-group--compact',
+    className
+  ].filter(Boolean)
+
+  return classes.join(' ')
 }
 
-// Tipos e utilitários para tags de status
-export type TagStatus = 'online' | 'offline' | 'pending'
-
-export const getTagStatusClass = (status: TagStatus): string => {
-  return `tag-status-${status}`
-}
-
-// Função para gerar classe composta (para compatibilidade com o padrão atual)
-export const getTagComposedClass = (
-  color: ThemeColor = 'primary',
-  variant: TagVariant = 'solid',
-  size: Size = 'medio'
-): string => {
-  return `tag-${color}-${variant}-${size}`
+export const buildStatusTagClasses = ({
+  status,
+  className = ''
+}: Partial<StatusTagProps>): string => {
+  // Altere de StatusTagProps para Partial<StatusTagProps>
+  const classes = [`tag--status-${status}`, className].filter(Boolean)
+  return classes.join(' ')
 }

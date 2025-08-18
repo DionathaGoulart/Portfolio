@@ -1,0 +1,215 @@
+// ============================================================================
+// TITLE COMPONENT STYLES
+// ============================================================================
+
+// ============================================================================
+// VARIÁVEIS
+// ============================================================================
+$theme-colors:
+  primary, secondary, accent, text, textSecondary, error, success, warning;
+$title-levels: h1, h2, h3, h4, h5, h6;
+$font-weights: normal, medium, semibold, bold;
+$aligns: start, center, end;
+
+// ============================================================================
+// MIXINS
+// ============================================================================
+@mixin title-transition {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+@mixin title-interactive {
+  @include title-transition;
+  @apply cursor-pointer;
+
+  &:hover {
+    @apply opacity-80;
+  }
+
+  &:focus {
+    @apply outline-none ring-2 ring-theme-primary ring-offset-2 rounded;
+  }
+}
+
+// ============================================================================
+// BASE CLASS
+// ============================================================================
+.title {
+  @include title-transition;
+
+  // Estados
+  &--interactive {
+    @include title-interactive;
+  }
+
+  &--disabled {
+    @apply opacity-50 cursor-not-allowed pointer-events-none;
+  }
+
+  &--uppercase {
+    @apply uppercase;
+  }
+
+  // Modificadores de estilo
+  &--italic {
+    @apply italic;
+  }
+
+  &--underline {
+    @apply underline;
+  }
+
+  &--line-through {
+    @apply line-through;
+  }
+
+  &--gradient {
+    @apply bg-gradient-to-r from-theme-primary to-theme-accent bg-clip-text text-transparent;
+  }
+
+  &--shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  &--shadow-strong {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  &--underlined {
+    @apply border-b-2 border-theme-primary pb-2;
+  }
+
+  &--highlighted {
+    @apply bg-theme-primary/10 px-4 py-2 rounded;
+  }
+
+  // Layout com ícone/badge
+  &--with-icon {
+    @apply flex items-center gap-2;
+
+    .title__icon {
+      @apply flex-shrink-0;
+    }
+  }
+
+  &--with-badge {
+    @apply relative;
+
+    .title__badge {
+      @apply absolute -top-2 -right-2 min-w-5 h-5 flex items-center justify-center;
+      @apply text-xs rounded-full bg-theme-error text-white px-1;
+    }
+  }
+}
+
+// ============================================================================
+// NÍVEIS (SIZES)
+// ============================================================================
+.title {
+  &--h1 {
+    @apply text-4xl sm:text-5xl md:text-6xl leading-tight;
+  }
+
+  &--h2 {
+    @apply text-3xl sm:text-4xl md:text-5xl leading-tight;
+  }
+
+  &--h3 {
+    @apply text-2xl sm:text-3xl md:text-4xl leading-snug;
+  }
+
+  &--h4 {
+    @apply text-xl sm:text-2xl md:text-3xl leading-snug;
+  }
+
+  &--h5 {
+    @apply text-lg sm:text-xl md:text-2xl leading-normal;
+  }
+
+  &--h6 {
+    @apply text-base sm:text-lg md:text-xl leading-normal;
+  }
+}
+
+// ============================================================================
+// VARIANTES ESPECIAIS
+// ============================================================================
+.title {
+  &--hero {
+    @apply text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-none;
+  }
+
+  &--display {
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight;
+  }
+
+  &--section {
+    @apply text-2xl sm:text-3xl md:text-4xl leading-snug;
+  }
+
+  &--subsection {
+    @apply text-xl sm:text-2xl md:text-3xl leading-normal;
+  }
+}
+
+// ============================================================================
+// CORES
+// ============================================================================
+@each $color in $theme-colors {
+  .title--#{$color} {
+    color: rgb(var(--color-#{$color}));
+  }
+}
+
+// ============================================================================
+// PESOS DE FONTE
+// ============================================================================
+.title {
+  &--normal {
+    @apply font-normal;
+  }
+
+  &--medium {
+    @apply font-medium;
+  }
+
+  &--semibold {
+    @apply font-semibold;
+  }
+
+  &--bold {
+    @apply font-bold;
+  }
+}
+
+// ============================================================================
+// ALINHAMENTOS
+// ============================================================================
+.title {
+  &--start {
+    @apply text-left;
+  }
+
+  &--center {
+    @apply text-center;
+  }
+
+  &--end {
+    @apply text-right;
+  }
+}
+
+// ============================================================================
+// GRUPO DE TÍTULOS
+// ============================================================================
+.title-group {
+  @apply space-y-2;
+
+  .title-group__main {
+    @apply mb-1;
+  }
+
+  .title-group__subtitle {
+    @apply text-theme-textSecondary;
+  }
+}

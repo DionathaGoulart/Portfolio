@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { SectionConfig } from '@/shared'
+
 import HomeSection from './Sections/Home'
 import SobreSection from './Sections/Sobre'
+import { useSectionTracking } from '@/features/Analytics/hooks/useAnalytics'
 
 interface HomePageProps {
   setSections: (sections: SectionConfig[]) => void
@@ -15,6 +17,9 @@ export function HomePage({ setSections, setPageTitle }: HomePageProps) {
     { id: 'meus-projetos', label: 'Projetos' },
     { id: 'fale-comigo', label: 'Contato' }
   ]
+
+  // TRACKING: Ativar tracking automático das seções
+  useSectionTracking(homePageSections)
 
   useEffect(() => {
     setSections(homePageSections)

@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react' // Importe o 'useRef'
+import React, { useState, useEffect, useRef } from 'react'
 import { SectionConfig, useTheme } from '@shared'
+import { analytics } from '@/features/Analytics/utils/analytics'
 
 interface HeaderProps {
   containerSize: 'sm' | 'md' | 'lg' | 'xl' | 'full'
@@ -20,7 +21,6 @@ const Header: React.FC<HeaderProps> = ({
   const [headerHeight, setHeaderHeight] = useState(0)
 
   const isScrolling = useRef(false)
-
   const navLinks = sections
 
   // Define a primeira section como ativa por padrão
@@ -39,6 +39,9 @@ const Header: React.FC<HeaderProps> = ({
 
       if (activeSectionLabel) {
         document.title = `${pageTitle} | ${activeSectionLabel}`
+
+        // TRACKING: Atualizar page view virtual quando a seção ativa muda
+        analytics.trackSectionView(activeSection, activeSectionLabel)
       }
     } else if (pageTitle) {
       document.title = pageTitle
@@ -104,6 +107,16 @@ const Header: React.FC<HeaderProps> = ({
     // 2. ATIVA O SINALIZADOR DE ROLAGEM MANUAL
     isScrolling.current = true
 
+    // TRACKING: Rastrear clique na navegação
+    const section = sections.find((s) => s.id === id)
+    if (section) {
+      analytics.trackEvent({
+        action: 'navigation_click',
+        category: 'engagement',
+        label: `nav_${id}`
+      })
+    }
+
     // 3. ROLA A PÁGINA
     const el = document.getElementById(id)
     if (el) {
@@ -124,11 +137,25 @@ const Header: React.FC<HeaderProps> = ({
   }
 
   const handleLogoClick = () => {
+    // TRACKING: Rastrear clique no logo
+    analytics.trackButtonClick('logo', 'header')
+
     if (navLinks.length > 0) {
       handleScrollTo(navLinks[0].id)
     } else {
       window.location.href = '/'
     }
+  }
+
+  const handleThemeToggle = () => {
+    // TRACKING: Rastrear mudança de tema
+    analytics.trackEvent({
+      action: 'theme_toggle',
+      category: 'engagement',
+      label: theme === 'light' ? 'to_dark' : 'to_light'
+    })
+
+    toggleTheme()
   }
 
   return (
@@ -167,7 +194,7 @@ const Header: React.FC<HeaderProps> = ({
           {/* Controls */}
           <div className="flex items-center space-x-2">
             <button
-              onClick={toggleTheme}
+              onClick={handleThemeToggle}
               className="p-2 theme-text-primary hover:theme-text-primary transition-colors"
               aria-label="Alternar tema"
             >
@@ -177,7 +204,17 @@ const Header: React.FC<HeaderProps> = ({
             {/* Mobile Menu Button */}
             {navLinks.length > 0 && (
               <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                onClick={() => {
+                  const newState = !isMobileMenuOpen
+                  setIsMobileMenuOpen(newState)
+
+                  // TRACKING: Rastrear abertura/fechamento do menu mobile
+                  analytics.trackEvent({
+                    action: 'mobile_menu_toggle',
+                    category: 'engagement',
+                    label: newState ? 'open' : 'close'
+                  })
+                }}
                 className="md:hidden p-2 theme-text-primary hover:theme-text-primary"
                 aria-label="Menu"
               >

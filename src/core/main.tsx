@@ -4,6 +4,10 @@ import App from './App'
 import { ThemeProvider } from '@/shared/contexts/ThemeContext'
 
 import '@styles/index'
+import { analytics } from '@/features/Analytics/utils/analytics'
+
+// Inicializar o GA o mais cedo possível
+analytics.init()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

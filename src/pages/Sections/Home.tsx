@@ -1,3 +1,4 @@
+import { analytics } from '@/features/Analytics/utils/analytics'
 import { Button } from '@/shared/ui/Button'
 import { GDLogo } from '@/shared/ui/Logo'
 import { P } from '@/shared/ui/Text'
@@ -9,10 +10,28 @@ interface HomeSectionProps {
 
 const HomeSection: React.FC<HomeSectionProps> = ({ id = 'inicio' }) => {
   const handleVerTrabalhos = () => {
+    // TRACKING: Rastrear clique no botão "Ver Trabalhos"
+    analytics.trackButtonClick('ver_trabalhos', 'home_section')
+
+    // Rolar para a seção de projetos
+    const projectsSection = document.getElementById('meus-projetos')
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth' })
+    }
+
     console.log('Ver trabalhos clicado')
   }
 
   const handleContato = () => {
+    // TRACKING: Rastrear clique no botão "Contato"
+    analytics.trackButtonClick('contato', 'home_section')
+
+    // Rolar para a seção de contato
+    const contactSection = document.getElementById('fale-comigo')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+
     console.log('Contato clicado')
   }
 

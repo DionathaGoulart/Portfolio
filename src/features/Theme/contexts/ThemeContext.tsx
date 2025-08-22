@@ -1,7 +1,11 @@
 import { createContext, ReactNode, useContext } from 'react'
-import { Theme, ThemeContextType } from '@shared'
-import { themes } from '@shared'
-import { useSystemTheme, useThemeDetection, useThemePersistence } from '@shared'
+import { Theme, ThemeContextType } from '@features/Theme'
+import { themes } from '@features/Theme'
+import {
+  useSystemTheme,
+  useThemeDetection,
+  useThemePersistence
+} from '@features/Theme'
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 

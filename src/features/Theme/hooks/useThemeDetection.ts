@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Theme } from '@/shared'
+import { Theme } from '@features/Theme'
 
 const THEME_STORAGE_KEY = 'app-theme'
 

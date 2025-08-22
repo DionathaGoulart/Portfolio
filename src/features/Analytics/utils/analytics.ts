@@ -50,9 +50,6 @@ class GoogleAnalytics {
 
   init() {
     if (!this.isEnabled) {
-      console.log(
-        'GA não inicializado (desenvolvimento ou measurementId inválido)'
-      )
       return
     }
 
@@ -72,13 +69,10 @@ class GoogleAnalytics {
       page_location: window.location.href,
       send_page_view: true
     })
-
-    console.log('Google Analytics inicializado:', this.measurementId)
   }
 
   trackPageView(pageData: GAPageView) {
     if (!this.isEnabled) {
-      console.log('GA PageView (dev):', pageData)
       return
     }
 
@@ -91,7 +85,6 @@ class GoogleAnalytics {
 
   trackEvent(event: GAEvent) {
     if (!this.isEnabled) {
-      console.log('GA Event (dev):', event)
       return
     }
 

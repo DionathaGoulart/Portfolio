@@ -1,4 +1,4 @@
-import { Theme } from '@shared'
+import { Theme } from '@features/Theme'
 
 export const themeUtils = {
   // Gera classes CSS dinâmicas

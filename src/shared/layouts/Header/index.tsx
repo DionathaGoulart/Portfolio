@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { SectionConfig, useTheme } from '@shared'
+
 import { analytics } from '@/features/Analytics/utils/analytics'
+import { SectionConfig } from '@/shared'
+import { useTheme } from '@/features/Theme'
 
 interface HeaderProps {
   containerSize: 'sm' | 'md' | 'lg' | 'xl' | 'full'

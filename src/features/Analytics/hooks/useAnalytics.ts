@@ -54,7 +54,7 @@ export const useSectionTracking = (
         })
       },
       {
-        rootMargin: '-20% 0px -20% 0px', // Só considera "visualizada" quando estiver bem visível
+        rootMargin: '-20% 0px -20% 0px',
         threshold: 0.5
       }
     )

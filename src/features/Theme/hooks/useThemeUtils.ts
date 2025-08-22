@@ -1,4 +1,4 @@
-import { useTheme } from '@/shared'
+import { useTheme } from '@features/Theme'
 
 export function useThemeUtils() {
   const { colors, theme, isDarkMode } = useTheme()

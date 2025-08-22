@@ -1,5 +1,5 @@
-import { Theme, ThemeColors } from '@/shared'
 import { useEffect } from 'react'
+import { Theme, ThemeColors } from '@features/Theme'
 
 interface UseThemePersistenceProps {
   theme: Theme

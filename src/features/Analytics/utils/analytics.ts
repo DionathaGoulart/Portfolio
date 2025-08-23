@@ -5,19 +5,6 @@ declare global {
   }
 }
 
-export interface GAEvent {
-  action: string
-  category: string
-  label?: string
-  value?: number
-}
-
-export interface GAPageView {
-  page_title: string
-  page_location: string
-  page_path?: string
-}
-
 const getEnvVar = (key: string): string => {
   try {
     return (import.meta as any).env?.[key] || ''
@@ -50,6 +37,9 @@ class GoogleAnalytics {
 
   init() {
     if (!this.isEnabled) {
+      console.log(
+        'Analytics desabilitado (desenvolvimento ou sem measurement ID)'
+      )
       return
     }
 
@@ -69,60 +59,41 @@ class GoogleAnalytics {
       page_location: window.location.href,
       send_page_view: true
     })
+
+    console.log('Google Analytics inicializado:', this.measurementId)
   }
 
-  trackPageView(pageData: GAPageView) {
+  // SIMPLIFICADO: Apenas rastrear cliques em botões
+  trackButtonClick(buttonName: string) {
     if (!this.isEnabled) {
+      console.log('Button click (dev):', buttonName)
       return
     }
 
-    window.gtag('config', this.measurementId, {
-      page_title: pageData.page_title,
-      page_location: pageData.page_location,
-      page_path: pageData.page_path || window.location.pathname
+    window.gtag('event', 'click', {
+      event_category: 'engagement',
+      event_label: buttonName
     })
   }
 
-  trackEvent(event: GAEvent) {
-    if (!this.isEnabled) {
-      return
-    }
-
-    window.gtag('event', event.action, {
-      event_category: event.category,
-      event_label: event.label,
-      value: event.value
-    })
-  }
-
-  trackButtonClick(buttonName: string, section?: string) {
-    this.trackEvent({
-      action: 'click',
-      category: 'engagement',
-      label: section ? `${buttonName}_${section}` : buttonName
-    })
-  }
-
+  // SIMPLIFICADO: Apenas rastrear quando seções são visualizadas
   trackSectionView(sectionId: string, sectionLabel: string) {
-    this.trackPageView({
+    if (!this.isEnabled) {
+      console.log('Section view (dev):', sectionId, sectionLabel)
+      return
+    }
+
+    // Atualizar o título da página virtual
+    window.gtag('config', this.measurementId, {
       page_title: `Dionatha | ${sectionLabel}`,
       page_location: `${window.location.origin}/#${sectionId}`,
       page_path: `/#${sectionId}`
     })
 
-    this.trackEvent({
-      action: 'section_view',
-      category: 'navigation',
-      label: sectionId
-    })
-  }
-
-  trackSectionEngagement(sectionId: string, timeSpent: number) {
-    this.trackEvent({
-      action: 'section_engagement',
-      category: 'engagement',
-      label: sectionId,
-      value: Math.round(timeSpent / 1000)
+    // Evento de visualização de seção
+    window.gtag('event', 'page_view', {
+      event_category: 'navigation',
+      event_label: sectionId
     })
   }
 }

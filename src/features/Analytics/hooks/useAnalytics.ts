@@ -1,31 +1,15 @@
 import { useEffect } from 'react'
 import { analytics } from '../utils/analytics'
 
-// Hook personalizado para usar no React
-export const useAnalytics = () => {
-  useEffect(() => {
-    analytics.init()
-  }, [])
-
-  return {
-    trackPageView: analytics.trackPageView.bind(analytics),
-    trackEvent: analytics.trackEvent.bind(analytics),
-    trackButtonClick: analytics.trackButtonClick.bind(analytics),
-    trackSectionView: analytics.trackSectionView.bind(analytics),
-    trackSectionEngagement: analytics.trackSectionEngagement.bind(analytics)
-  }
-}
-
-// Hook para rastrear seções automaticamente
+// Hook simplificado apenas para tracking de seções
 export const useSectionTracking = (
   sections: { id: string; label: string }[]
 ) => {
-  const { trackSectionView, trackSectionEngagement } = useAnalytics()
-
   useEffect(() => {
     if (sections.length === 0) return
 
     const sectionTimes = new Map<string, number>()
+    const trackedSections = new Set<string>() // Para evitar múltiplos tracks da mesma seção
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -38,24 +22,21 @@ export const useSectionTracking = (
           if (entry.isIntersecting) {
             // Seção entrou na viewport
             sectionTimes.set(sectionId, Date.now())
-            trackSectionView(sectionId, section.label)
-          } else if (sectionTimes.has(sectionId)) {
-            // Seção saiu da viewport - calcular tempo gasto
-            const startTime = sectionTimes.get(sectionId)!
-            const timeSpent = Date.now() - startTime
 
-            // Só rastrear se ficou mais de 2 segundos
-            if (timeSpent > 2000) {
-              trackSectionEngagement(sectionId, timeSpent)
+            // Só rastrear uma vez por seção durante a sessão
+            if (!trackedSections.has(sectionId)) {
+              analytics.trackSectionView(sectionId, section.label)
+              trackedSections.add(sectionId)
             }
-
+          } else if (sectionTimes.has(sectionId)) {
+            // Seção saiu da viewport
             sectionTimes.delete(sectionId)
           }
         })
       },
       {
         rootMargin: '-20% 0px -20% 0px',
-        threshold: 0.5
+        threshold: 0.3 // Seção deve estar pelo menos 30% visível
       }
     )
 
@@ -71,5 +52,5 @@ export const useSectionTracking = (
       observer.disconnect()
       sectionTimes.clear()
     }
-  }, [sections, trackSectionView, trackSectionEngagement])
+  }, [sections])
 }

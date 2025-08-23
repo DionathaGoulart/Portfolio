@@ -41,16 +41,13 @@ const Header: React.FC<HeaderProps> = ({
 
       if (activeSectionLabel) {
         document.title = `${pageTitle} | ${activeSectionLabel}`
-
-        // TRACKING: Atualizar page view virtual quando a seção ativa muda
-        analytics.trackSectionView(activeSection, activeSectionLabel)
       }
     } else if (pageTitle) {
       document.title = pageTitle
     }
   }, [activeSection, pageTitle, sections])
 
-  // Observador para seções ativas
+  // Observador para seções ativas - CORRIGIDO
   useEffect(() => {
     if (navLinks.length === 0) return
 
@@ -62,16 +59,23 @@ const Header: React.FC<HeaderProps> = ({
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // VERIFICA SE ESTAMOS EM UMA ROLAGEM MANUAL. SE SIM, IGNORA A ATUALIZAÇÃO DO ESTADO.
-            if (!isScrolling.current) {
-              setActiveSection(entry.target.id)
-            }
-          }
-        })
+        // Só processa se não estiver em rolagem manual
+        if (isScrolling.current) return
+
+        // Encontra a seção mais visível
+        const visibleSections = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+
+        if (visibleSections.length > 0) {
+          const mostVisible = visibleSections[0]
+          setActiveSection(mostVisible.target.id)
+        }
       },
-      { rootMargin: '-80px 0px -60% 0px' }
+      {
+        rootMargin: '-80px 0px -60% 0px',
+        threshold: [0.1, 0.25, 0.5, 0.75] // Múltiplos thresholds para melhor detecção
+      }
     )
 
     sectionsElements.forEach((section) => observer.observe(section))
@@ -109,15 +113,8 @@ const Header: React.FC<HeaderProps> = ({
     // 2. ATIVA O SINALIZADOR DE ROLAGEM MANUAL
     isScrolling.current = true
 
-    // TRACKING: Rastrear clique na navegação
-    const section = sections.find((s) => s.id === id)
-    if (section) {
-      analytics.trackEvent({
-        action: 'navigation_click',
-        category: 'engagement',
-        label: `nav_${id}`
-      })
-    }
+    // TRACKING: Apenas rastrear clique na navegação
+    analytics.trackButtonClick(`nav_${id}`)
 
     // 3. ROLA A PÁGINA
     const el = document.getElementById(id)
@@ -131,16 +128,16 @@ const Header: React.FC<HeaderProps> = ({
       })
       setIsMobileMenuOpen(false)
 
-      // 4. DESATIVA O SINALIZADOR APÓS UM PEQUENO ATRASO (mais que o tempo do smooth scroll)
+      // 4. DESATIVA O SINALIZADOR APÓS UM ATRASO MAIOR
       setTimeout(() => {
         isScrolling.current = false
-      }, 750) // Ajuste este valor se a rolagem for muito lenta
+      }, 1000) // Aumentado para garantir que a rolagem termine
     }
   }
 
   const handleLogoClick = () => {
     // TRACKING: Rastrear clique no logo
-    analytics.trackButtonClick('logo', 'header')
+    analytics.trackButtonClick('logo')
 
     if (navLinks.length > 0) {
       handleScrollTo(navLinks[0].id)
@@ -151,12 +148,9 @@ const Header: React.FC<HeaderProps> = ({
 
   const handleThemeToggle = () => {
     // TRACKING: Rastrear mudança de tema
-    analytics.trackEvent({
-      action: 'theme_toggle',
-      category: 'engagement',
-      label: theme === 'light' ? 'to_dark' : 'to_light'
-    })
-
+    analytics.trackButtonClick(
+      `theme_${theme === 'light' ? 'to_dark' : 'to_light'}`
+    )
     toggleTheme()
   }
 
@@ -211,11 +205,9 @@ const Header: React.FC<HeaderProps> = ({
                   setIsMobileMenuOpen(newState)
 
                   // TRACKING: Rastrear abertura/fechamento do menu mobile
-                  analytics.trackEvent({
-                    action: 'mobile_menu_toggle',
-                    category: 'engagement',
-                    label: newState ? 'open' : 'close'
-                  })
+                  analytics.trackButtonClick(
+                    `mobile_menu_${newState ? 'open' : 'close'}`
+                  )
                 }}
                 className="md:hidden p-2 theme-text-primary hover:theme-text-primary"
                 aria-label="Menu"

@@ -11,28 +11,24 @@ interface HomeSectionProps {
 const HomeSection: React.FC<HomeSectionProps> = ({ id = 'inicio' }) => {
   const handleVerTrabalhos = () => {
     // TRACKING: Rastrear clique no botão "Ver Trabalhos"
-    analytics.trackButtonClick('ver_trabalhos', 'home_section')
+    analytics.trackButtonClick('ver_trabalhos')
 
     // Rolar para a seção de projetos
     const projectsSection = document.getElementById('meus-projetos')
     if (projectsSection) {
       projectsSection.scrollIntoView({ behavior: 'smooth' })
     }
-
-    console.log('Ver trabalhos clicado')
   }
 
   const handleContato = () => {
     // TRACKING: Rastrear clique no botão "Contato"
-    analytics.trackButtonClick('contato', 'home_section')
+    analytics.trackButtonClick('contato')
 
     // Rolar para a seção de contato
     const contactSection = document.getElementById('fale-comigo')
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' })
     }
-
-    console.log('Contato clicado')
   }
 
   return (
@@ -46,13 +42,16 @@ const HomeSection: React.FC<HomeSectionProps> = ({ id = 'inicio' }) => {
               goulart
             </Title>
           </Title>
+
           <Title level="h3" className="font-normal">
             desenvolvedor fullstack
           </Title>
+
           <P size="grande" className="max-w-lg leading-relaxed">
             Desenvolvedor apaixonado por criar soluções digitais inovadoras,
             combinando design elegante com código limpo e funcional.
           </P>
+
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Button
               variant="solid"
@@ -62,6 +61,7 @@ const HomeSection: React.FC<HomeSectionProps> = ({ id = 'inicio' }) => {
             >
               ver trabalhos
             </Button>
+
             <Button
               variant="outline"
               size="grande"
@@ -72,6 +72,7 @@ const HomeSection: React.FC<HomeSectionProps> = ({ id = 'inicio' }) => {
             </Button>
           </div>
         </div>
+
         {/* Lado direito - Logo GD - Oculto no mobile */}
         <div className="hidden lg:flex justify-end">
           <GDLogo />

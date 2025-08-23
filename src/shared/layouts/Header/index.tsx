@@ -1,29 +1,79 @@
 import React, { useState, useEffect, useRef } from 'react'
 
 import { analytics } from '@/features/Analytics/utils/analytics'
-import { SectionConfig } from '@/shared'
 import { useTheme } from '@/features/Theme'
+import { HeaderProps } from '@shared/types'
 
-interface HeaderProps {
-  containerSize: 'sm' | 'md' | 'lg' | 'xl' | 'full'
-  containerSizes: Record<string, string>
-  sections?: SectionConfig[]
-  pageTitle?: string
-}
-
-const Header: React.FC<HeaderProps> = ({
-  containerSize,
-  containerSizes,
+export const Header: React.FC<HeaderProps> = ({
+  // Estrutura
+  containerSize = 'lg',
   sections = [],
-  pageTitle
+
+  // Conteúdo
+  pageTitle,
+  logoText = 'GD.',
+
+  // Aparência
+  variant = 'default',
+  showThemeToggle = true,
+  fixed = true,
+  transparent = false,
+
+  // Estados
+  disabled = false,
+
+  // Callbacks
+  onLogoClick,
+  onSectionClick,
+  onThemeToggle,
+
+  // HTML attributes
+  className = '',
+  id
 }) => {
   const { theme, toggleTheme } = useTheme()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
   const [headerHeight, setHeaderHeight] = useState(0)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   const isScrolling = useRef(false)
   const navLinks = sections
+
+  // ============================================================================
+  // CONFIGURAÇÃO
+  // ============================================================================
+  const hasNavigation = navLinks.length > 0
+  const isInteractive = !disabled
+
+  // ============================================================================
+  // CLASSES CSS
+  // ============================================================================
+  const headerClasses = [
+    // Classe base
+    'header',
+
+    // Variante
+    `header--${variant}`,
+
+    // Estados
+    fixed && 'header--fixed',
+    disabled && 'header--disabled',
+    isScrolled && 'header--scrolled',
+
+    // Classes customizadas
+    className
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+  const navClasses = ['header__nav', `layout-container--${containerSize}`]
+    .filter(Boolean)
+    .join(' ')
+
+  // ============================================================================
+  // EFFECTS
+  // ============================================================================
 
   // Define a primeira section como ativa por padrão
   useEffect(() => {
@@ -32,7 +82,7 @@ const Header: React.FC<HeaderProps> = ({
     }
   }, [navLinks, activeSection])
 
-  // useEffect para atualizar o título da página
+  // Atualiza o título da página
   useEffect(() => {
     if (pageTitle && activeSection) {
       const activeSectionLabel = sections.find(
@@ -47,7 +97,7 @@ const Header: React.FC<HeaderProps> = ({
     }
   }, [activeSection, pageTitle, sections])
 
-  // Observador para seções ativas - CORRIGIDO
+  // Observador para seções ativas
   useEffect(() => {
     if (navLinks.length === 0) return
 
@@ -59,10 +109,8 @@ const Header: React.FC<HeaderProps> = ({
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Só processa se não estiver em rolagem manual
         if (isScrolling.current) return
 
-        // Encontra a seção mais visível
         const visibleSections = entries
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
@@ -74,7 +122,7 @@ const Header: React.FC<HeaderProps> = ({
       },
       {
         rootMargin: '-80px 0px -60% 0px',
-        threshold: [0.1, 0.25, 0.5, 0.75] // Múltiplos thresholds para melhor detecção
+        threshold: [0.1, 0.25, 0.5, 0.75]
       }
     )
 
@@ -90,7 +138,9 @@ const Header: React.FC<HeaderProps> = ({
       const updateHeaderHeight = () => {
         const height = headerElement.offsetHeight
         setHeaderHeight(height)
-        document.body.style.paddingTop = `${height}px`
+        if (fixed) {
+          document.body.style.paddingTop = `${height}px`
+        }
       }
 
       updateHeaderHeight()
@@ -101,22 +151,34 @@ const Header: React.FC<HeaderProps> = ({
       return () => {
         observer.disconnect()
         window.removeEventListener('resize', updateHeaderHeight)
-        document.body.style.paddingTop = '0'
+        if (fixed) {
+          document.body.style.paddingTop = '0'
+        }
       }
     }
-  }, [isMobileMenuOpen])
+  }, [isMobileMenuOpen, fixed])
 
+  // Detectar scroll para efeitos visuais
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // ============================================================================
+  // HANDLERS
+  // ============================================================================
   const handleScrollTo = (id: string) => {
-    // 1. ATUALIZA O ESTADO IMEDIATAMENTE PARA DAR FEEDBACK VISUAL
-    setActiveSection(id)
+    if (!isInteractive) return
 
-    // 2. ATIVA O SINALIZADOR DE ROLAGEM MANUAL
+    setActiveSection(id)
     isScrolling.current = true
 
-    // TRACKING: Apenas rastrear clique na navegação
     analytics.trackButtonClick(`nav_${id}`)
 
-    // 3. ROLA A PÁGINA
     const el = document.getElementById(id)
     if (el) {
       const headerOffset = headerHeight + 20
@@ -128,18 +190,24 @@ const Header: React.FC<HeaderProps> = ({
       })
       setIsMobileMenuOpen(false)
 
-      // 4. DESATIVA O SINALIZADOR APÓS UM ATRASO MAIOR
       setTimeout(() => {
         isScrolling.current = false
-      }, 1000) // Aumentado para garantir que a rolagem termine
+      }, 1000)
+    }
+
+    if (onSectionClick) {
+      onSectionClick(id)
     }
   }
 
   const handleLogoClick = () => {
-    // TRACKING: Rastrear clique no logo
+    if (!isInteractive) return
+
     analytics.trackButtonClick('logo')
 
-    if (navLinks.length > 0) {
+    if (onLogoClick) {
+      onLogoClick()
+    } else if (navLinks.length > 0) {
       handleScrollTo(navLinks[0].id)
     } else {
       window.location.href = '/'
@@ -147,101 +215,126 @@ const Header: React.FC<HeaderProps> = ({
   }
 
   const handleThemeToggle = () => {
-    // TRACKING: Rastrear mudança de tema
+    if (!isInteractive) return
+
     analytics.trackButtonClick(
       `theme_${theme === 'light' ? 'to_dark' : 'to_light'}`
     )
-    toggleTheme()
+
+    if (onThemeToggle) {
+      onThemeToggle()
+    } else {
+      toggleTheme()
+    }
   }
 
-  return (
-    <>
-      <header className="theme-surface border-b theme-border fixed top-0 w-full z-50">
-        <nav
-          className={`${containerSizes[containerSize]} mx-auto px-4 py-4 flex items-center justify-between`}
-        >
-          {/* Logo */}
+  const handleMobileMenuToggle = () => {
+    if (!isInteractive) return
+
+    const newState = !isMobileMenuOpen
+    setIsMobileMenuOpen(newState)
+
+    analytics.trackButtonClick(`mobile_menu_${newState ? 'open' : 'close'}`)
+  }
+
+  // ============================================================================
+  // RENDER FUNCTIONS
+  // ============================================================================
+  const renderLogo = () => (
+    <button
+      onClick={handleLogoClick}
+      className="header__logo"
+      disabled={disabled}
+      aria-label="Ir para o início"
+    >
+      {logoText}
+    </button>
+  )
+
+  const renderDesktopNavigation = () => {
+    if (!hasNavigation) return null
+
+    return (
+      <div className="header__nav-desktop">
+        {navLinks.map((link) => (
           <button
-            onClick={handleLogoClick}
-            className="text-xl font-bold theme-text-primary hover:theme-text-primary transition-colors"
+            key={link.id}
+            onClick={() => handleScrollTo(link.id)}
+            className={`header__nav-link ${
+              activeSection === link.id ? 'header__nav-link--active' : ''
+            }`}
+            disabled={disabled}
           >
-            GD.
+            {link.label}
           </button>
+        ))}
+      </div>
+    )
+  }
 
-          {/* Desktop Navigation */}
-          {navLinks.length > 0 && (
-            <div className="hidden md:flex items-center space-x-8">
-              {navLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => handleScrollTo(link.id)}
-                  className={
-                    activeSection === link.id
-                      ? 'theme-text-primary font-medium'
-                      : 'theme-text-primary hover:theme-text-primary transition-colors'
-                  }
-                >
-                  {link.label}
-                </button>
-              ))}
-            </div>
-          )}
+  const renderControls = () => (
+    <div className="header__controls">
+      {showThemeToggle && (
+        <button
+          onClick={handleThemeToggle}
+          className="header__theme-toggle"
+          disabled={disabled}
+          aria-label="Alternar tema"
+        >
+          {theme === 'light' ? '🌙' : '☀️'}
+        </button>
+      )}
 
-          {/* Controls */}
-          <div className="flex items-center space-x-2">
+      {hasNavigation && (
+        <button
+          onClick={handleMobileMenuToggle}
+          className="header__mobile-toggle"
+          disabled={disabled}
+          aria-label="Menu"
+        >
+          {isMobileMenuOpen ? '✕' : '☰'}
+        </button>
+      )}
+    </div>
+  )
+
+  const renderMobileMenu = () => {
+    if (!isMobileMenuOpen || !hasNavigation) return null
+
+    return (
+      <div className="header__mobile-menu">
+        <div
+          className={`header__mobile-nav layout-container--${containerSize}`}
+        >
+          {navLinks.map((link) => (
             <button
-              onClick={handleThemeToggle}
-              className="p-2 theme-text-primary hover:theme-text-primary transition-colors"
-              aria-label="Alternar tema"
+              key={link.id}
+              onClick={() => handleScrollTo(link.id)}
+              className={`header__mobile-link ${
+                activeSection === link.id ? 'header__mobile-link--active' : ''
+              }`}
+              disabled={disabled}
             >
-              {theme === 'light' ? '🌙' : '☀️'}
+              {link.label}
             </button>
+          ))}
+        </div>
+      </div>
+    )
+  }
 
-            {/* Mobile Menu Button */}
-            {navLinks.length > 0 && (
-              <button
-                onClick={() => {
-                  const newState = !isMobileMenuOpen
-                  setIsMobileMenuOpen(newState)
-
-                  // TRACKING: Rastrear abertura/fechamento do menu mobile
-                  analytics.trackButtonClick(
-                    `mobile_menu_${newState ? 'open' : 'close'}`
-                  )
-                }}
-                className="md:hidden p-2 theme-text-primary hover:theme-text-primary"
-                aria-label="Menu"
-              >
-                {isMobileMenuOpen ? '✕' : '☰'}
-              </button>
-            )}
-          </div>
-        </nav>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && navLinks.length > 0 && (
-          <div className="md:hidden border-t theme-border">
-            <div
-              className={`${containerSizes[containerSize]} mx-auto px-4 py-2 space-y-1`}
-            >
-              {navLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => handleScrollTo(link.id)}
-                  className={`block w-full text-left py-2 px-3 rounded transition-colors ${
-                    activeSection === link.id
-                      ? 'theme-text-primary bg-theme-accent bg-opacity-10'
-                      : 'theme-text-primary hover:theme-text-primary hover:bg-theme-accent hover:bg-opacity-5'
-                  }`}
-                >
-                  {link.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-      </header>
-    </>
+  // ============================================================================
+  // RENDER
+  // ============================================================================
+  return (
+    <header className={headerClasses} id={id}>
+      <nav className={navClasses}>
+        {renderLogo()}
+        {renderDesktopNavigation()}
+        {renderControls()}
+      </nav>
+      {renderMobileMenu()}
+    </header>
   )
 }
 

@@ -71,7 +71,7 @@ export interface CardsContainerProps {
 }
 
 // ============================================================================
-// CLASS BUILDERS (integrados no types)
+// CLASS BUILDERS - Apenas concatenação de classes
 // ============================================================================
 
 export const buildCardClasses = ({

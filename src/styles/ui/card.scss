@@ -1,5 +1,5 @@
 // ============================================================================
-// CARD STYLES - Otimizado e Organizado
+// CARD STYLES - Completo e Organizado
 // ============================================================================
 
 // ============================================================================
@@ -84,6 +84,61 @@ $theme-colors:
         0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
   }
+
+  // ============================================================================
+  // ELEMENTOS INTERNOS
+  // ============================================================================
+
+  // Header (usado no layout with-icon)
+  &__header {
+    @apply flex items-center gap-2 mb-2;
+  }
+
+  &__icon {
+    @apply flex-shrink-0;
+  }
+
+  // Badge (usado no layout varied)
+  &__badge {
+    @apply absolute top-4 right-4;
+  }
+
+  // Content (usado no layout varied)
+  &__content {
+    @apply space-y-4;
+  }
+
+  // Tags (usado no layout varied)
+  &__tags {
+    @apply flex flex-wrap gap-2 mt-4;
+  }
+
+  // ============================================================================
+  // TEXTO E CORES DOS ELEMENTOS
+  // ============================================================================
+
+  // Fallback para elementos que não tenham as classes específicas
+  .title,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-theme-text;
+  }
+
+  .text,
+  p {
+    @apply text-theme-text;
+
+    &--primary {
+      @apply text-theme-text;
+    }
+    &--secondary {
+      @apply text-theme-text-secondary;
+    }
+  }
 }
 
 // ============================================================================
@@ -131,14 +186,21 @@ $theme-colors:
 .card--horizontal {
   @apply flex flex-col justify-center;
 
-  &.card--small {
+  &.card--pequeno {
     @apply min-h-12 sm:min-h-16 p-2 sm:p-3;
   }
-  &.card--medium {
+
+  &.card--medio {
     @apply min-h-16 sm:min-h-20 p-3 sm:p-4;
   }
-  &.card--large {
+
+  &.card--grande {
     @apply min-h-20 sm:min-h-24 p-4 sm:p-5;
+  }
+
+  // Espaçamento entre título e subtítulo
+  .title + .text {
+    @apply mt-1;
   }
 }
 
@@ -150,12 +212,20 @@ $theme-colors:
     @apply p-4;
   }
 
-  &__header {
-    @apply flex items-center gap-2 mb-2;
+  .card__header {
+    @apply mb-2;
+  }
 
-    &-icon {
-      @apply flex-shrink-0;
-    }
+  .card__icon {
+    @apply text-theme-text;
+  }
+
+  .title {
+    @apply font-semibold;
+  }
+
+  .text {
+    @apply text-theme-text-secondary;
   }
 }
 
@@ -167,16 +237,26 @@ $theme-colors:
     @apply p-4;
   }
 
-  &__badge {
-    @apply absolute top-4 right-4;
+  .card__content {
+    @apply pr-16; // Espaço para o badge
   }
 
-  &__content {
-    @apply space-y-4;
+  .title {
+    @apply font-semibold;
   }
 
-  &__tags {
-    @apply flex flex-wrap gap-2 mt-4;
+  .text {
+    &:first-of-type {
+      @apply text-theme-text-secondary;
+    }
+
+    &:not(:first-of-type) {
+      @apply text-theme-text;
+    }
+  }
+
+  .card__tags {
+    @apply pt-2;
   }
 }
 
@@ -186,9 +266,11 @@ $theme-colors:
 .card--align-start {
   @apply text-left items-start;
 }
+
 .card--align-center {
   @apply text-center items-center;
 }
+
 .card--align-end {
   @apply text-right items-end;
 }
@@ -202,12 +284,15 @@ $theme-colors:
   &--1 {
     @apply grid-cols-1;
   }
+
   &--2 {
     @apply grid-cols-1 sm:grid-cols-2;
   }
+
   &--3 {
     @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
   }
+
   &--4 {
     @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-4;
   }

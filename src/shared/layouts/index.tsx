@@ -1,49 +1,111 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import ScrollToTop from '../ui/ScroolToTop'
-
-export interface SectionConfig {
-  id: string
-  label: string
-}
-
-interface MainLayoutProps {
-  children: ReactNode
-  className?: string
-  containerSize?: 'lg'
-  sections?: SectionConfig[]
-  pageTitle?: string
-}
-
-const containerSizes = {
-  lg: 'max-w-screen-2xl px-8'
-}
+import { MainLayoutProps } from '@shared/types'
 
 export const MainLayout: React.FC<MainLayoutProps> = ({
+  // Conteúdo
   children,
-  className = '',
+
+  // Estrutura
   containerSize = 'lg',
   sections = [],
-  pageTitle
+  pageTitle,
+
+  // Aparência
+  spacing = 'normal',
+  headerVariant = 'default',
+  footerVariant = 'default',
+
+  // Configuração
+  showHeader = true,
+  showFooter = true,
+  showScrollToTop = true,
+
+  // Props passthrough
+  headerProps = {},
+  footerProps = {},
+
+  // HTML attributes
+  className = '',
+  id
 }) => {
-  return (
-    <div className="theme-container min-h-screen flex flex-col space-y-48">
+  // ============================================================================
+  // CLASSES CSS
+  // ============================================================================
+  const layoutClasses = [
+    // Classe base
+    'main-layout',
+
+    // Espaçamento
+    `main-layout--${spacing}`,
+
+    // Classes customizadas
+    className
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+  const containerClasses = [
+    'main-layout__container',
+    `layout-container--${containerSize}`
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+  // ============================================================================
+  // RENDER FUNCTIONS
+  // ============================================================================
+  const renderHeader = () => {
+    if (!showHeader) return null
+
+    return (
       <Header
         containerSize={containerSize}
-        containerSizes={containerSizes}
         sections={sections}
         pageTitle={pageTitle}
+        variant={headerVariant}
+        {...headerProps}
       />
-      <main className="flex-grow mx-auto w-full pb-8">
-        <div
-          className={`mx-auto w-full ${containerSizes[containerSize]} ${className}`}
-        >
-          {children}
-        </div>
-      </main>
-      <Footer />
-      <ScrollToTop />
+    )
+  }
+
+  const renderFooter = () => {
+    if (!showFooter) return null
+
+    return (
+      <Footer
+        containerSize={containerSize}
+        variant={footerVariant}
+        {...footerProps}
+      />
+    )
+  }
+
+  const renderScrollToTop = () => {
+    if (!showScrollToTop) return null
+
+    return <ScrollToTop />
+  }
+
+  const renderContent = () => (
+    <main className="main-layout__content">
+      <div className={containerClasses}>{children}</div>
+    </main>
+  )
+
+  // ============================================================================
+  // RENDER
+  // ============================================================================
+  return (
+    <div className={layoutClasses} id={id}>
+      {renderHeader()}
+      {renderContent()}
+      {renderFooter()}
+      {renderScrollToTop()}
     </div>
   )
 }
+
+export default MainLayout

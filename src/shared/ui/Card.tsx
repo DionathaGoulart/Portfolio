@@ -23,14 +23,8 @@ const HorizontalCard: React.FC<Omit<CardProps, 'layout'>> = ({
 
   return (
     <>
-      <Title level={titleLevel} className="text-theme-text">
-        {title}
-      </Title>
-      {subtitle && (
-        <P size={subtitleSize} className="text-theme-text-secondary mt-1">
-          {subtitle}
-        </P>
-      )}
+      <Title level={titleLevel}>{title}</Title>
+      {subtitle && <P size={subtitleSize}>{subtitle}</P>}
     </>
   )
 }
@@ -41,17 +35,11 @@ const WithIconCard: React.FC<Omit<CardProps, 'layout'>> = ({
   icon
 }) => (
   <>
-    <div className="card--with-icon__header">
-      {icon && <span className="card--with-icon__header-icon">{icon}</span>}
-      <Title level="h4" className="font-semibold text-theme-text">
-        {title}
-      </Title>
+    <div className="card__header">
+      {icon && <span className="card__icon">{icon}</span>}
+      <Title level="h4">{title}</Title>
     </div>
-    {subtitle && (
-      <P size="pequeno" className="text-theme-text-secondary">
-        {subtitle}
-      </P>
-    )}
+    {subtitle && <P size="pequeno">{subtitle}</P>}
   </>
 )
 
@@ -64,22 +52,16 @@ const VariedCard: React.FC<Omit<CardProps, 'layout'>> = ({
 }) => (
   <>
     {date && (
-      <div className="card--varied__badge">
+      <div className="card__badge">
         <Tag color="secondary">{date}</Tag>
       </div>
     )}
-    <div className="card--varied__content">
-      <Title level="h3" className="font-semibold text-theme-text">
-        {title}
-      </Title>
-      {subtitle && (
-        <P size="pequeno" className="text-theme-text-secondary">
-          {subtitle}
-        </P>
-      )}
+    <div className="card__content">
+      <Title level="h3">{title}</Title>
+      {subtitle && <P size="pequeno">{subtitle}</P>}
       {description && <P size="pequeno">{description}</P>}
       {tags && tags.length > 0 && (
-        <div className="card--varied__tags">
+        <div className="card__tags">
           {tags.map((tag, index) => (
             <Tag key={index}>{tag}</Tag>
           ))}

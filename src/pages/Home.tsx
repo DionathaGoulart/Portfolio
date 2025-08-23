@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
-import { SectionConfig } from '@/shared'
+import { useEffect } from 'react'
 
 import HomeSection from './Sections/Home'
 import SobreSection from './Sections/Sobre'
 import { useSectionTracking } from '@/features/Analytics/hooks/useAnalytics'
+import { SectionConfig } from '@/shared/types'
 
 interface HomePageProps {
   setSections: (sections: SectionConfig[]) => void

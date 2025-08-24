@@ -82,7 +82,7 @@ export const Header: React.FC<HeaderProps> = ({
     }
   }, [navLinks, activeSection])
 
-  // Atualiza o título da página
+  // Atualiza o título da página E inicia o tracking por tempo
   useEffect(() => {
     if (pageTitle && activeSection) {
       const activeSectionLabel = sections.find(
@@ -90,10 +90,15 @@ export const Header: React.FC<HeaderProps> = ({
       )?.label
 
       if (activeSectionLabel) {
-        document.title = `${pageTitle} | ${activeSectionLabel}`
+        const newTitle = `${pageTitle} | ${activeSectionLabel}`
+        document.title = newTitle
+
+        // NOVO: Iniciar tracking por tempo no analytics
+        analytics.trackTitleChange(newTitle, activeSection)
       }
     } else if (pageTitle) {
       document.title = pageTitle
+      analytics.trackTitleChange(pageTitle, 'home')
     }
   }, [activeSection, pageTitle, sections])
 
@@ -127,8 +132,11 @@ export const Header: React.FC<HeaderProps> = ({
     )
 
     sectionsElements.forEach((section) => observer.observe(section))
-    return () =>
+    return () => {
       sectionsElements.forEach((section) => observer.unobserve(section))
+      // NOVO: Limpar timer quando o componente desmontar
+      analytics.clearTitleTimer()
+    }
   }, [navLinks])
 
   // Medir altura do header

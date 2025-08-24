@@ -19,15 +19,15 @@ $spacing-variants: compact, normal, relaxed;
 
 @mixin interactive-element {
   @include layout-transition;
-  @apply cursor-pointer;
+  @apply cursor-pointer outline-none;
 
   &:hover {
     @apply opacity-80;
   }
 
   &:focus {
-    @apply outline-none ring-2 ring-offset-2 rounded;
-    box-shadow: 0 0 0 2px rgb(var(--color-primary) / 0.5);
+    @apply outline-none;
+    // Removido o box-shadow padrão que criava a outline
   }
 
   &:disabled {
@@ -94,11 +94,36 @@ $spacing-variants: compact, normal, relaxed;
 
   .header__nav-link {
     @include interactive-element;
+    @apply relative outline-none;
     color: rgb(var(--color-text));
+    padding-bottom: 4px;
+
+    // Remove outline do foco
+    &:focus {
+      @apply outline-none;
+      box-shadow: none;
+    }
+
+    // Linha inferior animada
+    &::after {
+      content: '';
+      @apply absolute bottom-0 left-0 w-0 h-0.5;
+      background-color: rgb(var(--color-primary));
+      transition: width 0.3s ease-in-out;
+    }
 
     &--active {
       @apply font-medium;
       color: rgb(var(--color-primary));
+
+      &::after {
+        @apply w-full;
+      }
+    }
+
+    // Efeito hover opcional
+    &:hover:not(.header__nav-link--active)::after {
+      @apply w-full opacity-50;
     }
   }
 
@@ -129,12 +154,30 @@ $spacing-variants: compact, normal, relaxed;
 
     .header__mobile-link {
       @include interactive-element;
-      @apply block w-full text-left py-2 px-3 rounded;
+      @apply block w-full text-left py-2 px-3 rounded relative outline-none;
       color: rgb(var(--color-text));
+
+      // Remove outline do foco
+      &:focus {
+        @apply outline-none;
+        box-shadow: none;
+      }
+
+      // Linha lateral para mobile
+      &::before {
+        content: '';
+        @apply absolute left-0 top-0 w-0 h-full;
+        background-color: rgb(var(--color-primary));
+        transition: width 0.3s ease-in-out;
+      }
 
       &--active {
         color: rgb(var(--color-text));
         background-color: rgb(var(--color-accent) / 0.1);
+
+        &::before {
+          @apply w-1;
+        }
       }
 
       &:not(.header__mobile-link--active):hover {

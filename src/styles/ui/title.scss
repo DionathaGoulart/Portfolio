@@ -1,35 +1,29 @@
 // ============================================================================
-// TITLE COMPONENT STYLES - VERSÃO OTIMIZADA E MELHORADA
+// TITLE SYSTEM - OTIMIZADO
 // ============================================================================
 
-// ============================================================================
-// VARIÁVEIS E CONFIGURAÇÕES
-// ============================================================================
-$theme-colors:
+// Configurações
+$colors:
   primary, secondary, accent, text, textSecondary, error, success, warning;
-$title-levels: h1, h2, h3, h4, h5, h6;
-$font-weights: normal, medium, semibold, bold;
+$levels: h1, h2, h3, h4, h5, h6;
+$weights: normal, medium, semibold, bold;
 $aligns: start, center, end;
-$border-sides: top, bottom;
+$borders: top, bottom;
 
-// ============================================================================
-// MIXINS
-// ============================================================================
+// Mixins
 @mixin title-transition {
   @apply transition-all duration-200 ease-in-out;
 }
-
 @mixin title-interactive {
   @include title-transition;
   @apply cursor-pointer;
   &:hover {
     @apply opacity-80;
   }
-  &:focus {
+  &:focus-visible {
     @apply outline-none ring-2 ring-theme-primary ring-offset-2 rounded;
   }
 }
-
 @mixin decorative-border($side, $align) {
   @apply relative;
   @if $side == top {
@@ -40,7 +34,7 @@ $border-sides: top, bottom;
       @if $align == start {
         @apply left-0;
       } @else if $align == center {
-        @apply left-1/2 -translate-x-1/2 transform;
+        @apply left-1/2 -translate-x-1/2;
       } @else if $align == end {
         @apply right-0;
       }
@@ -53,7 +47,7 @@ $border-sides: top, bottom;
       @if $align == start {
         @apply left-0;
       } @else if $align == center {
-        @apply left-1/2 -translate-x-1/2 transform;
+        @apply left-1/2 -translate-x-1/2;
       } @else if $align == end {
         @apply right-0;
       }
@@ -62,8 +56,9 @@ $border-sides: top, bottom;
 }
 
 // ============================================================================
-// BASE CLASS
+// BASE
 // ============================================================================
+
 .title {
   @include title-transition;
 
@@ -104,7 +99,7 @@ $border-sides: top, bottom;
     @apply bg-theme-primary/10 px-4 py-2 rounded;
   }
 
-  // Layout com ícone/badge
+  // Layout com extras
   &--with-icon {
     @apply flex items-center gap-2;
     .title__icon {
@@ -115,87 +110,85 @@ $border-sides: top, bottom;
   &--with-badge {
     @apply relative;
     .title__badge {
-      @apply absolute -top-2 -right-2 min-w-5 h-5 flex items-center justify-center;
-      @apply text-xs rounded-full bg-theme-error text-white px-1;
+      @apply absolute -top-2 -right-2 min-w-5 h-5 flex items-center justify-center text-xs rounded-full bg-red-500 text-white px-1;
     }
   }
 }
 
 // ============================================================================
-// NÍVEIS (SIZES)
+// NÍVEIS (TAMANHOS)
 // ============================================================================
-@each $level in $title-levels {
-  .title--#{$level} {
-    @if $level == h1 {
-      @apply text-4xl sm:text-5xl md:text-6xl leading-tight;
-    } @else if $level == h2 {
-      @apply text-3xl sm:text-4xl md:text-5xl leading-tight;
-    } @else if $level == h3 {
-      @apply text-2xl sm:text-3xl md:text-4xl leading-snug;
-    } @else if $level == h4 {
-      @apply text-xl sm:text-2xl md:text-3xl leading-snug;
-    } @else if $level == h5 {
-      @apply text-lg sm:text-xl md:text-2xl leading-normal;
-    } @else if $level == h6 {
-      @apply text-base sm:text-lg md:text-xl leading-normal;
-    }
-  }
+
+.title--h1 {
+  @apply text-4xl sm:text-5xl md:text-6xl leading-tight;
+}
+.title--h2 {
+  @apply text-3xl sm:text-4xl md:text-5xl leading-tight;
+}
+.title--h3 {
+  @apply text-2xl sm:text-3xl md:text-4xl leading-snug;
+}
+.title--h4 {
+  @apply text-xl sm:text-2xl md:text-3xl leading-snug;
+}
+.title--h5 {
+  @apply text-lg sm:text-xl md:text-2xl leading-normal;
+}
+.title--h6 {
+  @apply text-base sm:text-lg md:text-xl leading-normal;
 }
 
 // ============================================================================
 // VARIANTES ESPECIAIS
 // ============================================================================
-.title {
-  &--hero {
-    @apply text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-none;
-  }
-  &--display {
-    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight;
-  }
-  &--section {
-    @apply text-2xl sm:text-3xl md:text-4xl leading-snug;
-  }
-  &--subsection {
-    @apply text-xl sm:text-2xl md:text-3xl leading-normal;
-  }
+
+.title--hero {
+  @apply text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-none;
+}
+.title--display {
+  @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight;
+}
+.title--section {
+  @apply text-2xl sm:text-3xl md:text-4xl leading-snug;
+}
+.title--subsection {
+  @apply text-xl sm:text-2xl md:text-3xl leading-normal;
 }
 
 // ============================================================================
-// CORES
+// CORES, PESOS E ALINHAMENTOS
 // ============================================================================
-@each $color in $theme-colors {
+
+// Cores
+@each $color in $colors {
   .title--#{$color} {
     color: rgb(var(--color-#{$color}));
   }
 }
 
-// ============================================================================
-// PESOS DE FONTE
-// ============================================================================
-@each $weight in $font-weights {
+// Pesos
+@each $weight in $weights {
   .title--#{$weight} {
     font-weight: #{$weight};
   }
 }
-// ============================================================================
-// ALINHAMENTOS
-// ============================================================================
-@each $align in $aligns {
-  .title--#{$align} {
-    @if $align == start {
-      @apply text-left;
-    } @else if $align == center {
-      @apply text-center;
-    } @else if $align == end {
-      @apply text-right;
-    }
-  }
+
+// Alinhamentos
+.title--start {
+  @apply text-left;
+}
+.title--center {
+  @apply text-center;
+}
+.title--end {
+  @apply text-right;
 }
 
 // ============================================================================
 // BORDAS DECORATIVAS
 // ============================================================================
-@each $side in $border-sides {
+
+@each $side in $borders {
   @each $align in $aligns {
     .title--border-#{$side}-#{$align} {
       @include decorative-border($side, $align);
@@ -206,12 +199,13 @@ $border-sides: top, bottom;
 // ============================================================================
 // GRUPO DE TÍTULOS
 // ============================================================================
+
 .title-group {
   @apply space-y-2;
   .title-group__main {
     @apply mb-1;
   }
   .title-group__subtitle {
-    @apply text-theme-textSecondary;
+    @apply text-theme-secondary;
   }
 }

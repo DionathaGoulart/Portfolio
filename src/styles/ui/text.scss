@@ -1,59 +1,33 @@
 // ============================================================================
-// TEXT COMPONENT STYLES - OPTIMIZED AND IMPROVED VERSION
+// TEXT SYSTEM - OTIMIZADO
 // ============================================================================
 
-// Importa o módulo 'map' do Sass para usar as novas funções
-@use 'sass:map';
-
-// ============================================================================
-// VARIABLES AND CONFIGURATION
-// ============================================================================
-$theme-colors:
+// Configurações
+$colors:
   primary, secondary, accent, text, textSecondary, error, success, warning;
-$text-sizes: (
-  pequeno: sm,
-  medio: base,
-  grande: lg
-);
-$aligns: (
-  start: left,
-  center: center,
-  end: right
-);
-$font-weights: light, normal, medium, semibold, bold;
-$line-heights: tight, normal, relaxed, loose;
-$borders: start, center, end;
-$responsive-variants: (
-  small: (
-    sm: base,
-    lg: lg
-  ),
-  medium: (
-    md: lg,
-    lg: xl
-  ),
-  large: (
-    md: xl,
-    lg: 2xl
-  )
-);
+$sizes: pequeno, medio, grande;
+$weights: light, normal, medium, semibold, bold;
+$aligns: start, center, end;
+$layouts: column, sidebar, overlay, floating, magazine;
 
-// Mapeamento de breakpoints do Tailwind para uso com Sass
-$breakpoints: (
-  sm: 640px,
-  md: 768px,
-  lg: 1024px,
-  xl: 1280px,
-  '2xl': 1536px
-);
-
-// ============================================================================
-// MIXINS
-// ============================================================================
+// Mixins
 @mixin text-transition {
   @apply transition-all duration-300 ease-in-out;
 }
-
+@mixin decorative-border($position) {
+  @apply relative pt-3;
+  &::before {
+    content: '';
+    @apply absolute top-0 w-24 h-1 bg-theme-primary rounded-xl;
+    @if $position == start {
+      @apply left-0;
+    } @else if $position == center {
+      @apply left-1/2 -translate-x-1/2;
+    } @else if $position == end {
+      @apply right-0;
+    }
+  }
+}
 @mixin image-interactive {
   @include text-transition;
   @apply cursor-pointer;
@@ -68,53 +42,22 @@ $breakpoints: (
   }
 }
 
-@mixin decorative-border($position) {
-  @apply relative pt-3;
-  &::before {
-    content: '';
-    @apply absolute top-0 w-24 h-1 bg-theme-primary rounded-xl;
-    @if $position == start {
-      @apply left-0;
-    } @else if $position == center {
-      @apply left-1/2 -translate-x-1/2 transform;
-    } @else if $position == end {
-      @apply right-0;
-    }
-  }
-}
+// ============================================================================
+// BASE
+// ============================================================================
 
-// ============================================================================
-// ANIMATIONS
-// ============================================================================
-@keyframes gentle-float {
-  0%,
-  100% {
-    transform: translateY(0px) translateX(0px);
-  }
-  25% {
-    transform: translateY(-10px) translateX(5px);
-  }
-  50% {
-    transform: translateY(0px) translateX(10px);
-  }
-  75% {
-    transform: translateY(-5px) translateX(5px);
-  }
-}
-
-// ============================================================================
-// BASE CLASS & MODIFIERS
-// ============================================================================
 .text {
   @include text-transition;
 
-  // Typography and Colors
+  // Tipos de elemento
   &--p {
     @apply block opacity-80;
   }
   &--span {
     @apply inline-block w-full;
   }
+
+  // Decorações
   &--italic {
     @apply italic;
   }
@@ -142,6 +85,8 @@ $breakpoints: (
   &--break-all {
     @apply break-all;
   }
+
+  // Alinhamentos
   &--baseline {
     @apply align-baseline;
   }
@@ -154,6 +99,8 @@ $breakpoints: (
   &--bottom {
     @apply align-bottom;
   }
+
+  // Efeitos especiais
   &--highlight {
     @apply bg-theme-accent/20 px-1 rounded;
   }
@@ -169,341 +116,306 @@ $breakpoints: (
   &--shadow-strong {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
+}
 
-  // CORREÇÃO: Usando @apply diretamente com classes do Tailwind
-  &--pequeno {
-    @apply text-sm leading-relaxed;
+// ============================================================================
+// TAMANHOS E CORES
+// ============================================================================
+
+// Tamanhos
+.text--pequeno {
+  @apply text-sm leading-relaxed;
+}
+.text--medio {
+  @apply text-base leading-relaxed;
+}
+.text--grande {
+  @apply text-lg leading-relaxed;
+}
+
+// Cores
+@each $color in $colors {
+  .text--#{$color} {
+    color: rgb(var(--color-#{$color}));
   }
-  &--medio {
-    @apply text-base leading-relaxed;
+}
+
+// Pesos
+@each $weight in $weights {
+  .text--#{$weight} {
+    font-weight: #{$weight};
   }
-  &--grande {
-    @apply text-lg leading-relaxed;
+}
+
+// Alinhamentos de texto
+.text--start {
+  @apply text-left;
+}
+.text--center {
+  @apply text-center;
+}
+.text--end {
+  @apply text-right;
+}
+
+// Line heights
+.text--leading-tight {
+  @apply leading-tight;
+}
+.text--leading-normal {
+  @apply leading-normal;
+}
+.text--leading-relaxed {
+  @apply leading-relaxed;
+}
+.text--leading-loose {
+  @apply leading-loose;
+}
+
+// ============================================================================
+// BORDAS DECORATIVAS
+// ============================================================================
+
+@each $position in $aligns {
+  .text--border-#{$position} {
+    @include decorative-border($position);
+  }
+}
+
+// ============================================================================
+// RESPONSIVIDADE
+// ============================================================================
+
+.text--responsive-small {
+  @apply text-base sm:text-base lg:text-lg;
+}
+.text--responsive-medium {
+  @apply text-base md:text-lg lg:text-xl;
+}
+.text--responsive-large {
+  @apply text-base md:text-xl lg:text-2xl;
+}
+
+// ============================================================================
+// LAYOUTS DE COLUNA
+// ============================================================================
+
+.text--column-layout {
+  @apply w-full;
+
+  .text__columns {
+    @apply flex items-start flex-col md:flex-row;
+  }
+  .text__column {
+    @apply flex-1;
   }
 
-  // Cores do tema usando variáveis CSS
-  @each $color in $theme-colors {
-    &--#{$color} {
-      color: rgb(var(--color-#{$color}));
+  .text__image {
+    @apply flex justify-center items-center;
+
+    &--top,
+    &--bottom {
+      @apply w-full mb-6;
+    }
+    &--center {
+      @apply flex-shrink-0;
+    }
+
+    .text__image-element {
+      @apply rounded-lg object-cover shadow-lg max-w-full;
+    }
+    .text__image-interactive {
+      @include image-interactive;
+      @apply inline-block;
     }
   }
 
-  // CORREÇÃO: Usando @apply diretamente para pesos de fonte
-  &--light {
-    @apply font-light;
+  // Configurações de colunas
+  &--columns-2 .text__columns {
+    @apply gap-4;
   }
-  &--normal {
-    @apply font-normal;
+  &--columns-3 .text__columns {
+    @apply gap-3;
   }
-  &--medium {
-    @apply font-medium;
-  }
-  &--semibold {
-    @apply font-semibold;
-  }
-  &--bold {
-    @apply font-bold;
+  &--columns-4 .text__columns {
+    @apply gap-2;
   }
 
-  // Line heights
-  &--leading-tight {
-    @apply leading-tight;
+  // Gaps
+  &--gap-small .text__columns {
+    @apply gap-2 md:gap-4;
   }
-  &--leading-normal {
-    @apply leading-normal;
+  &--gap-medium .text__columns {
+    @apply gap-4 md:gap-6;
   }
-  &--leading-relaxed {
-    @apply leading-relaxed;
-  }
-  &--leading-loose {
-    @apply leading-loose;
+  &--gap-large .text__columns {
+    @apply gap-6 md:gap-8;
   }
 
-  // CORREÇÃO: Usando @apply diretamente para alinhamentos de texto
-  &--start {
-    @apply text-left;
+  // Tamanhos de imagem por coluna
+  &--columns-2 .text__image--center .text__image-element {
+    @apply w-32 h-32 md:w-40 md:h-40;
   }
-  &--center {
-    @apply text-center;
+  &--columns-3 .text__image--center .text__image-element {
+    @apply w-24 h-24 md:w-32 md:h-32;
   }
-  &--end {
-    @apply text-right;
-  }
-
-  // Bordas decorativas
-  @each $border in $borders {
-    &--border-#{$border} {
-      @include decorative-border($border);
-    }
+  &--columns-4 .text__image--center .text__image-element {
+    @apply w-20 h-20 md:w-28 md:h-28;
   }
 
-  // CORREÇÃO: Variantes responsivas usando @apply direto
-  &--responsive-small {
-    @apply text-base;
-    @media (min-width: map.get($breakpoints, sm)) {
-      @apply text-base;
-    }
-    @media (min-width: map.get($breakpoints, lg)) {
-      @apply text-lg;
+  // Posicionamento de imagens
+  &--image-top .text__image--top .text__image-element {
+    @apply mb-8 w-48 h-48 md:w-64 md:h-64 mx-auto;
+  }
+  &--image-center .text__columns {
+    @apply items-center;
+  }
+  &--image-center .text__image--center {
+    @apply mx-4;
+  }
+  &--image-bottom .text__image--bottom .text__image-element {
+    @apply mt-8 w-48 h-48 md:w-64 md:h-64 mx-auto;
+  }
+}
+
+// ============================================================================
+// LAYOUTS ESPECIAIS
+// ============================================================================
+
+// Sidebar
+.text--layout-sidebar {
+  .text__special-layout {
+    @apply flex flex-col md:flex-row items-start gap-8 relative;
+  }
+  .text__image--center .text__image-element {
+    @apply w-48 h-64 object-cover rounded-lg shadow-xl relative;
+    animation: gentle-float 6s ease-in-out infinite;
+  }
+  .text__content--sidebar {
+    @apply flex-1;
+  }
+  &.text--sidebar-columns-1 .text__main-content {
+    @apply columns-1;
+  }
+  &.text--sidebar-columns-2 .text__main-content {
+    @apply md:columns-2 gap-8;
+  }
+  &.text--sidebar-columns-3 .text__main-content {
+    @apply md:columns-3 gap-6;
+  }
+  .text__content--sidebar .text__main-content p {
+    @apply break-inside-avoid mb-4;
+  }
+}
+
+// Overlay
+.text--layout-overlay {
+  .text__special-layout {
+    @apply relative;
+  }
+  .text__image--center {
+    @apply relative w-full;
+  }
+  .text__image--center .text__image-element {
+    @apply w-full h-96 object-cover rounded-xl;
+  }
+  .text__content--overlay {
+    @apply absolute inset-0 flex items-end p-8;
+  }
+  .text__main-content {
+    @apply bg-black/40 backdrop-blur-sm text-white p-6 rounded-xl;
+  }
+}
+
+// Floating
+.text--layout-floating {
+  .text__special-layout {
+    @apply relative;
+  }
+  .text__image--center {
+    @apply md:float-right md:ml-6 mb-4;
+    shape-outside: circle(50%);
+    shape-margin: 1rem;
+  }
+  .text__image--center .text__image-element {
+    @apply w-40 h-40 object-cover rounded-full shadow-2xl;
+    animation: gentle-float 6s ease-in-out infinite;
+  }
+  .text__content--floating .text__main-content {
+    @apply text-justify leading-relaxed;
+    &::first-letter {
+      @apply text-4xl font-bold text-theme-primary float-left mr-2 mt-1 leading-none;
     }
   }
+}
 
-  &--responsive-medium {
-    @apply text-base;
-    @media (min-width: map.get($breakpoints, md)) {
-      @apply text-lg;
+// Magazine
+.text--layout-magazine {
+  .text__special-layout {
+    @apply grid grid-cols-1 md:grid-cols-12 gap-6 items-start;
+  }
+  .text__image--center {
+    @apply col-span-1 md:col-span-5;
+  }
+  .text__image--center .text__image-element {
+    @apply w-full h-80 object-cover rounded-lg shadow-lg;
+  }
+  .text__content--magazine {
+    @apply col-span-1 md:col-span-7 space-y-4;
+  }
+  .text__content--magazine .text__main-content {
+    @apply relative;
+    &::before {
+      @apply absolute -left-6 top-0 w-1 h-full bg-gradient-to-b from-theme-primary via-theme-accent to-transparent rounded-full;
     }
-    @media (min-width: map.get($breakpoints, lg)) {
-      @apply text-xl;
+    p:first-child {
+      @apply text-lg font-medium text-theme-primary mb-4;
+    }
+    p:not(:first-child) {
+      @apply text-base leading-relaxed mb-4;
     }
   }
+}
 
-  &--responsive-large {
-    @apply text-base;
-    @media (min-width: map.get($breakpoints, md)) {
-      @apply text-xl;
-    }
-    @media (min-width: map.get($breakpoints, lg)) {
-      @apply text-2xl;
-    }
-  }
+// ============================================================================
+// CENTRALIZAÇÃO DE IMAGENS
+// ============================================================================
 
-  // Column Layouts
-  &--column-layout {
-    @apply w-full;
-    .text__columns {
-      @apply flex items-start flex-col md:flex-row;
-    }
-    .text__column {
-      @apply flex-1;
-    }
+.text--center-image-mobile {
+  @media (max-width: 768px) {
     .text__image {
-      @apply flex justify-center items-center;
-      &--top,
-      &--bottom {
-        @apply w-full mb-6;
-      }
-      &--center {
-        @apply flex-shrink-0;
-      }
-      .text__image-element {
-        @apply rounded-lg object-cover shadow-lg max-w-full;
-      }
-      .text__image-interactive {
-        @include image-interactive;
-        @apply inline-block;
-      }
-    }
-
-    // Column and gap configuration
-    &--columns-2 .text__columns {
-      @apply gap-4;
-    }
-    &--columns-3 .text__columns {
-      @apply gap-3;
-    }
-    &--columns-4 .text__columns {
-      @apply gap-2;
-    }
-
-    &--gap-small .text__columns {
-      @apply gap-2 md:gap-4;
-    }
-    &--gap-medium .text__columns {
-      @apply gap-4 md:gap-6;
-    }
-    &--gap-large .text__columns {
-      @apply gap-6 md:gap-8;
-    }
-
-    // Image sizes within columns
-    &--columns-2 .text__image--center .text__image-element {
-      @apply w-32 h-32 md:w-40 md:h-40;
-    }
-    &--columns-3 .text__image--center .text__image-element {
-      @apply w-24 h-24 md:w-32 md:h-32;
-    }
-    &--columns-4 .text__image--center .text__image-element {
-      @apply w-20 h-20 md:w-28 md:h-28;
-    }
-
-    // Image positioning
-    &--image-top .text__image--top .text__image-element {
-      @apply mb-8 w-48 h-48 md:w-64 md:h-64 mx-auto;
-    }
-    &--image-center .text__columns {
-      @apply items-center;
-    }
-    &--image-center .text__image--center {
-      @apply mx-4;
-    }
-    &--image-bottom .text__image--bottom .text__image-element {
-      @apply mt-8 w-48 h-48 md:w-64 md:h-64 mx-auto;
-    }
-  }
-
-  // Special Layouts
-  &--layout-sidebar {
-    .text__special-layout {
-      @apply flex flex-col md:flex-row items-start gap-8 relative;
-    }
-    .text__image--center .text__image-element {
-      @apply w-48 h-64 object-cover rounded-lg shadow-xl relative;
-      border: 3px solid transparent;
-      background:
-        linear-gradient(rgb(var(--color-primary)), rgb(var(--color-surface)))
-          padding-box,
-        conic-gradient(
-            from 0deg,
-            rgb(var(--color-primary)),
-            transparent,
-            rgb(var(--color-primary))
-          )
-          border-box;
-      animation: gentle-float 6s ease-in-out infinite;
-    }
-    .text__content--sidebar {
-      @apply flex-1;
-    }
-    &.text--sidebar-columns-1 .text__main-content {
-      @apply columns-1;
-    }
-    &.text--sidebar-columns-2 .text__main-content {
-      @apply md:columns-2 gap-8;
-    }
-    &.text--sidebar-columns-3 .text__main-content {
-      @apply md:columns-3 gap-6;
-    }
-    .text__content--sidebar .text__main-content p {
-      @apply break-inside-avoid mb-4;
-    }
-  }
-
-  &--layout-overlay {
-    .text__special-layout {
-      @apply relative;
-    }
-    .text__image--center {
-      @apply relative w-full;
-    }
-    .text__image--center .text__image-element {
-      @apply w-full h-96 object-cover rounded-xl;
-    }
-    .text__content--overlay {
-      @apply absolute inset-0 flex items-end p-8;
-    }
-    .text__main-content {
-      @apply bg-black/40 backdrop-blur-sm text-theme-text p-6 rounded-xl border bg-theme-border;
-    }
-  }
-
-  &--layout-floating {
-    .text__special-layout {
-      @apply relative;
-    }
-    .text__image--center {
-      @apply md:float-right md:ml-6 mb-4;
-      shape-outside: circle(50%);
-      shape-margin: 1rem;
-    }
-    .text__image--center .text__image-element {
-      @apply w-40 h-40 object-cover rounded-full shadow-2xl ring-4 ring-white ring-opacity-80;
-      animation: gentle-float 6s ease-in-out infinite;
-    }
-    .text__content--floating .text__main-content {
-      @apply text-justify leading-relaxed;
-      &::first-letter {
-        @apply text-4xl font-bold text-theme-primary float-left mr-2 mt-1 leading-none;
-      }
-    }
-  }
-
-  &--layout-magazine {
-    .text__special-layout {
-      @apply grid grid-cols-1 md:grid-cols-12 gap-6 items-start;
-    }
-    .text__image--center {
-      @apply col-span-1 md:col-span-5;
-    }
-    .text__image--center .text__image-element {
-      @apply w-full h-80 object-cover rounded-lg shadow-lg;
-    }
-    .text__content--magazine {
-      @apply col-span-1 md:col-span-7 space-y-4;
-    }
-    .text__content--magazine .text__main-content {
-      @apply relative;
-      &::before {
-        @apply absolute -left-6 top-0 w-1 h-full bg-gradient-to-b from-theme-primary via-theme-accent to-transparent rounded-full;
-      }
-      p:first-child {
-        @apply text-lg font-medium text-theme-primary mb-4;
-      }
-      p:not(:first-child) {
-        @apply text-base leading-relaxed mb-4;
-      }
-    }
-  }
-
-  // ============================================================================
-  // CLASSES AUXILIARES PARA CENTRALIZAÇÃO
-  // ============================================================================
-
-  // Classe modificadora para forçar centralização em mobile
-  &--center-image-mobile {
-    @media (max-width: 768px) {
-      .text__image,
-      .text__image--top,
-      .text__image--center,
-      .text__image--bottom {
-        @apply mx-auto flex justify-center items-center;
-      }
-
-      .text__image-element {
-        @apply mx-auto block;
-      }
-    }
-  }
-
-  // Classe para centralização em todos os breakpoints
-  &--center-image-always {
-    .text__image,
-    .text__image--top,
-    .text__image--center,
-    .text__image--bottom {
       @apply mx-auto flex justify-center items-center;
     }
-
     .text__image-element {
       @apply mx-auto block;
     }
   }
 }
 
+.text--center-image-always {
+  .text__image {
+    @apply mx-auto flex justify-center items-center;
+  }
+  .text__image-element {
+    @apply mx-auto block;
+  }
+}
+
 // ============================================================================
-// RESPONSIVENESS
+// RESPONSIVIDADE MOBILE
 // ============================================================================
+
 @media (max-width: 768px) {
   .text--column-layout {
     .text__columns {
       @apply flex-col;
     }
-
-    // Centralização específica para imagens no mobile
     .text__image {
       @apply flex justify-center items-center mx-auto;
-
-      &--top,
-      &--bottom,
-      &--center {
-        @apply w-full flex justify-center items-center;
-      }
     }
-
     .text__image--center {
       @apply mx-auto my-4 order-first flex justify-center;
     }
-
     .text__column {
       @apply w-full;
     }
@@ -513,12 +425,9 @@ $breakpoints: (
     .text__special-layout {
       @apply flex-col gap-4;
     }
-
-    // Centralizar imagem no layout sidebar mobile
     .text__image--center {
       @apply mx-auto flex justify-center;
     }
-
     .text__content--sidebar {
       @apply pl-0 border-l-0 border-t border-theme-primary/20 pt-4;
     }
@@ -528,12 +437,9 @@ $breakpoints: (
     .text__special-layout {
       @apply grid-cols-1 gap-4;
     }
-
-    // Centralizar imagem no layout magazine mobile
     .text__image--center {
       @apply col-span-1 mx-auto flex justify-center;
     }
-
     .text__content--magazine {
       @apply col-span-1;
     }
@@ -545,10 +451,29 @@ $breakpoints: (
     }
   }
 
-  // Centralização geral para layout overlay no mobile
   .text--layout-overlay {
     .text__image--center {
       @apply flex justify-center items-center;
     }
+  }
+}
+
+// ============================================================================
+// ANIMAÇÕES
+// ============================================================================
+
+@keyframes gentle-float {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  50% {
+    transform: translateY(0px) translateX(10px);
+  }
+  75% {
+    transform: translateY(-5px) translateX(5px);
   }
 }

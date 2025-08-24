@@ -1,275 +1,180 @@
 // ============================================================================
-// LAYOUT COMPONENTS STYLES
+// LAYOUT SYSTEM - OTIMIZADO
 // ============================================================================
 
-// ============================================================================
-// VARIÁVEIS
-// ============================================================================
-$container-sizes: sm, md, lg, xl, full;
-$header-variants: default, minimal, sticky, transparent;
-$footer-variants: default, minimal, extended;
-$spacing-variants: compact, normal, relaxed;
-
-// ============================================================================
-// MIXINS
-// ============================================================================
-@mixin layout-transition {
+// Mixins globais
+@mixin transition-smooth {
   @apply transition-all duration-300 ease-in-out;
 }
-
-@mixin interactive-element {
-  @include layout-transition;
-  @apply cursor-pointer outline-none;
-
+@mixin interactive-hover {
+  @include transition-smooth;
+  @apply cursor-pointer;
   &:hover {
     @apply opacity-80;
   }
-
-  &:focus {
-    @apply outline-none;
-    // Removido o box-shadow padrão que criava a outline
+  &:focus-visible {
+    @apply outline-none ring-2 ring-theme-primary ring-offset-2 rounded;
   }
-
   &:disabled {
     @apply opacity-50 cursor-not-allowed pointer-events-none;
   }
 }
-
-@mixin blur-backdrop {
+@mixin backdrop-blur {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
 // ============================================================================
-// HEADER STYLES
+// HEADER
 // ============================================================================
+
 .header {
-  @include layout-transition;
+  @include transition-smooth;
   @apply w-full z-50;
 
   // Variantes
   &--default {
-    background-color: rgb(var(--color-surface));
-    border-color: rgb(var(--color-border));
+    @apply bg-theme-surface border-theme-border;
   }
-
   &--minimal {
     @apply bg-transparent border-none;
   }
-
   &--sticky {
-    background-color: rgb(var(--color-surface));
-    border-color: rgb(var(--color-border));
-    @include blur-backdrop;
+    @apply bg-theme-surface border-theme-border;
+    @include backdrop-blur;
   }
-
   &--transparent {
     @apply bg-transparent border-none;
-    @include blur-backdrop;
+    @include backdrop-blur;
   }
-
-  // Estados
   &--fixed {
     @apply fixed top-0;
   }
 
-  &--disabled {
-    @apply opacity-50 pointer-events-none;
-  }
-
-  // Navegação
-  .header__nav {
+  // Elementos
+  &__nav {
     @apply mx-auto px-4 py-4 flex items-center justify-between;
   }
-
-  .header__logo {
-    @include interactive-element;
-    @apply text-xl font-bold;
-    color: rgb(var(--color-text));
+  &__logo {
+    @include interactive-hover;
+    @apply text-xl font-bold theme-text-primary;
   }
 
-  .header__nav-desktop {
+  &__nav-desktop {
     @apply hidden md:flex items-center space-x-8;
   }
+  &__nav-link {
+    @include interactive-hover;
+    @apply relative theme-text-primary pb-1;
 
-  .header__nav-link {
-    @include interactive-element;
-    @apply relative outline-none;
-    color: rgb(var(--color-text));
-    padding-bottom: 4px;
-
-    // Remove outline do foco
-    &:focus {
-      @apply outline-none;
-      box-shadow: none;
-    }
-
-    // Linha inferior animada
     &::after {
       content: '';
-      @apply absolute bottom-0 left-0 w-0 h-0.5;
-      background-color: rgb(var(--color-primary));
+      @apply absolute bottom-0 left-0 w-0 h-0.5 bg-theme-primary;
       transition: width 0.3s ease-in-out;
     }
 
     &--active {
-      @apply font-medium;
-      color: rgb(var(--color-primary));
-
+      @apply font-medium theme-text-primary;
       &::after {
         @apply w-full;
       }
     }
 
-    // Efeito hover opcional
     &:hover:not(.header__nav-link--active)::after {
       @apply w-full opacity-50;
     }
   }
 
-  .header__controls {
+  &__controls {
     @apply flex items-center space-x-2;
   }
-
-  .header__theme-toggle {
-    @include interactive-element;
-    @apply p-2;
-    color: rgb(var(--color-text));
+  &__theme-toggle,
+  &__mobile-toggle {
+    @include interactive-hover;
+    @apply p-2 theme-text-primary;
   }
 
-  .header__mobile-toggle {
-    @include interactive-element;
-    @apply md:hidden p-2;
-    color: rgb(var(--color-text));
-  }
+  // Mobile menu
+  &__mobile-menu {
+    @apply md:hidden border-t theme-border;
+    animation: slideDown 0.2s ease-out;
 
-  // Menu mobile
-  .header__mobile-menu {
-    @apply md:hidden border-t;
-    border-color: rgb(var(--color-border));
-
-    .header__mobile-nav {
+    &-nav {
       @apply mx-auto px-4 py-2 space-y-1;
     }
+    &-link {
+      @include interactive-hover;
+      @apply block w-full text-left py-2 px-3 rounded relative theme-text-primary;
 
-    .header__mobile-link {
-      @include interactive-element;
-      @apply block w-full text-left py-2 px-3 rounded relative outline-none;
-      color: rgb(var(--color-text));
-
-      // Remove outline do foco
-      &:focus {
-        @apply outline-none;
-        box-shadow: none;
-      }
-
-      // Linha lateral para mobile
       &::before {
         content: '';
-        @apply absolute left-0 top-0 w-0 h-full;
-        background-color: rgb(var(--color-primary));
+        @apply absolute left-0 top-0 w-0 h-full bg-theme-primary;
         transition: width 0.3s ease-in-out;
       }
 
       &--active {
-        color: rgb(var(--color-text));
-        background-color: rgb(var(--color-accent) / 0.1);
-
+        @apply bg-theme-accent/10;
         &::before {
           @apply w-1;
         }
       }
 
       &:not(.header__mobile-link--active):hover {
-        color: rgb(var(--color-text));
-        background-color: rgb(var(--color-accent) / 0.05);
+        @apply bg-theme-accent/5;
       }
     }
   }
 }
 
 // ============================================================================
-// FOOTER STYLES
+// FOOTER
 // ============================================================================
+
 .footer {
-  @include layout-transition;
+  @include transition-smooth;
   @apply mt-auto;
 
   // Variantes
   &--default {
-    background-color: rgb(var(--color-surface));
-    border-color: rgb(var(--color-border));
-    @apply border-t;
+    @apply bg-theme-surface border-t theme-border;
   }
-
   &--minimal {
     @apply bg-transparent border-none;
   }
-
   &--extended {
-    background-color: rgb(var(--color-surface));
-    border-color: rgb(var(--color-border));
-    @apply border-t;
-  }
-
-  // Estados
-  &--compact {
-    .footer__content {
-      @apply py-4;
-    }
+    @apply bg-theme-surface border-t theme-border;
   }
 
   // Layout
-  .footer__content {
+  &__content {
     @apply mx-auto px-4 py-6;
   }
-
-  .footer__wrapper {
+  &__wrapper {
     @apply flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0;
   }
 
-  .footer__links {
+  &__links {
     @apply flex space-x-6 text-sm;
+  }
+  &__link {
+    @include interactive-hover;
+    @apply text-sm theme-text-primary;
 
-    &--extended {
-      @apply flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-6;
+    &--external::after {
+      content: ' ↗';
+      @apply text-xs opacity-60;
     }
   }
 
-  .footer__link {
-    @include interactive-element;
-    @apply text-sm;
-    color: rgb(var(--color-text));
-
-    &:hover {
-      color: rgb(var(--color-text));
-    }
-
-    &--external {
-      &:after {
-        content: ' ↗';
-        @apply text-xs opacity-60;
-      }
-    }
-  }
-
-  .footer__social {
+  &__social {
     @apply flex items-center space-x-4 mt-4 sm:mt-0;
   }
-
-  .footer__social-link {
-    @include interactive-element;
-    @apply text-lg;
-    color: rgb(var(--color-text));
-
-    &:hover {
-      color: rgb(var(--color-text));
-    }
+  &__social-link {
+    @include interactive-hover;
+    @apply text-lg theme-text-primary;
   }
-
-  .footer__copyright {
-    @apply text-sm;
-    color: rgb(var(--color-text));
+  &__copyright {
+    @apply text-sm theme-text-secondary;
   }
 
   // Layout extendido
@@ -277,130 +182,89 @@ $spacing-variants: compact, normal, relaxed;
     .footer__wrapper {
       @apply flex-col space-y-6;
     }
-
     .footer__main {
       @apply flex flex-col sm:flex-row justify-between items-start w-full space-y-4 sm:space-y-0;
     }
-
     .footer__bottom {
-      @apply flex flex-col sm:flex-row justify-between items-center w-full pt-4 space-y-2 sm:space-y-0;
-      border-top: 1px solid rgb(var(--color-border));
+      @apply flex flex-col sm:flex-row justify-between items-center w-full pt-4 space-y-2 sm:space-y-0 border-t theme-border;
     }
   }
 }
 
 // ============================================================================
-// MAIN LAYOUT STYLES
+// MAIN LAYOUT
 // ============================================================================
+
 .main-layout {
-  @apply min-h-screen flex flex-col;
-  background-color: rgb(var(--color-background));
-  color: rgb(var(--color-text));
+  @apply min-h-screen flex flex-col bg-theme-background theme-text-primary;
   transition: var(--transition-theme);
 
-  // Variantes de espaçamento
+  // Espaçamentos
   &--compact {
     @apply space-y-24;
   }
-
   &--normal {
     @apply space-y-48;
   }
-
   &--relaxed {
     @apply space-y-64;
   }
 
-  // Layout principal
-  .main-layout__content {
+  &__content {
     @apply flex-grow mx-auto w-full pb-8;
   }
-
-  .main-layout__container {
+  &__container {
     @apply mx-auto w-full;
   }
 }
 
 // ============================================================================
-// CONTAINER SIZES
+// CONTAINERS
 // ============================================================================
+
 .layout-container {
   @apply mx-auto;
 
   &--sm {
     @apply max-w-2xl px-4;
   }
-
   &--md {
     @apply max-w-4xl px-4;
   }
-
   &--lg {
     @apply max-w-screen-2xl px-4;
   }
-
   &--xl {
     @apply max-w-screen-2xl px-4;
   }
-
   &--full {
     @apply max-w-full px-4;
   }
 }
 
-// Aplicar containers nos componentes
-.header__nav {
-  @apply mx-auto px-4 py-4 flex items-center justify-between;
-}
-
-.footer__content {
-  @apply mx-auto px-4 py-6;
-}
-
-.main-layout__container {
-  @apply mx-auto w-full;
-}
-
 // ============================================================================
 // RESPONSIVIDADE
 // ============================================================================
+
 @media (max-width: 640px) {
-  .header__nav {
+  .header__nav,
+  .footer__content {
     @apply px-3 py-3;
   }
-
-  .footer__content {
-    @apply px-3 py-4;
-  }
-
   .main-layout--compact {
     @apply space-y-16;
   }
-
   .main-layout--normal {
     @apply space-y-24;
   }
-
   .main-layout--relaxed {
     @apply space-y-32;
   }
 }
 
 // ============================================================================
-// ESTADOS ESPECIAIS
+// ANIMAÇÕES
 // ============================================================================
-.header--scrolled {
-  @apply shadow-sm;
-}
-
-.footer--sticky {
-  @apply sticky bottom-0;
-}
-
-// Animações
-.header__mobile-menu {
-  animation: slideDown 0.2s ease-out;
-}
 
 @keyframes slideDown {
   from {

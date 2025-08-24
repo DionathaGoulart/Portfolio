@@ -1,39 +1,26 @@
 // ============================================================================
-// TAG STYLES - Otimizado e Organizado
+// TAG SYSTEM - OTIMIZADO
 // ============================================================================
 
-// ============================================================================
-// VARIÁVEIS E CONFIGURAÇÕES
-// ============================================================================
-$tag-scale: 1.05;
-$theme-colors:
+// Configurações
+$colors:
   primary, secondary, accent, text, textSecondary, error, success, warning;
+$variants: solid, outline, ghost;
+$sizes: small, medium, large;
 
-// ============================================================================
-// MIXINS
-// ============================================================================
-@mixin tag-transition {
-  @apply transform transition-all duration-200 ease-in-out;
-}
+// Mixins
+@mixin tag-base {
+  @apply transform transition-all duration-200 ease-in-out inline-flex items-center justify-center font-medium rounded-full;
 
-@mixin tag-hover-effect {
-  transform: scale($tag-scale);
-}
-
-@mixin tag-focus-ring($color: primary) {
-  outline: none;
   &:focus-visible {
+    outline: none;
     box-shadow:
       0 0 0 2px rgb(var(--color-background)),
-      0 0 0 4px rgb(var(--color-#{$color}) / 0.5);
+      0 0 0 4px rgb(var(--color-primary) / 0.5);
   }
 }
 
 @mixin tag-variant($variant, $color) {
-  @include tag-transition;
-  @include tag-focus-ring($color);
-
-  // Lógica para as variantes solid, outline e ghost
   @if $variant == solid {
     background-color: rgb(var(--color-#{$color}));
     color: rgb(var(--color-text));
@@ -42,20 +29,13 @@ $theme-colors:
     @if $color == text {
       background-color: rgb(var(--color-text));
       color: rgb(var(--color-background));
-      border-color: rgb(var(--color-text));
     } @else if $color == textSecondary {
       background-color: rgb(var(--color-textSecondary));
       color: rgb(var(--color-text));
-      border-color: rgb(var(--color-textSecondary));
     }
 
     &.tag--interactive:hover:not(.tag--disabled) {
       background-color: rgb(var(--color-#{$color}) / 0.8);
-      @if $color == text {
-        background-color: rgb(var(--color-text) / 0.8);
-      } @else if $color == textSecondary {
-        background-color: rgb(var(--color-textSecondary) / 0.8);
-      }
     }
   } @else if $variant == outline {
     background-color: transparent;
@@ -79,14 +59,15 @@ $theme-colors:
 // ============================================================================
 // BASE
 // ============================================================================
+
 .tag {
-  @apply inline-flex items-center justify-center font-medium rounded-full;
+  @include tag-base;
 
   // Estados
   &--interactive {
     @apply cursor-pointer;
     &:hover:not(.tag--disabled) {
-      @include tag-hover-effect;
+      transform: scale(1.05);
     }
   }
 
@@ -101,6 +82,7 @@ $theme-colors:
 // ============================================================================
 // TAMANHOS
 // ============================================================================
+
 .tag--small {
   @apply text-xs px-2 py-0.5;
 }
@@ -112,38 +94,27 @@ $theme-colors:
 }
 
 // ============================================================================
-// CORES E VARIANTES
+// VARIANTES DE COR
 // ============================================================================
-@each $color in $theme-colors {
-  .tag--solid-#{$color} {
-    @include tag-variant(solid, $color);
-  }
-  .tag--outline-#{$color} {
-    @include tag-variant(outline, $color);
-  }
-  .tag--ghost-#{$color} {
-    @include tag-variant(ghost, $color);
+
+@each $color in $colors {
+  @each $variant in $variants {
+    .tag--#{$variant}-#{$color} {
+      @include tag-variant($variant, $color);
+    }
   }
 }
 
 // ============================================================================
 // MODIFICADORES
 // ============================================================================
+
 .tag {
   // Com ícone
   &--with-icon {
     @apply gap-1;
     &__icon {
       @apply flex-shrink-0;
-    }
-    &.tag--small .tag--with-icon__icon {
-      @apply w-2.5 h-2.5;
-    }
-    &.tag--medium .tag--with-icon__icon {
-      @apply w-3 h-3;
-    }
-    &.tag--large .tag--with-icon__icon {
-      @apply w-4 h-4;
     }
   }
 
@@ -163,7 +134,36 @@ $theme-colors:
     @apply relative;
     &__badge {
       @apply absolute -top-1 -right-1 min-w-4 h-4 flex items-center justify-center;
-      @apply text-xs rounded-full bg-theme-error text-white px-1;
+      @apply text-xs rounded-full bg-red-500 text-white px-1;
+    }
+  }
+}
+
+// Ícones por tamanho
+.tag--small.tag--with-icon .tag__icon {
+  @apply w-2.5 h-2.5;
+}
+.tag--medium.tag--with-icon .tag__icon {
+  @apply w-3 h-3;
+}
+.tag--large.tag--with-icon .tag__icon {
+  @apply w-4 h-4;
+}
+
+// ============================================================================
+// STATUS TAGS
+// ============================================================================
+
+@each $status, $color in (online: success, offline: error, pending: warning) {
+  .tag--status-#{$status} {
+    @apply text-xs px-2 py-0.5 relative;
+    background-color: rgb(var(--color-#{$color}) / 0.1);
+    color: rgb(var(--color-#{$color}));
+
+    &::before {
+      content: '';
+      @apply w-2 h-2 rounded-full mr-1;
+      background-color: rgb(var(--color-#{$color}));
     }
   }
 }
@@ -171,39 +171,10 @@ $theme-colors:
 // ============================================================================
 // CONTAINERS
 // ============================================================================
+
 .tag-group {
   @apply flex flex-wrap gap-2;
   &--compact {
     @apply gap-1;
-  }
-}
-
-// ============================================================================
-// STATUS TAGS (especiais)
-// ============================================================================
-.tag {
-  &--status-online {
-    @include tag-variant(ghost, success);
-    @apply text-xs px-2 py-0.5 relative;
-    &::before {
-      content: '';
-      @apply w-2 h-2 bg-theme-success rounded-full mr-1;
-    }
-  }
-  &--status-offline {
-    @include tag-variant(ghost, error);
-    @apply text-xs px-2 py-0.5 relative;
-    &::before {
-      content: '';
-      @apply w-2 h-2 bg-theme-error rounded-full mr-1;
-    }
-  }
-  &--status-pending {
-    @include tag-variant(ghost, warning);
-    @apply text-xs px-2 py-0.5 relative;
-    &::before {
-      content: '';
-      @apply w-2 h-2 bg-theme-warning rounded-full mr-1;
-    }
   }
 }

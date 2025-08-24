@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextProps } from '../types'
+import { TextProps, ImageResource } from '../types'
 
 export const Text: React.FC<TextProps> = ({
   // Conteúdo
@@ -36,6 +36,18 @@ export const Text: React.FC<TextProps> = ({
   // ============================================================================
   const Element = as
   const hasColumnLayout = columnLayout?.enabled
+
+  // ============================================================================
+  // UTILITÁRIO PARA RESOLVER IMAGEM
+  // ============================================================================
+  const resolveImageSrc = (src: ImageResource): string => {
+    if (typeof src === 'string') {
+      return src
+    }
+    // Se for um objeto, pega o primeiro valor string encontrado
+    const firstValue = Object.values(src)[0]
+    return typeof firstValue === 'string' ? firstValue : ''
+  }
 
   // ============================================================================
   // CLASSES CSS
@@ -134,10 +146,11 @@ export const Text: React.FC<TextProps> = ({
     if (!image) return null
 
     const isInteractive = Boolean(image.onClick)
+    const resolvedSrc = resolveImageSrc(image.src)
 
     const imageElement = (
       <img
-        src={image.src}
+        src={resolvedSrc}
         alt={image.alt}
         className={`text__image-element ${image.className || ''}`}
       />

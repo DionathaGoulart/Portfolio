@@ -3,6 +3,7 @@ import { analytics } from '@/features/Analytics/utils/analytics'
 import { Title } from '@/shared/ui/Title'
 import { Text } from '@/shared/ui/Text'
 import { Card, CardsContainer } from '@/shared/ui/Card'
+import { images } from '@/assets/images'
 
 interface SobreProps {
   id?: string
@@ -103,7 +104,7 @@ const SobreSection: React.FC<SobreProps> = ({ id = 'sobre-mim' }) => {
                 imagePosition: 'center',
                 gap: 'large',
                 image: {
-                  src: '/me.jpg',
+                  src: images.me,
                   alt: 'Foto do desenvolvedor',
                   onClick: () => {
                     // TRACKING: Rastrear clique na foto

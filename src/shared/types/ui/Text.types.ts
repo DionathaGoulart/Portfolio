@@ -19,8 +19,10 @@ export type TextBorder = 'none' | 'start' | 'center' | 'end'
 // ============================================================================
 // TYPES PARA LAYOUT DE COLUNAS E ESPECIAIS
 // ============================================================================
+export type ImageResource = string | Record<string, string>
+
 export interface TextColumnImage {
-  src: string
+  src: ImageResource
   alt: string
   className?: string
   onClick?: () => void
@@ -50,37 +52,29 @@ export interface TextColumnConfig {
 export interface TextProps {
   // Conteúdo
   children: ReactNode
-
   // Estrutura
   as?: TextElement
-
   // Aparência
   size?: Size
   align?: Align
   color?: ColorVariant
   weight?: Weight
-
   // Modificadores de estilo
   style?: Style
   leading?: TextLeading
-
   // Comportamentos de texto
   truncate?: boolean
   breakWords?: boolean
-
   // Modificadores visuais
   highlight?: boolean
   code?: boolean
   gradient?: boolean
   shadow?: Shadow
   border?: TextBorder
-
   // Responsividade
   responsive?: TextResponsiveSize
-
   // Layout de colunas e especiais
   columnLayout?: TextColumnConfig
-
   // HTML attributes
   className?: string
   id?: string

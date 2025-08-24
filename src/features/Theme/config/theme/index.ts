@@ -3,17 +3,17 @@ import { ThemeConfig } from '../../types/theme.types'
 export const lightTheme: ThemeConfig = {
   name: 'light',
   colors: {
-    primary: '59 130 246', // #3b82f6 -> rgb
-    secondary: '100 116 139', // #64748b -> rgb
-    accent: '139 92 246', // #8b5cf6 -> rgb
-    background: '255 255 255', // #ffffff -> rgb
-    surface: '248 250 252', // #f8fafc -> rgb
-    text: '15 23 42', // #0f172a -> rgb
-    textSecondary: '248 250 252', // #f8fafc -> rgb
-    border: '226 232 240', // #e2e8f0 -> rgb
-    error: '239 68 68', // #ef4444 -> rgb
-    success: '34 197 94', // #22c55e -> rgb
-    warning: '245 158 11' // #f59e0b -> rgb
+    primary: '247 150 102', // #F79666 -> rgb
+    secondary: '118 102 96', // #766660 -> rgb
+    accent: '124 77 255', // #7C4DFF -> rgb
+    background: '255 251 245', // #FFFBF5 -> rgb
+    surface: '249 243 234', // #F9F3EA -> rgb
+    text: '38 29 23', // #261D17 -> rgb
+    textSecondary: '255 251 245', // #FFFBF5 -> rgb
+    border: '221 217 210', // #DDD9D2 -> rgb
+    error: '239 68 68', // #EF4444 -> rgb
+    success: '34 197 94', // #22C55E -> rgb
+    warning: '255 193 7' // #FFC107 -> rgb
   }
 }
 

@@ -3,7 +3,7 @@
 // ============================================================================
 
 // ============================================================================
-// VARIÁVEIS
+// VARIÁVEIS E CONFIGURAÇÕES
 // ============================================================================
 $tag-scale: 1.05;
 $theme-colors:
@@ -33,58 +33,42 @@ $theme-colors:
   @include tag-transition;
   @include tag-focus-ring($color);
 
+  // Lógica para as variantes solid, outline e ghost
   @if $variant == solid {
+    background-color: rgb(var(--color-#{$color}));
+    color: rgb(var(--color-text));
+    border: 1px solid rgb(var(--color-#{$color}));
+
     @if $color == text {
       background-color: rgb(var(--color-text));
       color: rgb(var(--color-background));
-      border: 1px solid rgb(var(--color-text));
-
-      &.tag--interactive:hover:not(.tag--disabled) {
-        background-color: rgb(var(--color-text) / 0.8);
-      }
+      border-color: rgb(var(--color-text));
     } @else if $color == textSecondary {
       background-color: rgb(var(--color-textSecondary));
       color: rgb(var(--color-text));
-      border: 1px solid rgb(var(--color-textSecondary));
+      border-color: rgb(var(--color-textSecondary));
+    }
 
-      &.tag--interactive:hover:not(.tag--disabled) {
+    &.tag--interactive:hover:not(.tag--disabled) {
+      background-color: rgb(var(--color-#{$color}) / 0.8);
+      @if $color == text {
+        background-color: rgb(var(--color-text) / 0.8);
+      } @else if $color == textSecondary {
         background-color: rgb(var(--color-textSecondary) / 0.8);
       }
-    } @else {
-      background-color: rgb(var(--color-#{$color}));
-      color: rgb(var(--color-text));
-      border: 1px solid rgb(var(--color-#{$color}));
-
-      &.tag--interactive:hover:not(.tag--disabled) {
-        background-color: rgb(var(--color-#{$color}) / 0.8);
-      }
     }
-  }
-
-  @if $variant == outline {
+  } @else if $variant == outline {
     background-color: transparent;
     border: 1px solid rgb(var(--color-#{$color}));
-
-    @if $color == text or $color == textSecondary {
-      color: rgb(var(--color-#{$color}));
-    } @else {
-      color: rgb(var(--color-#{$color}));
-    }
+    color: rgb(var(--color-#{$color}));
 
     &.tag--interactive:hover:not(.tag--disabled) {
       background-color: rgb(var(--color-#{$color}) / 0.1);
     }
-  }
-
-  @if $variant == ghost {
+  } @else if $variant == ghost {
     background-color: rgb(var(--color-#{$color}) / 0.1);
     border: 1px solid transparent;
-
-    @if $color == text or $color == textSecondary {
-      color: rgb(var(--color-#{$color}));
-    } @else {
-      color: rgb(var(--color-#{$color}));
-    }
+    color: rgb(var(--color-#{$color}));
 
     &.tag--interactive:hover:not(.tag--disabled) {
       background-color: rgb(var(--color-#{$color}) / 0.2);
@@ -101,7 +85,6 @@ $theme-colors:
   // Estados
   &--interactive {
     @apply cursor-pointer;
-
     &:hover:not(.tag--disabled) {
       @include tag-hover-effect;
     }
@@ -109,7 +92,6 @@ $theme-colors:
 
   &--disabled {
     @apply opacity-50 cursor-not-allowed;
-
     &:hover {
       transform: none !important;
     }
@@ -132,23 +114,13 @@ $theme-colors:
 // ============================================================================
 // CORES E VARIANTES
 // ============================================================================
-
-// Solid
 @each $color in $theme-colors {
   .tag--solid-#{$color} {
     @include tag-variant(solid, $color);
   }
-}
-
-// Outline
-@each $color in $theme-colors {
   .tag--outline-#{$color} {
     @include tag-variant(outline, $color);
   }
-}
-
-// Ghost
-@each $color in $theme-colors {
   .tag--ghost-#{$color} {
     @include tag-variant(ghost, $color);
   }
@@ -157,46 +129,42 @@ $theme-colors:
 // ============================================================================
 // MODIFICADORES
 // ============================================================================
-
-// Com ícone
-.tag--with-icon {
-  @apply gap-1;
-
-  &__icon {
-    @apply flex-shrink-0;
-  }
-
-  &.tag--small .tag--with-icon__icon {
-    @apply w-2.5 h-2.5;
-  }
-  &.tag--medium .tag--with-icon__icon {
-    @apply w-3 h-3;
-  }
-  &.tag--large .tag--with-icon__icon {
-    @apply w-4 h-4;
-  }
-}
-
-// Removível
-.tag--removable {
-  @apply pr-1;
-
-  &__remove-btn {
-    @apply ml-1 hover:bg-black/10 rounded-full p-0.5 transition-colors;
-
-    &-icon {
+.tag {
+  // Com ícone
+  &--with-icon {
+    @apply gap-1;
+    &__icon {
+      @apply flex-shrink-0;
+    }
+    &.tag--small .tag--with-icon__icon {
+      @apply w-2.5 h-2.5;
+    }
+    &.tag--medium .tag--with-icon__icon {
       @apply w-3 h-3;
     }
+    &.tag--large .tag--with-icon__icon {
+      @apply w-4 h-4;
+    }
   }
-}
 
-// Com badge
-.tag--with-badge {
-  @apply relative;
+  // Removível
+  &--removable {
+    @apply pr-1;
+    &__remove-btn {
+      @apply ml-1 hover:bg-black/10 rounded-full p-0.5 transition-colors;
+      &-icon {
+        @apply w-3 h-3;
+      }
+    }
+  }
 
-  &__badge {
-    @apply absolute -top-1 -right-1 min-w-4 h-4 flex items-center justify-center;
-    @apply text-xs rounded-full bg-theme-error text-white px-1;
+  // Com badge
+  &--with-badge {
+    @apply relative;
+    &__badge {
+      @apply absolute -top-1 -right-1 min-w-4 h-4 flex items-center justify-center;
+      @apply text-xs rounded-full bg-theme-error text-white px-1;
+    }
   }
 }
 
@@ -205,7 +173,6 @@ $theme-colors:
 // ============================================================================
 .tag-group {
   @apply flex flex-wrap gap-2;
-
   &--compact {
     @apply gap-1;
   }
@@ -214,32 +181,29 @@ $theme-colors:
 // ============================================================================
 // STATUS TAGS (especiais)
 // ============================================================================
-.tag--status-online {
-  @include tag-variant(ghost, success);
-  @apply text-xs px-2 py-0.5 relative;
-
-  &::before {
-    content: '';
-    @apply w-2 h-2 bg-theme-success rounded-full mr-1;
+.tag {
+  &--status-online {
+    @include tag-variant(ghost, success);
+    @apply text-xs px-2 py-0.5 relative;
+    &::before {
+      content: '';
+      @apply w-2 h-2 bg-theme-success rounded-full mr-1;
+    }
   }
-}
-
-.tag--status-offline {
-  @include tag-variant(ghost, error);
-  @apply text-xs px-2 py-0.5 relative;
-
-  &::before {
-    content: '';
-    @apply w-2 h-2 bg-theme-error rounded-full mr-1;
+  &--status-offline {
+    @include tag-variant(ghost, error);
+    @apply text-xs px-2 py-0.5 relative;
+    &::before {
+      content: '';
+      @apply w-2 h-2 bg-theme-error rounded-full mr-1;
+    }
   }
-}
-
-.tag--status-pending {
-  @include tag-variant(ghost, warning);
-  @apply text-xs px-2 py-0.5 relative;
-
-  &::before {
-    content: '';
-    @apply w-2 h-2 bg-theme-warning rounded-full mr-1;
+  &--status-pending {
+    @include tag-variant(ghost, warning);
+    @apply text-xs px-2 py-0.5 relative;
+    &::before {
+      content: '';
+      @apply w-2 h-2 bg-theme-warning rounded-full mr-1;
+    }
   }
 }

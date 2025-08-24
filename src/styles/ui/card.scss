@@ -1,314 +1,63 @@
 // ============================================================================
-// CARD STYLES - Completo e Organizado
+// COMPONENTE: CARD
+// Descrição: Estilos para um componente de card com efeitos de profundidade e interatividade.
 // ============================================================================
 
 // ============================================================================
-// VARIÁVEIS
+// CONFIGURAÇÕES E VARIÁVEIS
 // ============================================================================
-$card-scale: 1.02;
-$card-shadow-opacity: 0.1;
-$theme-colors:
-  primary, secondary, accent, text, textSecondary, error, success, warning;
+
+// Níveis de elevação (box-shadow) para diferentes estados
+$shadow-elevation-1: 0 8px 20px -8px rgba(0, 0, 0, 0.08); // Elevação inicial sutil
+$shadow-elevation-2: 0 16px 30px -10px rgba(0, 0, 0, 0.15); // Elevação no hover
+
+// Escala de transformação no hover
+$card-scale-hover: 1.02;
 
 // ============================================================================
-// MIXINS
+// MIXINS E FUNÇÕES
 // ============================================================================
-@mixin card-transition {
-  @apply transform transition-all duration-200 ease-in-out;
+
+// Mixin para transições suaves em todos os estados
+@mixin smooth-transition {
+  @apply transform transition-all duration-300 ease-in-out;
 }
 
-@mixin card-hover-effect {
-  transform: scale(#{$card-scale});
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, $card-shadow-opacity);
+// Efeito visual aplicado ao hover e focus
+@mixin card-interactive-effect {
+  transform: scale(#{$card-scale-hover}) translateY(-3px);
+  box-shadow: $shadow-elevation-2;
 }
 
+// Anel de foco acessível
 @mixin card-focus-ring($color: primary) {
   outline: none;
   &:focus-visible {
+    // Foco de acessibilidade com cores baseadas no tema
     box-shadow:
-      0 0 0 2px rgb(var(--color-background)),
+      0 0 0 2px rgb(var(--color-surface)),
       0 0 0 4px rgb(var(--color-#{$color}) / 0.5);
   }
 }
 
-// ============================================================================
-// BASE
-// ============================================================================
-.card {
-  @include card-transition;
-  @apply border rounded-lg;
-
-  // Estados
-  &--clickable {
-    @apply cursor-pointer;
-    @include card-focus-ring;
-
-    &:hover:not(.card--disabled) {
-      @include card-hover-effect;
-    }
-  }
-
-  &--disabled {
-    @apply opacity-50 cursor-not-allowed;
-
-    &:hover {
-      transform: none !important;
-      box-shadow: none !important;
-    }
-  }
-
-  &--loading {
-    @apply relative overflow-hidden;
-
-    &::after {
-      content: '';
-      @apply absolute inset-0;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.4),
-        transparent
-      );
-      animation: shimmer 2s infinite;
-    }
-  }
-
-  &--elevated {
-    box-shadow:
-      0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
-
-    &.card--clickable:hover:not(.card--disabled) {
-      box-shadow:
-        0 20px 25px -5px rgba(0, 0, 0, 0.1),
-        0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
-  }
-
-  // ============================================================================
-  // ELEMENTOS INTERNOS
-  // ============================================================================
-
-  // Header (usado no layout with-icon)
-  &__header {
-    @apply flex items-center gap-2 mb-2;
-  }
-
-  &__icon {
-    @apply flex-shrink-0;
-  }
-
-  // Badge (usado no layout varied)
-  &__badge {
-    @apply absolute top-4 right-4;
-  }
-
-  // Content (usado no layout varied)
-  &__content {
-    @apply space-y-4;
-  }
-
-  // Tags (usado no layout varied)
-  &__tags {
-    @apply flex flex-wrap gap-2 mt-4;
-  }
-
-  // ============================================================================
-  // TEXTO E CORES DOS ELEMENTOS
-  // ============================================================================
-
-  // Fallback para elementos que não tenham as classes específicas
-  .title,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply text-theme-text;
-  }
-
-  .text,
-  p {
-    @apply text-theme-text;
-
-    &--primary {
-      @apply text-theme-text;
-    }
-    &--secondary {
-      @apply text-theme-text-secondary;
-    }
-  }
-}
-
-// ============================================================================
-// CORES
-// ============================================================================
+// Estilos de cor para o card.
+// Usa o nome da cor para gerar o fundo e a borda.
 @mixin card-color-variant($color) {
+  // Se for a cor padrão, aplica estilos neutros
   @if $color == default {
     @apply bg-theme-surface border-theme-border;
-
-    &.card--clickable:hover:not(.card--disabled) {
-      @apply bg-opacity-90;
-    }
   } @else {
-    background-color: rgb(var(--color-#{$color}) / 0.05);
-    border-color: rgb(var(--color-#{$color}) / 0.2);
-
-    &.card--clickable:hover:not(.card--disabled) {
-      background-color: rgb(var(--color-#{$color}) / 0.1);
-    }
-  }
-}
-
-// Gerar variantes de cor
-.card--default {
-  @include card-color-variant(default);
-}
-@each $color in $theme-colors {
-  .card--#{$color} {
-    @include card-color-variant($color);
-  }
-}
-
-// Bordas customizadas
-@each $color in $theme-colors {
-  .card--border-#{$color} {
-    border-color: rgb(var(--color-#{$color}) / 0.3) !important;
-  }
-}
-
-// ============================================================================
-// LAYOUTS
-// ============================================================================
-
-// Horizontal
-.card--horizontal {
-  @apply flex flex-col justify-center;
-
-  &.card--pequeno {
-    @apply min-h-12 sm:min-h-16 p-2 sm:p-3;
-  }
-
-  &.card--medio {
-    @apply min-h-16 sm:min-h-20 p-3 sm:p-4;
-  }
-
-  &.card--grande {
-    @apply min-h-20 sm:min-h-24 p-4 sm:p-5;
-  }
-
-  // Espaçamento entre título e subtítulo
-  .title + .text {
-    @apply mt-1;
-  }
-}
-
-// With Icon
-.card--with-icon {
-  @apply p-6;
-
-  &.card--compact {
-    @apply p-4;
-  }
-
-  .card__header {
-    @apply mb-2;
-  }
-
-  .card__icon {
-    @apply text-theme-text;
-  }
-
-  .title {
-    @apply font-semibold;
-  }
-
-  .text {
-    @apply text-theme-text-secondary;
-  }
-}
-
-// Varied
-.card--varied {
-  @apply p-6 rounded-2xl relative;
-
-  &.card--compact {
-    @apply p-4;
-  }
-
-  .card__content {
-    @apply pr-16; // Espaço para o badge
-  }
-
-  .title {
-    @apply font-semibold;
-  }
-
-  .text {
-    &:first-of-type {
-      @apply text-theme-text-secondary;
-    }
-
-    &:not(:first-of-type) {
-      @apply text-theme-text;
-    }
-  }
-
-  .card__tags {
-    @apply pt-2;
-  }
-}
-
-// ============================================================================
-// ALINHAMENTOS
-// ============================================================================
-.card--align-start {
-  @apply text-left items-start;
-}
-
-.card--align-center {
-  @apply text-center items-center;
-}
-
-.card--align-end {
-  @apply text-right items-end;
-}
-
-// ============================================================================
-// CONTAINERS
-// ============================================================================
-.cards-grid {
-  @apply grid gap-4;
-
-  &--1 {
-    @apply grid-cols-1;
-  }
-
-  &--2 {
-    @apply grid-cols-1 sm:grid-cols-2;
-  }
-
-  &--3 {
-    @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
-  }
-
-  &--4 {
-    @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-4;
-  }
-}
-
-.cards-list {
-  @apply space-y-4;
-
-  &--compact {
-    @apply space-y-2;
+    // Caso contrário, aplica um fundo semi-transparente para o "glassmorphism"
+    background-color: rgb(var(--color-#{$color}) / 0.15);
+    border-color: rgb(var(--color-#{$color}) / 0.3);
   }
 }
 
 // ============================================================================
 // ANIMAÇÕES
 // ============================================================================
+
+// Animação de brilho para estado de carregamento
 @keyframes shimmer {
   0% {
     transform: translateX(-100%);
@@ -316,4 +65,121 @@ $theme-colors:
   100% {
     transform: translateX(100%);
   }
+}
+
+// ============================================================================
+// ESTILOS BASE DO COMPONENTE
+// ============================================================================
+
+.card {
+  @include smooth-transition;
+  @apply border rounded-2xl p-6 relative;
+
+  // Aplica a sombra inicial para dar profundidade
+  box-shadow: $shadow-elevation-1;
+
+  // Borda interna pontilhada para um detalhe sutil
+  &::before {
+    content: '';
+    @apply absolute inset-2 rounded-xl border border-dotted;
+    border-color: rgb(var(--color-border));
+    z-index: 1;
+  }
+
+  // --- SUBCOMPONENTES ---
+  &__header {
+    @apply flex items-center gap-4 mb-3;
+  }
+  &__icon {
+    @apply flex-shrink-0 text-3xl; // Ícone maior e mais destacado
+  }
+  &__badge {
+    @apply absolute top-4 right-4;
+  }
+  &__content {
+    @apply space-y-3;
+  }
+  &__tags {
+    @apply flex flex-wrap gap-2 mt-4;
+  }
+
+  // --- TIPOGRAFIA ---
+  &__title {
+    @apply text-xl font-bold;
+  }
+  &__text {
+    @apply text-base text-theme-text/60 leading-relaxed;
+  }
+
+  // --- ESTADOS DO CARD ---
+  &--clickable {
+    @apply cursor-pointer;
+    @include card-focus-ring;
+    &:hover:not(.card--disabled) {
+      @include card-interactive-effect;
+    }
+  }
+
+  &--disabled {
+    @apply opacity-40 cursor-not-allowed;
+    // Anula efeitos de hover/focus quando desabilitado
+    &:hover {
+      @apply transform-none shadow-none;
+    }
+  }
+
+  &--loading {
+    @apply relative overflow-hidden;
+    &::after {
+      content: '';
+      @apply absolute inset-0;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.8),
+        transparent
+      );
+      animation: shimmer 2s infinite;
+    }
+  }
+
+  // --- VARIAÇÕES DE COR ---
+  &--default {
+    @include card-color-variant(default);
+  }
+  // Aplica as variações de cor para cada tema
+  @each $color
+    in (
+      primary,
+      secondary,
+      accent,
+      text,
+      text-secondary,
+      error,
+      success,
+      warning
+    )
+  {
+    &--#{$color} {
+      @include card-color-variant($color);
+    }
+  }
+}
+
+// ============================================================================
+// CONTAINERS DE LAYOUT
+// ============================================================================
+
+.cards-grid {
+  @apply grid gap-8; // Aumentado para melhor espaçamento
+  &--2 {
+    @apply grid-cols-1 sm:grid-cols-2;
+  }
+  &--3 {
+    @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
+  }
+}
+
+.cards-list {
+  @apply space-y-6;
 }

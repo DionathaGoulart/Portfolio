@@ -27,6 +27,7 @@ export const Text: React.FC<TextProps> = ({
   code = false,
   gradient = false,
   shadow,
+  border = 'none',
 
   // Responsividade
   responsive,
@@ -78,6 +79,9 @@ export const Text: React.FC<TextProps> = ({
     gradient && 'text--gradient',
     shadow === true && 'text--shadow',
     shadow === 'strong' && 'text--shadow-strong',
+
+    // Border decorativa
+    border !== 'none' && `text--border-${border}`,
 
     // Responsividade
     responsive && `text--responsive-${responsive}`,

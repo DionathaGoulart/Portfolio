@@ -23,23 +23,28 @@ const SobreSection: React.FC<SobreProps> = ({ id = 'sobre-mim' }) => {
       <div className="grid lg:grid-cols-2 gap-16">
         {/* Coluna esquerda - Texto */}
         <div className="flex flex-col justify-center space-y-6">
-          <Title level="h2">Sobre Mim</Title>
+          <Title level="h2" border="bottom-start">
+            Sobre {''}
+            <Title level="h2" element="span" color="primary">
+              Mim
+            </Title>
+          </Title>
 
           <div className="space-y-4">
-            <Text size="medio">
+            <Text size="grande">
               Desenvolvedor fullstack apaixonado por tecnologia e inovação, com
               mais de 5 anos de experiência criando soluções digitais que fazem
               a diferença.
             </Text>
 
-            <Text size="medio">
+            <Text size="grande">
               Especializado em arquiteturas modernas, sempre buscando as
               melhores práticas para entregar produtos de alta qualidade.
               Acredito que o código deve ser elegante, performático e
               sustentável.
             </Text>
 
-            <Text size="medio">
+            <Text size="grande">
               Quando não estou codando, gosto de contribuir com projetos open
               source, estudar novas tecnologias e compartilhar conhecimento com
               a comunidade.

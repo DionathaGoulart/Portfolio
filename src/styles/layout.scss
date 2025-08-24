@@ -289,15 +289,15 @@ $spacing-variants: compact, normal, relaxed;
   }
 
   &--md {
-    @apply max-w-4xl px-6;
+    @apply max-w-4xl px-4;
   }
 
   &--lg {
-    @apply max-w-screen-2xl px-8;
+    @apply max-w-screen-2xl px-4;
   }
 
   &--xl {
-    @apply max-w-screen-2xl px-12;
+    @apply max-w-screen-2xl px-4;
   }
 
   &--full {

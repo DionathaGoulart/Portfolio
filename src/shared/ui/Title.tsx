@@ -22,6 +22,7 @@ export const Title: React.FC<TitleProps> = ({
   shadow,
   underlined = false,
   highlighted = false,
+  border = 'none',
 
   // Interatividade
   interactive = false,
@@ -69,6 +70,9 @@ export const Title: React.FC<TitleProps> = ({
     shadow === 'strong' && 'title--shadow-strong',
     underlined && 'title--underlined',
     highlighted && 'title--highlighted',
+
+    // Border decorativa
+    border !== 'none' && `title--border-${border}`,
 
     // Layout
     icon && 'title--with-icon',

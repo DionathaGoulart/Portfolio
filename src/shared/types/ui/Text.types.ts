@@ -14,6 +14,7 @@ import {
 export type TextElement = 'p' | 'span'
 export type TextLeading = 'tight' | 'normal' | 'relaxed' | 'loose'
 export type TextResponsiveSize = 'small' | 'medium' | 'large'
+export type TextBorder = 'none' | 'start' | 'center' | 'end'
 
 // ============================================================================
 // INTERFACE PRINCIPAL
@@ -44,6 +45,7 @@ export interface TextProps {
   code?: boolean
   gradient?: boolean
   shadow?: Shadow
+  border?: TextBorder
 
   // Responsividade
   responsive?: TextResponsiveSize

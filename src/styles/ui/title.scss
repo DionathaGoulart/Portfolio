@@ -200,6 +200,73 @@ $aligns: start, center, end;
 }
 
 // ============================================================================
+// BORDAS DECORATIVAS
+// ============================================================================
+.title {
+  // BORDAS NO TOPO
+  // Border horizontal no topo à esquerda
+  &--border-start {
+    @apply relative pt-4;
+
+    &::before {
+      content: '';
+      @apply absolute left-0 top-0 w-24 h-1 bg-theme-primary rounded-xl;
+    }
+  }
+
+  // Border horizontal no topo centralizada
+  &--border-center {
+    @apply relative pt-4;
+
+    &::before {
+      content: '';
+      @apply absolute left-1/2 top-0 transform -translate-x-1/2 w-24 h-1 bg-theme-primary rounded-xl;
+    }
+  }
+
+  // Border horizontal no topo à direita
+  &--border-end {
+    @apply relative pt-4;
+
+    &::before {
+      content: '';
+      @apply absolute right-0 top-0 w-24 h-1 bg-theme-primary rounded-xl;
+    }
+  }
+
+  // BORDAS EMBAIXO
+  // Border horizontal embaixo à esquerda
+  &--border-bottom-start {
+    @apply relative pb-4;
+
+    &::after {
+      content: '';
+      @apply absolute left-0 bottom-0 w-24 h-1 bg-theme-primary rounded-xl;
+    }
+  }
+
+  // Border horizontal embaixo centralizada
+  &--border-bottom-center {
+    @apply relative pb-4;
+
+    &::after {
+      content: '';
+      @apply absolute left-1/2 bottom-0 transform -translate-x-1/2 w-24 h-1 bg-theme-primary rounded-xl;
+    }
+  }
+
+  // Border horizontal embaixo à direita
+  &--border-bottom-end {
+    @apply relative pb-4;
+
+    &::after {
+      content: '';
+      @apply absolute right-0 bottom-0 w-24 h-1 bg-theme-primary rounded-xl;
+    }
+  }
+}
+
+// ============================================================================
 // GRUPO DE TÍTULOS
 // ============================================================================
 .title-group {

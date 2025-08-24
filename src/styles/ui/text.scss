@@ -220,6 +220,41 @@ $aligns: start, center, end;
 }
 
 // ============================================================================
+// BORDAS DECORATIVAS
+// ============================================================================
+.text {
+  // Border horizontal no topo à esquerda (para align="start")
+  &--border-start {
+    @apply relative pt-3;
+
+    &::before {
+      content: '';
+      @apply absolute left-0 top-0 w-24 h-1 bg-theme-primary rounded-xl;
+    }
+  }
+
+  // Border horizontal no topo centralizada (para align="center")
+  &--border-center {
+    @apply relative pt-3;
+
+    &::before {
+      content: '';
+      @apply absolute left-1/2 top-0 transform -translate-x-1/2 w-24 h-1 bg-theme-primary rounded-xl;
+    }
+  }
+
+  // Border horizontal no topo à direita (para align="end")
+  &--border-end {
+    @apply relative pt-3;
+
+    &::before {
+      content: '';
+      @apply absolute right-0 top-0 w-24 h-1 bg-theme-primary rounded-xl;
+    }
+  }
+}
+
+// ============================================================================
 // VARIANTES RESPONSIVAS
 // ============================================================================
 .text {

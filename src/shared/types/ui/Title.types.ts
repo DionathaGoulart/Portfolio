@@ -4,9 +4,17 @@ import { Align, ColorVariant, Shadow, Style, Weight } from './global.types'
 // ============================================================================
 // TYPES BASE
 // ============================================================================
-export type TitleLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
+export type TitleLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 export type TitleElement = TitleLevel | 'div' | 'span' | 'p'
 export type TitleVariant = 'hero' | 'display' | 'section' | 'subsection'
+export type TitleBorder =
+  | 'none'
+  | 'start'
+  | 'center'
+  | 'end'
+  | 'bottom-start'
+  | 'bottom-center'
+  | 'bottom-end'
 
 // ============================================================================
 // INTERFACE PRINCIPAL
@@ -32,6 +40,7 @@ export interface TitleProps {
   shadow?: Shadow
   underlined?: boolean
   highlighted?: boolean
+  border?: TitleBorder
 
   // Interatividade
   interactive?: boolean

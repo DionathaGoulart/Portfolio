@@ -2,6 +2,9 @@
 // TEXT COMPONENT STYLES - OPTIMIZED AND IMPROVED VERSION
 // ============================================================================
 
+// Importa o módulo 'map' do Sass para usar as novas funções
+@use 'sass:map';
+
 // ============================================================================
 // VARIABLES AND CONFIGURATION
 // ============================================================================
@@ -33,6 +36,15 @@ $responsive-variants: (
     md: xl,
     lg: 2xl
   )
+);
+
+// Mapeamento de breakpoints do Tailwind para uso com Sass
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  '2xl': 1536px
 );
 
 // ============================================================================
@@ -158,52 +170,101 @@ $responsive-variants: (
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
-  @each $size, $class in $text-sizes {
-    &--#{$size} {
-      @apply text-#{$class} leading-relaxed;
-    }
+  // CORREÇÃO: Usando @apply diretamente com classes do Tailwind
+  &--pequeno {
+    @apply text-sm leading-relaxed;
+  }
+  &--medio {
+    @apply text-base leading-relaxed;
+  }
+  &--grande {
+    @apply text-lg leading-relaxed;
   }
 
+  // Cores do tema usando variáveis CSS
   @each $color in $theme-colors {
     &--#{$color} {
       color: rgb(var(--color-#{$color}));
     }
   }
 
-  @each $weight in $font-weights {
-    &--#{$weight} {
-      @apply font-#{$weight};
-    }
+  // CORREÇÃO: Usando @apply diretamente para pesos de fonte
+  &--light {
+    @apply font-light;
+  }
+  &--normal {
+    @apply font-normal;
+  }
+  &--medium {
+    @apply font-medium;
+  }
+  &--semibold {
+    @apply font-semibold;
+  }
+  &--bold {
+    @apply font-bold;
   }
 
-  @each $leading in $line-heights {
-    &--leading-#{$leading} {
-      @apply leading-#{$leading};
-    }
+  // Line heights
+  &--leading-tight {
+    @apply leading-tight;
+  }
+  &--leading-normal {
+    @apply leading-normal;
+  }
+  &--leading-relaxed {
+    @apply leading-relaxed;
+  }
+  &--leading-loose {
+    @apply leading-loose;
   }
 
-  @each $align, $class in $aligns {
-    &--#{$align} {
-      @apply text-#{$class};
-    }
+  // CORREÇÃO: Usando @apply diretamente para alinhamentos de texto
+  &--start {
+    @apply text-left;
+  }
+  &--center {
+    @apply text-center;
+  }
+  &--end {
+    @apply text-right;
   }
 
+  // Bordas decorativas
   @each $border in $borders {
     &--border-#{$border} {
       @include decorative-border($border);
     }
   }
 
-  @each $variant, $sizes in $responsive-variants {
-    &--responsive-#{$variant} {
+  // CORREÇÃO: Variantes responsivas usando @apply direto
+  &--responsive-small {
+    @apply text-base;
+    @media (min-width: map.get($breakpoints, sm)) {
       @apply text-base;
-      @each $breakpoint, $size in $sizes {
-        @if $breakpoint == sm {
-          @apply text-#{$size};
-        } @else {
-          @apply #{$breakpoint}:text-#{$size};
-        }
-      }
+    }
+    @media (min-width: map.get($breakpoints, lg)) {
+      @apply text-lg;
+    }
+  }
+
+  &--responsive-medium {
+    @apply text-base;
+    @media (min-width: map.get($breakpoints, md)) {
+      @apply text-lg;
+    }
+    @media (min-width: map.get($breakpoints, lg)) {
+      @apply text-xl;
+    }
+  }
+
+  &--responsive-large {
+    @apply text-base;
+    @media (min-width: map.get($breakpoints, md)) {
+      @apply text-xl;
+    }
+    @media (min-width: map.get($breakpoints, lg)) {
+      @apply text-2xl;
     }
   }
 
@@ -383,6 +444,40 @@ $responsive-variants: (
       }
     }
   }
+
+  // ============================================================================
+  // CLASSES AUXILIARES PARA CENTRALIZAÇÃO
+  // ============================================================================
+
+  // Classe modificadora para forçar centralização em mobile
+  &--center-image-mobile {
+    @media (max-width: 768px) {
+      .text__image,
+      .text__image--top,
+      .text__image--center,
+      .text__image--bottom {
+        @apply mx-auto flex justify-center items-center;
+      }
+
+      .text__image-element {
+        @apply mx-auto block;
+      }
+    }
+  }
+
+  // Classe para centralização em todos os breakpoints
+  &--center-image-always {
+    .text__image,
+    .text__image--top,
+    .text__image--center,
+    .text__image--bottom {
+      @apply mx-auto flex justify-center items-center;
+    }
+
+    .text__image-element {
+      @apply mx-auto block;
+    }
+  }
 }
 
 // ============================================================================
@@ -393,33 +488,67 @@ $responsive-variants: (
     .text__columns {
       @apply flex-col;
     }
-    .text__image--center {
-      @apply mx-0 my-4 order-first;
+
+    // Centralização específica para imagens no mobile
+    .text__image {
+      @apply flex justify-center items-center mx-auto;
+
+      &--top,
+      &--bottom,
+      &--center {
+        @apply w-full flex justify-center items-center;
+      }
     }
+
+    .text__image--center {
+      @apply mx-auto my-4 order-first flex justify-center;
+    }
+
     .text__column {
       @apply w-full;
     }
   }
+
   .text--layout-sidebar {
     .text__special-layout {
       @apply flex-col gap-4;
     }
+
+    // Centralizar imagem no layout sidebar mobile
+    .text__image--center {
+      @apply mx-auto flex justify-center;
+    }
+
     .text__content--sidebar {
       @apply pl-0 border-l-0 border-t border-theme-primary/20 pt-4;
     }
   }
+
   .text--layout-magazine {
     .text__special-layout {
       @apply grid-cols-1 gap-4;
     }
-    .text__image--center,
+
+    // Centralizar imagem no layout magazine mobile
+    .text__image--center {
+      @apply col-span-1 mx-auto flex justify-center;
+    }
+
     .text__content--magazine {
       @apply col-span-1;
     }
   }
+
   .text--layout-floating {
     .text__image--center {
-      @apply float-none ml-0 mb-4 mx-auto block;
+      @apply float-none ml-0 mb-4 mx-auto flex justify-center;
+    }
+  }
+
+  // Centralização geral para layout overlay no mobile
+  .text--layout-overlay {
+    .text__image--center {
+      @apply flex justify-center items-center;
     }
   }
 }

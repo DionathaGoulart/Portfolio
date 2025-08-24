@@ -20,70 +20,67 @@ const tecnologias = [
 const SobreSection: React.FC<SobreProps> = ({ id = 'sobre-mim' }) => {
   return (
     <section id={id}>
-      <div className="grid lg:grid-cols-2 gap-16">
-        {/* Coluna esquerda - Texto */}
-        <div className="flex flex-col justify-center space-y-6">
+      <div className="space-y-12">
+        {/* Título centralizado */}
+        <div className="text-center">
           <Title level="h2" border="bottom-start">
             Sobre {''}
             <Title level="h2" element="span" color="primary">
               Mim
             </Title>
           </Title>
+        </div>
 
+        {/* Texto em duas colunas */}
+        <div className="grid md:grid-cols-1 gap-8">
           <div className="space-y-4">
-            <Text size="grande">
+            <Text
+              size="grande"
+              columnLayout={{
+                enabled: true,
+                layoutType: 'sidebar',
+                sidebarColumns: 3,
+                imagePosition: 'center',
+                gap: 'large',
+                image: {
+                  src: '/me.jpg',
+                  alt: 'Foto do desenvolvedor',
+                  onClick: () => {
+                    // TRACKING: Rastrear clique na foto
+                    analytics.trackButtonClick('profile_photo')
+                  }
+                }
+              }}
+            >
               Desenvolvedor fullstack apaixonado por tecnologia e inovação, com
               mais de 5 anos de experiência criando soluções digitais que fazem
-              a diferença.
-            </Text>
-
-            <Text size="grande">
-              Especializado em arquiteturas modernas, sempre buscando as
-              melhores práticas para entregar produtos de alta qualidade.
-              Acredito que o código deve ser elegante, performático e
-              sustentável.
-            </Text>
-
-            <Text size="grande">
-              Quando não estou codando, gosto de contribuir com projetos open
-              source, estudar novas tecnologias e compartilhar conhecimento com
-              a comunidade.
+              a diferença. Especializado em arquiteturas modernas, sempre
+              buscando as melhores práticas para entregar produtos de alta
+              qualidade. Acredito que o código deve ser elegante, performático e
+              sustentável. Quando não estou codando, gosto de contribuir com
+              projetos open source, estudar novas tecnologias e compartilhar
+              conhecimento com a comunidade.
             </Text>
           </div>
         </div>
 
-        {/* Coluna direita - Foto e tecnologias */}
-        <div className="space-y-8">
-          {/* Foto */}
-          <div className="flex justify-center">
-            <img
-              src="/path/to/your/photo.jpg"
-              alt="Foto do desenvolvedor"
-              className="w-64 h-64 rounded-xl border-4 border-primary object-cover cursor-pointer hover:opacity-90 transition-opacity"
-              onClick={() => {
-                // TRACKING: Rastrear clique na foto
-                analytics.trackButtonClick('profile_photo')
-              }}
-            />
-          </div>
-
-          {/* Tecnologias */}
-          <div className="space-y-4">
+        {/* Tecnologias */}
+        <div className="space-y-6">
+          <div className="text-center">
             <Title level="h3">Principais Tecnologias</Title>
-
-            <CardsContainer type="grid" columns={2} compact={true}>
-              {tecnologias.map((tech, index) => (
-                <Card
-                  key={index}
-                  layout="horizontal"
-                  title={tech.title}
-                  subtitle={tech.subtitle}
-                  size="pequeno"
-                  className="cursor-pointer hover:scale-105 transition-transform"
-                />
-              ))}
-            </CardsContainer>
           </div>
+          <CardsContainer type="grid" columns={3} compact={true}>
+            {tecnologias.map((tech, index) => (
+              <Card
+                key={index}
+                layout="horizontal"
+                title={tech.title}
+                subtitle={tech.subtitle}
+                size="pequeno"
+                className="cursor-pointer hover:scale-105 transition-transform duration-300"
+              />
+            ))}
+          </CardsContainer>
         </div>
       </div>
     </section>

@@ -1,32 +1,90 @@
 // ============================================================================
-// TEXT COMPONENT STYLES
+// TEXT COMPONENT STYLES - VERSÃO OTIMIZADA E MELHORADA
 // ============================================================================
 
 // ============================================================================
-// VARIÁVEIS
+// VARIÁVEIS E CONFIGURAÇÕES
 // ============================================================================
 $theme-colors:
   primary, secondary, accent, text, textSecondary, error, success, warning;
 $text-sizes: pequeno, medio, grande;
 $aligns: start, center, end;
+$font-weights: light, normal, medium, semibold, bold;
+$line-heights: tight, normal, relaxed, loose;
+$borders: start, center, end;
+$responsive-variants: small, medium, large;
 
 // ============================================================================
 // MIXINS
 // ============================================================================
 @mixin text-transition {
-  @apply transition-all duration-200 ease-in-out;
+  @apply transition-all duration-300 ease-in-out;
 }
 
-@mixin text-interactive {
+@mixin image-interactive {
   @include text-transition;
   @apply cursor-pointer;
-
   &:hover {
-    @apply opacity-80;
+    @apply opacity-80 scale-105;
   }
-
   &:focus {
     @apply outline-none ring-2 ring-theme-primary ring-offset-2 rounded;
+  }
+  &:active {
+    @apply scale-95;
+  }
+}
+
+@mixin text-alignment($align) {
+  @if $align == start {
+    @apply text-left;
+  } @else if $align == center {
+    @apply text-center;
+  } @else if $align == end {
+    @apply text-right;
+  }
+}
+
+@mixin decorative-border($border-position) {
+  @apply relative pt-3;
+  &::before {
+    content: '';
+    @apply absolute top-0 w-24 h-1 bg-theme-primary rounded-xl;
+    @if $border-position == start {
+      @apply left-0;
+    } @else if $border-position == center {
+      @apply left-1/2 -translate-x-1/2 transform;
+    } @else if $border-position == end {
+      @apply right-0;
+    }
+  }
+}
+
+@mixin generate-columns-gap($gap-size, $md-gap-size) {
+  &--gap-#{$gap-size} .text__columns {
+    @apply gap-2;
+    @if $md-gap-size {
+      @apply md:gap-#{$md-gap-size};
+    }
+  }
+}
+
+// ============================================================================
+// ANIMAÇÕES
+// ============================================================================
+@keyframes gentle-float {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  50% {
+    transform: translateY(0px) translateX(10px);
+  }
+  75% {
+    transform: translateY(-5px) translateX(5px);
   }
 }
 
@@ -35,238 +93,361 @@ $aligns: start, center, end;
 // ============================================================================
 .text {
   @include text-transition;
-
-  // Estados
-  &--interactive {
-    @include text-interactive;
-  }
-
-  &--disabled {
-    @apply opacity-50 cursor-not-allowed pointer-events-none;
-  }
 }
 
 // ============================================================================
-// ELEMENTOS
+// MODIFICADORES
 // ============================================================================
+// Tipografia e Cores
 .text {
   &--p {
-    @apply block;
+    @apply block opacity-80;
   }
-
   &--span {
     @apply inline-block w-full;
   }
-}
-
-// ============================================================================
-// TAMANHOS
-// ============================================================================
-.text {
-  &--pequeno {
-    @apply text-sm leading-relaxed;
-  }
-
-  &--medio {
-    @apply text-base leading-relaxed;
-  }
-
-  &--grande {
-    @apply text-lg leading-relaxed;
-  }
-}
-
-// ============================================================================
-// CORES
-// ============================================================================
-@each $color in $theme-colors {
-  .text--#{$color} {
-    color: rgb(var(--color-#{$color}));
-  }
-}
-
-// ============================================================================
-// ALINHAMENTOS
-// ============================================================================
-.text {
-  &--start {
-    @apply text-left;
-  }
-
-  &--center {
-    @apply text-center;
-  }
-
-  &--end {
-    @apply text-right;
-  }
-}
-
-// ============================================================================
-// PESOS DE FONTE
-// ============================================================================
-.text {
-  &--light {
-    @apply font-light;
-  }
-
-  &--normal {
-    @apply font-normal;
-  }
-
-  &--medium {
-    @apply font-medium;
-  }
-
-  &--semibold {
-    @apply font-semibold;
-  }
-
-  &--bold {
-    @apply font-bold;
-  }
-}
-
-// ============================================================================
-// ESTILOS DE TEXTO
-// ============================================================================
-.text {
   &--italic {
     @apply italic;
   }
-
   &--underline {
     @apply underline;
   }
-
   &--line-through {
     @apply line-through;
   }
-
   &--uppercase {
     @apply uppercase;
   }
-
   &--lowercase {
     @apply lowercase;
   }
-
   &--capitalize {
     @apply capitalize;
   }
-}
 
-// ============================================================================
-// ESPAÇAMENTOS DE LINHA
-// ============================================================================
-.text {
-  &--leading-tight {
-    @apply leading-tight;
+  @each $size in $text-sizes {
+    &--#{$size} {
+      @if $size == pequeno {
+        @apply text-sm leading-relaxed;
+      } @else if $size == medio {
+        @apply text-base leading-relaxed;
+      } @else if $size == grande {
+        @apply text-lg leading-relaxed;
+      }
+    }
   }
 
-  &--leading-normal {
-    @apply leading-normal;
+  @each $color in $theme-colors {
+    &--#{$color} {
+      color: rgb(var(--color-#{$color}));
+    }
   }
 
-  &--leading-relaxed {
-    @apply leading-relaxed;
+  @each $weight in $font-weights {
+    &--#{$weight} {
+      @apply font-#{$weight};
+    }
   }
 
-  &--leading-loose {
-    @apply leading-loose;
+  @each $leading in $line-heights {
+    &--leading-#{$leading} {
+      @apply leading-#{$leading};
+    }
   }
-}
 
-// ============================================================================
-// COMPORTAMENTOS DE TEXTO
-// ============================================================================
-.text {
+  @each $align in $aligns {
+    &--#{$align} {
+      @include text-alignment($align);
+    }
+  }
+
+  // Alinhamentos Verticais
+  &--baseline {
+    @apply align-baseline;
+  }
+  &--top {
+    @apply align-top;
+  }
+  &--middle {
+    @apply align-middle;
+  }
+  &--bottom {
+    @apply align-bottom;
+  }
+
+  // Comportamentos de Texto
   &--truncate {
     @apply truncate;
   }
-
   &--break-words {
     @apply break-words;
   }
-
   &--break-all {
     @apply break-all;
   }
-}
 
-// ============================================================================
-// MODIFICADORES VISUAIS
-// ============================================================================
-.text {
+  // Modificadores Visuais
   &--highlight {
     @apply bg-theme-accent/20 px-1 rounded;
   }
-
   &--code {
     @apply font-mono text-sm bg-theme-surface px-1.5 py-0.5 rounded border;
   }
-
   &--gradient {
     @apply bg-gradient-to-r from-theme-primary to-theme-accent bg-clip-text text-transparent;
   }
-
   &--shadow {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
-
   &--shadow-strong {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
-}
 
-// ============================================================================
-// BORDAS DECORATIVAS
-// ============================================================================
-.text {
-  // Border horizontal no topo à esquerda (para align="start")
-  &--border-start {
-    @apply relative pt-3;
-
-    &::before {
-      content: '';
-      @apply absolute left-0 top-0 w-24 h-1 bg-theme-primary rounded-xl;
+  // Bordas Decorativas
+  @each $border in $borders {
+    &--border-#{$border} {
+      @include decorative-border($border);
     }
   }
 
-  // Border horizontal no topo centralizada (para align="center")
-  &--border-center {
-    @apply relative pt-3;
-
-    &::before {
-      content: '';
-      @apply absolute left-1/2 top-0 transform -translate-x-1/2 w-24 h-1 bg-theme-primary rounded-xl;
-    }
-  }
-
-  // Border horizontal no topo à direita (para align="end")
-  &--border-end {
-    @apply relative pt-3;
-
-    &::before {
-      content: '';
-      @apply absolute right-0 top-0 w-24 h-1 bg-theme-primary rounded-xl;
+  // Variantes Responsivas
+  @each $variant in $responsive-variants {
+    &--responsive-#{$variant} {
+      @if $variant == small {
+        @apply text-sm md:text-base lg:text-lg;
+      } @else if $variant == medium {
+        @apply text-base md:text-lg lg:text-xl;
+      } @else if $variant == large {
+        @apply text-lg md:text-xl lg:text-2xl;
+      }
     }
   }
 }
 
 // ============================================================================
-// VARIANTES RESPONSIVAS
+// LAYOUTS DE COLUNAS
 // ============================================================================
 .text {
-  &--responsive-small {
-    @apply text-sm md:text-base lg:text-lg;
+  // Layout de Colunas Tradicionais
+  &--column-layout {
+    @apply w-full;
+    .text__columns {
+      @apply flex items-start flex-col md:flex-row;
+    }
+    .text__column {
+      @apply flex-1;
+    }
+    .text__image {
+      @apply flex justify-center items-center;
+      &--top,
+      &--bottom {
+        @apply w-full mb-6;
+      }
+      &--center {
+        @apply flex-shrink-0;
+      }
+      .text__image-element {
+        @apply rounded-lg object-cover shadow-lg max-w-full;
+      }
+      .text__image-interactive {
+        @include image-interactive;
+        @apply inline-block;
+      }
+    }
+
+    // Configurações de colunas e gaps
+    &--columns-2 .text__columns {
+      @apply gap-4;
+    }
+    &--columns-3 .text__columns {
+      @apply gap-3;
+    }
+    &--columns-4 .text__columns {
+      @apply gap-2;
+    }
+
+    &--gap-small .text__columns {
+      @apply gap-2 md:gap-4;
+    }
+    &--gap-medium .text__columns {
+      @apply gap-4 md:gap-6;
+    }
+    &--gap-large .text__columns {
+      @apply gap-6 md:gap-8;
+    }
+
+    // Tamanhos de imagem para colunas
+    &--columns-2 .text__image--center .text__image-element {
+      @apply w-32 h-32 md:w-40 md:h-40;
+    }
+    &--columns-3 .text__image--center .text__image-element {
+      @apply w-24 h-24 md:w-32 md:h-32;
+    }
+    &--columns-4 .text__image--center .text__image-element {
+      @apply w-20 h-20 md:w-28 md:h-28;
+    }
+
+    // Posicionamento da imagem
+    &--image-top .text__image--top .text__image-element {
+      @apply mb-8 w-48 h-48 md:w-64 md:h-64 mx-auto;
+    }
+    &--image-center .text__columns {
+      @apply items-center;
+      .text__image--center {
+        @apply mx-4;
+      }
+    }
+    &--image-bottom .text__image--bottom .text__image-element {
+      @apply mt-8 w-48 h-48 md:w-64 md:h-64 mx-auto;
+    }
+  }
+}
+
+// ============================================================================
+// LAYOUTS ESPECIAIS
+// ============================================================================
+.text {
+  &--layout-sidebar {
+    .text__special-layout {
+      @apply flex flex-col md:flex-row items-start gap-8 relative;
+    }
+    .text__image--center {
+      @apply flex-shrink-0 relative;
+      .text__image-element {
+        @apply w-48 h-64 object-cover rounded-lg shadow-xl relative;
+        border: 3px solid transparent;
+        background:
+          linear-gradient(rgb(var(--color-primary)), rgb(var(--color-surface)))
+            padding-box,
+          conic-gradient(
+              from 0deg,
+              rgb(var(--color-primary)),
+              transparent,
+              rgb(var(--color-primary))
+            )
+            border-box;
+        animation: gentle-float 6s ease-in-out infinite;
+      }
+    }
+    .text__content--sidebar {
+      @apply flex-1;
+    }
+    &.text--sidebar-columns-1 .text__main-content {
+      @apply columns-1;
+    }
+    &.text--sidebar-columns-2 .text__main-content {
+      @apply md:columns-2 gap-8;
+    }
+    &.text--sidebar-columns-3 .text__main-content {
+      @apply md:columns-3 gap-6;
+    }
+    .text__content--sidebar .text__main-content p {
+      @apply break-inside-avoid mb-4;
+    }
   }
 
-  &--responsive-medium {
-    @apply text-base md:text-lg lg:text-xl;
+  &--layout-overlay {
+    .text__special-layout {
+      @apply relative;
+    }
+    .text__image--center {
+      @apply relative w-full;
+      .text__image-element {
+        @apply w-full h-96 object-cover rounded-xl;
+      }
+    }
+    .text__content--overlay {
+      @apply absolute inset-0 flex items-end p-8;
+    }
+    .text__main-content {
+      @apply bg-black/40 backdrop-blur-sm text-theme-text p-6 rounded-xl border bg-theme-border;
+    }
   }
 
-  &--responsive-large {
-    @apply text-lg md:text-xl lg:text-2xl;
+  &--layout-floating {
+    .text__special-layout {
+      @apply relative;
+    }
+    .text__image--center {
+      @apply md:float-right md:ml-6 mb-4;
+      shape-outside: circle(50%);
+      shape-margin: 1rem;
+      .text__image-element {
+        @apply w-40 h-40 object-cover rounded-full shadow-2xl ring-4 ring-white ring-opacity-80;
+        animation: gentle-float 6s ease-in-out infinite;
+      }
+    }
+    .text__content--floating .text__main-content {
+      @apply text-justify leading-relaxed;
+      &::first-letter {
+        @apply text-4xl font-bold text-theme-primary float-left mr-2 mt-1 leading-none;
+      }
+    }
+  }
+
+  &--layout-magazine {
+    .text__special-layout {
+      @apply grid grid-cols-1 md:grid-cols-12 gap-6 items-start;
+    }
+    .text__image--center {
+      @apply col-span-1 md:col-span-5;
+      .text__image-element {
+        @apply w-full h-80 object-cover rounded-lg shadow-lg;
+      }
+    }
+    .text__content--magazine {
+      @apply col-span-1 md:col-span-7 space-y-4;
+      .text__main-content {
+        @apply relative;
+        &::before {
+          @apply absolute -left-6 top-0 w-1 h-full bg-gradient-to-b from-theme-primary via-theme-accent to-transparent rounded-full;
+        }
+        p:first-child {
+          @apply text-lg font-medium text-theme-primary mb-4;
+        }
+        p:not(:first-child) {
+          @apply text-base leading-relaxed mb-4;
+        }
+      }
+    }
+  }
+}
+
+// ============================================================================
+// RESPONSIVIDADE
+// ============================================================================
+@media (max-width: 768px) {
+  .text--column-layout {
+    .text__columns {
+      @apply flex-col;
+    }
+    .text__image--center {
+      @apply mx-0 my-4 order-first;
+    }
+    .text__column {
+      @apply w-full;
+    }
+  }
+  .text--layout-sidebar {
+    .text__special-layout {
+      @apply flex-col gap-4;
+    }
+    .text__content--sidebar {
+      @apply pl-0 border-l-0 border-t border-theme-primary/20 pt-4;
+    }
+  }
+  .text--layout-magazine {
+    .text__special-layout {
+      @apply grid-cols-1 gap-4;
+    }
+    .text__image--center,
+    .text__content--magazine {
+      @apply col-span-1;
+    }
+  }
+  .text--layout-floating {
+    .text__image--center {
+      @apply float-none ml-0 mb-4 mx-auto block;
+    }
   }
 }

@@ -17,6 +17,34 @@ export type TextResponsiveSize = 'small' | 'medium' | 'large'
 export type TextBorder = 'none' | 'start' | 'center' | 'end'
 
 // ============================================================================
+// TYPES PARA LAYOUT DE COLUNAS E ESPECIAIS
+// ============================================================================
+export interface TextColumnImage {
+  src: string
+  alt: string
+  className?: string
+  onClick?: () => void
+}
+
+export type TextLayoutType =
+  | 'columns'
+  | 'sidebar'
+  | 'overlay'
+  | 'floating'
+  | 'magazine'
+
+export interface TextColumnConfig {
+  enabled: boolean
+  layoutType?: TextLayoutType
+  image?: TextColumnImage
+  columns?: 2 | 3 | 4
+  imagePosition?: 'center' | 'top' | 'bottom'
+  gap?: 'small' | 'medium' | 'large'
+  // Opção específica para layout sidebar
+  sidebarColumns?: 1 | 2 | 3
+}
+
+// ============================================================================
 // INTERFACE PRINCIPAL
 // ============================================================================
 export interface TextProps {
@@ -50,10 +78,8 @@ export interface TextProps {
   // Responsividade
   responsive?: TextResponsiveSize
 
-  // Interatividade
-  interactive?: boolean
-  disabled?: boolean
-  onClick?: () => void
+  // Layout de colunas e especiais
+  columnLayout?: TextColumnConfig
 
   // HTML attributes
   className?: string

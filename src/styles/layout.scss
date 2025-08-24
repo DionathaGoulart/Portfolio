@@ -196,7 +196,7 @@ $spacing-variants: compact, normal, relaxed;
   .footer__link {
     @include interactive-element;
     @apply text-sm;
-    color: rgb(var(--color-textSecondary));
+    color: rgb(var(--color-text));
 
     &:hover {
       color: rgb(var(--color-text));
@@ -217,7 +217,7 @@ $spacing-variants: compact, normal, relaxed;
   .footer__social-link {
     @include interactive-element;
     @apply text-lg;
-    color: rgb(var(--color-textSecondary));
+    color: rgb(var(--color-text));
 
     &:hover {
       color: rgb(var(--color-text));
@@ -226,7 +226,7 @@ $spacing-variants: compact, normal, relaxed;
 
   .footer__copyright {
     @apply text-sm;
-    color: rgb(var(--color-textSecondary));
+    color: rgb(var(--color-text));
   }
 
   // Layout extendido

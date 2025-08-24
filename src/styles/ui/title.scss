@@ -26,13 +26,16 @@ $borders: top, bottom;
 }
 @mixin decorative-border($side, $align) {
   @apply relative;
+
   @if $side == top {
     @apply pt-4;
     &::before {
       content: '';
       @apply absolute top-0 w-24 h-1 bg-theme-primary rounded-xl;
+
       @if $align == start {
-        @apply left-0;
+        // Alinha ao centro no mobile e à esquerda no desktop
+        @apply left-1/2 -translate-x-1/2 md:left-0 md:transform-none;
       } @else if $align == center {
         @apply left-1/2 -translate-x-1/2;
       } @else if $align == end {
@@ -44,8 +47,10 @@ $borders: top, bottom;
     &::after {
       content: '';
       @apply absolute bottom-0 w-24 h-1 bg-theme-primary rounded-xl;
+
       @if $align == start {
-        @apply left-0;
+        // Alinha ao centro no mobile e à esquerda no desktop
+        @apply left-1/2 -translate-x-1/2 md:left-0 md:transform-none;
       } @else if $align == center {
         @apply left-1/2 -translate-x-1/2;
       } @else if $align == end {
@@ -175,13 +180,13 @@ $borders: top, bottom;
 
 // Alinhamentos
 .title--start {
-  @apply text-left;
+  @apply text-center md:text-left;
 }
 .title--center {
   @apply text-center;
 }
 .title--end {
-  @apply text-right;
+  @apply text-center md:text-right;
 }
 
 // ============================================================================

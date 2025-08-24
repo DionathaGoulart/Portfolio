@@ -20,17 +20,17 @@ export const lightTheme: ThemeConfig = {
 export const darkTheme: ThemeConfig = {
   name: 'dark',
   colors: {
-    primary: '96 165 250', // #60a5fa -> rgb
-    secondary: '148 163 184', // #94a3b8 -> rgb
-    accent: '167 139 250', // #a78bfa -> rgb
-    background: '15 23 42', // #0f172a -> rgb
-    surface: '30 41 59', // #1e293b -> rgb
-    text: '248 250 252', // #f8fafc -> rgb
-    textSecondary: '15 23 42', // #0f172a -> rgb
-    border: '51 65 85', // #334155 -> rgb
-    error: '248 113 113', // #f87171 -> rgb
-    success: '74 222 128', // #4ade80 -> rgb
-    warning: '251 191 36' // #fbbf24 -> rgb
+    primary: '137 180 250', // #89b4fa (blue) -> rgb
+    secondary: '186 194 220', // #bac2de (subtext0) -> rgb
+    accent: '245 194 231', // #f5c2e7 (pink) -> rgb
+    background: '30 30 46', // #1e1e2e (base) -> rgb
+    surface: '49 50 68', // #313244 (surface0) -> rgb
+    text: '205 214 244', // #cdd6f4 (text) -> rgb
+    textSecondary: '30 30 46', // #1e1e2e (base) -> rgb
+    border: '69 71 90', // #45475a (surface1) -> rgb
+    error: '243 139 168', // #f38ba8 (red) -> rgb
+    success: '166 227 161', // #a6e3a1 (green) -> rgb
+    warning: '255 128 64' // #fab387 (peach) -> rgb
   }
 }
 

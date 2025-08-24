@@ -21,7 +21,7 @@ const ScrollToTop: React.FC = () => {
   return (
     <button
       onClick={scrollToTop}
-      className="fixed bottom-6 right-6 z-50 p-3 rounded-full theme-surface border theme-border theme-text-primary hover:bg-theme-accent hover:bg-opacity-10 transition-all shadow-lg"
+      className="fixed bottom-20 right-6 z-50 p-3 rounded-full theme-surface border theme-border theme-text-primary hover:bg-theme-accent hover:bg-opacity-10 transition-all shadow-lg"
       aria-label="Voltar ao topo"
     >
       ↑

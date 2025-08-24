@@ -17,15 +17,29 @@ import {
 const HorizontalCard: React.FC<Omit<CardProps, 'layout'>> = ({
   title,
   subtitle,
+  icon,
   size = 'medio'
 }) => {
   const { titleLevel, subtitleSize } = CARD_HORIZONTAL_CONFIGS[size]
 
-  return (
-    <>
+  const textContent = (
+    <div className="card__text-content">
       <Title level={titleLevel}>{title}</Title>
       {subtitle && <P size={subtitleSize}>{subtitle}</P>}
-    </>
+    </div>
+  )
+
+  const iconContent = icon && (
+    <div className="card__icon-wrapper">
+      <span className="card__icon">{icon}</span>
+    </div>
+  )
+
+  return (
+    <div className="card__horizontal-content">
+      {textContent}
+      {iconContent}
+    </div>
   )
 }
 
@@ -70,10 +84,6 @@ const VariedCard: React.FC<Omit<CardProps, 'layout'>> = ({
     </div>
   </>
 )
-
-// ============================================================================
-// MAIN COMPONENT
-// ============================================================================
 
 export const Card: React.FC<CardProps> = (props) => {
   const {
@@ -133,10 +143,6 @@ export const Card: React.FC<CardProps> = (props) => {
     </div>
   )
 }
-
-// ============================================================================
-// CARDS CONTAINER
-// ============================================================================
 
 export const CardsContainer: React.FC<CardsContainerProps> = ({
   type = 'grid',

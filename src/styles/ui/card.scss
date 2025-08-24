@@ -1,135 +1,115 @@
 // ============================================================================
-// COMPONENTE: CARD
-// Descrição: Estilos para um componente de card com efeitos de profundidade e interatividade.
+// CARD COMPONENT - VERSÃO OTIMIZADA
 // ============================================================================
 
-// ============================================================================
-// CONFIGURAÇÕES E VARIÁVEIS
-// ============================================================================
-
-// Níveis de elevação (box-shadow) para diferentes estados
-$shadow-elevation-1: 0 8px 20px -8px rgba(0, 0, 0, 0.08); // Elevação inicial sutil
-$shadow-elevation-2: 0 16px 30px -10px rgba(0, 0, 0, 0.15); // Elevação no hover
-
-// Escala de transformação no hover
-$card-scale-hover: 1.02;
+// Variáveis essenciais
+$shadow-base: 0 2px 8px rgba(0, 0, 0, 0.1);
+$shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+$card-scale: 1.02;
 
 // ============================================================================
-// MIXINS E FUNÇÕES
+// MIXINS PRINCIPAIS
 // ============================================================================
 
-// Mixin para transições suaves em todos os estados
-@mixin smooth-transition {
-  @apply transform transition-all duration-300 ease-in-out;
+@mixin transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-// Efeito visual aplicado ao hover e focus
-@mixin card-interactive-effect {
-  transform: scale(#{$card-scale-hover}) translateY(-3px);
-  box-shadow: $shadow-elevation-2;
+@mixin card-hover-effect {
+  transform: scale($card-scale) translateY(-4px);
+  box-shadow: $shadow-hover;
 }
 
-// Anel de foco acessível
-@mixin card-focus-ring($color: primary) {
-  outline: none;
-  &:focus-visible {
-    // Foco de acessibilidade com cores baseadas no tema
-    box-shadow:
-      0 0 0 2px rgb(var(--color-surface)),
-      0 0 0 4px rgb(var(--color-#{$color}) / 0.5);
-  }
-}
-
-// Estilos de cor para o card.
-// Usa o nome da cor para gerar o fundo e a borda.
-@mixin card-color-variant($color) {
-  // Se for a cor padrão, aplica estilos neutros
+@mixin card-variant($color) {
   @if $color == default {
-    @apply bg-theme-surface border-theme-border;
+    @apply bg-theme-surface border-theme-secondary;
   } @else {
-    // Caso contrário, aplica um fundo semi-transparente para o "glassmorphism"
-    background-color: rgb(var(--color-#{$color}) / 0.15);
-    border-color: rgb(var(--color-#{$color}) / 0.3);
+    background: rgb(var(--color-#{$color}) / 0.05);
+    border-color: rgb(var(--color-#{$color}) / 0.2);
+
+    &:hover {
+      background: rgb(var(--color-#{$color}) / 0.1);
+    }
   }
 }
 
 // ============================================================================
-// ANIMAÇÕES
-// ============================================================================
-
-// Animação de brilho para estado de carregamento
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-// ============================================================================
-// ESTILOS BASE DO COMPONENTE
+// COMPONENTE PRINCIPAL
 // ============================================================================
 
 .card {
-  @include smooth-transition;
-  @apply border rounded-2xl p-6 relative;
+  @include transition-smooth;
+  @apply relative border rounded-xl p-4 bg-white;
+  box-shadow: $shadow-base;
 
-  // Aplica a sombra inicial para dar profundidade
-  box-shadow: $shadow-elevation-1;
-
-  // Borda interna pontilhada para um detalhe sutil
-  &::before {
-    content: '';
-    @apply absolute inset-2 rounded-xl border border-dotted;
-    border-color: rgb(var(--color-border));
-    z-index: 1;
-  }
-
-  // --- SUBCOMPONENTES ---
+  // Subcomponentes
   &__header {
-    @apply flex items-center gap-4 mb-3;
+    @apply flex items-center gap-3 mb-3;
   }
+
   &__icon {
-    @apply flex-shrink-0 text-3xl; // Ícone maior e mais destacado
-  }
-  &__badge {
-    @apply absolute top-4 right-4;
-  }
-  &__content {
-    @apply space-y-3;
-  }
-  &__tags {
-    @apply flex flex-wrap gap-2 mt-4;
+    @apply flex-shrink-0;
+    @include transition-smooth;
+
+    svg {
+      @apply w-5 h-5;
+    }
   }
 
-  // --- TIPOGRAFIA ---
+  &__icon-wrapper {
+    @apply flex items-center justify-center w-5 h-5;
+  }
+
+  &__text-content {
+    @apply flex-1;
+  }
+
+  &__horizontal-content {
+    @apply flex items-center justify-between;
+    @apply gap-3;
+  }
+
   &__title {
-    @apply text-xl font-bold;
-  }
-  &__text {
-    @apply text-base text-theme-text/60 leading-relaxed;
+    @apply text-base font-semibold leading-tight;
   }
 
-  // --- ESTADOS DO CARD ---
+  &__text {
+    @apply text-sm text-gray-600 leading-relaxed;
+  }
+
+  &__content {
+    @apply space-y-2;
+  }
+
+  &__tags {
+    @apply flex flex-wrap gap-2 mt-3;
+  }
+
+  // Estados
   &--clickable {
     @apply cursor-pointer;
-    @include card-focus-ring;
+
     &:hover:not(.card--disabled) {
-      @include card-interactive-effect;
+      @include card-hover-effect;
+
+      .card__icon {
+        transform: scale(1.1);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgb(var(--color-primary));
+      outline-offset: 2px;
     }
   }
 
   &--disabled {
-    @apply opacity-40 cursor-not-allowed;
-    // Anula efeitos de hover/focus quando desabilitado
-    &:hover {
-      @apply transform-none shadow-none;
-    }
+    @apply opacity-50 pointer-events-none;
   }
 
   &--loading {
     @apply relative overflow-hidden;
+
     &::after {
       content: '';
       @apply absolute inset-0;
@@ -143,43 +123,71 @@ $card-scale-hover: 1.02;
     }
   }
 
-  // --- VARIAÇÕES DE COR ---
+  // Variações de cor
   &--default {
-    @include card-color-variant(default);
+    @include card-variant(default);
   }
-  // Aplica as variações de cor para cada tema
-  @each $color
-    in (
-      primary,
-      secondary,
-      accent,
-      text,
-      text-secondary,
-      error,
-      success,
-      warning
-    )
-  {
+
+  @each $color in (primary, secondary, success, warning, error) {
     &--#{$color} {
-      @include card-color-variant($color);
+      @include card-variant($color);
+    }
+  }
+
+  // Tamanhos
+  &--compact {
+    @apply p-3 rounded-lg;
+
+    .card__title {
+      @apply text-sm;
+    }
+
+    .card__icon {
+      svg {
+        @apply w-4 h-4;
+      }
+    }
+
+    .card__icon-wrapper {
+      @apply w-4 h-4;
     }
   }
 }
 
 // ============================================================================
-// CONTAINERS DE LAYOUT
+// LAYOUTS
 // ============================================================================
 
 .cards-grid {
-  @apply grid gap-8; // Aumentado para melhor espaçamento
+  @apply grid gap-4;
+
   &--2 {
     @apply grid-cols-1 sm:grid-cols-2;
   }
   &--3 {
     @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
   }
+  &--4 {
+    @apply grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+  }
+  &--5 {
+    @apply grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5;
+  }
 }
 
 .cards-list {
-  @apply space-y-6;
+  @apply space-y-4;
+}
+
+// ============================================================================
+// ANIMAÇÕES
+// ============================================================================
+
+@keyframes shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
 }

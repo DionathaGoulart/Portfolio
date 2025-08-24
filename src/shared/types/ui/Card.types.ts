@@ -1,10 +1,6 @@
 import { Align, Size, ColorVariant } from './global.types'
 import { TitleLevel } from './Title.types'
 
-// ============================================================================
-// CARD TYPES
-// ============================================================================
-
 export type CardLayout = 'horizontal' | 'with-icon' | 'varied'
 
 export interface CardProps {
@@ -34,10 +30,6 @@ export interface CardProps {
   className?: string
 }
 
-// ============================================================================
-// SIZE CONFIG FOR HORIZONTAL CARDS
-// ============================================================================
-
 export interface CardHorizontalConfig {
   titleLevel: TitleLevel
   subtitleSize: Size
@@ -58,21 +50,13 @@ export const CARD_HORIZONTAL_CONFIGS: Record<Size, CardHorizontalConfig> = {
   }
 }
 
-// ============================================================================
-// CONTAINER TYPES
-// ============================================================================
-
 export interface CardsContainerProps {
   type?: 'grid' | 'list'
-  columns?: 1 | 2 | 3 | 4
+  columns?: 1 | 2 | 3 | 4 | 5
   compact?: boolean
   className?: string
   children: React.ReactNode
 }
-
-// ============================================================================
-// CLASS BUILDERS - Apenas concatenação de classes
-// ============================================================================
 
 export const buildCardClasses = ({
   layout = 'horizontal',
@@ -88,32 +72,17 @@ export const buildCardClasses = ({
   className = ''
 }: Partial<CardProps>): string => {
   const classes = [
-    // Base
     'card',
-
-    // Layout
     `card--${layout}`,
-
-    // Color
     `card--${color}`,
-
-    // Size (apenas para horizontal)
     layout === 'horizontal' && `card--${size}`,
-
-    // Alignment
     `card--align-${align}`,
-
-    // States
     onClick && !disabled && 'card--clickable',
     disabled && 'card--disabled',
     loading && 'card--loading',
     elevated && 'card--elevated',
     compact && 'card--compact',
-
-    // Border color
     borderColor && `card--border-${borderColor}`,
-
-    // Custom
     className
   ].filter(Boolean)
 

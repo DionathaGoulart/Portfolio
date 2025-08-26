@@ -105,6 +105,7 @@ const SobreSection: React.FC<SobreProps> = ({ id = 'sobre-mim' }) => {
                 size="sidebar"
                 shape="rectangle"
                 shadow="strong"
+                neonFire="primary"
                 onClick={() => {
                   // TRACKING: Rastrear clique na foto
                   analytics.trackButtonClick('profile_photo')

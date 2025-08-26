@@ -18,6 +18,8 @@ export interface ImageProps {
   // Efeitos visuais
   shadow?: boolean | 'strong'
   hover?: boolean
+  // Novo: Efeito neon fire
+  neonFire?: boolean | 'primary' // true para cores fire, 'primary' para cores do tema
   // Layout
   float?: 'left' | 'right' | 'none'
   // Responsivo
@@ -37,6 +39,7 @@ export const Image: React.FC<ImageProps> = ({
   shape = 'rectangle',
   shadow = false,
   hover = true,
+  neonFire = false,
   float = 'none',
   responsive = true
 }) => {
@@ -77,20 +80,31 @@ export const Image: React.FC<ImageProps> = ({
   const classes = [
     // Classe base
     'image',
+
     // Tamanho
     `image--${size}`,
+
     // Formato (não aplicar para sidebar pois já tem estilo próprio)
     size !== 'sidebar' && `image--${shape}`,
+
     // Float
     float !== 'none' && `image--float-${float}`,
+
     // Efeitos (não aplicar sombra para sidebar pois já tem shadow-xl)
     size !== 'sidebar' && shadow === true && 'image--shadow',
     size !== 'sidebar' && shadow === 'strong' && 'image--shadow-strong',
     hover && 'image--hover',
+
+    // Efeito neon fire
+    neonFire === true && 'image--neon-fire',
+    neonFire === 'primary' && 'image--neon-primary',
+
     // Interativo
     onClick && 'image--interactive',
+
     // Responsivo
     responsive && 'image--responsive',
+
     // Classes customizadas
     className
   ]

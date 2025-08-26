@@ -1,6 +1,6 @@
 import { MainLayout } from '@/shared'
 import { RouteConfig, RouteGroup } from '@core/types/router'
-import { HomePage, NotFoundPage, TestPage } from '@pages'
+import { HomePage, NotFoundPage } from '@pages'
 
 export const appRoutes: (RouteConfig | RouteGroup)[] = [
   {
@@ -17,11 +17,7 @@ export const appRoutes: (RouteConfig | RouteGroup)[] = [
       }
     ]
   },
-  {
-    path: '/test',
-    element: TestPage,
-    title: 'Test'
-  },
+
   {
     path: '/404',
     element: NotFoundPage,

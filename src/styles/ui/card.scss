@@ -1,102 +1,47 @@
 // ============================================================================
-// CARD COMPONENT - VERSÃO OTIMIZADA
+// CARD HORIZONTAL - SUPER OTIMIZADO
 // ============================================================================
 
-// Variáveis essenciais
-$shadow-base: 0 2px 8px rgba(0, 0, 0, 0.1);
-$shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
-$card-scale: 1.02;
+@use 'sass:list';
+
+// Variáveis
+$shadow:
+  0 2px 8px rgba(0, 0, 0, 0.1),
+  0 8px 25px rgba(0, 0, 0, 0.15);
 
 // ============================================================================
-// MIXINS PRINCIPAIS
+// COMPONENTE
 // ============================================================================
-
-@mixin transition-smooth {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@mixin card-hover-effect {
-  transform: scale($card-scale) translateY(-4px);
-  box-shadow: $shadow-hover;
-}
-
-@mixin card-variant($color) {
-  @if $color == default {
-    @apply bg-theme-surface border-theme-secondary;
-  } @else {
-    background: rgb(var(--color-#{$color}) / 0.05);
-    border-color: rgb(var(--color-#{$color}) / 0.2);
-
-    &:hover {
-      background: rgb(var(--color-#{$color}) / 0.1);
-    }
-  }
-}
-
-// ============================================================================
-// COMPONENTE PRINCIPAL
-// ============================================================================
-
 .card {
-  @include transition-smooth;
-  @apply relative border rounded-xl p-4 bg-white;
-  box-shadow: $shadow-base;
+  @apply relative border rounded-xl bg-theme-surface border-theme-secondary;
+  box-shadow: list.nth($shadow, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  // Subcomponentes
-  &__header {
-    @apply flex items-center gap-3 mb-3;
+  // Estrutura
+  &__content {
+    @apply flex items-center justify-between gap-3 p-4;
   }
-
+  &__text {
+    @apply flex-1 space-y-1;
+  }
   &__icon {
     @apply flex-shrink-0;
-    @include transition-smooth;
-
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     svg {
       @apply w-5 h-5;
     }
   }
 
-  &__icon-wrapper {
-    @apply flex items-center justify-center w-5 h-5;
-  }
-
-  &__text-content {
-    @apply flex-1;
-  }
-
-  &__horizontal-content {
-    @apply flex items-center justify-between;
-    @apply gap-3;
-  }
-
-  &__title {
-    @apply text-base font-semibold leading-tight;
-  }
-
-  &__text {
-    @apply text-sm text-gray-600 leading-relaxed;
-  }
-
-  &__content {
-    @apply space-y-2;
-  }
-
-  &__tags {
-    @apply flex flex-wrap gap-2 mt-3;
-  }
-
   // Estados
   &--clickable {
     @apply cursor-pointer;
-
     &:hover:not(.card--disabled) {
-      @include card-hover-effect;
-
+      transform: scale(1.02) translateY(-4px);
+      box-shadow: list.nth($shadow, 2);
       .card__icon {
         transform: scale(1.1);
       }
     }
-
     &:focus-visible {
       outline: 2px solid rgb(var(--color-primary));
       outline-offset: 2px;
@@ -106,10 +51,11 @@ $card-scale: 1.02;
   &--disabled {
     @apply opacity-50 pointer-events-none;
   }
-
+  &--elevated {
+    box-shadow: list.nth($shadow, 2);
+  }
   &--loading {
     @apply relative overflow-hidden;
-
     &::after {
       content: '';
       @apply absolute inset-0;
@@ -123,44 +69,58 @@ $card-scale: 1.02;
     }
   }
 
-  // Variações de cor
-  &--default {
-    @include card-variant(default);
-  }
-
+  // Cores
   @each $color in (primary, secondary, success, warning, error) {
     &--#{$color} {
-      @include card-variant($color);
+      background: rgb(var(--color-#{$color}) / 0.05);
+      border-color: rgb(var(--color-#{$color}) / 0.2);
+      &:hover:not(.card--disabled) {
+        background: rgb(var(--color-#{$color}) / 0.1);
+      }
+    }
+    &--border-#{$color} {
+      border-color: rgb(var(--color-#{$color}));
     }
   }
 
   // Tamanhos
-  &--compact {
-    @apply p-3 rounded-lg;
-
-    .card__title {
-      @apply text-sm;
+  &--pequeno {
+    .card__content {
+      @apply p-3;
     }
-
-    .card__icon {
-      svg {
-        @apply w-4 h-4;
-      }
-    }
-
-    .card__icon-wrapper {
+    .card__icon svg {
       @apply w-4 h-4;
     }
+  }
+  &--grande {
+    .card__content {
+      @apply p-6;
+    }
+    .card__icon svg {
+      @apply w-6 h-6;
+    }
+  }
+  &--compact .card__content {
+    @apply p-3;
+  }
+
+  // Alinhamentos
+  &--align-center .card__content {
+    @apply justify-center text-center;
+  }
+  &--align-end .card__content {
+    @apply justify-end text-right;
   }
 }
 
 // ============================================================================
-// LAYOUTS
+// CONTAINERS
 // ============================================================================
-
 .cards-grid {
   @apply grid gap-4;
-
+  &--1 {
+    @apply grid-cols-1;
+  }
   &--2 {
     @apply grid-cols-1 sm:grid-cols-2;
   }
@@ -177,12 +137,12 @@ $card-scale: 1.02;
 
 .cards-list {
   @apply space-y-4;
+  &--compact {
+    @apply space-y-2;
+  }
 }
 
-// ============================================================================
-// ANIMAÇÕES
-// ============================================================================
-
+// Animação
 @keyframes shimmer {
   from {
     transform: translateX(-100%);

@@ -1,5 +1,5 @@
 // ============================================================================
-// TEXT SYSTEM - OTIMIZADO
+// TEXT SYSTEM - OTIMIZADO COM SUPORTE A 5 COLUNAS
 // ============================================================================
 
 // Configurações
@@ -8,12 +8,12 @@ $colors:
 $sizes: pequeno, medio, grande;
 $weights: light, normal, medium, semibold, bold;
 $aligns: start, center, end;
-$layouts: column, sidebar, overlay, floating, magazine;
 
 // Mixins
 @mixin text-transition {
   @apply transition-all duration-300 ease-in-out;
 }
+
 @mixin decorative-border($position) {
   @apply relative pt-3;
   &::before {
@@ -26,19 +26,6 @@ $layouts: column, sidebar, overlay, floating, magazine;
     } @else if $position == end {
       @apply right-0;
     }
-  }
-}
-@mixin image-interactive {
-  @include text-transition;
-  @apply cursor-pointer;
-  &:hover {
-    @apply opacity-80 scale-105;
-  }
-  &:focus {
-    @apply outline-none ring-2 ring-theme-primary ring-offset-2 rounded;
-  }
-  &:active {
-    @apply scale-95;
   }
 }
 
@@ -197,207 +184,69 @@ $layouts: column, sidebar, overlay, floating, magazine;
 }
 
 // ============================================================================
-// LAYOUTS DE COLUNA
+// LAYOUTS DE COLUNA - CORRIGIDO E EXPANDIDO
 // ============================================================================
 
 .text--column-layout {
   @apply w-full;
 
   .text__columns {
-    @apply flex items-start flex-col md:flex-row;
+    @apply flex items-start justify-between flex-col md:flex-row;
   }
+
   .text__column {
-    @apply flex-1;
+    @apply flex-1 min-w-0; // min-w-0 ajuda com overflow em flex items
   }
 
-  .text__image {
-    @apply flex justify-center items-center;
+  .text__column-content {
+    @apply w-full h-full;
+  }
 
-    &--top,
-    &--bottom {
-      @apply w-full mb-6;
-    }
-    &--center {
-      @apply flex-shrink-0;
-    }
-
-    .text__image-element {
-      @apply rounded-lg object-cover shadow-lg max-w-full;
-    }
-    .text__image-interactive {
-      @include image-interactive;
-      @apply inline-block;
+  // Configurações específicas por número de colunas
+  &.text--columns-1 .text__columns {
+    @apply flex-col;
+    .text__column {
+      @apply w-full;
     }
   }
 
-  // Configurações de colunas
-  &--columns-2 .text__columns {
+  &.text--columns-2 .text__columns {
     @apply gap-4;
-  }
-  &--columns-3 .text__columns {
-    @apply gap-3;
-  }
-  &--columns-4 .text__columns {
-    @apply gap-2;
+    .text__column {
+      @apply w-full md:w-1/2;
+    }
   }
 
-  // Gaps
-  &--gap-small .text__columns {
-    @apply gap-2 md:gap-4;
+  &.text--columns-3 .text__columns {
+    @apply gap-3;
+    .text__column {
+      @apply w-full md:w-1/3;
+    }
   }
-  &--gap-medium .text__columns {
+
+  &.text--columns-4 .text__columns {
+    @apply gap-2;
+    .text__column {
+      @apply w-full md:w-1/4;
+    }
+  }
+
+  &.text--columns-5 .text__columns {
+    @apply gap-2;
+    .text__column {
+      @apply w-full md:w-1/5;
+    }
+  }
+
+  // Gaps - aplicados aos containers de coluna
+  &.text--gap-small .text__columns {
+    @apply gap-2 md:gap-3;
+  }
+  &.text--gap-medium .text__columns {
     @apply gap-4 md:gap-6;
   }
-  &--gap-large .text__columns {
+  &.text--gap-large .text__columns {
     @apply gap-6 md:gap-8;
-  }
-
-  // Tamanhos de imagem por coluna
-  &--columns-2 .text__image--center .text__image-element {
-    @apply w-32 h-32 md:w-40 md:h-40;
-  }
-  &--columns-3 .text__image--center .text__image-element {
-    @apply w-24 h-24 md:w-32 md:h-32;
-  }
-  &--columns-4 .text__image--center .text__image-element {
-    @apply w-20 h-20 md:w-28 md:h-28;
-  }
-
-  // Posicionamento de imagens
-  &--image-top .text__image--top .text__image-element {
-    @apply mb-8 w-48 h-48 md:w-64 md:h-64 mx-auto;
-  }
-  &--image-center .text__columns {
-    @apply items-center;
-  }
-  &--image-center .text__image--center {
-    @apply mx-4;
-  }
-  &--image-bottom .text__image--bottom .text__image-element {
-    @apply mt-8 w-48 h-48 md:w-64 md:h-64 mx-auto;
-  }
-}
-
-// ============================================================================
-// LAYOUTS ESPECIAIS
-// ============================================================================
-
-// Sidebar
-.text--layout-sidebar {
-  .text__special-layout {
-    @apply flex flex-col md:flex-row items-start gap-8 relative;
-  }
-  .text__image--center .text__image-element {
-    @apply w-48 h-64 object-cover rounded-lg shadow-xl relative;
-    animation: gentle-float 6s ease-in-out infinite;
-  }
-  .text__content--sidebar {
-    @apply flex-1;
-  }
-  &.text--sidebar-columns-1 .text__main-content {
-    @apply columns-1;
-  }
-  &.text--sidebar-columns-2 .text__main-content {
-    @apply md:columns-2 gap-8;
-  }
-  &.text--sidebar-columns-3 .text__main-content {
-    @apply md:columns-3 gap-6;
-  }
-  .text__content--sidebar .text__main-content p {
-    @apply break-inside-avoid mb-4;
-  }
-}
-
-// Overlay
-.text--layout-overlay {
-  .text__special-layout {
-    @apply relative;
-  }
-  .text__image--center {
-    @apply relative w-full;
-  }
-  .text__image--center .text__image-element {
-    @apply w-full h-96 object-cover rounded-xl;
-  }
-  .text__content--overlay {
-    @apply absolute inset-0 flex items-end p-8;
-  }
-  .text__main-content {
-    @apply bg-black/40 backdrop-blur-sm text-white p-6 rounded-xl;
-  }
-}
-
-// Floating
-.text--layout-floating {
-  .text__special-layout {
-    @apply relative;
-  }
-  .text__image--center {
-    @apply md:float-right md:ml-6 mb-4;
-    shape-outside: circle(50%);
-    shape-margin: 1rem;
-  }
-  .text__image--center .text__image-element {
-    @apply w-40 h-40 object-cover rounded-full shadow-2xl;
-    animation: gentle-float 6s ease-in-out infinite;
-  }
-  .text__content--floating .text__main-content {
-    @apply text-justify leading-relaxed;
-    &::first-letter {
-      @apply text-4xl font-bold text-theme-primary float-left mr-2 mt-1 leading-none;
-    }
-  }
-}
-
-// Magazine
-.text--layout-magazine {
-  .text__special-layout {
-    @apply grid grid-cols-1 md:grid-cols-12 gap-6 items-start;
-  }
-  .text__image--center {
-    @apply col-span-1 md:col-span-5;
-  }
-  .text__image--center .text__image-element {
-    @apply w-full h-80 object-cover rounded-lg shadow-lg;
-  }
-  .text__content--magazine {
-    @apply col-span-1 md:col-span-7 space-y-4;
-  }
-  .text__content--magazine .text__main-content {
-    @apply relative;
-    &::before {
-      @apply absolute -left-6 top-0 w-1 h-full bg-gradient-to-b from-theme-primary via-theme-accent to-transparent rounded-full;
-    }
-    p:first-child {
-      @apply text-lg font-medium text-theme-primary mb-4;
-    }
-    p:not(:first-child) {
-      @apply text-base leading-relaxed mb-4;
-    }
-  }
-}
-
-// ============================================================================
-// CENTRALIZAÇÃO DE IMAGENS
-// ============================================================================
-
-.text--center-image-mobile {
-  @media (max-width: 768px) {
-    .text__image {
-      @apply mx-auto flex justify-center items-center;
-    }
-    .text__image-element {
-      @apply mx-auto block;
-    }
-  }
-}
-
-.text--center-image-always {
-  .text__image {
-    @apply mx-auto flex justify-center items-center;
-  }
-  .text__image-element {
-    @apply mx-auto block;
   }
 }
 
@@ -408,72 +257,36 @@ $layouts: column, sidebar, overlay, floating, magazine;
 @media (max-width: 768px) {
   .text--column-layout {
     .text__columns {
-      @apply flex-col;
-    }
-    .text__image {
-      @apply flex justify-center items-center mx-auto;
-    }
-    .text__image--center {
-      @apply mx-auto my-4 order-first flex justify-center;
+      @apply flex-col gap-4;
     }
     .text__column {
       @apply w-full;
     }
   }
+}
 
-  .text--layout-sidebar {
-    .text__special-layout {
-      @apply flex-col gap-4;
-    }
-    .text__image--center {
-      @apply mx-auto flex justify-center;
-    }
-    .text__content--sidebar {
-      @apply pl-0 border-l-0 border-t border-theme-primary/20 pt-4;
-    }
-  }
+// ============================================================================
+// AJUSTES PARA MELHOR DISTRIBUIÇÃO DE COLUNAS
+// ============================================================================
 
-  .text--layout-magazine {
-    .text__special-layout {
-      @apply grid-cols-1 gap-4;
-    }
-    .text__image--center {
-      @apply col-span-1 mx-auto flex justify-center;
-    }
-    .text__content--magazine {
-      @apply col-span-1;
-    }
-  }
-
-  .text--layout-floating {
-    .text__image--center {
-      @apply float-none ml-0 mb-4 mx-auto flex justify-center;
-    }
-  }
-
-  .text--layout-overlay {
-    .text__image--center {
-      @apply flex justify-center items-center;
+// Em telas menores que tablet, sempre em coluna única
+@media (max-width: 640px) {
+  .text--column-layout .text__columns {
+    @apply flex-col;
+    .text__column {
+      @apply w-full;
     }
   }
 }
 
-// ============================================================================
-// ANIMAÇÕES
-// ============================================================================
-
-@keyframes gentle-float {
-  0%,
-  100% {
-    transform: translateY(0px) translateX(0px);
-  }
-  25% {
-    transform: translateY(-10px) translateX(5px);
-  }
-  50% {
-    transform: translateY(0px) translateX(10px);
-  }
-  75% {
-    transform: translateY(-5px) translateX(5px);
+// Em tablets, ajustar colunas 4 e 5 para 2 colunas
+@media (min-width: 641px) and (max-width: 1024px) {
+  .text--column-layout {
+    &.text--columns-4 .text__columns .text__column {
+      @apply w-1/2;
+    }
+    &.text--columns-5 .text__columns .text__column {
+      @apply w-1/2;
+    }
   }
 }

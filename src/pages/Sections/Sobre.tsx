@@ -2,6 +2,7 @@ import React from 'react'
 import { analytics } from '@/features/Analytics/utils/analytics'
 import { Title } from '@/shared/ui/Title'
 import { Text } from '@/shared/ui/Text'
+import { Image } from '@/shared/ui/Image'
 import { Card, CardsContainer } from '@/shared/ui/Card'
 import { images } from '@/assets/images'
 
@@ -95,33 +96,33 @@ const SobreSection: React.FC<SobreProps> = ({ id = 'sobre-mim' }) => {
         {/* Texto em duas colunas */}
         <div className="grid md:grid-cols-1 gap-8">
           <div className="space-y-4">
-            <Text
-              size="grande"
-              columnLayout={{
-                enabled: true,
-                layoutType: 'sidebar',
-                sidebarColumns: 3,
-                imagePosition: 'center',
-                gap: 'large',
-                image: {
-                  src: images.me,
-                  alt: 'Foto do desenvolvedor',
-                  onClick: () => {
-                    // TRACKING: Rastrear clique na foto
-                    analytics.trackButtonClick('profile_photo')
-                  }
-                }
-              }}
-            >
-              Desenvolvedor fullstack apaixonado por tecnologia e inovação, com
-              mais de 5 anos de experiência criando soluções digitais que fazem
-              a diferença. Especializado em arquiteturas modernas, sempre
-              buscando as melhores práticas para entregar produtos de alta
-              qualidade. Acredito que o código deve ser elegante, performático e
-              sustentável. Quando não estou codando, gosto de contribuir com
-              projetos open source, estudar novas tecnologias e compartilhar
-              conhecimento com a comunidade.
-            </Text>
+            {/* Layout sidebar com flexbox */}
+            <div className="flex flex-col md:flex-row items-start gap-8">
+              {/* Imagem como componente separado */}
+              <Image
+                src={images.me}
+                alt="Foto do desenvolvedor"
+                size="sidebar"
+                shape="rectangle"
+                shadow="strong"
+                onClick={() => {
+                  // TRACKING: Rastrear clique na foto
+                  analytics.trackButtonClick('profile_photo')
+                }}
+              />
+
+              {/* Texto em 3 colunas */}
+              <Text size="grande" columns={3} className="flex-1">
+                Desenvolvedor fullstack apaixonado por tecnologia e inovação,
+                com mais de 5 anos de experiência criando soluções digitais que
+                fazem a diferença. Especializado em arquiteturas modernas,
+                sempre buscando as melhores práticas para entregar produtos de
+                alta qualidade. Acredito que o código deve ser elegante,
+                performático e sustentável. Quando não estou codando, gosto de
+                contribuir com projetos open source, estudar novas tecnologias e
+                compartilhar conhecimento com a comunidade.
+              </Text>
+            </div>
           </div>
         </div>
 
@@ -134,7 +135,6 @@ const SobreSection: React.FC<SobreProps> = ({ id = 'sobre-mim' }) => {
             {tecnologias.map((tech, index) => (
               <Card
                 key={index}
-                layout="horizontal"
                 title={tech.title}
                 subtitle={tech.subtitle}
                 icon={tech.icon}

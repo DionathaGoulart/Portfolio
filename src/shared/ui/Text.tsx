@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextProps, ImageResource } from '../types'
+import { TextProps } from '../types'
 
 export const Text: React.FC<TextProps> = ({
   // Conteúdo
@@ -25,8 +25,9 @@ export const Text: React.FC<TextProps> = ({
   border = 'none',
   // Responsividade
   responsive,
-  // Layout de colunas
-  columnLayout,
+  // Layout de colunas (API simplificada)
+  columns,
+  columnGap = 'medium',
   // HTML attributes
   className = '',
   id
@@ -35,19 +36,7 @@ export const Text: React.FC<TextProps> = ({
   // CONFIGURAÇÃO
   // ============================================================================
   const Element = as
-  const hasColumnLayout = columnLayout?.enabled
-
-  // ============================================================================
-  // UTILITÁRIO PARA RESOLVER IMAGEM
-  // ============================================================================
-  const resolveImageSrc = (src: ImageResource): string => {
-    if (typeof src === 'string') {
-      return src
-    }
-    // Se for um objeto, pega o primeiro valor string encontrado
-    const firstValue = Object.values(src)[0]
-    return typeof firstValue === 'string' ? firstValue : ''
-  }
+  const hasColumns = columns && columns > 1
 
   // ============================================================================
   // CLASSES CSS
@@ -78,10 +67,9 @@ export const Text: React.FC<TextProps> = ({
     // Responsividade
     responsive && `text--responsive-${responsive}`,
     // Layout de colunas
-    hasColumnLayout && 'text--column-layout',
-    hasColumnLayout && `text--columns-${columnLayout.columns || 2}`,
-    hasColumnLayout && `text--image-${columnLayout.imagePosition || 'center'}`,
-    hasColumnLayout && `text--gap-${columnLayout.gap || 'medium'}`,
+    hasColumns && 'text--column-layout',
+    hasColumns && `text--columns-${columns}`,
+    hasColumns && `text--gap-${columnGap}`,
     // Classes customizadas
     className
   ]
@@ -89,157 +77,171 @@ export const Text: React.FC<TextProps> = ({
     .join(' ')
 
   // ============================================================================
-  // HANDLER PARA IMAGEM INTERATIVA
-  // ============================================================================
-  const handleImageClick = () => {
-    if (columnLayout?.image?.onClick) {
-      columnLayout.image.onClick()
-    }
-  }
-
-  const handleImageKeyDown = (e: React.KeyboardEvent) => {
-    if (columnLayout?.image?.onClick && (e.key === 'Enter' || e.key === ' ')) {
-      e.preventDefault()
-      columnLayout.image.onClick()
-    }
-  }
-
-  // ============================================================================
-  // UTILITÁRIOS PARA DIVIDIR CONTEÚDO (SIMPLIFICADOS)
+  // UTILITÁRIOS PARA DIVIDIR CONTEÚDO DE FORMA EQUILIBRADA
   // ============================================================================
   const splitTextIntoColumns = (
     content: React.ReactNode,
     numColumns: number
   ) => {
     if (typeof content !== 'string') {
-      return Array(numColumns).fill(content)
+      // Para conteúdo não-string, duplica igualmente
+      return Array(numColumns)
+        .fill(null)
+        .map((_, index) => (
+          <React.Fragment key={index}>{content}</React.Fragment>
+        ))
     }
 
-    // Divide por parágrafos primeiro, depois por sentenças se necessário
-    let sections = content.split(/\n\s*\n/)
+    // Remove quebras de linha extras e divide por parágrafos
+    const cleanContent = content.trim()
+    let sections = cleanContent.split(/\n\s*\n/).filter((s) => s.trim())
 
-    if (sections.length === 1) {
-      // Se não há parágrafos, divide por sentenças
-      sections = content.split(/(?<=[.!?])\s+/)
+    // Se não há parágrafos suficientes, divide por sentenças
+    if (sections.length < numColumns * 2) {
+      sections = cleanContent.split(/(?<=[.!?])\s+/).filter((s) => s.trim())
     }
 
-    const sectionsPerColumn = Math.ceil(sections.length / numColumns)
-    const columns = []
-
-    for (let i = 0; i < numColumns; i++) {
-      const start = i * sectionsPerColumn
-      const end = start + sectionsPerColumn
-      const columnText = sections.slice(start, end).join(' ')
-      if (columnText.trim()) {
-        columns.push(columnText)
+    // Se ainda não há seções suficientes, divide por palavras
+    if (sections.length < numColumns * 2) {
+      const words = cleanContent.split(/\s+/)
+      const wordsPerSection = Math.max(
+        1,
+        Math.floor(words.length / (numColumns * 3))
+      )
+      sections = []
+      for (let i = 0; i < words.length; i += wordsPerSection) {
+        const sectionWords = words.slice(i, i + wordsPerSection)
+        if (sectionWords.length > 0) {
+          sections.push(sectionWords.join(' '))
+        }
       }
     }
 
-    return columns
-  }
+    // ============================================================================
+    // ALGORITMO DE DISTRIBUIÇÃO EQUILIBRADA
+    // ============================================================================
 
-  // ============================================================================
-  // COMPONENTE DE IMAGEM
-  // ============================================================================
-  const renderImage = (position: string) => {
-    const { image } = columnLayout || {}
-    if (!image) return null
+    // Calcula o "peso" de cada seção (baseado no número de caracteres)
+    const sectionsWithWeight = sections.map((section, index) => ({
+      content: section,
+      weight: section.length,
+      originalIndex: index
+    }))
 
-    const isInteractive = Boolean(image.onClick)
-    const resolvedSrc = resolveImageSrc(image.src)
+    // Inicializa as colunas
+    const columns = Array(numColumns)
+      .fill(null)
+      .map(() => ({
+        sections: [] as string[],
+        totalWeight: 0
+      }))
 
-    const imageElement = (
-      <img
-        src={resolvedSrc}
-        alt={image.alt}
-        className={`text__image-element ${image.className || ''}`}
-      />
-    )
+    // Distribui as seções usando algoritmo de "bin packing" simplificado
+    // Ordena seções por peso (maior primeiro) para melhor distribuição
+    sectionsWithWeight
+      .sort((a, b) => b.weight - a.weight)
+      .forEach((section) => {
+        // Encontra a coluna com menor peso total
+        const lightestColumn = columns.reduce(
+          (min, current, index) =>
+            current.totalWeight < columns[min].totalWeight ? index : min,
+          0
+        )
 
-    return (
-      <div className={`text__image text__image--${position}`}>
-        {isInteractive ? (
-          <div
-            className="text__image-interactive"
-            onClick={handleImageClick}
-            onKeyDown={handleImageKeyDown}
-            tabIndex={0}
-            role="button"
-            aria-label={image.alt}
-          >
-            {imageElement}
-          </div>
-        ) : (
-          imageElement
-        )}
-      </div>
-    )
-  }
+        // Adiciona a seção à coluna mais leve
+        columns[lightestColumn].sections.push(section.content)
+        columns[lightestColumn].totalWeight += section.weight
+      })
 
-  // ============================================================================
-  // RENDER COM LAYOUTS ESPECIAIS
-  // ============================================================================
-  if (hasColumnLayout) {
-    const { layoutType = 'columns', imagePosition = 'center' } = columnLayout
+    // Se alguma coluna ficou vazia, redistribui
+    const emptyColumns = columns.filter((col) => col.sections.length === 0)
+    if (emptyColumns.length > 0) {
+      // Pega seções das colunas mais pesadas e redistribui
+      const heaviestColumns = columns
+        .map((col, index) => ({ ...col, index }))
+        .filter((col) => col.sections.length > 1)
+        .sort((a, b) => b.totalWeight - a.totalWeight)
 
-    const columns = splitTextIntoColumns(children, columnLayout.columns || 2)
-
-    // Layout especiais simplificados
-    if (layoutType !== 'columns') {
-      return (
-        <div
-          className={`${classes} text--layout-${layoutType} ${layoutType === 'sidebar' && columnLayout.sidebarColumns ? `text--sidebar-columns-${columnLayout.sidebarColumns}` : ''}`}
-        >
-          <div className="text__special-container">
-            {imagePosition === 'top' && renderImage('top')}
-
-            <div className="text__special-layout">
-              {/* Imagem central */}
-              {(imagePosition === 'center' || !imagePosition) &&
-                renderImage('center')}
-
-              {/* Conteúdo com layout especial */}
-              <div className={`text__content text__content--${layoutType}`}>
-                <Element className="text__main-content">{children}</Element>
-              </div>
-            </div>
-
-            {imagePosition === 'bottom' && renderImage('bottom')}
-          </div>
-        </div>
-      )
+      emptyColumns.forEach((emptyCol, emptyIndex) => {
+        if (
+          heaviestColumns[emptyIndex] &&
+          heaviestColumns[emptyIndex].sections.length > 1
+        ) {
+          const sectionToMove = heaviestColumns[emptyIndex].sections.pop()
+          if (sectionToMove) {
+            emptyCol.sections.push(sectionToMove)
+          }
+        }
+      })
     }
 
-    // Layout tradicional em colunas
+    // ============================================================================
+    // BALANCEAMENTO FINAL
+    // ============================================================================
+
+    // Tenta balancear ainda mais movendo seções pequenas entre colunas
+    let improved = true
+    let iterations = 0
+    const maxIterations = 5
+
+    while (improved && iterations < maxIterations) {
+      improved = false
+      iterations++
+
+      for (let i = 0; i < columns.length; i++) {
+        for (let j = i + 1; j < columns.length; j++) {
+          const col1 = columns[i]
+          const col2 = columns[j]
+          const weightDiff = Math.abs(col1.totalWeight - col2.totalWeight)
+
+          // Se a diferença é significativa, tenta rebalancear
+          if (
+            weightDiff > 50 &&
+            col1.sections.length > 0 &&
+            col2.sections.length > 0
+          ) {
+            const heavierCol = col1.totalWeight > col2.totalWeight ? col1 : col2
+            const lighterCol = col1.totalWeight > col2.totalWeight ? col2 : col1
+
+            // Procura uma seção pequena da coluna mais pesada para mover
+            const smallSectionIndex = heavierCol.sections.findIndex(
+              (section) => section.length < weightDiff / 2
+            )
+
+            if (smallSectionIndex !== -1) {
+              const sectionToMove = heavierCol.sections.splice(
+                smallSectionIndex,
+                1
+              )[0]
+              lighterCol.sections.push(sectionToMove)
+              heavierCol.totalWeight -= sectionToMove.length
+              lighterCol.totalWeight += sectionToMove.length
+              improved = true
+            }
+          }
+        }
+      }
+    }
+
+    // Retorna o conteúdo das colunas, juntando as seções
+    return columns.map((column) => column.sections.join('\n\n'))
+  }
+
+  // ============================================================================
+  // RENDER COM LAYOUT DE COLUNAS
+  // ============================================================================
+  if (hasColumns) {
+    const columnContents = splitTextIntoColumns(children, columns)
+
     return (
       <div className={classes}>
-        {imagePosition === 'top' && renderImage('top')}
-
         <div className="text__columns">
-          {imagePosition === 'center' && columns.length > 1 ? (
-            <>
-              <div className="text__column">
-                <Element className="text__column-content">{columns[0]}</Element>
-              </div>
-
-              {renderImage('center')}
-
-              <div className="text__column">
-                <Element className="text__column-content">
-                  {columns.slice(1).join(' ')}
-                </Element>
-              </div>
-            </>
-          ) : (
-            columns.map((column, index) => (
-              <div key={index} className="text__column">
-                <Element className="text__column-content">{column}</Element>
-              </div>
-            ))
-          )}
+          {columnContents.map((content, index) => (
+            <div key={index} className="text__column">
+              <Element className="text__column-content">{content}</Element>
+            </div>
+          ))}
         </div>
-
-        {imagePosition === 'bottom' && renderImage('bottom')}
       </div>
     )
   }

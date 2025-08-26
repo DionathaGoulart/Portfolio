@@ -1,0 +1,179 @@
+// ============================================================================
+// IMAGE COMPONENT STYLES
+// ============================================================================
+
+// Mixins
+@mixin image-transition {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+@mixin image-interactive {
+  @include image-transition;
+  @apply cursor-pointer;
+  &:hover .image__element {
+    @apply opacity-80 scale-105;
+  }
+  &:focus {
+    @apply outline-none ring-2 ring-theme-primary ring-offset-2 rounded;
+  }
+  &:active .image__element {
+    @apply scale-95;
+  }
+}
+
+// ============================================================================
+// BASE
+// ============================================================================
+
+.image {
+  @include image-transition;
+  @apply inline-block;
+
+  .image__element {
+    @apply max-w-full object-cover;
+    @include image-transition;
+  }
+
+  // Estados interativos
+  &--interactive {
+    @include image-interactive;
+  }
+
+  &--hover:hover .image__element {
+    @apply opacity-90;
+  }
+}
+
+// ============================================================================
+// TAMANHOS
+// ============================================================================
+
+.image--small .image__element {
+  @apply w-20 h-20;
+}
+
+.image--medium .image__element {
+  @apply w-40 h-40;
+}
+
+.image--large .image__element {
+  @apply w-64 h-64;
+}
+
+.image--xlarge .image__element {
+  @apply w-96 h-96;
+}
+
+// Novo tamanho específico para sidebar (igual ao Text)
+.image--sidebar .image__element {
+  @apply w-48 h-64 object-cover rounded-lg shadow-xl relative;
+  animation: gentle-float 6s ease-in-out infinite;
+}
+
+// ============================================================================
+// FORMATOS
+// ============================================================================
+
+.image--square .image__element {
+  @apply aspect-square;
+}
+
+.image--rectangle .image__element {
+  @apply aspect-video;
+}
+
+.image--circle .image__element {
+  @apply rounded-full aspect-square;
+}
+
+// ============================================================================
+// SOMBRAS
+// ============================================================================
+
+.image--shadow .image__element {
+  @apply shadow-lg;
+}
+
+.image--shadow-strong .image__element {
+  @apply shadow-2xl;
+}
+
+// ============================================================================
+// FLOAT
+// ============================================================================
+
+.image--float-left {
+  @apply float-left mr-6 mb-4;
+  shape-outside: circle(50%);
+  shape-margin: 1rem;
+}
+
+.image--float-right {
+  @apply float-right ml-6 mb-4;
+  shape-outside: circle(50%);
+  shape-margin: 1rem;
+}
+
+// ============================================================================
+// RESPONSIVIDADE
+// ============================================================================
+
+.image--responsive {
+  // Tamanhos responsivos por breakpoint
+  &.image--small .image__element {
+    @apply w-16 h-16 sm:w-20 sm:h-20;
+  }
+
+  &.image--medium .image__element {
+    @apply w-32 h-32 sm:w-40 sm:h-40;
+  }
+
+  &.image--large .image__element {
+    @apply w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64;
+  }
+
+  &.image--xlarge .image__element {
+    @apply w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96;
+  }
+
+  // Responsividade para sidebar
+  &.image--sidebar .image__element {
+    @apply w-40 h-52 sm:w-48 sm:h-64;
+  }
+}
+
+// ============================================================================
+// ANIMAÇÕES
+// ============================================================================
+
+@keyframes gentle-float {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  50% {
+    transform: translateY(0px) translateX(10px);
+  }
+  75% {
+    transform: translateY(-5px) translateX(5px);
+  }
+}
+
+// ============================================================================
+// MOBILE RESPONSIVITY
+// ============================================================================
+
+@media (max-width: 768px) {
+  .image--float-left,
+  .image--float-right {
+    @apply float-none mx-auto mb-4 flex justify-center;
+  }
+
+  // Mobile para sidebar
+  .image--sidebar {
+    @apply mx-auto flex justify-center;
+  }
+}

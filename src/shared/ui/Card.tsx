@@ -1,4 +1,4 @@
-import React from 'react'
+// card.tsx
 import { Title } from './Title'
 import { P } from './Text'
 import {
@@ -36,14 +36,13 @@ export const Card: React.FC<CardProps> = (props) => {
     ...rest
   } = props
 
-  const handleClick = () => !disabled && !loading && onClick?.()
+  // Unifica as validações
+  const canInteract = !disabled && !loading && onClick
+
+  const handleClick = () => canInteract && onClick()
+
   const handleKey = (e: React.KeyboardEvent) => {
-    if (
-      (e.key === 'Enter' || e.key === ' ') &&
-      !disabled &&
-      !loading &&
-      onClick
-    ) {
+    if ((e.key === 'Enter' || e.key === ' ') && canInteract) {
       e.preventDefault()
       onClick()
     }
@@ -54,7 +53,7 @@ export const Card: React.FC<CardProps> = (props) => {
       className={buildClasses(props)}
       onClick={handleClick}
       onKeyDown={handleKey}
-      tabIndex={onClick && !disabled ? 0 : undefined}
+      tabIndex={canInteract ? 0 : undefined}
       role={onClick ? 'button' : undefined}
       aria-disabled={disabled}
     >

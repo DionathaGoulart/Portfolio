@@ -1,21 +1,23 @@
 // ============================================================================
-// CARD HORIZONTAL - SUPER OTIMIZADO
+// CARD HORIZONTAL - OTIMIZADO
 // ============================================================================
 
 @use 'sass:list';
 
-// Variáveis
-$shadow:
-  0 2px 8px rgba(0, 0, 0, 0.1),
-  0 8px 25px rgba(0, 0, 0, 0.15);
+// Variáveis centralizadas
+$shadow-base: 0 2px 8px rgba(0, 0, 0, 0.1);
+$shadow-elevated: 0 8px 25px rgba(0, 0, 0, 0.15);
+$transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Removido mixin - Tailwind não aceita variáveis com @apply
 
 // ============================================================================
 // COMPONENTE
 // ============================================================================
 .card {
   @apply relative border rounded-xl bg-theme-surface border-theme-secondary;
-  box-shadow: list.nth($shadow, 1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: $shadow-base;
+  transition: $transition;
 
   // Estrutura
   &__content {
@@ -23,6 +25,16 @@ $shadow:
   }
   &__text {
     @apply flex-1 space-y-1;
+    // Força alinhamento à esquerda em todos os breakpoints
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
+      @apply text-left;
+    }
   }
   &__icon {
     @apply flex-shrink-0;
@@ -37,7 +49,7 @@ $shadow:
     @apply cursor-pointer;
     &:hover:not(.card--disabled) {
       transform: scale(1.02) translateY(-4px);
-      box-shadow: list.nth($shadow, 2);
+      box-shadow: $shadow-elevated;
       .card__icon {
         transform: scale(1.1);
       }
@@ -52,7 +64,7 @@ $shadow:
     @apply opacity-50 pointer-events-none;
   }
   &--elevated {
-    box-shadow: list.nth($shadow, 2);
+    box-shadow: $shadow-elevated;
   }
   &--loading {
     @apply relative overflow-hidden;
@@ -69,7 +81,7 @@ $shadow:
     }
   }
 
-  // Cores
+  // Cores - usando loop mais eficiente
   @each $color in (primary, secondary, success, warning, error) {
     &--#{$color} {
       background: rgb(var(--color-#{$color}) / 0.05);
@@ -83,7 +95,7 @@ $shadow:
     }
   }
 
-  // Tamanhos
+  // Tamanhos - sem mixin devido à limitação do Tailwind
   &--pequeno {
     .card__content {
       @apply p-3;
@@ -100,38 +112,67 @@ $shadow:
       @apply w-6 h-6;
     }
   }
-  &--compact .card__content {
-    @apply p-3;
+
+  // Compact deve sobrescrever outros tamanhos
+  &--compact {
+    .card__content {
+      @apply p-2; // Menor que pequeno (p-3)
+    }
+    .card__text {
+      @apply space-y-0.5; // Espaçamento menor entre title/subtitle
+    }
   }
 
   // Alinhamentos
-  &--align-center .card__content {
-    @apply justify-center text-center;
+  &--align-center {
+    .card__content {
+      @apply justify-center text-center;
+    }
+    .card__text h1,
+    .card__text h2,
+    .card__text h3,
+    .card__text h4,
+    .card__text h5,
+    .card__text h6,
+    .card__text p {
+      @apply text-center;
+    }
   }
-  &--align-end .card__content {
-    @apply justify-end text-right;
+  &--align-end {
+    .card__content {
+      @apply justify-end text-right;
+    }
+    .card__text h1,
+    .card__text h2,
+    .card__text h3,
+    .card__text h4,
+    .card__text h5,
+    .card__text h6,
+    .card__text p {
+      @apply text-right;
+    }
   }
 }
 
 // ============================================================================
-// CONTAINERS
+// CONTAINERS - Grid com 3 colunas mobile
 // ============================================================================
 .cards-grid {
   @apply grid gap-4;
-  &--1 {
-    @apply grid-cols-1;
-  }
-  &--2 {
-    @apply grid-cols-1 sm:grid-cols-2;
-  }
-  &--3 {
-    @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
-  }
-  &--4 {
-    @apply grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
-  }
-  &--5 {
-    @apply grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5;
+  @for $i from 1 through 5 {
+    &--#{$i} {
+      @if $i == 1 {
+        @apply grid-cols-1;
+      } @else if $i == 2 {
+        @apply grid-cols-2 sm:grid-cols-3;
+      } @else if $i == 3 {
+        @apply grid-cols-2 sm:grid-cols-3 lg:grid-cols-3;
+      } @else if $i == 4 {
+        @apply grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4;
+      } @else {
+        @apply grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5;
+      }
+    }
   }
 }
 

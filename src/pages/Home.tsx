@@ -4,6 +4,7 @@ import HomeSection from './Sections/Home'
 import SobreSection from './Sections/Sobre'
 import { useSectionTracking } from '@/features/Analytics/hooks/useAnalytics'
 import { SectionConfig } from '@/shared/types'
+import ProjectsSection from './Sections/Projects'
 
 interface HomePageProps {
   setSections: (sections: SectionConfig[]) => void
@@ -33,6 +34,7 @@ export function HomePage({ setSections, setPageTitle }: HomePageProps) {
     <div className="space-y-72">
       <HomeSection id="inicio" />
       <SobreSection id="sobre-mim" />
+      <ProjectsSection id="meus-projetos" />
     </div>
   )
 }

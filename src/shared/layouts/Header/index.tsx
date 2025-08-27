@@ -153,7 +153,6 @@ export const Header: React.FC<HeaderProps> = ({
     }
   }, [activeSection, pageTitle, sections])
 
-  // Observador para seções ativas
   useEffect(() => {
     if (navLinks.length === 0) return
 
@@ -172,6 +171,21 @@ export const Header: React.FC<HeaderProps> = ({
       return
     }
 
+    const headerOffset = headerHeight || 80
+
+    // Lógica para determinar o rootMargin com base no tamanho da tela
+    let rootMarginValue
+    const isMobile = window.innerWidth <= 768 // Exemplo de breakpoint mobile
+
+    if (isMobile) {
+      // Usa a lógica simples para mobile
+      rootMarginValue = `-${headerOffset}px 0px 0px 0px`
+    } else {
+      // Usa a lógica centralizada para desktop
+      const verticalCenter = window.innerHeight * 0.5
+      rootMarginValue = `-${headerOffset}px 0px -${verticalCenter}px 0px`
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (isScrolling.current) return
@@ -188,8 +202,8 @@ export const Header: React.FC<HeaderProps> = ({
         }
       },
       {
-        rootMargin: `-${headerHeight + 20}px 0px 0px 0px`,
-        threshold: [0.1, 0.25, 0.5, 0.75]
+        rootMargin: rootMarginValue,
+        threshold: 0.1
       }
     )
 

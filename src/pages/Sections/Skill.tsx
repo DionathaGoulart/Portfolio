@@ -114,56 +114,39 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
 
   return (
     <section id={id}>
-      <div className="container mx-auto">
-        {/* Header */}
-        <div className="space-y-6 mb-12">
-          <Title level="h2" border="bottom-start">
-            habilidades técnicas
-          </Title>
-          <P size="grande" className="max-w-2xl leading-relaxed">
-            Domínio em tecnologias modernas para desenvolvimento de aplicações
-            robustas e escaláveis em todo o stack.
-          </P>
-        </div>
-
-        {/* Filtros */}
-        <div className="mb-8">
-          <NavFilter
-            options={filterOptions}
-            activeFilter={activeFilter}
-            onFilterChange={handleFilterChange}
-            size="medium"
-            layout="horizontal"
-            align="center"
-            ariaLabel="Filtrar habilidades por categoria"
-          />
-        </div>
-
-        {/* Skills Grid */}
-        <div className="space-y-10">
-          {getFilteredCategories().map(({ key, skills, delay }) => (
-            <SkillGrid
-              key={key}
-              skills={skills}
-              columns="responsive"
-              gap="medium"
-              animationDelay={delay}
-              showCategories={activeFilter === 'all'} // Só mostra títulos quando "Todas" está ativo
-            />
-          ))}
-        </div>
-
-        {/* Rodapé da seção */}
-        <div className="mt-16 pt-8 border-t border-theme-border">
-          <P
-            size="medio"
-            className="text-center text-theme-text/70 max-w-3xl mx-auto"
-          >
-            Sempre em busca de aprender novas tecnologias e aprimorar minhas
-            habilidades existentes para entregar soluções ainda melhores.
-          </P>
-        </div>
+      {/* Header */}
+      <div className="space-y-6">
+        <Title level="h2" border="bottom-start">
+          habilidades técnicas
+        </Title>
+        <P size="grande" className="max-w-2xl leading-relaxed">
+          Domínio em tecnologias modernas para desenvolvimento de aplicações
+          robustas e escaláveis em todo o stack.
+        </P>
       </div>
+
+      {/* Filtros */}
+      <NavFilter
+        options={filterOptions}
+        activeFilter={activeFilter}
+        onFilterChange={handleFilterChange}
+        size="medium"
+        layout="horizontal"
+        align="center"
+        ariaLabel="Filtrar habilidades por categoria"
+      />
+
+      {/* Skills Grid */}
+      {getFilteredCategories().map(({ key, skills, delay }) => (
+        <SkillGrid
+          key={key}
+          skills={skills}
+          columns="responsive"
+          gap="medium"
+          animationDelay={delay}
+          showCategories={activeFilter === 'all'} // Só mostra títulos quando "Todas" está ativo
+        />
+      ))}
     </section>
   )
 }

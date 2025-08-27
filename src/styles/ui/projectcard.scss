@@ -1,0 +1,161 @@
+// ============================================================================
+// PROJECT CARD STYLES
+// ============================================================================
+
+.project-card {
+  // Card base já está sendo aplicado via Tailwind
+  // Estilos personalizados podem ser adicionados aqui se necessário
+
+  // Hover effects customizados se necessário
+  &:hover {
+    // transform e shadow já estão sendo aplicados via Tailwind hover:
+
+    .project-card__image {
+      // Scale já está sendo aplicado via group-hover:scale-110
+    }
+
+    .project-card__title {
+      // Color change já está sendo aplicado via group-hover:text-theme-primary
+    }
+  }
+
+  // ============================================================================
+  // ELEMENTOS DO CARD
+  // ============================================================================
+
+  &__image {
+    &-container {
+      // Styles já aplicados via Tailwind
+    }
+
+    &-overlay {
+      // Gradient já aplicado via Tailwind
+    }
+  }
+
+  &__content {
+    // Padding já aplicado via Tailwind
+  }
+
+  &__title {
+    // Styles já aplicados via Tailwind
+  }
+
+  &__description {
+    // Line clamp já aplicado via Tailwind
+
+    // Caso queira customizar o line-clamp
+    // display: -webkit-box;
+    // -webkit-line-clamp: 3;
+    // -webkit-box-orient: vertical;
+    // overflow: hidden;
+  }
+
+  &__tags {
+    // Gap e flex já aplicados via Tailwind
+  }
+
+  &__buttons {
+    // Flex e gap já aplicados via Tailwind
+  }
+}
+
+// ============================================================================
+// PROJECT GRID STYLES
+// ============================================================================
+
+.project-grid {
+  // Grid já aplicado via Tailwind
+
+  &__empty {
+    // Styles já aplicados via Tailwind
+  }
+}
+
+// ============================================================================
+// ANIMAÇÕES PERSONALIZADAS
+// ============================================================================
+
+// Animação de entrada para os cards (se necessário)
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-card {
+  // Aplicar animação se necessário
+  // animation: cardFadeIn 0.5s ease-out;
+}
+
+// ============================================================================
+// MEDIA QUERIES PERSONALIZADAS
+// ============================================================================
+
+// Ajustes para telas muito pequenas
+@media (max-width: 480px) {
+  .project-card {
+    // Ajustes específicos se necessário
+
+    &__content {
+      // Padding menor em mobile se necessário
+      // @apply p-4;
+    }
+
+    &__buttons {
+      // Botões empilhados em telas muito pequenas se necessário
+      // @apply flex-col gap-2;
+    }
+  }
+}
+
+// ============================================================================
+// ESTADOS DE LOADING (se necessário)
+// ============================================================================
+
+.project-card {
+  &--loading {
+    // Skeleton loading state se necessário
+
+    .project-card__image {
+      // Loading placeholder
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+    }
+
+    .project-card__title,
+    .project-card__description {
+      // Loading text placeholder
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+      color: transparent;
+    }
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// ============================================================================
+// TEMA DARK (se necessário)
+// ============================================================================
+
+// Ajustes específicos para tema dark se não estiver sendo tratado via CSS variables
+[data-theme='dark'] {
+  .project-card {
+    // Ajustes específicos para tema dark se necessário
+  }
+}

@@ -1,0 +1,63 @@
+// ============================================================================
+// PROJECT FILTER STYLES
+// ============================================================================
+
+// Caso precise de estilos customizados específicos para o filtro
+// A maioria dos estilos está sendo feita via Tailwind nas classes
+
+.project-filter {
+  // Container base já está sendo aplicado via Tailwind
+  // Estilos adicionais podem ser adicionados aqui se necessário
+
+  &__button {
+    // Botão base já está sendo aplicado via Tailwind
+    // Animações personalizadas podem ser adicionadas aqui
+
+    // Efeito hover personalizado se necessário
+    &:hover:not(&--active) {
+      // Já está sendo aplicado via Tailwind hover:
+    }
+
+    // Estado ativo personalizado se necessário
+    &--active {
+      // Já está sendo aplicado via classes condicionais
+    }
+  }
+}
+
+// ============================================================================
+// MEDIA QUERIES PERSONALIZADAS (se necessário)
+// ============================================================================
+
+// Caso precise de breakpoints específicos não cobertos pelo Tailwind
+@media (max-width: 480px) {
+  .project-filter {
+    // Estilos para telas muito pequenas se necessário
+    nav {
+      // Ajustes específicos para mobile
+    }
+  }
+}
+
+// ============================================================================
+// ANIMAÇÕES PERSONALIZADAS (se necessário)
+// ============================================================================
+
+// Caso queira adicionar animações mais complexas que as do Tailwind
+.project-filter__button {
+  // Animação personalizada se necessário
+  // transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// ============================================================================
+// ACESSIBILIDADE
+// ============================================================================
+
+// Estilos específicos para acessibilidade se necessário
+.project-filter__button {
+  &:focus-visible {
+    // Tailwind já fornece focus-visible, mas pode personalizar aqui
+    outline: 2px solid rgb(var(--color-primary));
+    outline-offset: 2px;
+  }
+}

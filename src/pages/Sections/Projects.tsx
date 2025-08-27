@@ -1,26 +1,19 @@
 import { useState } from 'react'
 import { analytics } from '@/features/Analytics/utils/analytics'
-import { Button } from '@/shared/ui/Button'
 import { P } from '@/shared/ui/Text'
 import { Title } from '@/shared/ui/Title'
-import { Github, ExternalLink } from 'lucide-react'
-
-interface Project {
-  id: string
-  title: string
-  description: string
-  image: string
-  tags: string[]
-  category: 'frontend' | 'backend' | 'fullstack' | 'mobile'
-  githubUrl: string
-  demoUrl: string
-}
+import { Project } from '@/shared/types/ui/ProjectCard.types'
+import { ProjectGrid } from '@/shared/ui/ProjectCard'
+import { NavFilter } from '@/shared/ui/NavFilter'
 
 interface ProjectsSectionProps {
   id?: string
 }
 
-// Dados de exemplo dos projetos
+// ============================================================================
+// DADOS DOS PROJETOS
+// ============================================================================
+
 const projectsData: Project[] = [
   {
     id: '1',
@@ -90,24 +83,22 @@ const projectsData: Project[] = [
   }
 ]
 
-const filterOptions = [
-  { value: 'todos', label: 'todos' },
-  { value: 'frontend', label: 'frontend' },
-  { value: 'backend', label: 'backend' },
-  { value: 'fullstack', label: 'fullstack' },
-  { value: 'mobile', label: 'mobile' }
-]
+// ============================================================================
+// PROJECTS SECTION COMPONENT
+// ============================================================================
 
 const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   id = 'meus-projetos'
 }) => {
   const [activeFilter, setActiveFilter] = useState<string>('todos')
 
+  // Filtrar projetos baseado no filtro ativo
   const filteredProjects =
     activeFilter === 'todos'
       ? projectsData
       : projectsData.filter((project) => project.category === activeFilter)
 
+  // Handlers com analytics
   const handleFilterChange = (filter: string) => {
     setActiveFilter(filter)
     analytics.trackButtonClick(`filter_projects_${filter}`)
@@ -137,100 +128,18 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         </div>
 
         {/* Filtros */}
-        <nav className="flex flex-wrap justify-center gap-4 mb-12">
-          {filterOptions.map((option) => (
-            <button
-              key={option.value}
-              onClick={() => handleFilterChange(option.value)}
-              className={`
-                px-6 py-3 rounded-full text-sm font-medium transition-all duration-200
-                ${
-                  activeFilter === option.value
-                    ? 'bg-theme-primary text-theme-textSecondary shadow-lg'
-                    : 'bg-theme-surface text-theme-text hover:bg-theme-primary/10 hover:text-theme-primary'
-                }
-              `}
-            >
-              {option.label}
-            </button>
-          ))}
-        </nav>
+        <NavFilter
+          activeFilter={activeFilter}
+          onFilterChange={handleFilterChange}
+        />
 
         {/* Grid de Projetos */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project) => (
-            <div
-              key={project.id}
-              className="group theme-surface rounded-2xl overflow-hidden theme-shadow hover:theme-shadow-lg transition-all duration-300 hover:scale-105"
-            >
-              {/* Imagem do Projeto */}
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-              </div>
-
-              {/* Conteúdo do Card */}
-              <div className="p-6">
-                <Title
-                  level="h3"
-                  className="mb-3 group-hover:text-theme-primary transition-colors"
-                >
-                  {project.title}
-                </Title>
-
-                <P className="mb-4 line-clamp-3">{project.description}</P>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 text-xs font-medium bg-theme-primary/10 text-theme-primary rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Botões */}
-                <div className="flex gap-3">
-                  <Button
-                    variant="outline"
-                    size="pequeno"
-                    onClick={() => handleGithubClick(project.id)}
-                    className="flex-1 flex items-center justify-center gap-2"
-                  >
-                    <Github size={16} />
-                    GitHub
-                  </Button>
-
-                  <Button
-                    variant="solid"
-                    size="pequeno"
-                    onClick={() => handleDemoClick(project.id)}
-                    className="flex-1 flex items-center justify-center gap-2"
-                  >
-                    <ExternalLink size={16} />
-                    Demo
-                  </Button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Mensagem quando não há projetos */}
-        {filteredProjects.length === 0 && (
-          <div className="text-center py-16">
-            <P className="text-theme-text/60">
-              Nenhum projeto encontrado para esta categoria.
-            </P>
-          </div>
-        )}
+        <ProjectGrid
+          projects={filteredProjects}
+          onGithubClick={handleGithubClick}
+          onDemoClick={handleDemoClick}
+          emptyMessage="Nenhum projeto encontrado para esta categoria."
+        />
       </div>
     </section>
   )

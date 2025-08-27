@@ -158,37 +158,48 @@ export const Header: React.FC<HeaderProps> = ({
     if (navLinks.length === 0) return
 
     const sectionsElements = navLinks
-      .map((link) => document.getElementById(link.id))
+      .map((link) => {
+        const element = document.getElementById(link.id)
+        if (!element) {
+          console.warn(`Seção com ID "${link.id}" não encontrada`)
+        }
+        return element
+      })
       .filter(Boolean) as HTMLElement[]
 
-    if (sectionsElements.length === 0) return
+    if (sectionsElements.length === 0) {
+      console.warn('Nenhuma seção encontrada para observar')
+      return
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
         if (isScrolling.current) return
 
-        const visibleSections = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+        const visibleSections = entries.filter((entry) => entry.isIntersecting)
 
         if (visibleSections.length > 0) {
-          const mostVisible = visibleSections[0]
-          setActiveSection(mostVisible.target.id)
+          const mostVisible = visibleSections.reduce((prev, current) =>
+            prev.intersectionRatio > current.intersectionRatio ? prev : current
+          )
+
+          const newActiveSection = mostVisible.target.id
+          setActiveSection(newActiveSection)
         }
       },
       {
-        rootMargin: '-80px 0px -60% 0px',
+        rootMargin: `-${headerHeight + 20}px 0px 0px 0px`,
         threshold: [0.1, 0.25, 0.5, 0.75]
       }
     )
 
     sectionsElements.forEach((section) => observer.observe(section))
+
     return () => {
       sectionsElements.forEach((section) => observer.unobserve(section))
-      // NOVO: Limpar timer quando o componente desmontar
       analytics.clearTitleTimer()
     }
-  }, [navLinks])
+  }, [navLinks, headerHeight])
 
   // Medir altura do header
   useEffect(() => {

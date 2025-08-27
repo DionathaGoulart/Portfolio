@@ -79,7 +79,7 @@ const tecnologias = [
   }
 ]
 
-const SobreSection: React.FC<SobreProps> = ({ id = 'sobre-mim' }) => {
+const SobreSection: React.FC<SobreProps> = ({ id = '' }) => {
   return (
     <section id={id}>
       <div className="space-y-12">

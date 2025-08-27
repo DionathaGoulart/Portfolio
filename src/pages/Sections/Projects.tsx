@@ -149,35 +149,33 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
   return (
     <section id={id}>
-      <div className="container mx-auto">
-        {/* Header */}
-        <div className="space-y-6">
-          <Title level="h2" border="bottom-start">
-            meus projetos
-          </Title>
+      {/* Header */}
+      <div className="space-y-6">
+        <Title level="h2" border="bottom-start">
+          meus projetos
+        </Title>
 
-          <P size="grande" className="max-w-lg leading-relaxed">
-            Aqui estão alguns dos projetos que desenvolvi, demonstrando minhas
-            habilidades em diferentes tecnologias e áreas de desenvolvimento.
-          </P>
-        </div>
+        <P size="grande" className="max-w-lg leading-relaxed">
+          Aqui estão alguns dos projetos que desenvolvi, demonstrando minhas
+          habilidades em diferentes tecnologias e áreas de desenvolvimento.
+        </P>
+      </div>
 
-        {/* Filtros */}
-        <NavFilter
-          options={filterOptions}
-          activeFilter={activeFilter}
-          onFilterChange={handleFilterChange}
+      {/* Filtros */}
+      <NavFilter
+        options={filterOptions}
+        activeFilter={activeFilter}
+        onFilterChange={handleFilterChange}
+      />
+
+      {/* Grid de Projetos */}
+      <div key={animationKey} className={getGridClassName()}>
+        <ProjectGrid
+          projects={filteredProjects}
+          onGithubClick={handleGithubClick}
+          onDemoClick={handleDemoClick}
+          emptyMessage="Nenhum projeto encontrado para esta categoria."
         />
-
-        {/* Grid de Projetos */}
-        <div key={animationKey} className={getGridClassName()}>
-          <ProjectGrid
-            projects={filteredProjects}
-            onGithubClick={handleGithubClick}
-            onDemoClick={handleDemoClick}
-            emptyMessage="Nenhum projeto encontrado para esta categoria."
-          />
-        </div>
       </div>
     </section>
   )

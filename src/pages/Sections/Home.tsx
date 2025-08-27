@@ -8,7 +8,7 @@ interface HomeSectionProps {
   id?: string
 }
 
-const HomeSection: React.FC<HomeSectionProps> = ({ id = 'inicio' }) => {
+const HomeSection: React.FC<HomeSectionProps> = ({ id = '' }) => {
   const handleVerTrabalhos = () => {
     // TRACKING: Rastrear clique no botão "Ver Trabalhos"
     analytics.trackButtonClick('ver_trabalhos')

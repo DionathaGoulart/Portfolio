@@ -5,6 +5,7 @@ import SobreSection from './Sections/Sobre'
 import { useSectionTracking } from '@/features/Analytics/hooks/useAnalytics'
 import { SectionConfig } from '@/shared/types'
 import ProjectsSection from './Sections/Projects'
+import SkillsSection from './Sections/Skill'
 
 interface HomePageProps {
   setSections: (sections: SectionConfig[]) => void
@@ -16,7 +17,7 @@ export function HomePage({ setSections, setPageTitle }: HomePageProps) {
     { id: 'inicio', label: 'Início' },
     { id: 'sobre-mim', label: 'Sobre Mim' },
     { id: 'meus-projetos', label: 'Projetos' },
-    { id: 'fale-comigo', label: 'Contato' }
+    { id: 'habilidades-tecnicas', label: 'Habilidades' }
   ]
 
   // TRACKING: Ativar tracking automático das seções
@@ -34,7 +35,8 @@ export function HomePage({ setSections, setPageTitle }: HomePageProps) {
     <div className="space-y-72">
       <HomeSection id="inicio" />
       <SobreSection id="sobre-mim" />
-      <ProjectsSection id="meus-projetos" />
+      <ProjectsSection id="meus-projetos" /> {/* ← Explícito */}
+      <SkillsSection id="habilidades-tecnicas" /> {/* ← Explícito */}
     </div>
   )
 }

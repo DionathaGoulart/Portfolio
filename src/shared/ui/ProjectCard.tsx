@@ -5,18 +5,9 @@ import { P } from '@/shared/ui/Text'
 import { Title } from '@/shared/ui/Title'
 import { Tag } from '@/shared/ui/Tag'
 import {
-  buildButtonClasses,
-  buildButtonsContainerClasses,
   buildCardClasses,
-  buildCardContentClasses,
-  buildCardDescriptionClasses,
-  buildCardImageClasses,
-  buildCardTitleClasses,
   buildEmptyStateClasses,
   buildGridClasses,
-  buildImageClasses,
-  buildImageOverlayClasses,
-  buildTagsContainerClasses,
   ProjectCardProps,
   ProjectGridProps
 } from '../types/ui/ProjectCard.types'
@@ -29,49 +20,69 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
   onGithubClick,
   onDemoClick,
-  className = ''
+  className = '',
+  size = 'medium',
+  variant = 'default',
+  loading = false,
+  disabled = false,
+  elevated = false
 }) => {
-  const cardClasses = buildCardClasses(className)
-  const imageContainerClasses = buildCardImageClasses()
-  const imageClasses = buildImageClasses()
-  const overlayClasses = buildImageOverlayClasses()
-  const contentClasses = buildCardContentClasses()
-  const titleClasses = buildCardTitleClasses()
-  const descriptionClasses = buildCardDescriptionClasses()
-  const tagsContainerClasses = buildTagsContainerClasses()
-  const buttonsContainerClasses = buildButtonsContainerClasses()
-  const buttonClasses = buildButtonClasses()
+  const cardClasses = buildCardClasses(
+    size,
+    variant,
+    loading,
+    disabled,
+    elevated,
+    className
+  )
 
   const handleGithubClick = () => {
-    if (onGithubClick) {
+    if (!disabled && !loading && onGithubClick) {
       onGithubClick(project.id)
     }
   }
 
   const handleDemoClick = () => {
-    if (onDemoClick) {
+    if (!disabled && !loading && onDemoClick) {
       onDemoClick(project.id)
     }
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      handleDemoClick()
+    }
+  }
+
   return (
-    <div className={cardClasses}>
+    <div
+      className={cardClasses}
+      onKeyDown={handleKeyDown}
+      tabIndex={!disabled && !loading ? 0 : -1}
+      role="button"
+      aria-label={`Projeto ${project.title}`}
+    >
       {/* Imagem do Projeto */}
-      <div className={imageContainerClasses}>
-        <img src={project.image} alt={project.title} className={imageClasses} />
-        <div className={overlayClasses} />
+      <div className="project-card__image-container">
+        <img
+          src={project.image}
+          alt={project.title}
+          className="project-card__image"
+        />
+        <div className="project-card__image-overlay" />
       </div>
 
       {/* Conteúdo do Card */}
-      <div className={contentClasses}>
-        <Title level="h3" className={titleClasses}>
+      <div className="project-card__content">
+        <Title level="h3" className="project-card__title">
           {project.title}
         </Title>
 
-        <P className={descriptionClasses}>{project.description}</P>
+        <P className="project-card__description">{project.description}</P>
 
         {/* Tags */}
-        <div className={tagsContainerClasses}>
+        <div className="project-card__tags">
           {project.tags.map((tag) => (
             <Tag size="pequeno" key={tag}>
               {tag}
@@ -80,12 +91,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
 
         {/* Botões */}
-        <div className={buttonsContainerClasses}>
+        <div className="project-card__buttons">
           <Button
             variant="outline"
             size="pequeno"
             onClick={handleGithubClick}
-            className={buttonClasses}
+            disabled={disabled || loading}
           >
             <Github size={16} />
             GitHub
@@ -94,7 +105,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           <Button
             size="pequeno"
             onClick={handleDemoClick}
-            className={buttonClasses}
+            disabled={disabled || loading}
           >
             <ExternalLink size={16} />
             Demo
@@ -114,15 +125,18 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({
   onGithubClick,
   onDemoClick,
   emptyMessage = 'Nenhum projeto encontrado para esta categoria.',
-  className = ''
+  className = '',
+  columns = 'responsive', // Usa 'responsive' como padrão
+  gap = 'medium',
+  loading = false
 }) => {
-  const gridClasses = buildGridClasses(className)
+  const gridClasses = buildGridClasses(columns, gap, loading, className)
   const emptyStateClasses = buildEmptyStateClasses()
 
-  if (projects.length === 0) {
+  if (projects.length === 0 && !loading) {
     return (
       <div className={emptyStateClasses}>
-        <P className="text-theme-text/60">{emptyMessage}</P>
+        <P className="project-grid__empty-text">{emptyMessage}</P>
       </div>
     )
   }
@@ -135,8 +149,36 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({
           project={project}
           onGithubClick={onGithubClick}
           onDemoClick={onDemoClick}
+          loading={loading}
         />
       ))}
+
+      {/* Loading skeleton cards se necessário */}
+      {loading &&
+        projects.length === 0 &&
+        Array.from(
+          { length: 6 },
+          (
+            _,
+            i // Reduzido para 6 cards skeleton
+          ) => (
+            <ProjectCard
+              key={`skeleton-${i}`}
+              project={{
+                id: `skeleton-${i}`,
+                title: 'Loading...',
+                description: 'Loading project description...',
+                image: '/placeholder.jpg',
+                tags: ['Loading'],
+                category: 'frontend',
+                githubUrl: '#',
+                demoUrl: '#'
+              }}
+              loading={true}
+              disabled={true}
+            />
+          )
+        )}
     </div>
   )
 }

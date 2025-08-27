@@ -2,35 +2,35 @@ import React from 'react'
 import {
   buildFilterButtonClasses,
   buildFilterContainerClasses,
-  FilterOption,
   NavFilterProps
 } from '../types/ui/NavFilter.types'
 
 // ============================================================================
-// FILTER OPTIONS DATA
-// ============================================================================
-
-const filterOptions: FilterOption[] = [
-  { value: 'todos', label: 'todos' },
-  { value: 'frontend', label: 'frontend' },
-  { value: 'backend', label: 'backend' },
-  { value: 'fullstack', label: 'fullstack' },
-  { value: 'mobile', label: 'mobile' }
-]
-
-// ============================================================================
-// PROJECT FILTER COMPONENT
+// NAV FILTER COMPONENT
 // ============================================================================
 
 export const NavFilter: React.FC<NavFilterProps> = ({
+  options = [], // ← ADICIONEI VALOR PADRÃO AQUI
   activeFilter,
   onFilterChange,
-  className = ''
+  className = '',
+  ariaLabel = 'Filtros de navegação',
+  size = 'medium',
+  layout = 'horizontal',
+  align = 'center',
+  loading = false
 }) => {
-  const containerClasses = buildFilterContainerClasses(className)
+  const containerClasses = buildFilterContainerClasses(
+    layout,
+    align,
+    size,
+    className
+  )
 
   const handleFilterClick = (filter: string) => {
-    onFilterChange(filter)
+    if (!loading) {
+      onFilterChange(filter)
+    }
   }
 
   const handleKeyDown = (e: React.KeyboardEvent, filter: string) => {
@@ -40,11 +40,17 @@ export const NavFilter: React.FC<NavFilterProps> = ({
     }
   }
 
+  // ← ADICIONEI VERIFICAÇÃO DE SEGURANÇA
+  if (!options || !Array.isArray(options)) {
+    console.warn('NavFilter: options prop is required and must be an array')
+    return null
+  }
+
   return (
-    <nav className={containerClasses}>
-      {filterOptions.map((option) => {
+    <nav className={containerClasses} aria-label={ariaLabel}>
+      {options.map((option) => {
         const isActive = activeFilter === option.value
-        const buttonClasses = buildFilterButtonClasses(isActive)
+        const buttonClasses = buildFilterButtonClasses(isActive, loading)
 
         return (
           <button
@@ -55,7 +61,8 @@ export const NavFilter: React.FC<NavFilterProps> = ({
             type="button"
             role="button"
             aria-pressed={isActive}
-            aria-label={`Filtrar projetos por ${option.label}`}
+            aria-label={`Filtrar por ${option.label}`}
+            disabled={loading}
           >
             {option.label}
           </button>

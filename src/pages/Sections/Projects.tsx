@@ -1,14 +1,27 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { analytics } from '@/features/Analytics/utils/analytics'
 import { P } from '@/shared/ui/Text'
 import { Title } from '@/shared/ui/Title'
 import { Project } from '@/shared/types/ui/ProjectCard.types'
 import { ProjectGrid } from '@/shared/ui/ProjectCard'
 import { NavFilter } from '@/shared/ui/NavFilter'
+import { FilterOption } from '@/shared/types/ui/NavFilter.types'
 
 interface ProjectsSectionProps {
   id?: string
 }
+
+// ============================================================================
+// FILTROS DISPONÍVEIS
+// ============================================================================
+
+const filterOptions: FilterOption[] = [
+  { value: 'todos', label: 'Todos' },
+  { value: 'frontend', label: 'Frontend' },
+  { value: 'backend', label: 'Backend' },
+  { value: 'fullstack', label: 'Full Stack' },
+  { value: 'mobile', label: 'Mobile' }
+]
 
 // ============================================================================
 // DADOS DOS PROJETOS
@@ -91,6 +104,8 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   id = 'meus-projetos'
 }) => {
   const [activeFilter, setActiveFilter] = useState<string>('todos')
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
+  const [animationKey, setAnimationKey] = useState(0)
 
   // Filtrar projetos baseado no filtro ativo
   const filteredProjects =
@@ -98,9 +113,21 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       ? projectsData
       : projectsData.filter((project) => project.category === activeFilter)
 
+  // Marcar que não é mais carregamento inicial
+  useEffect(() => {
+    if (isInitialLoad) {
+      const timer = setTimeout(() => {
+        setIsInitialLoad(false)
+      }, 2000) // Após 2s, considera que já passou o carregamento inicial
+
+      return () => clearTimeout(timer)
+    }
+  }, [isInitialLoad])
+
   // Handlers com analytics
   const handleFilterChange = (filter: string) => {
     setActiveFilter(filter)
+    setAnimationKey((prev) => prev + 1) // ← Força re-render com nova animação
     analytics.trackButtonClick(`filter_projects_${filter}`)
   }
 
@@ -110,6 +137,14 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
   const handleDemoClick = (projectId: string) => {
     analytics.trackButtonClick(`demo_project_${projectId}`)
+  }
+
+  // Determina qual classe de animação usar
+  const getGridClassName = () => {
+    if (isInitialLoad) {
+      return 'project-grid--initial-load'
+    }
+    return 'project-grid--filter-change'
   }
 
   return (
@@ -129,17 +164,20 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
         {/* Filtros */}
         <NavFilter
+          options={filterOptions}
           activeFilter={activeFilter}
           onFilterChange={handleFilterChange}
         />
 
         {/* Grid de Projetos */}
-        <ProjectGrid
-          projects={filteredProjects}
-          onGithubClick={handleGithubClick}
-          onDemoClick={handleDemoClick}
-          emptyMessage="Nenhum projeto encontrado para esta categoria."
-        />
+        <div key={animationKey} className={getGridClassName()}>
+          <ProjectGrid
+            projects={filteredProjects}
+            onGithubClick={handleGithubClick}
+            onDemoClick={handleDemoClick}
+            emptyMessage="Nenhum projeto encontrado para esta categoria."
+          />
+        </div>
       </div>
     </section>
   )

@@ -1,27 +1,107 @@
 // ============================================================================
-// PROJECT FILTER STYLES
+// NAV FILTER SYSTEM - OTIMIZADO
 // ============================================================================
 
-// Caso precise de estilos customizados específicos para o filtro
-// A maioria dos estilos está sendo feita via Tailwind nas classes
+// Configurações
+$filter-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+$filter-shadow-base: 0 2px 4px rgba(0, 0, 0, 0.05);
+$filter-shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.1);
 
-.project-filter {
-  // Container base já está sendo aplicado via Tailwind
-  // Estilos adicionais podem ser adicionados aqui se necessário
+// Mixins
+@mixin filter-transition {
+  transition: $filter-transition;
+}
+
+@mixin filter-focus {
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px rgb(var(--color-background)),
+      0 0 0 4px rgb(var(--color-primary) / 0.5);
+  }
+}
+
+@mixin filter-button-variant($active: false) {
+  @include filter-transition;
+  @include filter-focus;
+  @apply rounded-full font-medium cursor-pointer inline-flex items-center justify-center;
+  box-shadow: $filter-shadow-base;
+
+  @if $active {
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--color-textSecondary));
+    border: 2px solid rgb(var(--color-primary));
+    box-shadow: $filter-shadow-elevated;
+    transform: scale(1.02);
+
+    &:hover:not(:disabled) {
+      background-color: rgb(var(--color-primary) / 0.9);
+      transform: scale(1.05);
+    }
+  } @else {
+    background-color: rgb(var(--color-surface));
+    color: rgb(var(--color-text));
+    border: 2px solid rgb(var(--color-surface));
+
+    &:hover:not(:disabled) {
+      background-color: rgb(var(--color-primary) / 0.1);
+      color: rgb(var(--color-primary));
+      border-color: rgb(var(--color-primary) / 0.3);
+      transform: scale(1.02);
+      box-shadow: $filter-shadow-elevated;
+    }
+  }
+
+  &:disabled {
+    @apply opacity-50 cursor-not-allowed;
+    transform: none !important;
+  }
+}
+
+// ============================================================================
+// COMPONENTE
+// ============================================================================
+
+.nav-filter {
+  @apply flex flex-wrap justify-center gap-3 mb-12;
 
   &__button {
-    // Botão base já está sendo aplicado via Tailwind
-    // Animações personalizadas podem ser adicionadas aqui
+    @apply px-6 py-3 text-sm;
+    @include filter-button-variant(false);
 
-    // Efeito hover personalizado se necessário
-    &:hover:not(&--active) {
-      // Já está sendo aplicado via Tailwind hover:
-    }
-
-    // Estado ativo personalizado se necessário
     &--active {
-      // Já está sendo aplicado via classes condicionais
+      @include filter-button-variant(true);
     }
+
+    // Estados de loading se necessário
+    &--loading {
+      @apply relative;
+      &::after {
+        content: '';
+        @apply absolute inset-0 rounded-full;
+        background: rgba(255, 255, 255, 0.1);
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+    }
+  }
+
+  // Tamanhos
+  &--small .nav-filter__button {
+    @apply px-4 py-2 text-xs;
+  }
+  &--large .nav-filter__button {
+    @apply px-8 py-4 text-base;
+  }
+
+  // Layouts
+  &--vertical {
+    @apply flex-col items-center gap-2;
+  }
+  &--start {
+    @apply justify-start;
+  }
+  &--end {
+    @apply justify-end;
   }
 }
 
@@ -31,7 +111,7 @@
 
 // Caso precise de breakpoints específicos não cobertos pelo Tailwind
 @media (max-width: 480px) {
-  .project-filter {
+  .nav-filter {
     // Estilos para telas muito pequenas se necessário
     nav {
       // Ajustes específicos para mobile
@@ -44,7 +124,7 @@
 // ============================================================================
 
 // Caso queira adicionar animações mais complexas que as do Tailwind
-.project-filter__button {
+.nav-filter__button {
   // Animação personalizada se necessário
   // transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -54,7 +134,7 @@
 // ============================================================================
 
 // Estilos específicos para acessibilidade se necessário
-.project-filter__button {
+.nav-filter__button {
   &:focus-visible {
     // Tailwind já fornece focus-visible, mas pode personalizar aqui
     outline: 2px solid rgb(var(--color-primary));

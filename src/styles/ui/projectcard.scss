@@ -1,86 +1,420 @@
 // ============================================================================
-// PROJECT CARD STYLES
+// PROJECT CARD SYSTEM - USANDO VARIÁVEIS DE TEMA EXISTENTES
 // ============================================================================
 
-.project-card {
-  // Card base já está sendo aplicado via Tailwind
-  // Estilos personalizados podem ser adicionados aqui se necessário
+// Variáveis específicas do card
+:root {
+  --card-shadow-base: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --card-shadow-elevated: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --card-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --image-transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-  // Hover effects customizados se necessário
-  &:hover {
-    // transform e shadow já estão sendo aplicados via Tailwind hover:
+// Sombras para tema dark
+.dark {
+  --card-shadow-base: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --card-shadow-elevated: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+// Mixins
+@mixin card-transition {
+  transition: var(--card-transition);
+}
+
+@mixin card-focus {
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px rgb(var(--color-background)),
+      0 0 0 4px rgb(var(--color-primary) / 0.5);
+  }
+}
+
+@mixin card-hover-effect {
+  &:hover:not(.project-card--disabled) {
+    transform: scale(1.02) translateY(-8px);
+    box-shadow: var(--card-shadow-elevated);
 
     .project-card__image {
-      // Scale já está sendo aplicado via group-hover:scale-110
+      transform: scale(1.08);
     }
 
     .project-card__title {
-      // Color change já está sendo aplicado via group-hover:text-theme-primary
+      color: rgb(var(--color-primary));
+    }
+
+    .project-card__buttons .btn {
+      transform: scale(1.02);
     }
   }
+}
 
-  // ============================================================================
-  // ELEMENTOS DO CARD
-  // ============================================================================
+// ============================================================================
+// PROJECT CARD COMPONENT
+// ============================================================================
 
+.project-card {
+  @include card-transition;
+  @include card-focus;
+  @include card-hover-effect;
+
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  background-color: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-border));
+  box-shadow: var(--card-shadow-base);
+  cursor: default;
+
+  // Estrutura da imagem
   &__image {
     &-container {
-      // Styles já aplicados via Tailwind
+      position: relative;
+      height: 12rem; // 192px
+      overflow: hidden;
     }
 
     &-overlay {
-      // Gradient já aplicado via Tailwind
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgb(var(--color-text) / 0.05) 70%,
+        rgb(var(--color-text) / 0.15) 100%
+      );
     }
   }
 
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--image-transition);
+  }
+
+  // Conteúdo
   &__content {
-    // Padding já aplicado via Tailwind
+    padding: 1.5rem;
+    position: relative;
   }
 
   &__title {
-    // Styles já aplicados via Tailwind
+    @include card-transition;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: rgb(var(--color-text));
   }
 
   &__description {
-    // Line clamp já aplicado via Tailwind
-
-    // Caso queira customizar o line-clamp
-    // display: -webkit-box;
-    // -webkit-line-clamp: 3;
-    // -webkit-box-orient: vertical;
-    // overflow: hidden;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgb(var(--color-text) / 0.7);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   &__tags {
-    // Gap e flex já aplicados via Tailwind
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
   }
 
   &__buttons {
-    // Flex e gap já aplicados via Tailwind
+    display: flex;
+    gap: 0.75rem;
+
+    .btn {
+      @include card-transition;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:disabled,
+      &.btn--disabled {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  // Estados do card
+  &--loading {
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(var(--color-surface) / 0.8),
+        transparent
+      );
+      animation: shimmer 2s infinite;
+    }
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &--elevated {
+    box-shadow: var(--card-shadow-elevated);
+  }
+
+  // Variações de cor usando as cores do tema
+  &--primary {
+    border-color: rgb(var(--color-primary) / 0.2);
+    background: linear-gradient(
+      135deg,
+      rgb(var(--color-primary) / 0.03),
+      rgb(var(--color-surface))
+    );
+
+    &:hover .project-card__title {
+      color: rgb(var(--color-primary));
+    }
+  }
+
+  &--accent {
+    border-color: rgb(var(--color-accent) / 0.2);
+    background: linear-gradient(
+      135deg,
+      rgb(var(--color-accent) / 0.03),
+      rgb(var(--color-surface))
+    );
+
+    &:hover .project-card__title {
+      color: rgb(var(--color-accent));
+    }
+  }
+
+  // Tamanhos
+  &--compact {
+    .project-card__content {
+      padding: 1rem;
+    }
+
+    .project-card__image-container {
+      height: 9rem; // 144px
+    }
+
+    .project-card__title {
+      font-size: 1.125rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-card__description {
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+    }
+
+    .project-card__buttons {
+      gap: 0.5rem;
+
+      .btn {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  &--large {
+    .project-card__content {
+      padding: 2rem;
+    }
+
+    .project-card__image-container {
+      height: 16rem; // 256px
+    }
+
+    .project-card__title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-card__description {
+      margin-bottom: 2rem;
+      font-size: 1.125rem;
+    }
   }
 }
 
 // ============================================================================
-// PROJECT GRID STYLES
+// PROJECT GRID SYSTEM
 // ============================================================================
 
 .project-grid {
-  // Grid já aplicado via Tailwind
+  display: grid;
+  width: 100%;
+  gap: 1.5rem; // gap padrão medium
 
+  // Sistema de colunas responsivo otimizado
+  &--1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  &--2 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &--3 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  &--4 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (min-width: 1280px) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  // Sistema responsivo personalizado (padrão)
+  // Mobile: 1 coluna | 768px+: 3 colunas | 1920px+: 4 colunas
+  &--responsive {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (min-width: 1920px) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  // Gaps
+  &--gap-small {
+    gap: 1rem;
+  }
+
+  &--gap-large {
+    gap: 2rem;
+  }
+
+  // Estado vazio
   &__empty {
-    // Styles já aplicados via Tailwind
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1rem;
+    text-align: center;
+    min-height: 12.5rem; // 200px
+
+    &-text {
+      color: rgb(var(--color-text) / 0.6);
+      font-size: 1rem;
+    }
+  }
+
+  // Loading state
+  &--loading .project-card {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  // Animação inicial
+  &--initial-load {
+    .project-card {
+      animation: cardFadeIn 0.6s ease-out backwards;
+
+      // Delay escalonado
+      @for $i from 1 through 12 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{$i * 0.1}s;
+        }
+      }
+    }
+  }
+
+  // Animação para filtros
+  &--filter-change {
+    .project-card {
+      animation: cardSlideIn 0.4s ease-out;
+
+      @for $i from 1 through 12 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{$i * 0.05}s;
+        }
+      }
+    }
   }
 }
 
 // ============================================================================
-// ANIMAÇÕES PERSONALIZADAS
+// ANIMAÇÕES
 // ============================================================================
 
-// Animação de entrada para os cards (se necessário)
+@keyframes shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 @keyframes cardFadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -88,74 +422,121 @@
   }
 }
 
-.project-card {
-  // Aplicar animação se necessário
-  // animation: cardFadeIn 0.5s ease-out;
+// ============================================================================
+// CONTROLE DE CURSOR
+// ============================================================================
+
+.project-grid .project-card {
+  cursor: default;
+
+  * {
+    cursor: inherit;
+  }
+
+  // Botões e elementos clicáveis
+  .project-card__buttons .btn,
+  a,
+  button,
+  [role='button'],
+  [data-clickable='true'] {
+    cursor: pointer;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:disabled,
+    &.disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  // Elementos que nunca devem ser clicáveis
+  .project-card__title,
+  .project-card__description,
+  .project-card__image,
+  .project-card__tags,
+  .project-card__content {
+    cursor: default;
+  }
 }
 
 // ============================================================================
-// MEDIA QUERIES PERSONALIZADAS
+// RESPONSIVE ADJUSTMENTS
 // ============================================================================
 
-// Ajustes para telas muito pequenas
-@media (max-width: 480px) {
+// Ajustes específicos para mobile
+@media (max-width: 640px) {
   .project-card {
-    // Ajustes específicos se necessário
-
     &__content {
-      // Padding menor em mobile se necessário
-      // @apply p-4;
+      padding: 1rem;
+    }
+
+    &__title {
+      font-size: 1.125rem;
+    }
+
+    &__description {
+      font-size: 0.875rem;
+      -webkit-line-clamp: 2;
     }
 
     &__buttons {
-      // Botões empilhados em telas muito pequenas se necessário
-      // @apply flex-col gap-2;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+
+  .project-grid {
+    gap: 1rem;
+
+    &--gap-large {
+      gap: 1.5rem;
     }
   }
 }
 
-// ============================================================================
-// ESTADOS DE LOADING (se necessário)
-// ============================================================================
+// Ajustes para tablets (768px - 1023px)
+@media (min-width: 768px) and (max-width: 1023px) {
+  .project-grid--responsive {
+    .project-card {
+      &__buttons {
+        flex-direction: row;
 
-.project-card {
-  &--loading {
-    // Skeleton loading state se necessário
-
-    .project-card__image {
-      // Loading placeholder
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: loading 1.5s infinite;
-    }
-
-    .project-card__title,
-    .project-card__description {
-      // Loading text placeholder
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: loading 1.5s infinite;
-      color: transparent;
+        .btn {
+          min-width: 0;
+          flex: 1;
+        }
+      }
     }
   }
 }
 
-@keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-// ============================================================================
-// TEMA DARK (se necessário)
-// ============================================================================
-
-// Ajustes específicos para tema dark se não estiver sendo tratado via CSS variables
-[data-theme='dark'] {
+// Ajustes para desktops grandes (1920px+)
+@media (min-width: 1920px) {
   .project-card {
-    // Ajustes específicos para tema dark se necessário
+    &__content {
+      padding: 2rem;
+    }
+
+    &__title {
+      font-size: 1.375rem;
+    }
+
+    &__description {
+      font-size: 1.125rem;
+    }
+  }
+
+  .project-grid {
+    gap: 2rem;
+
+    &--gap-small {
+      gap: 1.5rem;
+    }
   }
 }

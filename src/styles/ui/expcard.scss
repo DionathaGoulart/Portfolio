@@ -1,0 +1,365 @@
+// ============================================================================
+// EXPERIENCE CARD SYSTEM - CORRIGIDO PARA SUAS CORES
+// ============================================================================
+
+// Variáveis
+$card-spacing: 1.5rem;
+$timeline-width: 2px;
+$timeline-dot-size: 12px;
+$card-border-radius: 0.75rem;
+$card-shadow:
+  0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$card-shadow-hover:
+  0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+// Mixins
+@mixin card-transition {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+@mixin timeline-dot($color: var(--color-primary)) {
+  content: '';
+  position: absolute;
+  width: $timeline-dot-size;
+  height: $timeline-dot-size;
+  background: rgb($color);
+  border: 3px solid rgb(var(--color-background));
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgb($color);
+  @include card-transition;
+}
+
+// ============================================================================
+// EXPERIENCE LIST
+// ============================================================================
+
+.experience-list {
+  @apply relative space-y-8;
+
+  &--with-timeline {
+    @apply pl-8;
+
+    // Timeline vertical line
+    &::before {
+      content: '';
+      @apply absolute left-6 top-0 bottom-0;
+      width: $timeline-width;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgb(var(--color-primary)) 10%,
+        rgb(var(--color-primary)) 90%,
+        transparent 100%
+      );
+      transform: translateX(-50%);
+    }
+  }
+
+  &__items {
+    @apply space-y-8;
+  }
+}
+
+// ============================================================================
+// EXPERIENCE CARD
+// ============================================================================
+
+.experience-card {
+  @apply relative;
+  @include card-transition;
+
+  // Timeline dot posicionamento
+  &--with-timeline {
+    .experience-card__timeline-dot {
+      @apply absolute;
+      left: -2rem;
+      top: 1.5rem;
+      transform: translateX(-50%);
+
+      &::before {
+        @include timeline-dot;
+      }
+    }
+  }
+
+  // Card content base
+  &__content {
+    @apply rounded-lg p-6;
+    background-color: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-border));
+    box-shadow: $card-shadow;
+    @include card-transition;
+  }
+
+  // Estados interativos
+  &--interactive {
+    @apply cursor-pointer;
+
+    &:hover {
+      .experience-card__content {
+        @apply transform -translate-y-1;
+        box-shadow: $card-shadow-hover;
+      }
+
+      .experience-card__timeline-dot::before {
+        @apply scale-125;
+        box-shadow: 0 0 0 6px rgba(var(--color-primary), 0.2);
+      }
+    }
+
+    &:focus-visible {
+      @apply outline-none;
+
+      .experience-card__content {
+        box-shadow:
+          $card-shadow-hover,
+          0 0 0 2px rgb(var(--color-primary));
+      }
+    }
+
+    &:active {
+      .experience-card__content {
+        @apply transform translate-y-0;
+      }
+    }
+  }
+
+  // ============================================================================
+  // VARIANTES COM SUAS CORES
+  // ============================================================================
+
+  // Variante padrão (default)
+  &--default {
+    .experience-card__content {
+      background-color: rgb(var(--color-surface));
+      border-color: rgb(var(--color-border));
+    }
+
+    .experience-card__timeline-dot::before {
+      @include timeline-dot(var(--color-primary));
+    }
+
+    &.experience-card--interactive:hover {
+      .experience-card__timeline-dot::before {
+        box-shadow: 0 0 0 6px rgba(var(--color-primary), 0.3);
+      }
+    }
+  }
+
+  // Variante highlight (destaque principal)
+  &--highlight {
+    .experience-card__content {
+      background: linear-gradient(
+        135deg,
+        rgb(var(--color-primary) / 0.08) 0%,
+        rgb(var(--color-surface)) 100%
+      );
+      border-color: rgb(var(--color-primary) / 0.3);
+    }
+
+    .experience-card__timeline-dot::before {
+      background: linear-gradient(
+        135deg,
+        rgb(var(--color-primary)),
+        rgb(var(--color-accent))
+      );
+      box-shadow:
+        0 0 0 3px rgb(var(--color-background)),
+        0 0 0 6px rgb(var(--color-primary) / 0.3);
+    }
+
+    &.experience-card--interactive:hover {
+      .experience-card__timeline-dot::before {
+        box-shadow:
+          0 0 0 3px rgb(var(--color-background)),
+          0 0 0 8px rgb(var(--color-primary) / 0.4);
+      }
+    }
+  }
+
+  // Variante secondary (mais sutil)
+  &--secondary {
+    .experience-card__content {
+      background: linear-gradient(
+        135deg,
+        rgb(var(--color-secondary) / 0.06) 0%,
+        rgb(var(--color-surface)) 100%
+      );
+      border-color: rgb(var(--color-secondary) / 0.25);
+    }
+
+    .experience-card__timeline-dot::before {
+      @include timeline-dot(var(--color-secondary));
+      box-shadow:
+        0 0 0 3px rgb(var(--color-background)),
+        0 0 0 6px rgb(var(--color-secondary) / 0.3);
+    }
+
+    &.experience-card--interactive:hover {
+      .experience-card__timeline-dot::before {
+        box-shadow:
+          0 0 0 3px rgb(var(--color-background)),
+          0 0 0 8px rgb(var(--color-secondary) / 0.4);
+      }
+    }
+  }
+
+  // Variante accent (destaque alternativo)
+  &--accent {
+    .experience-card__content {
+      background: linear-gradient(
+        135deg,
+        rgb(var(--color-accent) / 0.08) 0%,
+        rgb(var(--color-surface)) 100%
+      );
+      border-color: rgb(var(--color-accent) / 0.3);
+    }
+
+    .experience-card__timeline-dot::before {
+      background: linear-gradient(
+        135deg,
+        rgb(var(--color-accent)),
+        rgb(var(--color-primary))
+      );
+      box-shadow:
+        0 0 0 3px rgb(var(--color-background)),
+        0 0 0 6px rgb(var(--color-accent) / 0.3);
+    }
+
+    &.experience-card--interactive:hover {
+      .experience-card__timeline-dot::before {
+        box-shadow:
+          0 0 0 3px rgb(var(--color-background)),
+          0 0 0 8px rgb(var(--color-accent) / 0.4);
+      }
+    }
+  }
+
+  // ============================================================================
+  // LAYOUT DOS ELEMENTOS
+  // ============================================================================
+
+  // Header layout
+  &__header {
+    @apply flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4;
+  }
+
+  &__title-group {
+    @apply flex-1 space-y-1;
+  }
+
+  &__title {
+    color: rgb(var(--color-text));
+  }
+
+  &__company {
+    @apply text-base;
+    color: rgb(var(--color-primary));
+  }
+
+  &__period {
+    @apply flex-shrink-0 self-start;
+  }
+
+  // Description
+  &__description {
+    @apply mb-4;
+
+    p {
+      @apply leading-relaxed;
+      color: rgb(var(--color-text) / 0.8);
+    }
+  }
+
+  // Technologies
+  &__technologies {
+    @apply pt-2;
+  }
+
+  // Responsive adjustments
+  @screen md {
+    &__content {
+      @apply p-8;
+    }
+
+    &__header {
+      @apply gap-4;
+    }
+  }
+}
+
+// ============================================================================
+// DARK MODE ESPECÍFICO (sobrescreve quando necessário)
+// ============================================================================
+
+.dark {
+  .experience-card {
+    &__content {
+      box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.4),
+        0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    }
+
+    &--interactive:hover {
+      .experience-card__content {
+        box-shadow:
+          0 10px 15px -3px rgba(0, 0, 0, 0.5),
+          0 4px 6px -2px rgba(0, 0, 0, 0.4);
+      }
+    }
+  }
+}
+
+// ============================================================================
+// ANIMAÇÕES
+// ============================================================================
+
+// Entrada em cascata
+.experience-list__items {
+  .experience-card {
+    @apply opacity-0 transform translate-y-8;
+    animation: slideInUp 0.6s ease-out forwards;
+
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{($i - 1) * 0.1}s;
+      }
+    }
+  }
+}
+
+@keyframes slideInUp {
+  to {
+    @apply opacity-100 transform translate-y-0;
+  }
+}
+
+// ============================================================================
+// UTILITY PARA DESTAQUE ESPECIAL
+// ============================================================================
+
+.experience-card--featured {
+  .experience-card__content {
+    border: 2px solid rgb(var(--color-primary) / 0.5);
+    background: linear-gradient(
+      135deg,
+      rgb(var(--color-primary) / 0.1) 0%,
+      rgb(var(--color-surface)) 100%
+    );
+  }
+
+  .experience-card__timeline-dot::before {
+    background: linear-gradient(
+      135deg,
+      rgb(var(--color-primary)),
+      rgb(var(--color-accent))
+    );
+    width: 16px;
+    height: 16px;
+    box-shadow:
+      0 0 0 4px rgb(var(--color-background)),
+      0 0 0 8px rgb(var(--color-primary) / 0.2);
+  }
+}

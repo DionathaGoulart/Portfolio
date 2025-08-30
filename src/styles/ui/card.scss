@@ -15,7 +15,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 // COMPONENTE
 // ============================================================================
 .card {
-  @apply relative border rounded-xl bg-theme-surface border-theme-secondary;
+  @apply relative border rounded-xl bg-theme-surface border-theme-primary;
   box-shadow: $shadow-base;
   transition: $transition;
 
@@ -37,7 +37,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
   &__icon {
-    @apply flex-shrink-0;
+    @apply flex-shrink-0 text-theme-primary;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     svg {
       @apply w-5 h-5;

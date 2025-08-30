@@ -19,7 +19,9 @@ const HorizontalCard: React.FC<Omit<CardProps, 'onClick'>> = ({
   return (
     <div className="card__content">
       <div className="card__text">
-        <Title level={titleLevel}>{title}</Title>
+        <Title color="primary" level={titleLevel}>
+          {title}
+        </Title>
         {subtitle && <P size={subtitleSize}>{subtitle}</P>}
       </div>
       {icon && <span className="card__icon">{icon}</span>}

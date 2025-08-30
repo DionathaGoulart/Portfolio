@@ -140,6 +140,7 @@ const SobreSection: React.FC<SobreProps> = ({ id = '' }) => {
                 subtitle={tech.subtitle}
                 icon={tech.icon}
                 size="pequeno"
+                color="primary"
               />
             ))}
           </CardsContainer>

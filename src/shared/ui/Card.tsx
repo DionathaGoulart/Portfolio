@@ -13,18 +13,50 @@ const HorizontalCard: React.FC<Omit<CardProps, 'onClick'>> = ({
   title,
   subtitle,
   icon,
+  color = 'primary',
   size = 'medio'
 }) => {
   const { titleLevel, subtitleSize } = CONFIGS[size]
+
   return (
     <div className="card__content">
       <div className="card__text">
-        <Title color="primary" level={titleLevel}>
+        <Title color={color} level={titleLevel} className="card__title">
           {title}
         </Title>
-        {subtitle && <P size={subtitleSize}>{subtitle}</P>}
+        {subtitle && (
+          <P size={subtitleSize} className="card__value">
+            {subtitle}
+          </P>
+        )}
       </div>
       {icon && <span className="card__icon">{icon}</span>}
+    </div>
+  )
+}
+
+const ContactCard: React.FC<Omit<CardProps, 'onClick'>> = ({
+  title,
+  subtitle,
+  icon,
+  color = 'primary',
+  size = 'medio'
+}) => {
+  const { titleLevel, subtitleSize } = CONFIGS[size]
+
+  return (
+    <div className="card__content card__content--contact">
+      <div className="card__icon card__icon--contact">{icon}</div>
+      <div className="card__text">
+        <Title color={color} level={titleLevel} className="card__title">
+          {title}
+        </Title>
+        {subtitle && (
+          <P size={subtitleSize} className="card__value">
+            {subtitle}
+          </P>
+        )}
+      </div>
     </div>
   )
 }
@@ -35,18 +67,32 @@ export const Card: React.FC<CardProps> = (props) => {
     disabled = false,
     loading = false,
     children,
+    variant = 'horizontal',
+    color,
+    borderColor,
     ...rest
   } = props
 
-  // Unifica as validações
   const canInteract = !disabled && !loading && onClick
-
   const handleClick = () => canInteract && onClick()
-
   const handleKey = (e: React.KeyboardEvent) => {
     if ((e.key === 'Enter' || e.key === ' ') && canInteract) {
       e.preventDefault()
       onClick()
+    }
+  }
+
+  const renderCardContent = () => {
+    if (children) return children
+
+    const cardProps = { ...rest, color }
+
+    switch (variant) {
+      case 'contact':
+        return <ContactCard {...cardProps} />
+      case 'horizontal':
+      default:
+        return <HorizontalCard {...cardProps} />
     }
   }
 
@@ -59,7 +105,7 @@ export const Card: React.FC<CardProps> = (props) => {
       role={onClick ? 'button' : undefined}
       aria-disabled={disabled}
     >
-      {children || <HorizontalCard {...rest} />}
+      {renderCardContent()}
     </div>
   )
 }

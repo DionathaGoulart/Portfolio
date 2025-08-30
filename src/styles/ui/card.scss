@@ -1,5 +1,5 @@
 // ============================================================================
-// CARD HORIZONTAL - OTIMIZADO
+// CARD HORIZONTAL E CONTACT - OTIMIZADO E UNIFICADO
 // ============================================================================
 
 @use 'sass:list';
@@ -9,22 +9,30 @@ $shadow-base: 0 2px 8px rgba(0, 0, 0, 0.1);
 $shadow-elevated: 0 8px 25px rgba(0, 0, 0, 0.15);
 $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-// Removido mixin - Tailwind não aceita variáveis com @apply
-
 // ============================================================================
-// COMPONENTE
+// COMPONENTE BASE - UNIFICADO
 // ============================================================================
 .card {
-  @apply relative border rounded-xl bg-theme-surface border-theme-primary;
+  @apply relative border-2 rounded-xl bg-theme-surface;
   box-shadow: $shadow-base;
   transition: $transition;
 
-  // Estrutura
+  // Estrutura base (aplicada a ambas variantes)
   &__content {
-    @apply flex items-center justify-between gap-3 p-4;
+    @apply flex items-center gap-3 p-4;
+
+    // ✅ Horizontal: justify-between (padrão)
+    justify-content: space-between;
+
+    // ✅ Contact: justify-start
+    &--contact {
+      @apply gap-4 justify-start;
+    }
   }
+
   &__text {
     @apply flex-1 space-y-1;
+
     // Força alinhamento à esquerda em todos os breakpoints
     h1,
     h2,
@@ -36,15 +44,57 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       @apply text-left;
     }
   }
+
+  // ✅ ÍCONE UNIFICADO - Herda cor do contexto
   &__icon {
-    @apply flex-shrink-0 text-theme-primary;
+    @apply flex-shrink-0;
+    color: currentColor;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
     svg {
       @apply w-5 h-5;
     }
+
+    // ✅ Contact: ícone com fundo colorido
+    &--contact {
+      @apply w-12 h-12 flex items-center justify-center rounded-lg order-first;
+      background: color-mix(in srgb, currentColor 10%, transparent);
+
+      svg {
+        @apply w-6 h-6;
+      }
+    }
   }
 
-  // Estados
+  // ✅ TÍTULO UNIFICADO
+  &__title {
+    @apply font-semibold;
+    color: currentColor; // Herda a cor do card
+  }
+
+  // ✅ VALOR/SUBTITLE UNIFICADO
+  &__value {
+    color: color-mix(
+      in srgb,
+      currentColor 70%,
+      transparent
+    ); // Versão suavizada
+  }
+
+  // ============================================================================
+  // VARIANTES SIMPLIFICADAS
+  // ============================================================================
+
+  // Contact: apenas ajustes de layout
+  &--contact {
+    .card__text {
+      @apply order-last; // Texto após o ícone
+    }
+  }
+
+  // ============================================================================
+  // ESTADOS
+  // ============================================================================
   &--clickable {
     @apply cursor-pointer;
     &:hover:not(.card--disabled) {
@@ -63,9 +113,11 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   &--disabled {
     @apply opacity-50 pointer-events-none;
   }
+
   &--elevated {
     box-shadow: $shadow-elevated;
   }
+
   &--loading {
     @apply relative overflow-hidden;
     &::after {
@@ -81,21 +133,100 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 
-  // Cores - usando loop mais eficiente
-  @each $color in (primary, secondary, success, warning, error) {
-    &--#{$color} {
-      background: rgb(var(--color-#{$color}) / 0.05);
-      border-color: rgb(var(--color-#{$color}) / 0.2);
-      &:hover:not(.card--disabled) {
-        background: rgb(var(--color-#{$color}) / 0.1);
-      }
-    }
-    &--border-#{$color} {
-      border-color: rgb(var(--color-#{$color}));
+  // ============================================================================
+  // CORES UNIFICADAS - Bordas dinâmicas automáticas
+  // ============================================================================
+
+  &--default {
+    @apply text-theme-text;
+    border-color: rgb(var(--color-border) / 0.3);
+  }
+
+  &--primary {
+    background: rgb(var(--color-primary) / 0.05);
+    border-color: rgb(var(--color-primary) / 0.4);
+    @apply text-theme-primary;
+    &:hover:not(.card--disabled) {
+      background: rgb(var(--color-primary) / 0.1);
+      border-color: rgb(var(--color-primary) / 0.6);
     }
   }
 
-  // Tamanhos - sem mixin devido à limitação do Tailwind
+  &--secondary {
+    background: rgb(var(--color-secondary) / 0.05);
+    border-color: rgb(var(--color-secondary) / 0.4);
+    @apply text-theme-secondary;
+    &:hover:not(.card--disabled) {
+      background: rgb(var(--color-secondary) / 0.1);
+      border-color: rgb(var(--color-secondary) / 0.6);
+    }
+  }
+
+  &--accent {
+    background: rgb(var(--color-accent) / 0.05);
+    border-color: rgb(var(--color-accent) / 0.4);
+    @apply text-theme-accent;
+    &:hover:not(.card--disabled) {
+      background: rgb(var(--color-accent) / 0.1);
+      border-color: rgb(var(--color-accent) / 0.6);
+    }
+  }
+
+  &--success {
+    background: rgb(var(--color-success) / 0.05);
+    border-color: rgb(var(--color-success) / 0.4);
+    @apply text-theme-success;
+    &:hover:not(.card--disabled) {
+      background: rgb(var(--color-success) / 0.1);
+      border-color: rgb(var(--color-success) / 0.6);
+    }
+  }
+
+  &--warning {
+    background: rgb(var(--color-warning) / 0.05);
+    border-color: rgb(var(--color-warning) / 0.4);
+    @apply text-theme-warning;
+    &:hover:not(.card--disabled) {
+      background: rgb(var(--color-warning) / 0.1);
+      border-color: rgb(var(--color-warning) / 0.6);
+    }
+  }
+
+  &--error {
+    background: rgb(var(--color-error) / 0.05);
+    border-color: rgb(var(--color-error) / 0.4);
+    @apply text-theme-error;
+    &:hover:not(.card--disabled) {
+      background: rgb(var(--color-error) / 0.1);
+      border-color: rgb(var(--color-error) / 0.6);
+    }
+  }
+
+  // ============================================================================
+  // OVERRIDE DE BORDAS (quando borderColor é especificado)
+  // ============================================================================
+  &--border-primary {
+    border-color: rgb(var(--color-primary)) !important;
+  }
+  &--border-secondary {
+    border-color: rgb(var(--color-secondary)) !important;
+  }
+  &--border-accent {
+    border-color: rgb(var(--color-accent)) !important;
+  }
+  &--border-success {
+    border-color: rgb(var(--color-success)) !important;
+  }
+  &--border-warning {
+    border-color: rgb(var(--color-warning)) !important;
+  }
+  &--border-error {
+    border-color: rgb(var(--color-error)) !important;
+  }
+
+  // ============================================================================
+  // TAMANHOS UNIFICADOS
+  // ============================================================================
   &--pequeno {
     .card__content {
       @apply p-3;
@@ -103,7 +234,14 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     .card__icon svg {
       @apply w-4 h-4;
     }
+    .card__icon--contact {
+      @apply w-10 h-10;
+      svg {
+        @apply w-5 h-5;
+      }
+    }
   }
+
   &--grande {
     .card__content {
       @apply p-6;
@@ -111,19 +249,35 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     .card__icon svg {
       @apply w-6 h-6;
     }
+    .card__icon--contact {
+      @apply w-14 h-14;
+      svg {
+        @apply w-7 h-7;
+      }
+    }
   }
 
-  // Compact deve sobrescrever outros tamanhos
   &--compact {
     .card__content {
-      @apply p-2; // Menor que pequeno (p-3)
+      @apply p-2;
     }
     .card__text {
-      @apply space-y-0.5; // Espaçamento menor entre title/subtitle
+      @apply space-y-0.5;
+    }
+    &.card--contact .card__content {
+      @apply gap-3;
+    }
+    .card__icon--contact {
+      @apply w-8 h-8;
+      svg {
+        @apply w-4 h-4;
+      }
     }
   }
 
-  // Alinhamentos
+  // ============================================================================
+  // ALINHAMENTOS
+  // ============================================================================
   &--align-center {
     .card__content {
       @apply justify-center text-center;
@@ -138,6 +292,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       @apply text-center;
     }
   }
+
   &--align-end {
     .card__content {
       @apply justify-end text-right;
@@ -155,7 +310,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 // ============================================================================
-// CONTAINERS - Grid com 3 colunas mobile
+// CONTAINERS
 // ============================================================================
 .cards-grid {
   @apply grid gap-4;
@@ -183,7 +338,6 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
-// Animação
 @keyframes shimmer {
   from {
     transform: translateX(-100%);

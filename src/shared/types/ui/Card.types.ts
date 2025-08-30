@@ -1,5 +1,8 @@
+// Card.types.ts
 import { Align, Size, ColorVariant } from './global.types'
 import { TitleLevel } from './Title.types'
+
+export type CardVariant = 'horizontal' | 'contact'
 
 export interface CardProps {
   title: string
@@ -14,6 +17,7 @@ export interface CardProps {
   loading?: boolean
   elevated?: boolean
   compact?: boolean
+  variant?: CardVariant // Nova prop
   onClick?: () => void
   className?: string
 }
@@ -36,7 +40,7 @@ export interface ContainerProps {
 }
 
 export const buildClasses = ({
-  color = 'default',
+  color = 'primary',
   size = 'medio',
   align = 'start',
   onClick,
@@ -45,6 +49,7 @@ export const buildClasses = ({
   elevated = false,
   compact = false,
   borderColor,
+  variant = 'horizontal',
   className = ''
 }: Partial<CardProps>): string =>
   [
@@ -52,6 +57,7 @@ export const buildClasses = ({
     `card--${color}`,
     `card--${size}`,
     `card--align-${align}`,
+    `card--${variant}`,
     onClick && !disabled && 'card--clickable',
     disabled && 'card--disabled',
     loading && 'card--loading',

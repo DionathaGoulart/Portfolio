@@ -7,6 +7,7 @@ import { SectionConfig } from '@/shared/types'
 import ProjectsSection from './Sections/Projects'
 import SkillsSection from './Sections/Skill'
 import ExpSection from './Sections/Experience'
+import ContactSection from './Sections/Contact'
 
 interface HomePageProps {
   setSections: (sections: SectionConfig[]) => void
@@ -19,7 +20,8 @@ export function HomePage({ setSections, setPageTitle }: HomePageProps) {
     { id: 'sobre-mim', label: 'Sobre Mim' },
     { id: 'meus-projetos', label: 'Projetos' },
     { id: 'habilidades-tecnicas', label: 'Habilidades' },
-    { id: 'experiencia', label: 'Experiencia' }
+    { id: 'experiencia', label: 'Experiencia' },
+    { id: 'contato', label: 'Contato' }
   ]
 
   // TRACKING: Ativar tracking automático das seções
@@ -40,6 +42,7 @@ export function HomePage({ setSections, setPageTitle }: HomePageProps) {
       <ProjectsSection id="meus-projetos" />
       <SkillsSection id="habilidades-tecnicas" />
       <ExpSection id="experiencia" />
+      <ContactSection id="contato" />
     </div>
   )
 }

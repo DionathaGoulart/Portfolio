@@ -1,0 +1,225 @@
+// ============================================================================
+// INPUT SYSTEM - OTIMIZADO
+// ============================================================================
+
+// Configurações
+$sizes: pequeno, medio, grande;
+$variants: outline, filled, ghost;
+
+// Mixins
+@mixin input-transition {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+@mixin input-focus {
+  &:focus {
+    @apply outline-none ring-2 ring-theme-primary ring-offset-2;
+  }
+}
+
+@mixin input-disabled {
+  @apply opacity-50 cursor-not-allowed pointer-events-none;
+}
+
+// ============================================================================
+// INPUT BASE
+// ============================================================================
+
+.input {
+  @include input-transition;
+  @include input-focus;
+  @apply w-full border rounded-lg font-medium;
+
+  &::placeholder {
+    @apply text-theme-text/50;
+  }
+
+  // Estados
+  &--disabled {
+    @include input-disabled;
+  }
+
+  &--error {
+    @apply border-theme-error ring-theme-error/20;
+  }
+}
+
+// ============================================================================
+// TAMANHOS
+// ============================================================================
+
+.input--pequeno {
+  @apply px-3 py-2 text-sm;
+}
+
+.input--medio {
+  @apply px-4 py-3 text-base;
+}
+
+.input--grande {
+  @apply px-5 py-4 text-lg;
+}
+
+// ============================================================================
+// VARIANTES
+// ============================================================================
+
+.input--outline {
+  @apply bg-transparent border-theme-border text-theme-text;
+
+  &:hover {
+    @apply border-theme-primary/50;
+  }
+}
+
+.input--filled {
+  @apply bg-theme-surface border-transparent text-theme-text;
+
+  &:hover {
+    @apply bg-theme-surface/80;
+  }
+}
+
+.input--ghost {
+  @apply bg-transparent border-transparent text-theme-text;
+
+  &:hover {
+    @apply bg-theme-surface/50;
+  }
+}
+
+// ============================================================================
+// TEXTAREA
+// ============================================================================
+
+.textarea {
+  @extend .input;
+  @apply resize-y min-h-24;
+
+  // Resize options
+  &--resize-none {
+    @apply resize-none;
+  }
+
+  &--resize-vertical {
+    @apply resize-y;
+  }
+
+  &--resize-horizontal {
+    @apply resize-x;
+  }
+
+  &--resize-both {
+    @apply resize;
+  }
+}
+
+// Herdar tamanhos e variantes do input
+@each $size in $sizes {
+  .textarea--#{$size} {
+    @extend .input--#{$size};
+  }
+}
+
+@each $variant in $variants {
+  .textarea--#{$variant} {
+    @extend .input--#{$variant};
+  }
+}
+
+.textarea--disabled {
+  @include input-disabled;
+}
+
+.textarea--error {
+  @apply border-theme-error ring-theme-error/20;
+}
+
+// ============================================================================
+// FORM FIELD
+// ============================================================================
+
+.form-field {
+  @apply space-y-2;
+
+  &__label {
+    @apply block text-sm font-medium text-theme-text;
+  }
+
+  &__required {
+    @apply text-theme-error ml-1;
+  }
+
+  &__input {
+    @apply relative;
+  }
+
+  &__error {
+    @apply text-sm text-theme-error;
+  }
+
+  // Estado de erro
+  &--error {
+    .form-field__label {
+      @apply text-theme-error;
+    }
+  }
+}
+
+// ============================================================================
+// CONTACT CARD
+// ============================================================================
+
+.contact-card {
+  @apply p-4 rounded-lg border border-theme-border bg-theme-surface flex items-start gap-3;
+
+  &__icon {
+    @apply w-10 h-10 flex items-center justify-center rounded-lg bg-theme-primary/10 text-theme-primary flex-shrink-0;
+  }
+
+  &__content {
+    @apply flex-1 space-y-1;
+  }
+
+  &__title {
+    @apply text-sm font-medium text-theme-text;
+  }
+
+  &__value {
+    @apply text-theme-text/70;
+  }
+
+  // Estado interativo
+  &--clickable {
+    @apply cursor-pointer;
+
+    &:hover {
+      @apply bg-theme-surface/80 border-theme-primary/30 transform -translate-y-1;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    &:focus-visible {
+      @apply outline-none ring-2 ring-theme-primary ring-offset-2;
+    }
+  }
+
+  // Variante social
+  &--social {
+    .contact-card__icon {
+      @apply bg-theme-accent/10 text-theme-accent;
+    }
+
+    &:hover {
+      @apply border-theme-accent/30;
+
+      .contact-card__icon {
+        @apply bg-theme-accent/20;
+      }
+    }
+  }
+
+  // Variante default
+  &--default {
+    // Já está definido no base
+  }
+}

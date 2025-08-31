@@ -25,7 +25,7 @@ const HomeSection: React.FC<HomeSectionProps> = ({ id = '' }) => {
     analytics.trackButtonClick('contato')
 
     // Rolar para a seção de contato
-    const contactSection = document.getElementById('fale-comigo')
+    const contactSection = document.getElementById('contato')
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' })
     }
@@ -47,12 +47,12 @@ const HomeSection: React.FC<HomeSectionProps> = ({ id = '' }) => {
             desenvolvedor fullstack
           </Title>
 
-          <P size="grande" className="max-w-lg leading-relaxed">
+          <P size="grande" className="leading-relaxed">
             Desenvolvedor apaixonado por criar soluções digitais inovadoras,
             combinando design elegante com código limpo e funcional.
           </P>
 
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row gap-4 pt-4 sm:justify-center md:justify-start">
             <Button
               variant="solid"
               size="grande"
@@ -61,7 +61,6 @@ const HomeSection: React.FC<HomeSectionProps> = ({ id = '' }) => {
             >
               ver trabalhos
             </Button>
-
             <Button
               variant="outline"
               size="grande"

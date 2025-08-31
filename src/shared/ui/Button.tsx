@@ -1,11 +1,27 @@
 import React from 'react'
 import { ButtonProps } from '@shared/types'
 
+// ============================================================================
+// BUTTON COMPONENT
+// ============================================================================
+
+/**
+ * Versatile button component with multiple variants, sizes and states
+ *
+ * @component
+ * @param {ButtonProps} props - Button configuration props
+ * @returns {React.FC<ButtonProps>} Rendered button component
+ *
+ * @example
+ * <Button size="medio" variant="solid" color="primary" onClick={handleClick}>
+ *   Click me
+ * </Button>
+ */
 export const Button: React.FC<ButtonProps> = ({
-  // Conteúdo
+  // Content
   children,
 
-  // Aparência
+  // Appearance
   size = 'medio',
   color = 'primary',
   variant = 'solid',
@@ -13,13 +29,13 @@ export const Button: React.FC<ButtonProps> = ({
   // Layout
   align = 'start',
 
-  // Funcionalidade
+  // Functionality
   onClick,
   type = 'button',
   disabled = false,
   loading = false,
 
-  // Elementos adicionais
+  // Additional elements
   icon,
 
   // HTML attributes
@@ -27,40 +43,45 @@ export const Button: React.FC<ButtonProps> = ({
   id
 }) => {
   // ============================================================================
-  // CONFIGURAÇÃO
+  // COMPONENT STATE
   // ============================================================================
+
   const isDisabled = disabled || loading
   const hasIcon = Boolean(icon)
 
   // ============================================================================
-  // CLASSES CSS
+  // CSS CLASSES
   // ============================================================================
-  const buttonClasses = [
-    // Classe base
-    'btn',
 
-    // Aparência
-    `btn--${size}`,
-    `btn--${variant}-${color}`,
+  const getButtonClasses = (): string => {
+    const classes = [
+      // Base class
+      'btn',
 
-    // Estados
-    loading && 'btn--loading',
-    hasIcon && 'btn--with-icon',
+      // Appearance
+      `btn--${size}`,
+      `btn--${variant}-${color}`,
 
-    // Classes customizadas
-    className
-  ]
-    .filter(Boolean)
-    .join(' ')
+      // States
+      loading && 'btn--loading',
+      hasIcon && 'btn--with-icon',
 
-  const containerClasses = ['btn-container', `btn-container--${align}`].join(
-    ' '
-  )
+      // Custom classes
+      className
+    ]
+
+    return classes.filter(Boolean).join(' ')
+  }
+
+  const getContainerClasses = (): string => {
+    return ['btn-container', `btn-container--${align}`].join(' ')
+  }
 
   // ============================================================================
-  // RENDER CONTENT
+  // RENDER HELPERS
   // ============================================================================
-  const renderContent = () => {
+
+  const renderContent = (): React.ReactNode => {
     if (loading) {
       return (
         <>
@@ -79,15 +100,26 @@ export const Button: React.FC<ButtonProps> = ({
   }
 
   // ============================================================================
+  // EVENT HANDLERS
+  // ============================================================================
+
+  const handleClick = (): void => {
+    if (!isDisabled && onClick) {
+      onClick()
+    }
+  }
+
+  // ============================================================================
   // RENDER
   // ============================================================================
+
   return (
-    <div className={containerClasses}>
+    <div className={getContainerClasses()}>
       <button
         type={type}
-        onClick={isDisabled ? undefined : onClick}
+        onClick={handleClick}
         disabled={isDisabled}
-        className={buttonClasses}
+        className={getButtonClasses()}
         id={id}
       >
         {renderContent()}

@@ -126,7 +126,7 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({
   onDemoClick,
   emptyMessage = 'Nenhum projeto encontrado para esta categoria.',
   className = '',
-  columns = 'responsive', // Usa 'responsive' como padrão
+  columns = 'responsive',
   gap = 'medium',
   loading = false
 }) => {

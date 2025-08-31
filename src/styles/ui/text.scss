@@ -1,5 +1,5 @@
 // ============================================================================
-// TEXT SYSTEM - OTIMIZADO COM SUPORTE A 5 COLUNAS
+// TEXT SYSTEM - OTIMIZADO COM SUPORTE A 5 COLUNAS E ALINHAMENTO RESPONSIVO
 // ============================================================================
 
 // Configurações
@@ -134,15 +134,19 @@ $aligns: start, center, end;
   }
 }
 
-// Alinhamentos de texto
+// ============================================================================
+// ALINHAMENTOS DE TEXTO - IGUAL AO TITLE
+// ============================================================================
+
+// Alinhamentos com comportamento responsivo igual ao Title
 .text--start {
-  @apply text-left;
+  @apply text-center md:text-left;
 }
 .text--center {
   @apply text-center;
 }
 .text--end {
-  @apply text-right;
+  @apply text-center md:text-right;
 }
 
 // Line heights

@@ -1,5 +1,5 @@
 // ============================================================================
-// LAYOUT COMPONENTS STYLES - OTIMIZADO COM TAILWIND + OVERFLOW FIX
+// LAYOUT COMPONENTS STYLES - OTIMIZADO COM TAILWIND
 // ============================================================================
 
 // ============================================================================
@@ -81,12 +81,10 @@
 // COMPONENTES BASE
 // ============================================================================
 
-// HEADER COMPONENT - COM CORREÇÕES DE OVERFLOW
+// HEADER COMPONENT
 .header {
   @include smooth-transition;
   @apply w-full z-50;
-  // CORREÇÃO: Prevenir overflow horizontal no header principal
-  @apply overflow-x-hidden;
 
   // Variantes de estilo
   &--default,
@@ -118,27 +116,21 @@
     @apply opacity-50 pointer-events-none;
   }
 
-  // Layout principal - PADDING E ALINHAMENTO CONSISTENTE + OVERFLOW FIX
+  // Layout principal - PADDING E ALINHAMENTO CONSISTENTE
   &__nav {
     @include content-container;
     @apply py-3 md:py-4 flex items-center justify-between;
-    // CORREÇÃO: Prevenir overflow no container principal
-    @apply overflow-x-hidden min-w-0;
   }
 
   &__logo {
     @include interactive-base;
     @include text-variants;
     @apply text-xl font-bold;
-    // CORREÇÃO: Prevenir quebra do logo
-    @apply flex-shrink-0;
   }
 
   // Desktop navigation
   &__nav-desktop {
     @apply hidden md:flex items-center space-x-8;
-    // CORREÇÃO: Permitir que a navegação se ajuste
-    @apply flex-shrink min-w-0;
   }
 
   &__nav-link {
@@ -146,8 +138,6 @@
     @include animated-underline;
     @include text-variants;
     @apply pb-1;
-    // CORREÇÃO: Prevenir quebra dos links
-    @apply flex-shrink-0 whitespace-nowrap;
 
     &--active {
       @apply font-medium;
@@ -158,8 +148,6 @@
   // Controls section
   &__controls {
     @apply flex items-center space-x-2;
-    // CORREÇÃO: Manter controles sempre visíveis
-    @apply flex-shrink-0;
   }
 
   &__theme-toggle,
@@ -167,49 +155,29 @@
     @include interactive-base;
     @include text-variants;
     @apply p-2;
-    // CORREÇÃO: Garantir tamanho fixo dos botões
-    @apply flex-shrink-0;
   }
 
   &__mobile-toggle {
     @apply md:hidden;
   }
 
-  // Mobile menu - CORREÇÕES PRINCIPAIS PARA OVERFLOW
+  // Mobile menu
   &__mobile-menu {
     @apply md:hidden border-t;
     border-color: rgb(var(--color-border));
     animation: slideDown 200ms ease-out;
-
-    // CORREÇÃO CRÍTICA: Controle total de overflow
-    @apply w-full max-w-full overflow-x-hidden;
-    // CORREÇÃO: Posicionamento seguro
-    @apply relative left-0 right-0;
-    // CORREÇÃO: Garantir que não ultrapasse a viewport
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
   }
 
   &__mobile-nav {
     @include content-container;
     @apply py-2 space-y-1;
-    // CORREÇÃO: Container interno seguro
-    @apply w-full max-w-full overflow-hidden;
-    // CORREÇÃO: Resetar margens negativas do menu pai
-    @apply mx-auto;
-    max-width: 100%;
   }
 
   &__mobile-link {
     @include interactive-base;
     @include smooth-transition;
+    @include text-variants;
     @apply block w-full text-left py-2 px-3 rounded relative;
-    // CORREÇÃO: Todas as declarações CSS ANTES das regras aninhadas
-    @apply overflow-hidden text-ellipsis max-w-full;
-    word-wrap: break-word;
-    hyphens: auto;
-    color: rgb(var(--color-text)); // Aplicar cor base diretamente
 
     &::before {
       content: '';
@@ -228,14 +196,6 @@
 
     &:hover:not(&--active) {
       background-color: rgb(var(--color-secondary) / 0.05);
-    }
-
-    // Variantes de cor como regras aninhadas separadas
-    &--primary {
-      color: rgb(var(--color-primary));
-    }
-    &--secondary {
-      color: rgb(var(--color-secondary));
     }
   }
 }
@@ -331,8 +291,6 @@
   background-color: rgb(var(--color-background));
   color: rgb(var(--color-text));
   transition: var(--transition-theme);
-  // CORREÇÃO: Prevenir overflow horizontal no layout principal
-  @apply overflow-x-hidden;
 
   // Espaçamento responsivo
   &--compact {
@@ -350,46 +308,16 @@
   // PADDING E ALINHAMENTO CONSISTENTE
   &__content {
     @apply flex-grow pb-8;
-    // CORREÇÃO: Garantir que o conteúdo não ultrapasse
-    @apply w-full max-w-full overflow-x-hidden;
   }
 
   &__container {
     @include content-container;
-    // CORREÇÃO: Container seguro
-    @apply max-w-full overflow-x-hidden;
   }
 }
 
-// CONTAINERS - PADDING CONSISTENTE + OVERFLOW PROTECTION
+// CONTAINERS - PADDING CONSISTENTE
 .layout-container {
   @include content-container;
-  // CORREÇÃO: Proteção global contra overflow
-  @apply max-w-full overflow-x-hidden;
-}
-
-// ============================================================================
-// CORREÇÕES ESPECÍFICAS PARA CHROME
-// ============================================================================
-
-// Correção específica para webkit (Chrome/Safari)
-@supports (-webkit-backdrop-filter: blur(8px)) {
-  .header__mobile-menu {
-    // Força recálculo do layout no Chrome
-    transform: translateZ(0);
-    will-change: transform;
-  }
-}
-
-// Proteção adicional para viewports muito pequenas
-@media (max-width: 320px) {
-  .header__mobile-nav {
-    @apply px-2; // Reduz padding em telas muito pequenas
-  }
-
-  .header__mobile-link {
-    @apply px-2 text-sm; // Ajusta padding e tamanho da fonte
-  }
 }
 
 // ============================================================================
@@ -403,21 +331,5 @@
   to {
     @apply opacity-100;
     transform: translateY(0);
-  }
-}
-
-// CORREÇÃO: Animação mais suave e sem overflow
-@keyframes slideDownSafe {
-  from {
-    @apply opacity-0;
-    transform: translateY(-10px);
-    max-height: 0;
-    overflow: hidden;
-  }
-  to {
-    @apply opacity-100;
-    transform: translateY(0);
-    max-height: 100vh;
-    overflow: visible;
   }
 }

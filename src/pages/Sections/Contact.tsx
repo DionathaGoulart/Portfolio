@@ -451,7 +451,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ id = '' }) => {
             <Title level="h3" className="mb-6">
               Redes Sociais
             </Title>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {socialCards.map((card, index) => (
                 <Card
                   key={index}
@@ -460,7 +460,6 @@ const ContactSection: React.FC<ContactSectionProps> = ({ id = '' }) => {
                   title={card.title}
                   subtitle={card.subtitle}
                   onClick={card.onClick}
-                  color="primary"
                 />
               ))}
             </div>

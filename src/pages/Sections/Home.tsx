@@ -77,7 +77,18 @@ const HomeSection: React.FC<HomeSectionProps> = ({ id = '' }) => {
 
         {/* Lado direito - Logo GD - Oculto no mobile */}
         <div className="hidden lg:flex justify-end">
-          <GDLogo />
+          {/* Imagem para light mode */}
+          <img
+            src="/light.png"
+            alt="Logo GD"
+            className="block dark:hidden w-96 h-96"
+          />
+          {/* Imagem para dark mode */}
+          <img
+            src="/dark.png"
+            alt="Logo GD"
+            className="hidden dark:block w-96 h-96"
+          />
         </div>
       </div>
     </section>

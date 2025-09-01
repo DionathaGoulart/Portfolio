@@ -1,4 +1,3 @@
-// card.tsx
 import { Title } from './Title'
 import { P } from './Text'
 import {
@@ -8,6 +7,8 @@ import {
   buildClasses,
   buildContainerClasses
 } from '@shared/types'
+
+import '@styles/ui/card.scss'
 
 const HorizontalCard: React.FC<Omit<CardProps, 'onClick'>> = ({
   title,

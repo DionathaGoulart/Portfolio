@@ -1,12 +1,12 @@
 import React from 'react'
-
-// Internal imports
 import {
   buildFilterButtonClasses,
   buildFilterContainerClasses,
   getSafeOptions,
   type NavFilterProps
 } from '../types/ui/NavFilter.types'
+
+import '@styles/ui/navfilter.scss'
 
 // ============================================================================
 // NAV FILTER COMPONENT

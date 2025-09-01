@@ -5,6 +5,8 @@ import type {
   KeyboardEventHandler
 } from '@shared/types'
 
+import '@styles/ui/image.scss'
+
 // ============================================================================
 // IMAGE UTILITIES
 // ============================================================================

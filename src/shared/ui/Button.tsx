@@ -1,6 +1,8 @@
 import React from 'react'
 import { ButtonProps } from '@shared/types'
 
+import '@styles/ui/button.scss'
+
 // ============================================================================
 // BUTTON COMPONENT
 // ============================================================================

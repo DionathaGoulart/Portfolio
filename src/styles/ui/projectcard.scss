@@ -21,21 +21,19 @@ $shimmer-duration: 2s;
 $pulse-duration: 2s;
 
 // ============================================================================
-// BASE - Custom Properties Layer
+// BASE - Custom Properties (sem @layer)
 // ============================================================================
 
-@layer base {
-  .project-card {
-    --card-bg: rgb(var(--color-surface));
-    --card-border: rgb(var(--color-border));
-    --card-text: rgb(var(--color-text));
-    --card-text-muted: rgb(var(--color-text) / 0.7);
-    --card-text-subtle: rgb(var(--color-text) / 0.6);
-    --card-primary: rgb(var(--color-primary));
-    --card-accent: rgb(var(--color-accent));
-    --card-focus-ring: rgb(var(--color-background));
-    --card-focus-offset: rgb(var(--color-primary) / 0.5);
-  }
+.project-card {
+  --card-bg: rgb(var(--color-surface));
+  --card-border: rgb(var(--color-border));
+  --card-text: rgb(var(--color-text));
+  --card-text-muted: rgb(var(--color-text) / 0.7);
+  --card-text-subtle: rgb(var(--color-text) / 0.6);
+  --card-primary: rgb(var(--color-primary));
+  --card-accent: rgb(var(--color-accent));
+  --card-focus-ring: rgb(var(--color-background));
+  --card-focus-offset: rgb(var(--color-primary) / 0.5);
 }
 
 // ============================================================================

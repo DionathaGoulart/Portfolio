@@ -1,6 +1,8 @@
 import React from 'react'
 import { InputProps } from '@shared/types/ui/Form.types'
 
+import '@styles/ui/expcard.scss'
+
 // ============================================================================
 // HELPERS PRIVADOS
 // ============================================================================

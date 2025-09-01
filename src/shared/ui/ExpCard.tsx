@@ -3,6 +3,8 @@ import { Title } from '@/shared/ui/Title'
 import { P } from '@/shared/ui/Text'
 import { Tag, TagGroup } from '@/shared/ui/Tag'
 
+import '@styles/ui/expcard.scss'
+
 // ============================================================================
 // TYPES
 // ============================================================================

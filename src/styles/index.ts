@@ -1,3 +1,3 @@
-import './global.scss'
+import './tailwind.scss'
 import './theme.scss'
-import './tailwind.css'
+import './global.scss'

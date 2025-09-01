@@ -1,6 +1,8 @@
 import React from 'react'
 import { FormFieldProps } from '@shared/types/ui/Form.types'
 
+import '@styles/ui/form.scss'
+
 // ============================================================================
 // HELPERS PRIVADOS
 // ============================================================================

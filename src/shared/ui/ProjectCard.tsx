@@ -13,6 +13,8 @@ import {
   type Project
 } from '../types/ui/ProjectCard.types'
 
+import '@styles/ui/projectcard.scss'
+
 // ============================================================================
 // CONSTANTS
 // ============================================================================

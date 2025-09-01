@@ -1,6 +1,8 @@
 import React from 'react'
 import { TextProps } from '../types'
 
+import '@styles/ui/text.scss'
+
 // ================================
 // CONSTANTS
 // ================================

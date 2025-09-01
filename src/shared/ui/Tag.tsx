@@ -8,6 +8,8 @@ import {
   buildStatusTagClasses
 } from '@shared/types'
 
+import '@styles/ui/tag.scss'
+
 // ================================
 // HELPER FUNCTIONS
 // ================================

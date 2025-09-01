@@ -1,17 +1,54 @@
+@use 'sass:map';
+@use 'sass:list';
+
 // ============================================================================
 // BUTTON SYSTEM - SETTINGS
 // ============================================================================
 
 // Color variants for button system
-$button-colors:
-  primary, secondary, accent, text, textSecondary, error, success, warning;
-$button-variants: solid, outline, ghost;
+$button-colors: (
+  primary,
+  secondary,
+  accent,
+  text,
+  textSecondary,
+  error,
+  success,
+  warning
+);
+
+// Button style variants
+$button-variants: (solid, outline, ghost);
+
+// Button size configurations
+$button-sizes: (
+  pequeno: (
+    padding: (
+      12px,
+      6px
+    )
+  ),
+  medio: (
+    padding: (
+      16px,
+      8px
+    )
+  ),
+  grande: (
+    padding: (
+      24px,
+      12px
+    )
+  )
+);
 
 // ============================================================================
 // BUTTON SYSTEM - TOOLS
 // ============================================================================
 
-// Button transition effect mixin
+/**
+ * Button transition effect mixin with hover transform
+ */
 @mixin button-transition {
   @apply transform transition-all duration-200 ease-in-out;
 
@@ -20,7 +57,10 @@ $button-variants: solid, outline, ghost;
   }
 }
 
-// Focus ring mixin for accessibility
+/**
+ * Focus ring mixin for accessibility compliance
+ * @param {string} $color - Color variant for focus ring
+ */
 @mixin button-focus($color) {
   &:focus-visible {
     @apply outline-none;
@@ -30,7 +70,11 @@ $button-variants: solid, outline, ghost;
   }
 }
 
-// Main button variant generator mixin
+/**
+ * Main button variant generator mixin
+ * @param {string} $variant - Button style variant (solid, outline, ghost)
+ * @param {string} $color - Color theme for the button
+ */
 @mixin button-variant($variant, $color) {
   @include button-focus($color);
   @apply border-2;
@@ -84,6 +128,56 @@ $button-variants: solid, outline, ghost;
   }
 }
 
+/**
+ * Button size variant generator mixin
+ * @param {string} $size - Size variant (pequeno, medio, grande)
+ */
+@mixin button-size($size) {
+  $config: map.get($button-sizes, $size);
+  $padding: map.get($config, padding);
+  $icon-size: map.get($config, icon-size);
+
+  padding: list.nth($padding, 2) list.nth($padding, 1);
+
+  @if $size == pequeno {
+    @apply text-xs;
+
+    // Responsive typography
+    @screen sm {
+      @apply text-sm;
+    }
+
+    // Icon sizing
+    &.btn--with-icon .btn__icon {
+      @apply w-3 h-3;
+    }
+  } @else if $size == medio {
+    @apply text-sm;
+
+    // Responsive typography
+    @screen sm {
+      @apply text-base;
+    }
+
+    // Icon sizing
+    &.btn--with-icon .btn__icon {
+      @apply w-4 h-4;
+    }
+  } @else if $size == grande {
+    @apply text-base;
+
+    // Responsive typography
+    @screen sm {
+      @apply text-lg;
+    }
+
+    // Icon sizing
+    &.btn--with-icon .btn__icon {
+      @apply w-5 h-5;
+    }
+  }
+}
+
 // ============================================================================
 // BUTTON SYSTEM - BASE COMPONENT
 // ============================================================================
@@ -92,13 +186,13 @@ $button-variants: solid, outline, ghost;
   @include button-transition;
   @apply rounded-md font-medium cursor-pointer inline-flex items-center justify-center;
 
-  // Disabled state
+  // Disabled state styling
   &:disabled {
     @apply opacity-50 cursor-not-allowed;
     transform: none;
   }
 
-  // Icon support
+  // Icon layout support
   &--with-icon {
     @apply gap-2;
 
@@ -107,7 +201,7 @@ $button-variants: solid, outline, ghost;
     }
   }
 
-  // Loading state
+  // Loading state with overlay effect
   &--loading {
     @apply relative;
 
@@ -124,53 +218,17 @@ $button-variants: solid, outline, ghost;
 // BUTTON SYSTEM - SIZE VARIANTS
 // ============================================================================
 
-.btn {
-  &--pequeno {
-    @apply px-3 py-1.5 text-xs;
-
-    // Responsive typography
-    @screen sm {
-      @apply text-sm;
-    }
+@each $size, $config in $button-sizes {
+  .btn--#{$size} {
+    @include button-size($size);
   }
-
-  &--medio {
-    @apply px-4 py-2 text-sm;
-
-    // Responsive typography
-    @screen sm {
-      @apply text-base;
-    }
-  }
-
-  &--grande {
-    @apply px-6 py-3 text-base;
-
-    // Responsive typography
-    @screen sm {
-      @apply text-lg;
-    }
-  }
-}
-
-// Icon sizing by button size
-.btn--pequeno.btn--with-icon .btn__icon {
-  @apply w-3 h-3;
-}
-
-.btn--medio.btn--with-icon .btn__icon {
-  @apply w-4 h-4;
-}
-
-.btn--grande.btn--with-icon .btn__icon {
-  @apply w-5 h-5;
 }
 
 // ============================================================================
-// BUTTON SYSTEM - COLOR VARIANTS
+// BUTTON SYSTEM - COLOR & VARIANT COMBINATIONS
 // ============================================================================
 
-// Generate all color/variant combinations
+// Generate all color and variant combinations
 @each $color in $button-colors {
   @each $variant in $button-variants {
     .btn--#{$variant}-#{$color} {
@@ -183,7 +241,9 @@ $button-variants: solid, outline, ghost;
 // BUTTON SYSTEM - LAYOUT COMPONENTS
 // ============================================================================
 
-// Button container for alignment
+/**
+ * Button container for alignment control
+ */
 .btn-container {
   @apply flex;
 
@@ -200,7 +260,9 @@ $button-variants: solid, outline, ghost;
   }
 }
 
-// Button group for connected buttons
+/**
+ * Button group for connected button layouts
+ */
 .btn-group {
   @apply flex;
 
@@ -229,15 +291,20 @@ $button-variants: solid, outline, ghost;
 // BUTTON SYSTEM - UTILITY COMPONENTS
 // ============================================================================
 
-// Loading spinner component
+/**
+ * Loading spinner component for button loading state
+ */
 .btn__spinner {
-  @apply animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full;
+  @apply animate-spin border-2 border-current border-t-transparent rounded-full w-4 h-4;
 }
 
 // ============================================================================
 // BUTTON SYSTEM - ANIMATIONS
 // ============================================================================
 
+/**
+ * Pulse animation for button loading state overlay
+ */
 @keyframes btn-pulse {
   0%,
   100% {

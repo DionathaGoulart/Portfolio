@@ -1,16 +1,37 @@
-// ============================================================================
-// TAG SYSTEM - OTIMIZADO
-// ============================================================================
+@use 'sass:map';
+@use 'sass:list';
 
-// Configurações
-$colors:
-  primary, secondary, accent, text, textSecondary, error, success, warning;
-$variants: solid, outline, ghost;
-$sizes: small, medium, large;
+// ================================
+// SETTINGS - DESIGN TOKENS
+// ================================
 
-// Mixins
+$tag-colors: (
+  primary: var(--color-primary),
+  secondary: var(--color-secondary),
+  accent: var(--color-accent),
+  text: var(--color-text),
+  textSecondary: var(--color-textSecondary),
+  error: var(--color-error),
+  success: var(--color-success),
+  warning: var(--color-warning)
+);
+
+$tag-variants: solid, outline, ghost;
+$tag-sizes: small, medium, large;
+
+$status-colors: (
+  online: success,
+  offline: error,
+  pending: warning
+);
+
+// ================================
+// TOOLS - MIXINS
+// ================================
+
 @mixin tag-base {
-  @apply transform transition-all duration-200 ease-in-out inline-flex items-center justify-center font-medium rounded-full;
+  @apply inline-flex items-center justify-center font-medium rounded-full;
+  @apply transform transition-all duration-200 ease-in-out;
 
   &:focus-visible {
     outline: none;
@@ -21,10 +42,12 @@ $sizes: small, medium, large;
 }
 
 @mixin tag-variant($variant, $color) {
+  $color-value: map.get($tag-colors, $color);
+
   @if $variant == solid {
-    background-color: rgb(var(--color-#{$color}));
+    background-color: rgb(#{$color-value});
     color: rgb(var(--color-text));
-    border: 1px solid rgb(var(--color-#{$color}));
+    border: 1px solid rgb(#{$color-value});
 
     @if $color == text {
       background-color: rgb(var(--color-text));
@@ -35,37 +58,48 @@ $sizes: small, medium, large;
     }
 
     &.tag--interactive:hover:not(.tag--disabled) {
-      background-color: rgb(var(--color-#{$color}) / 0.8);
+      background-color: rgb(#{$color-value} / 0.8);
     }
   } @else if $variant == outline {
-    background-color: transparent;
-    border: 1px solid rgb(var(--color-#{$color}));
-    color: rgb(var(--color-#{$color}));
+    @apply bg-transparent;
+    border: 1px solid rgb(#{$color-value});
+    color: rgb(#{$color-value});
 
     &.tag--interactive:hover:not(.tag--disabled) {
-      background-color: rgb(var(--color-#{$color}) / 0.1);
+      background-color: rgb(#{$color-value} / 0.1);
     }
   } @else if $variant == ghost {
-    background-color: rgb(var(--color-#{$color}) / 0.1);
-    border: 1px solid transparent;
-    color: rgb(var(--color-#{$color}));
+    background-color: rgb(#{$color-value} / 0.1);
+    @apply border border-transparent;
+    color: rgb(#{$color-value});
 
     &.tag--interactive:hover:not(.tag--disabled) {
-      background-color: rgb(var(--color-#{$color}) / 0.2);
+      background-color: rgb(#{$color-value} / 0.2);
     }
   }
 }
 
-// ============================================================================
-// BASE
-// ============================================================================
+@mixin tag-size($size) {
+  @if $size == small {
+    @apply text-xs px-2 py-0.5;
+  } @else if $size == medium {
+    @apply text-sm px-3 py-1;
+  } @else if $size == large {
+    @apply text-base px-4 py-1.5;
+  }
+}
+
+// ================================
+// BASE - TAG FOUNDATION
+// ================================
 
 .tag {
   @include tag-base;
 
-  // Estados
+  // States
   &--interactive {
     @apply cursor-pointer;
+
     &:hover:not(.tag--disabled) {
       transform: scale(1.05);
     }
@@ -73,107 +107,118 @@ $sizes: small, medium, large;
 
   &--disabled {
     @apply opacity-50 cursor-not-allowed;
+
     &:hover {
-      transform: none !important;
+      transform: none;
     }
   }
 }
 
-// ============================================================================
-// TAMANHOS
-// ============================================================================
+// ================================
+// COMPONENTS - SIZE VARIANTS
+// ================================
 
-.tag--small {
-  @apply text-xs px-2 py-0.5;
-}
-.tag--medium {
-  @apply text-sm px-3 py-1;
-}
-.tag--large {
-  @apply text-base px-4 py-1.5;
+@each $size in $tag-sizes {
+  .tag--#{$size} {
+    @include tag-size($size);
+  }
 }
 
-// ============================================================================
-// VARIANTES DE COR
-// ============================================================================
+// ================================
+// COMPONENTS - COLOR + VARIANT COMBINATIONS
+// ================================
 
-@each $color in $colors {
-  @each $variant in $variants {
+@each $color in map.keys($tag-colors) {
+  @each $variant in $tag-variants {
     .tag--#{$variant}-#{$color} {
       @include tag-variant($variant, $color);
     }
   }
 }
 
-// ============================================================================
-// MODIFICADORES
-// ============================================================================
+// ================================
+// COMPONENTS - FEATURE MODIFIERS
+// ================================
 
 .tag {
-  // Com ícone
+  // Icon feature
   &--with-icon {
     @apply gap-1;
+
     &__icon {
       @apply flex-shrink-0;
     }
   }
 
-  // Removível
+  // Removable feature
   &--removable {
     @apply pr-1;
+
     &__remove-btn {
-      @apply ml-1 hover:bg-black/10 rounded-full p-0.5 transition-colors;
+      @apply ml-1 rounded-full p-0.5 transition-colors;
+      @apply hover:bg-black hover:bg-opacity-10;
+
       &-icon {
         @apply w-3 h-3;
       }
     }
   }
 
-  // Com badge
+  // Badge feature
   &--with-badge {
     @apply relative;
+
     &__badge {
-      @apply absolute -top-1 -right-1 min-w-4 h-4 flex items-center justify-center;
-      @apply text-xs rounded-full bg-red-500 text-white px-1;
+      @apply absolute -top-1 -right-1 min-w-4 h-4;
+      @apply flex items-center justify-center text-xs rounded-full;
+      @apply bg-red-500 text-white px-1;
     }
   }
 }
 
-// Ícones por tamanho
+// ================================
+// COMPONENTS - ICON SIZING BY TAG SIZE
+// ================================
+
 .tag--small.tag--with-icon .tag__icon {
   @apply w-2.5 h-2.5;
 }
+
 .tag--medium.tag--with-icon .tag__icon {
   @apply w-3 h-3;
 }
+
 .tag--large.tag--with-icon .tag__icon {
   @apply w-4 h-4;
 }
 
-// ============================================================================
-// STATUS TAGS
-// ============================================================================
+// ================================
+// COMPONENTS - STATUS TAGS
+// ================================
 
-@each $status, $color in (online: success, offline: error, pending: warning) {
+@each $status, $color in $status-colors {
+  $color-value: map.get($tag-colors, $color);
+
   .tag--status-#{$status} {
     @apply text-xs px-2 py-0.5 relative;
-    background-color: rgb(var(--color-#{$color}) / 0.1);
-    color: rgb(var(--color-#{$color}));
+    background-color: rgb(#{$color-value} / 0.1);
+    color: rgb(#{$color-value});
 
     &::before {
       content: '';
       @apply w-2 h-2 rounded-full mr-1;
-      background-color: rgb(var(--color-#{$color}));
+      background-color: rgb(#{$color-value});
     }
   }
 }
 
-// ============================================================================
-// CONTAINERS
-// ============================================================================
+// ================================
+// COMPONENTS - CONTAINERS
+// ================================
 
 .tag-group {
   @apply flex flex-wrap gap-2;
+
   &--compact {
     @apply gap-1;
   }

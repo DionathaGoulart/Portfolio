@@ -8,10 +8,31 @@ import {
   buildStatusTagClasses
 } from '@shared/types'
 
-// ============================================================================
-// MAIN TAG COMPONENT
-// ============================================================================
+// ================================
+// HELPER FUNCTIONS
+// ================================
 
+/**
+ * Verifica se uma tecla é de ativação (Enter ou Space)
+ */
+const isActivationKey = (key: string): boolean => {
+  return key === 'Enter' || key === ' '
+}
+
+/**
+ * Verifica se uma tecla é de remoção (Delete ou Backspace)
+ */
+const isRemovalKey = (key: string): boolean => {
+  return key === 'Delete' || key === 'Backspace'
+}
+
+// ================================
+// MAIN TAG COMPONENT
+// ================================
+
+/**
+ * Componente Tag principal com suporte a ícones, badges e remoção
+ */
 export const Tag: React.FC<TagProps> = ({
   children,
   color = 'primary',
@@ -40,31 +61,29 @@ export const Tag: React.FC<TagProps> = ({
   })
 
   const handleClick = (e: React.MouseEvent) => {
-    if (!disabled && onClick) {
-      onClick()
-    }
+    if (disabled) return
+    if (onClick) onClick()
   }
 
   const handleRemove = (e: React.MouseEvent) => {
-    e.stopPropagation() // Evita trigger do onClick principal
-    if (onRemove && !disabled) {
-      onRemove()
-    }
+    e.stopPropagation()
+    if (disabled) return
+    if (onRemove) onRemove()
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!disabled && (onClick || interactive)) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault()
-        if (onClick) onClick()
-      }
+    if (disabled) return
+
+    // Ativação do tag
+    if ((onClick || interactive) && isActivationKey(e.key)) {
+      e.preventDefault()
+      if (onClick) onClick()
     }
 
-    if (!disabled && removable && onRemove) {
-      if (e.key === 'Delete' || e.key === 'Backspace') {
-        e.preventDefault()
-        onRemove()
-      }
+    // Remoção do tag
+    if (removable && onRemove && isRemovalKey(e.key)) {
+      e.preventDefault()
+      onRemove()
     }
   }
 
@@ -80,13 +99,13 @@ export const Tag: React.FC<TagProps> = ({
       role={isInteractive ? 'button' : undefined}
       aria-disabled={disabled}
     >
-      {/* Ícone */}
+      {/* Icon */}
       {icon && <span className="tag--with-icon__icon">{icon}</span>}
 
-      {/* Conteúdo */}
+      {/* Content */}
       {children}
 
-      {/* Botão de remoção */}
+      {/* Remove Button */}
       {removable && onRemove && (
         <button
           type="button"
@@ -105,10 +124,13 @@ export const Tag: React.FC<TagProps> = ({
   )
 }
 
-// ============================================================================
+// ================================
 // TAG GROUP COMPONENT
-// ============================================================================
+// ================================
 
+/**
+ * Componente para agrupar múltiplos Tags
+ */
 export const TagGroup: React.FC<TagGroupProps> = ({
   children,
   compact = false,
@@ -119,10 +141,13 @@ export const TagGroup: React.FC<TagGroupProps> = ({
   return <div className={groupClasses}>{children}</div>
 }
 
-// ============================================================================
+// ================================
 // STATUS TAG COMPONENT
-// ============================================================================
+// ================================
 
+/**
+ * Componente Tag especializado para indicação de status
+ */
 export const StatusTag: React.FC<StatusTagProps> = ({
   status,
   children,

@@ -1,12 +1,15 @@
 // ============================================================================
-// INPUT SYSTEM - OTIMIZADO
+// SETTINGS - VARIÁVEIS E TOKENS
 // ============================================================================
 
-// Configurações
-$sizes: pequeno, medio, grande;
-$variants: outline, filled, ghost;
+$input-sizes: pequeno, medio, grande;
+$input-variants: outline, filled, ghost;
+$contact-variants: default, social;
 
-// Mixins
+// ============================================================================
+// TOOLS - MIXINS E FUNÇÕES
+// ============================================================================
+
 @mixin input-transition {
   @apply transition-all duration-200 ease-in-out;
 }
@@ -21,8 +24,13 @@ $variants: outline, filled, ghost;
   @apply opacity-50 cursor-not-allowed pointer-events-none;
 }
 
+@mixin hover-lift-effect {
+  @apply transform -translate-y-1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
 // ============================================================================
-// INPUT BASE
+// COMPONENTS - INPUT SYSTEM
 // ============================================================================
 
 .input {
@@ -31,21 +39,21 @@ $variants: outline, filled, ghost;
   @apply w-full border rounded-lg font-medium;
 
   &::placeholder {
-    @apply text-theme-text/50;
+    @apply text-theme-text opacity-50;
   }
 
-  // Estados
+  // Estados do input
   &--disabled {
     @include input-disabled;
   }
 
   &--error {
-    @apply border-theme-error ring-theme-error/20;
+    @apply border-theme-error ring-theme-error ring-opacity-20;
   }
 }
 
 // ============================================================================
-// TAMANHOS
+// INPUT - TAMANHOS
 // ============================================================================
 
 .input--pequeno {
@@ -61,14 +69,14 @@ $variants: outline, filled, ghost;
 }
 
 // ============================================================================
-// VARIANTES
+// INPUT - VARIANTES
 // ============================================================================
 
 .input--outline {
   @apply bg-transparent border-theme-border text-theme-text;
 
   &:hover {
-    @apply border-theme-primary/50;
+    @apply border-theme-primary border-opacity-50;
   }
 }
 
@@ -76,7 +84,7 @@ $variants: outline, filled, ghost;
   @apply bg-theme-surface border-transparent text-theme-text;
 
   &:hover {
-    @apply bg-theme-surface/80;
+    @apply bg-theme-surface bg-opacity-80;
   }
 }
 
@@ -84,19 +92,19 @@ $variants: outline, filled, ghost;
   @apply bg-transparent border-transparent text-theme-text;
 
   &:hover {
-    @apply bg-theme-surface/50;
+    @apply bg-theme-surface bg-opacity-50;
   }
 }
 
 // ============================================================================
-// TEXTAREA
+// COMPONENTS - TEXTAREA
 // ============================================================================
 
 .textarea {
   @extend .input;
-  @apply resize-y min-h-24;
+  @apply resize-y min-h-24 resize-none;
 
-  // Resize options
+  // Opções de redimensionamento
   &--resize-none {
     @apply resize-none;
   }
@@ -112,31 +120,32 @@ $variants: outline, filled, ghost;
   &--resize-both {
     @apply resize;
   }
+
+  // Estados específicos do textarea
+  &--disabled {
+    @include input-disabled;
+  }
+
+  &--error {
+    @apply border-theme-error ring-theme-error ring-opacity-20;
+  }
 }
 
-// Herdar tamanhos e variantes do input
-@each $size in $sizes {
+// Herança de tamanhos e variantes do input para textarea
+@each $size in $input-sizes {
   .textarea--#{$size} {
     @extend .input--#{$size};
   }
 }
 
-@each $variant in $variants {
+@each $variant in $input-variants {
   .textarea--#{$variant} {
     @extend .input--#{$variant};
   }
 }
 
-.textarea--disabled {
-  @include input-disabled;
-}
-
-.textarea--error {
-  @apply border-theme-error ring-theme-error/20;
-}
-
 // ============================================================================
-// FORM FIELD
+// COMPONENTS - FORM FIELD
 // ============================================================================
 
 .form-field {
@@ -158,7 +167,7 @@ $variants: outline, filled, ghost;
     @apply text-sm text-theme-error;
   }
 
-  // Estado de erro
+  // Estado de erro para todo o campo
   &--error {
     .form-field__label {
       @apply text-theme-error;
@@ -167,14 +176,14 @@ $variants: outline, filled, ghost;
 }
 
 // ============================================================================
-// CONTACT CARD
+// COMPONENTS - CONTACT CARD
 // ============================================================================
 
 .contact-card {
   @apply p-4 rounded-lg border border-theme-border bg-theme-surface flex items-start gap-3;
 
   &__icon {
-    @apply w-10 h-10 flex items-center justify-center rounded-lg bg-theme-primary/10 text-theme-primary flex-shrink-0;
+    @apply w-10 h-10 flex items-center justify-center rounded-lg flex-shrink-0;
   }
 
   &__content {
@@ -186,16 +195,16 @@ $variants: outline, filled, ghost;
   }
 
   &__value {
-    @apply text-theme-text/70;
+    @apply text-theme-text text-opacity-70;
   }
 
-  // Estado interativo
+  // Estado interativo com hover e focus
   &--clickable {
     @apply cursor-pointer;
 
     &:hover {
-      @apply bg-theme-surface/80 border-theme-primary/30 transform -translate-y-1;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      @apply bg-theme-surface bg-opacity-80 border-theme-primary border-opacity-30;
+      @include hover-lift-effect;
     }
 
     &:focus-visible {
@@ -203,23 +212,29 @@ $variants: outline, filled, ghost;
     }
   }
 
-  // Variante social
-  &--social {
+  // Variante padrão com cor primária
+  &--default {
     .contact-card__icon {
-      @apply bg-theme-accent/10 text-theme-accent;
+      @apply bg-theme-primary bg-opacity-10 text-theme-primary;
     }
 
     &:hover {
-      @apply border-theme-accent/30;
-
-      .contact-card__icon {
-        @apply bg-theme-accent/20;
-      }
+      @apply border-theme-primary border-opacity-30;
     }
   }
 
-  // Variante default
-  &--default {
-    // Já está definido no base
+  // Variante social com cor de destaque
+  &--social {
+    .contact-card__icon {
+      @apply bg-theme-accent bg-opacity-10 text-theme-accent;
+    }
+
+    &:hover {
+      @apply border-theme-accent border-opacity-30;
+
+      .contact-card__icon {
+        @apply bg-theme-accent bg-opacity-20;
+      }
+    }
   }
 }

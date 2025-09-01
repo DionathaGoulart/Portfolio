@@ -8,7 +8,7 @@ import { ButtonProps } from '@shared/types'
 /**
  * Versatile button component with multiple variants, sizes and states
  *
- * @component
+ * @component Button
  * @param {ButtonProps} props - Button configuration props
  * @returns {React.FC<ButtonProps>} Rendered button component
  *
@@ -18,18 +18,18 @@ import { ButtonProps } from '@shared/types'
  * </Button>
  */
 export const Button: React.FC<ButtonProps> = ({
-  // Content
+  // Content properties
   children,
 
-  // Appearance
+  // Appearance properties
   size = 'medio',
   color = 'primary',
   variant = 'solid',
 
-  // Layout
+  // Layout properties
   align = 'start',
 
-  // Functionality
+  // Functionality properties
   onClick,
   type = 'button',
   disabled = false,
@@ -43,26 +43,31 @@ export const Button: React.FC<ButtonProps> = ({
   id
 }) => {
   // ============================================================================
-  // COMPONENT STATE
+  // COMPONENT STATE & DERIVED VALUES
   // ============================================================================
 
   const isDisabled = disabled || loading
   const hasIcon = Boolean(icon)
 
   // ============================================================================
-  // CSS CLASSES
+  // CSS CLASS GENERATORS
   // ============================================================================
 
+  /**
+   * Generates button CSS classes based on props
+   */
   const getButtonClasses = (): string => {
     const classes = [
-      // Base class
+      // Base BEM class
       'btn',
 
-      // Appearance
+      // Size modifier
       `btn--${size}`,
+
+      // Variant and color modifier
       `btn--${variant}-${color}`,
 
-      // States
+      // State modifiers
       loading && 'btn--loading',
       hasIcon && 'btn--with-icon',
 
@@ -73,6 +78,9 @@ export const Button: React.FC<ButtonProps> = ({
     return classes.filter(Boolean).join(' ')
   }
 
+  /**
+   * Generates container CSS classes for alignment
+   */
   const getContainerClasses = (): string => {
     return ['btn-container', `btn-container--${align}`].join(' ')
   }
@@ -81,6 +89,9 @@ export const Button: React.FC<ButtonProps> = ({
   // RENDER HELPERS
   // ============================================================================
 
+  /**
+   * Renders button content based on loading state
+   */
   const renderContent = (): React.ReactNode => {
     if (loading) {
       return (
@@ -103,6 +114,9 @@ export const Button: React.FC<ButtonProps> = ({
   // EVENT HANDLERS
   // ============================================================================
 
+  /**
+   * Handles button click events with disabled state check
+   */
   const handleClick = (): void => {
     if (!isDisabled && onClick) {
       onClick()

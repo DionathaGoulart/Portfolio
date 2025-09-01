@@ -1,6 +1,27 @@
 import React from 'react'
 import { TitleProps } from '@shared/types'
 
+// ============================================================================
+// TITLE COMPONENT
+// ============================================================================
+
+/**
+ * Componente de título flexível com múltiplas variantes e estilos
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <Title
+ *   level="h1"
+ *   color="primary"
+ *   weight="bold"
+ *   border="bottom-start"
+ *   icon={<IconStar />}
+ * >
+ *   Título Principal
+ * </Title>
+ * ```
+ */
 export const Title: React.FC<TitleProps> = ({
   // Conteúdo
   children,
@@ -37,63 +58,68 @@ export const Title: React.FC<TitleProps> = ({
   className = '',
   id
 }) => {
-  // ============================================================================
+  // ================================
   // CONFIGURAÇÃO
-  // ============================================================================
+  // ================================
+
   const Element = element || level
   const isInteractive = Boolean(onClick || interactive)
 
-  // ============================================================================
+  // ================================
   // CLASSES CSS
-  // ============================================================================
-  const classes = [
-    // Classe base
-    'title',
+  // ================================
 
-    // Tamanho (nível ou variante)
-    variant ? `title--${variant}` : `title--${level}`,
+  const buildClasses = (): string => {
+    const classes = [
+      // Classe base
+      'title',
 
-    // Aparência
-    `title--${color}`,
-    `title--${weight}`,
-    `title--${align}`,
+      // Tamanho (nível ou variante)
+      variant ? `title--${variant}` : `title--${level}`,
 
-    // Estados
-    isInteractive && 'title--interactive',
-    disabled && 'title--disabled',
+      // Aparência
+      `title--${color}`,
+      `title--${weight}`,
+      `title--${align}`,
 
-    // Modificadores
-    uppercase && 'title--uppercase',
-    style && `title--${style}`,
-    gradient && 'title--gradient',
-    shadow === true && 'title--shadow',
-    shadow === 'strong' && 'title--shadow-strong',
-    underlined && 'title--underlined',
-    highlighted && 'title--highlighted',
+      // Estados
+      isInteractive && 'title--interactive',
+      disabled && 'title--disabled',
 
-    // Border decorativa
-    border !== 'none' && `title--border-${border}`,
+      // Modificadores
+      uppercase && 'title--uppercase',
+      style && `title--${style}`,
+      gradient && 'title--gradient',
+      shadow === true && 'title--shadow',
+      shadow === 'strong' && 'title--shadow-strong',
+      underlined && 'title--underlined',
+      highlighted && 'title--highlighted',
 
-    // Layout
-    icon && 'title--with-icon',
-    badge && 'title--with-badge',
+      // Border decorativa
+      border !== 'none' && `title--border-${border}`,
 
-    // Classes customizadas
-    className
-  ]
-    .filter(Boolean)
-    .join(' ')
+      // Layout
+      icon && 'title--with-icon',
+      badge && 'title--with-badge',
 
-  // ============================================================================
-  // HANDLERS
-  // ============================================================================
-  const handleClick = (e: React.MouseEvent) => {
+      // Classes customizadas
+      className
+    ]
+
+    return classes.filter(Boolean).join(' ')
+  }
+
+  // ================================
+  // EVENT HANDLERS
+  // ================================
+
+  const handleClick = (e: React.MouseEvent): void => {
     if (!disabled && onClick) {
       onClick()
     }
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent): void => {
     if (!disabled && (onClick || interactive)) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault()
@@ -102,11 +128,16 @@ export const Title: React.FC<TitleProps> = ({
     }
   }
 
-  // ============================================================================
-  // RENDER CONTENT
-  // ============================================================================
-  const renderContent = () => {
-    if (icon && badge) {
+  // ================================
+  // RENDER HELPERS
+  // ================================
+
+  const renderContent = (): React.ReactNode => {
+    const hasIcon = Boolean(icon)
+    const hasBadge = Boolean(badge)
+
+    // Ícone + Badge
+    if (hasIcon && hasBadge) {
       return (
         <>
           <span className="title__icon">{icon}</span>
@@ -116,7 +147,8 @@ export const Title: React.FC<TitleProps> = ({
       )
     }
 
-    if (icon) {
+    // Apenas ícone
+    if (hasIcon) {
       return (
         <>
           <span className="title__icon">{icon}</span>
@@ -125,7 +157,8 @@ export const Title: React.FC<TitleProps> = ({
       )
     }
 
-    if (badge) {
+    // Apenas badge
+    if (hasBadge) {
       return (
         <>
           {children}
@@ -134,21 +167,31 @@ export const Title: React.FC<TitleProps> = ({
       )
     }
 
+    // Apenas conteúdo
     return children
   }
 
-  // ============================================================================
+  // ================================
+  // ACCESSIBILITY ATTRIBUTES
+  // ================================
+
+  const getAccessibilityProps = () => ({
+    tabIndex: isInteractive && !disabled ? 0 : undefined,
+    role: isInteractive ? 'button' : undefined,
+    'aria-disabled': disabled || undefined
+  })
+
+  // ================================
   // RENDER
-  // ============================================================================
+  // ================================
+
   return (
     <Element
-      className={classes}
+      className={buildClasses()}
       id={id}
       onClick={isInteractive ? handleClick : undefined}
       onKeyDown={isInteractive ? handleKeyDown : undefined}
-      tabIndex={isInteractive && !disabled ? 0 : undefined}
-      role={isInteractive ? 'button' : undefined}
-      aria-disabled={disabled || undefined}
+      {...getAccessibilityProps()}
     >
       {renderContent()}
     </Element>

@@ -1,193 +1,202 @@
 // ============================================================================
-// PROJECT CARD SYSTEM - USANDO VARIÁVEIS DE TEMA EXISTENTES
+// SETTINGS - Variables and Design Tokens
 // ============================================================================
 
-// Variáveis específicas do card
-:root {
-  --card-shadow-base: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --card-shadow-elevated: 0 12px 32px rgba(0, 0, 0, 0.12);
-  --card-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --image-transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+// Card-specific design tokens
+$card-border-radius: 1rem;
+$card-image-height: 12rem;
+$card-image-height-compact: 9rem;
+$card-image-height-large: 16rem;
+$card-content-padding: 1.5rem;
+$card-content-padding-compact: 1rem;
+$card-content-padding-large: 2rem;
+
+// Animation settings
+$card-transition-duration: 0.3s;
+$image-transition-duration: 0.4s;
+$card-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+// Shimmer animation settings
+$shimmer-duration: 2s;
+$pulse-duration: 2s;
+
+// ============================================================================
+// BASE - Custom Properties Layer
+// ============================================================================
+
+@layer base {
+  .project-card {
+    --card-bg: rgb(var(--color-surface));
+    --card-border: rgb(var(--color-border));
+    --card-text: rgb(var(--color-text));
+    --card-text-muted: rgb(var(--color-text) / 0.7);
+    --card-text-subtle: rgb(var(--color-text) / 0.6);
+    --card-primary: rgb(var(--color-primary));
+    --card-accent: rgb(var(--color-accent));
+    --card-focus-ring: rgb(var(--color-background));
+    --card-focus-offset: rgb(var(--color-primary) / 0.5);
+  }
 }
 
-// Sombras para tema dark
-.dark {
-  --card-shadow-base: 0 4px 12px rgba(0, 0, 0, 0.25);
-  --card-shadow-elevated: 0 12px 32px rgba(0, 0, 0, 0.35);
-}
+// ============================================================================
+// TOOLS - Mixins and Functions
+// ============================================================================
 
-// Mixins
 @mixin card-transition {
-  transition: var(--card-transition);
+  @apply transition-all duration-300 ease-out;
 }
 
-@mixin card-focus {
+@mixin card-focus-ring {
   &:focus-visible {
-    outline: none;
+    @apply outline-none;
     box-shadow:
-      0 0 0 2px rgb(var(--color-background)),
-      0 0 0 4px rgb(var(--color-primary) / 0.5);
+      0 0 0 2px var(--card-focus-ring),
+      0 0 0 4px var(--card-focus-offset);
   }
 }
 
 @mixin card-hover-effect {
   &:hover:not(.project-card--disabled) {
-    transform: scale(1.02) translateY(-8px);
-    box-shadow: var(--card-shadow-elevated);
+    @apply transform scale-105 -translate-y-2;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 
     .project-card__image {
-      transform: scale(1.08);
+      @apply transform scale-110;
     }
 
     .project-card__title {
-      color: rgb(var(--color-primary));
+      color: var(--card-primary);
     }
 
     .project-card__buttons .btn {
-      transform: scale(1.02);
+      @apply transform scale-105;
     }
   }
 }
 
+@mixin image-transition {
+  transition: transform $image-transition-duration $card-easing;
+}
+
+@mixin text-clamp($lines: 3) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  @apply overflow-hidden;
+}
+
 // ============================================================================
-// PROJECT CARD COMPONENT
+// COMPONENTS - Project Card
 // ============================================================================
 
 .project-card {
   @include card-transition;
-  @include card-focus;
+  @include card-focus-ring;
   @include card-hover-effect;
 
-  position: relative;
-  border-radius: 1rem;
-  overflow: hidden;
-  background-color: rgb(var(--color-surface));
-  border: 1px solid rgb(var(--color-border));
-  box-shadow: var(--card-shadow-base);
-  cursor: default;
+  @apply relative overflow-hidden cursor-default;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: $card-border-radius;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
-  // Estrutura da imagem
-  &__image {
-    &-container {
-      position: relative;
-      height: 12rem; // 192px
-      overflow: hidden;
-    }
-
-    &-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgb(var(--color-text) / 0.05) 70%,
-        rgb(var(--color-text) / 0.15) 100%
-      );
-    }
+  // Image structure
+  &__image-container {
+    @apply relative overflow-hidden;
+    height: $card-image-height;
   }
 
   &__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: var(--image-transition);
+    @include image-transition;
+    @apply w-full h-full object-cover;
   }
 
-  // Conteúdo
+  &__image-overlay {
+    @apply absolute inset-0;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.05) 70%,
+      rgba(0, 0, 0, 0.15) 100%
+    );
+  }
+
+  // Content area
   &__content {
-    padding: 1.5rem;
-    position: relative;
+    @apply relative;
+    padding: $card-content-padding;
   }
 
   &__title {
     @include card-transition;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-    font-size: 1.25rem;
-    line-height: 1.2;
-    color: rgb(var(--color-text));
+    @apply mb-3 font-semibold text-xl leading-tight;
+    color: var(--card-text);
   }
 
   &__description {
-    margin-bottom: 1.5rem;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: rgb(var(--color-text) / 0.7);
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    @include text-clamp(3);
+    @apply mb-6 text-base leading-relaxed;
+    color: var(--card-text-muted);
   }
 
   &__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
+    @apply flex flex-wrap gap-2 mb-6;
   }
 
   &__buttons {
-    display: flex;
-    gap: 0.75rem;
+    @apply flex gap-3;
 
     .btn {
       @include card-transition;
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
+      @apply flex-1 flex items-center justify-center gap-2;
 
       &:hover {
-        cursor: pointer;
+        @apply cursor-pointer;
       }
 
       &:disabled,
       &.btn--disabled {
-        cursor: not-allowed;
+        @apply cursor-not-allowed;
       }
     }
   }
 
-  // Estados do card
+  // Card states
   &--loading {
-    position: relative;
-    overflow: hidden;
+    @apply relative overflow-hidden;
 
     &::after {
       content: '';
-      position: absolute;
-      inset: 0;
+      @apply absolute inset-0;
       background: linear-gradient(
         90deg,
         transparent,
-        rgb(var(--color-surface) / 0.8),
+        rgba(255, 255, 255, 0.8),
         transparent
       );
-      animation: shimmer 2s infinite;
+      animation: shimmer $shimmer-duration infinite;
     }
   }
 
   &--disabled {
-    opacity: 0.5;
-    pointer-events: none;
+    @apply opacity-50 pointer-events-none;
   }
 
   &--elevated {
-    box-shadow: var(--card-shadow-elevated);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
   }
 
-  // Variações de cor usando as cores do tema
+  // Color variants using your custom theme colors
   &--primary {
     border-color: rgb(var(--color-primary) / 0.2);
     background: linear-gradient(
       135deg,
       rgb(var(--color-primary) / 0.03),
-      rgb(var(--color-surface))
+      var(--card-bg)
     );
 
     &:hover .project-card__title {
-      color: rgb(var(--color-primary));
+      color: var(--card-primary);
     }
   }
 
@@ -196,134 +205,92 @@
     background: linear-gradient(
       135deg,
       rgb(var(--color-accent) / 0.03),
-      rgb(var(--color-surface))
+      var(--card-bg)
     );
 
     &:hover .project-card__title {
-      color: rgb(var(--color-accent));
+      color: var(--card-accent);
     }
   }
 
-  // Tamanhos
+  // Size variants
   &--compact {
     .project-card__content {
-      padding: 1rem;
+      padding: $card-content-padding-compact;
     }
 
     .project-card__image-container {
-      height: 9rem; // 144px
+      height: $card-image-height-compact;
     }
 
     .project-card__title {
-      font-size: 1.125rem;
-      margin-bottom: 0.5rem;
+      @apply text-lg mb-2;
     }
 
     .project-card__description {
-      margin-bottom: 1rem;
-      font-size: 0.875rem;
+      @apply mb-4 text-sm;
     }
 
     .project-card__buttons {
-      gap: 0.5rem;
+      @apply gap-2;
 
       .btn {
-        padding: 0.375rem 0.75rem;
-        font-size: 0.75rem;
+        @apply px-3 py-1.5 text-xs;
       }
     }
   }
 
   &--large {
     .project-card__content {
-      padding: 2rem;
+      padding: $card-content-padding-large;
     }
 
     .project-card__image-container {
-      height: 16rem; // 256px
+      height: $card-image-height-large;
     }
 
     .project-card__title {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+      @apply text-2xl mb-4;
     }
 
     .project-card__description {
-      margin-bottom: 2rem;
-      font-size: 1.125rem;
+      @apply mb-8 text-lg;
     }
   }
 }
 
 // ============================================================================
-// PROJECT GRID SYSTEM
+// COMPONENTS - Project Grid
 // ============================================================================
 
 .project-grid {
-  display: grid;
-  width: 100%;
-  gap: 1.5rem; // gap padrão medium
+  @apply grid w-full;
+  gap: 1.5rem; // Default medium gap
 
-  // Sistema de colunas responsivo otimizado
+  // Column system - responsive optimized
   &--1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    @apply grid-cols-1;
   }
 
   &--2 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    @apply grid-cols-1 md:grid-cols-2;
   }
 
   &--3 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    @media (min-width: 1024px) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
+    @apply grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
   }
 
   &--4 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-
-    @media (min-width: 640px) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    @media (min-width: 1024px) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    @media (min-width: 1280px) {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
+    @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
   }
 
-  // Sistema responsivo personalizado (novo)
-  // Mobile: 2 colunas | 768px+: 3 colunas | 1024px+: 4 colunas
+  // Custom responsive system
+  // Mobile: 1 column | 640px+: 2 columns | 768px+: 3 columns | 1024px+: 4 columns
   &--responsive {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-
-    @media (min-width: 640px) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    @media (min-width: 1024px) {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
+    @apply grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
   }
 
-  // Gaps
+  // Gap variations
   &--gap-small {
     gap: 1rem;
   }
@@ -332,33 +299,28 @@
     gap: 2rem;
   }
 
-  // Estado vazio
+  // Empty state
   &__empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem 1rem;
-    text-align: center;
-    min-height: 12.5rem; // 200px
+    @apply flex flex-col items-center justify-center p-16 text-center;
+    min-height: 12.5rem;
 
     &-text {
-      color: rgb(var(--color-text) / 0.6);
-      font-size: 1rem;
+      @apply text-base;
+      color: var(--card-text-subtle);
     }
   }
 
   // Loading state
   &--loading .project-card {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation: pulse $pulse-duration cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
-  // Animação inicial
+  // Initial load animation
   &--initial-load {
     .project-card {
       animation: cardFadeIn 0.6s ease-out backwards;
 
-      // Delay escalonado
+      // Staggered delay for each card
       @for $i from 1 through 12 {
         &:nth-child(#{$i}) {
           animation-delay: #{$i * 0.1}s;
@@ -367,7 +329,7 @@
     }
   }
 
-  // Animação para filtros
+  // Filter change animation
   &--filter-change {
     .project-card {
       animation: cardSlideIn 0.4s ease-out;
@@ -382,7 +344,7 @@
 }
 
 // ============================================================================
-// ANIMAÇÕES
+// UTILITIES - Animations
 // ============================================================================
 
 @keyframes shimmer {
@@ -427,70 +389,69 @@
 }
 
 // ============================================================================
-// CONTROLE DE CURSOR
+// UTILITIES - Cursor Control
 // ============================================================================
 
 .project-grid .project-card {
-  cursor: default;
+  @apply cursor-default;
 
   * {
     cursor: inherit;
   }
 
-  // Botões e elementos clicáveis
+  // Clickable elements
   .project-card__buttons .btn,
   a,
   button,
   [role='button'],
   [data-clickable='true'] {
-    cursor: pointer;
+    @apply cursor-pointer;
 
     &:hover {
-      cursor: pointer;
+      @apply cursor-pointer;
     }
 
     &:disabled,
     &.disabled {
-      cursor: not-allowed;
+      @apply cursor-not-allowed;
     }
   }
 
-  // Elementos que nunca devem ser clicáveis
+  // Non-clickable elements
   .project-card__title,
   .project-card__description,
   .project-card__image,
   .project-card__tags,
   .project-card__content {
-    cursor: default;
+    @apply cursor-default;
   }
 }
 
 // ============================================================================
-// RESPONSIVE ADJUSTMENTS
+// UTILITIES - Responsive Adjustments
 // ============================================================================
 
-// Ajustes específicos para mobile
+// Mobile specific adjustments (max 640px)
 @media (max-width: 640px) {
   .project-card {
     &__content {
-      padding: 1rem;
+      padding: $card-content-padding-compact;
     }
 
     &__title {
-      font-size: 1.125rem;
+      @apply text-lg;
     }
 
     &__description {
-      font-size: 0.875rem;
-      -webkit-line-clamp: 2;
+      @include text-clamp(2);
+      @apply text-sm;
     }
 
     &__buttons {
-      flex-direction: column;
-      gap: 0.5rem;
+      @apply flex-col gap-2;
 
       .btn {
-        width: 100%;
+        @apply w-full;
       }
     }
   }
@@ -504,35 +465,34 @@
   }
 }
 
-// Ajustes para tablets (768px - 1023px)
+// Tablet adjustments (768px - 1023px)
 @media (min-width: 768px) and (max-width: 1023px) {
   .project-grid--responsive {
     .project-card {
       &__buttons {
-        flex-direction: row;
+        @apply flex-row;
 
         .btn {
-          min-width: 0;
-          flex: 1;
+          @apply min-w-0 flex-1;
         }
       }
     }
   }
 }
 
-// Ajustes para desktops grandes (1920px+)
+// Large desktop adjustments (1920px+)
 @media (min-width: 1920px) {
   .project-card {
     &__content {
-      padding: 2rem;
+      padding: $card-content-padding-large;
     }
 
     &__title {
-      font-size: 1.375rem;
+      @apply text-2xl;
     }
 
     &__description {
-      font-size: 1.125rem;
+      @apply text-lg;
     }
   }
 
@@ -541,6 +501,33 @@
 
     &--gap-small {
       gap: 1.5rem;
+    }
+  }
+}
+
+// ============================================================================
+// UTILITIES - Dark Theme Adjustments
+// ============================================================================
+
+.dark {
+  .project-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+    &--elevated {
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    &:hover:not(.project-card--disabled) {
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    &--loading::after {
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(var(--color-surface) / 0.8),
+        transparent
+      );
     }
   }
 }

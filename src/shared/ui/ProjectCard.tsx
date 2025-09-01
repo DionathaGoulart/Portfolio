@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { JSX } from 'react'
 import { Github, ExternalLink } from 'lucide-react'
 import { Button } from '@/shared/ui/Button'
 import { P } from '@/shared/ui/Text'
@@ -8,14 +8,40 @@ import {
   buildCardClasses,
   buildEmptyStateClasses,
   buildGridClasses,
-  ProjectCardProps,
-  ProjectGridProps
+  type ProjectCardProps,
+  type ProjectGridProps,
+  type Project
 } from '../types/ui/ProjectCard.types'
+
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+const SKELETON_CARDS_COUNT = 6
+const DEFAULT_EMPTY_MESSAGE = 'Nenhum projeto encontrado para esta categoria.'
+
+// ============================================================================
+// SKELETON PROJECT DATA
+// ============================================================================
+
+const createSkeletonProject = (index: number): Project => ({
+  id: `skeleton-${index}`,
+  title: 'Loading...',
+  description: 'Loading project description...',
+  image: '/placeholder.jpg',
+  tags: ['Loading'],
+  category: 'frontend',
+  githubUrl: '#',
+  demoUrl: '#'
+})
 
 // ============================================================================
 // PROJECT CARD COMPONENT
 // ============================================================================
 
+/**
+ * Componente que renderiza um card de projeto individual
+ */
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
   onGithubClick,
@@ -36,34 +62,42 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     className
   )
 
-  const handleGithubClick = () => {
-    if (!disabled && !loading && onGithubClick) {
+  const handleGithubClick = (): void => {
+    if (shouldAllowInteraction() && onGithubClick) {
       onGithubClick(project.id)
     }
   }
 
-  const handleDemoClick = () => {
-    if (!disabled && !loading && onDemoClick) {
+  const handleDemoClick = (): void => {
+    if (shouldAllowInteraction() && onDemoClick) {
       onDemoClick(project.id)
     }
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault()
+  const handleKeyDown = (event: React.KeyboardEvent): void => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
       handleDemoClick()
     }
+  }
+
+  const shouldAllowInteraction = (): boolean => {
+    return !disabled && !loading
+  }
+
+  const getTabIndex = (): number => {
+    return shouldAllowInteraction() ? 0 : -1
   }
 
   return (
     <div
       className={cardClasses}
       onKeyDown={handleKeyDown}
-      tabIndex={!disabled && !loading ? 0 : -1}
+      tabIndex={getTabIndex()}
       role="button"
       aria-label={`Projeto ${project.title}`}
     >
-      {/* Imagem do Projeto */}
+      {/* Image Container */}
       <div className="project-card__image-container">
         <img
           src={project.image}
@@ -73,7 +107,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         <div className="project-card__image-overlay" />
       </div>
 
-      {/* Conteúdo do Card */}
+      {/* Card Content */}
       <div className="project-card__content">
         <Title level="h3" className="project-card__title">
           {project.title}
@@ -90,13 +124,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           ))}
         </div>
 
-        {/* Botões */}
+        {/* Action Buttons */}
         <div className="project-card__buttons">
           <Button
             variant="outline"
             size="pequeno"
             onClick={handleGithubClick}
-            disabled={disabled || loading}
+            disabled={!shouldAllowInteraction()}
           >
             <Github size={16} />
             GitHub
@@ -105,7 +139,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           <Button
             size="pequeno"
             onClick={handleDemoClick}
-            disabled={disabled || loading}
+            disabled={!shouldAllowInteraction()}
           >
             <ExternalLink size={16} />
             Demo
@@ -120,11 +154,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 // PROJECT GRID COMPONENT
 // ============================================================================
 
+/**
+ * Componente que renderiza uma grade de projetos
+ */
 export const ProjectGrid: React.FC<ProjectGridProps> = ({
   projects,
   onGithubClick,
   onDemoClick,
-  emptyMessage = 'Nenhum projeto encontrado para esta categoria.',
+  emptyMessage = DEFAULT_EMPTY_MESSAGE,
   className = '',
   columns = 'responsive',
   gap = 'medium',
@@ -133,7 +170,11 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({
   const gridClasses = buildGridClasses(columns, gap, loading, className)
   const emptyStateClasses = buildEmptyStateClasses()
 
-  if (projects.length === 0 && !loading) {
+  const hasNoProjects = projects.length === 0
+  const shouldShowEmptyState = hasNoProjects && !loading
+  const shouldShowSkeletons = loading && hasNoProjects
+
+  if (shouldShowEmptyState) {
     return (
       <div className={emptyStateClasses}>
         <P className="project-grid__empty-text">{emptyMessage}</P>
@@ -141,44 +182,31 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({
     )
   }
 
+  const renderProjectCard = (project: Project): JSX.Element => (
+    <ProjectCard
+      key={project.id}
+      project={project}
+      onGithubClick={onGithubClick}
+      onDemoClick={onDemoClick}
+      loading={loading}
+    />
+  )
+
+  const renderSkeletonCards = (): JSX.Element[] => {
+    return Array.from({ length: SKELETON_CARDS_COUNT }, (_, index) => (
+      <ProjectCard
+        key={`skeleton-${index}`}
+        project={createSkeletonProject(index)}
+        loading={true}
+        disabled={true}
+      />
+    ))
+  }
+
   return (
     <div className={gridClasses}>
-      {projects.map((project) => (
-        <ProjectCard
-          key={project.id}
-          project={project}
-          onGithubClick={onGithubClick}
-          onDemoClick={onDemoClick}
-          loading={loading}
-        />
-      ))}
-
-      {/* Loading skeleton cards se necessário */}
-      {loading &&
-        projects.length === 0 &&
-        Array.from(
-          { length: 6 },
-          (
-            _,
-            i // Reduzido para 6 cards skeleton
-          ) => (
-            <ProjectCard
-              key={`skeleton-${i}`}
-              project={{
-                id: `skeleton-${i}`,
-                title: 'Loading...',
-                description: 'Loading project description...',
-                image: '/placeholder.jpg',
-                tags: ['Loading'],
-                category: 'frontend',
-                githubUrl: '#',
-                demoUrl: '#'
-              }}
-              loading={true}
-              disabled={true}
-            />
-          )
-        )}
+      {projects.map(renderProjectCard)}
+      {shouldShowSkeletons && renderSkeletonCards()}
     </div>
   )
 }

@@ -47,7 +47,7 @@ const HomeSection: React.FC<HomeSectionProps> = ({ id = '' }) => {
             desenvolvedor fullstack
           </Title>
 
-          <P size="grande" className="leading-relaxed">
+          <P size="grande" className="leading-relaxed max-w-md">
             Desenvolvedor apaixonado por criar soluções digitais inovadoras,
             combinando design elegante com código limpo e funcional.
           </P>

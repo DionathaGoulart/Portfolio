@@ -1,29 +1,111 @@
+@use 'sass:map';
+
 // ============================================================================
-// IMAGE COMPONENT STYLES - OPTIMIZED
+// SETTINGS - Variables and Design Tokens
 // ============================================================================
 
-// Mixins
+$image-transition-duration: 300ms;
+$image-transition-timing: ease-out;
+$neon-border-width: 2px;
+$neon-padding: 3px;
+$neon-blur-radius: 6px;
+$neon-blur-mobile: 4px;
+
+// ============================================================================
+// TOOLS - Mixins and Functions
+// ============================================================================
+
 @mixin image-transition {
-  @apply transition-all duration-300 ease-out;
+  @apply transition-all;
+  transition-duration: $image-transition-duration;
+  transition-timing-function: $image-transition-timing;
 }
 
 @mixin image-interactive {
   @include image-transition;
   @apply cursor-pointer;
+
   &:hover .image__element {
     @apply opacity-80;
     transform: scale(1.05);
   }
+
   &:focus {
-    @apply outline-none ring-2 ring-theme-primary ring-offset-2 rounded;
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2 rounded;
   }
+
   &:active .image__element {
     transform: scale(0.95);
   }
 }
 
+@mixin neon-base-structure {
+  @apply relative;
+  padding: $neon-padding;
+  animation: gentle-float 6s ease-in-out infinite;
+  will-change: transform;
+
+  .image__element {
+    @apply relative z-10 border-2 border-transparent rounded-lg;
+    will-change: auto;
+  }
+}
+
+@mixin neon-flowing-border($color-1, $color-2) {
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: $neon-border-width;
+    border-radius: inherit;
+    background: linear-gradient(45deg, $color-1, $color-2, $color-1, $color-2);
+    background-size: 400% 400%;
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    animation: neon-flow-smooth 4s ease-in-out infinite;
+    will-change: background-position;
+  }
+}
+
+@mixin neon-glow($glow-color-1, $glow-color-2) {
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle,
+      $glow-color-1 0%,
+      $glow-color-2 50%,
+      transparent 100%
+    );
+    animation: neon-pulse 3s ease-in-out infinite;
+    z-index: -1;
+    will-change: transform, opacity;
+    filter: blur($neon-blur-radius);
+  }
+}
+
+@mixin hardware-acceleration {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+
+  &::before,
+  &::after {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+}
+
 // ============================================================================
-// BASE
+// BASE - Image Component Foundation
 // ============================================================================
 
 .image {
@@ -33,21 +115,22 @@
   .image__element {
     @apply max-w-full object-cover;
     @include image-transition;
-    will-change: transform, opacity; // Otimização para GPU
+    will-change: transform, opacity;
   }
 
-  // Estados interativos
+  // Interactive state
   &--interactive {
     @include image-interactive;
   }
 
+  // Hover effect
   &--hover:hover .image__element {
     @apply opacity-90;
   }
 }
 
 // ============================================================================
-// TAMANHOS
+// COMPONENTS - Size Variants
 // ============================================================================
 
 .image--small .image__element {
@@ -66,17 +149,17 @@
   @apply w-96 h-96;
 }
 
-.image--sidebar .image__element {
-  @apply w-48 h-64 object-cover rounded-lg shadow-xl relative;
-}
-
 .image--sidebar {
   animation: gentle-float 6s ease-in-out infinite;
-  will-change: transform; // Otimização para GPU
+  will-change: transform;
+
+  .image__element {
+    @apply w-48 h-64 object-cover rounded-lg shadow-xl relative;
+  }
 }
 
 // ============================================================================
-// FORMATOS
+// COMPONENTS - Shape Variants
 // ============================================================================
 
 .image--square .image__element {
@@ -92,7 +175,7 @@
 }
 
 // ============================================================================
-// SOMBRAS
+// COMPONENTS - Shadow Effects
 // ============================================================================
 
 .image--shadow .image__element {
@@ -104,84 +187,26 @@
 }
 
 // ============================================================================
-// EFEITO NEON OTIMIZADO - Mantendo gradiente suave original
+// COMPONENTS - Neon Effects
 // ============================================================================
 
 .image--neon-fire {
-  @apply relative;
-  padding: 3px;
-  animation: gentle-float 6s ease-in-out infinite;
-  will-change: transform;
-
-  .image__element {
-    @apply relative z-10 border-2 border-transparent rounded-lg;
-    will-change: auto;
-  }
-
-  // Borda animada - gradiente flowing suave
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    padding: 2px;
-    border-radius: inherit;
-    background: linear-gradient(
-      45deg,
-      rgb(247 150 102),
-      rgb(249 243 234),
-      rgb(247 150 102),
-      rgb(249 243 234)
-    );
-    background-size: 400% 400%;
-    mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    mask-composite: xor;
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    animation: neon-flow-smooth 4s ease-in-out infinite;
-    will-change: background-position;
-  }
-
-  // Brilho externo otimizado
-  &::after {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    border-radius: inherit;
-    background: radial-gradient(
-      circle,
-      rgba(247, 150, 102, 0.5) 0%,
-      rgba(249, 243, 234, 0.2) 50%,
-      transparent 100%
-    );
-    animation: neon-pulse 3s ease-in-out infinite;
-    z-index: -1;
-    will-change: transform, opacity;
-    filter: blur(6px);
-  }
+  @include neon-base-structure;
+  @include neon-flowing-border(rgb(247 150 102), rgb(249 243 234));
+  @include neon-glow(rgba(247, 150, 102, 0.5), rgba(249, 243, 234, 0.2));
+  @include hardware-acceleration;
 }
 
-// Variação adaptável ao tema
-// Variação adaptável ao tema
 .image--neon-primary {
-  @apply relative;
-  padding: 3px;
-  animation: gentle-float 6s ease-in-out infinite;
-  will-change: transform;
+  @include neon-base-structure;
+  @include hardware-acceleration;
 
-  .image__element {
-    @apply relative z-10 border-2 border-transparent rounded-lg;
-    will-change: auto;
-  }
-
+  // Using original CSS custom properties for theme colors
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    padding: 2px;
+    padding: $neon-border-width;
     border-radius: inherit;
     background: linear-gradient(
       45deg,
@@ -217,14 +242,15 @@
     animation: neon-pulse 3s ease-in-out infinite;
     z-index: -1;
     will-change: transform, opacity;
-    filter: blur(6px);
+    filter: blur($neon-blur-radius);
   }
 }
 
-// Ajustes específicos para formas
+// Neon shape adjustments
 .image--circle.image--neon-fire,
 .image--circle.image--neon-primary {
   border-radius: 50%;
+
   .image__element {
     @apply rounded-full;
   }
@@ -232,7 +258,8 @@
 
 .image--square.image--neon-fire,
 .image--square.image--neon-primary {
-  border-radius: 8px;
+  @apply rounded-lg;
+
   .image__element {
     @apply rounded-lg;
   }
@@ -240,7 +267,8 @@
 
 .image--rectangle.image--neon-fire,
 .image--rectangle.image--neon-primary {
-  border-radius: 12px;
+  @apply rounded-xl;
+
   .image__element {
     @apply rounded-xl;
   }
@@ -248,18 +276,20 @@
 
 .image--sidebar.image--neon-fire,
 .image--sidebar.image--neon-primary {
-  border-radius: 12px;
+  @apply rounded-xl;
+
   .image__element {
     @apply rounded-lg;
   }
+
   &::before,
   &::after {
-    border-radius: 12px;
+    border-radius: 0.75rem; // 12px equivalent
   }
 }
 
 // ============================================================================
-// FLOAT
+// COMPONENTS - Float Layout
 // ============================================================================
 
 .image--float-left {
@@ -275,113 +305,64 @@
 }
 
 // ============================================================================
-// RESPONSIVIDADE
+// COMPONENTS - Responsive Variants
 // ============================================================================
 
 .image--responsive {
   &.image--small .image__element {
-    @apply w-16 h-16 sm:w-20 sm:h-20;
+    @apply w-16 h-16;
+
+    @media (min-width: 640px) {
+      @apply w-20 h-20;
+    }
   }
+
   &.image--medium .image__element {
-    @apply w-32 h-32 sm:w-40 sm:h-40;
+    @apply w-32 h-32;
+
+    @media (min-width: 640px) {
+      @apply w-40 h-40;
+    }
   }
+
   &.image--large .image__element {
-    @apply w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64;
+    @apply w-48 h-48;
+
+    @media (min-width: 640px) {
+      @apply w-56 h-56;
+    }
+
+    @media (min-width: 768px) {
+      @apply w-64 h-64;
+    }
   }
+
   &.image--xlarge .image__element {
-    @apply w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96;
+    @apply w-64 h-64;
+
+    @media (min-width: 640px) {
+      @apply w-80 h-80;
+    }
+
+    @media (min-width: 768px) {
+      @apply w-96 h-96;
+    }
   }
+
   &.image--sidebar .image__element {
-    @apply w-40 h-52 sm:w-48 sm:h-64;
+    @apply w-40 h-52;
+
+    @media (min-width: 640px) {
+      @apply w-48 h-64;
+    }
   }
 }
 
 // ============================================================================
-// ANIMAÇÕES OTIMIZADAS
+// UTILITIES - Performance Optimizations
 // ============================================================================
 
-// Float suave otimizada
-@keyframes gentle-float {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-  25% {
-    transform: translate3d(5px, -10px, 0);
-  }
-  50% {
-    transform: translate3d(10px, 0, 0);
-  }
-  75% {
-    transform: translate3d(5px, -5px, 0);
-  }
-}
-
-// Gradiente flowing suave - muito mais performático que o original
-@keyframes neon-flow-smooth {
-  0% {
-    background-position: 0% 0%;
-  }
-  25% {
-    background-position: 100% 0%;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-  75% {
-    background-position: 0% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
-}
-
-// Pulse otimizado usando apenas transform e opacity
-@keyframes neon-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: scale(1.03);
-    opacity: 0.9;
-  }
-}
-
-// Versão alternativa com breathing effect
-@keyframes neon-breathe {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.5;
-  }
-  25% {
-    transform: scale(1.01);
-    opacity: 0.7;
-  }
-  50% {
-    transform: scale(1.02);
-    opacity: 0.9;
-  }
-  75% {
-    transform: scale(1.01);
-    opacity: 0.7;
-  }
-}
-
-// Classe adicional para breathing effect
-.image--neon-breathe {
-  &::after {
-    animation: neon-breathe 4s ease-in-out infinite !important;
-  }
-}
-
-// ============================================================================
-// PERFORMANCE OPTIMIZATIONS
-// ============================================================================
-
-// Reduzir animações em dispositivos com pouca bateria
+// Reduced motion preferences
 @media (prefers-reduced-motion: reduce) {
   .image--neon-fire,
   .image--neon-primary,
@@ -400,7 +381,7 @@
   }
 }
 
-// Pause animações quando elemento não está visível
+// Pause animations when not in viewport
 .image:not(.in-viewport) {
   .image--neon-fire,
   .image--neon-primary,
@@ -409,8 +390,15 @@
   }
 }
 
+// Alternative breathing effect
+.image--neon-breathe {
+  &::after {
+    animation: neon-breathe 4s ease-in-out infinite !important;
+  }
+}
+
 // ============================================================================
-// MOBILE OPTIMIZATIONS
+// UTILITIES - Mobile Optimizations
 // ============================================================================
 
 @media (max-width: 768px) {
@@ -423,33 +411,86 @@
     @apply mx-auto flex justify-center;
   }
 
-  // Reduzir efeitos no mobile para melhor performance
+  // Reduced effects for better mobile performance
   .image--neon-fire,
   .image--neon-primary {
     &::before {
-      animation-duration: 6s; // Mais lento no mobile
+      animation-duration: 6s;
     }
+
     &::after {
-      filter: blur(4px); // Menos blur no mobile
+      filter: blur($neon-blur-mobile);
       animation-duration: 5s;
     }
   }
 }
 
 // ============================================================================
-// HARDWARE ACCELERATION HINTS
+// ANIMATIONS
 // ============================================================================
 
-.image--neon-fire,
-.image--neon-primary {
-  // Forçar camada de composição para GPU
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
+@keyframes gentle-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(5px, -10px, 0);
+  }
+  50% {
+    transform: translate3d(10px, 0, 0);
+  }
+  75% {
+    transform: translate3d(5px, -5px, 0);
+  }
+}
 
-  &::before,
-  &::after {
-    transform: translateZ(0);
-    backface-visibility: hidden;
+@keyframes neon-flow-smooth {
+  0% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@keyframes neon-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 0.9;
+  }
+}
+
+@keyframes neon-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  25% {
+    transform: scale(1.01);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.9;
+  }
+  75% {
+    transform: scale(1.01);
+    opacity: 0.7;
   }
 }

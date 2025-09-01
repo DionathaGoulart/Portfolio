@@ -1,35 +1,92 @@
 import React from 'react'
+import type {
+  ImageProps,
+  ImageResource,
+  KeyboardEventHandler
+} from '@shared/types'
 
 // ============================================================================
-// TYPES
+// IMAGE UTILITIES
 // ============================================================================
 
-export type ImageResource = string | Record<string, string>
+/**
+ * Resolves image source from string or resource object
+ * @param imageSrc - Image source to resolve
+ * @returns Resolved image URL string
+ */
+const resolveImageSrc = (imageSrc: ImageResource): string => {
+  if (typeof imageSrc === 'string') {
+    return imageSrc
+  }
 
-export interface ImageProps {
-  src: ImageResource
-  alt: string
-  className?: string
-  onClick?: () => void
-  // Tamanhos predefinidos (agora inclui sidebar)
-  size?: 'small' | 'medium' | 'large' | 'xlarge' | 'sidebar'
-  // Formato
-  shape?: 'square' | 'rectangle' | 'circle'
-  // Efeitos visuais
-  shadow?: boolean | 'strong'
-  hover?: boolean
-  // Novo: Efeito neon fire
-  neonFire?: boolean | 'primary' // true para cores fire, 'primary' para cores do tema
-  // Layout
-  float?: 'left' | 'right' | 'none'
-  // Responsivo
-  responsive?: boolean
+  // If object, get first string value found
+  const firstValue = Object.values(imageSrc)[0]
+  return typeof firstValue === 'string' ? firstValue : ''
+}
+
+/**
+ * Generates CSS classes array for image component
+ * @param props - Component props
+ * @returns Array of CSS class names
+ */
+const generateImageClasses = (
+  props: Omit<ImageProps, 'src' | 'alt'>
+): string[] => {
+  const {
+    size = 'medium',
+    shape = 'rectangle',
+    shadow = false,
+    hover = true,
+    neonFire = false,
+    float = 'none',
+    responsive = true,
+    onClick,
+    className = ''
+  } = props
+
+  return [
+    // Base class
+    'image',
+
+    // Size variant
+    `image--${size}`,
+
+    // Shape (not applied to sidebar as it has own styling)
+    size !== 'sidebar' && `image--${shape}`,
+
+    // Float positioning
+    float !== 'none' && `image--float-${float}`,
+
+    // Shadow effects (not applied to sidebar as it has shadow-xl)
+    size !== 'sidebar' && shadow === true && 'image--shadow',
+    size !== 'sidebar' && shadow === 'strong' && 'image--shadow-strong',
+
+    // Hover effects
+    hover && 'image--hover',
+
+    // Neon fire effects
+    neonFire === true && 'image--neon-fire',
+    neonFire === 'primary' && 'image--neon-primary',
+
+    // Interactive state
+    onClick && 'image--interactive',
+
+    // Responsive behavior
+    responsive && 'image--responsive',
+
+    // Custom classes
+    className
+  ].filter(Boolean) as string[]
 }
 
 // ============================================================================
-// COMPONENT
+// IMAGE COMPONENT
 // ============================================================================
 
+/**
+ * Reusable Image component with various styling options and effects
+ * Supports multiple sizes, shapes, effects, and interactive states
+ */
 export const Image: React.FC<ImageProps> = ({
   src,
   alt,
@@ -44,29 +101,16 @@ export const Image: React.FC<ImageProps> = ({
   responsive = true
 }) => {
   // ============================================================================
-  // UTILITÁRIO PARA RESOLVER IMAGEM
+  // EVENT HANDLERS
   // ============================================================================
 
-  const resolveImageSrc = (imageSrc: ImageResource): string => {
-    if (typeof imageSrc === 'string') {
-      return imageSrc
-    }
-    // Se for um objeto, pega o primeiro valor string encontrado
-    const firstValue = Object.values(imageSrc)[0]
-    return typeof firstValue === 'string' ? firstValue : ''
-  }
-
-  // ============================================================================
-  // HANDLERS PARA INTERATIVIDADE
-  // ============================================================================
-
-  const handleClick = () => {
+  const handleClick = (): void => {
     if (onClick) {
       onClick()
     }
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown: KeyboardEventHandler = (e) => {
     if (onClick && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault()
       onClick()
@@ -74,45 +118,22 @@ export const Image: React.FC<ImageProps> = ({
   }
 
   // ============================================================================
-  // CLASSES CSS
+  // COMPUTED VALUES
   // ============================================================================
-
-  const classes = [
-    // Classe base
-    'image',
-
-    // Tamanho
-    `image--${size}`,
-
-    // Formato (não aplicar para sidebar pois já tem estilo próprio)
-    size !== 'sidebar' && `image--${shape}`,
-
-    // Float
-    float !== 'none' && `image--float-${float}`,
-
-    // Efeitos (não aplicar sombra para sidebar pois já tem shadow-xl)
-    size !== 'sidebar' && shadow === true && 'image--shadow',
-    size !== 'sidebar' && shadow === 'strong' && 'image--shadow-strong',
-    hover && 'image--hover',
-
-    // Efeito neon fire
-    neonFire === true && 'image--neon-fire',
-    neonFire === 'primary' && 'image--neon-primary',
-
-    // Interativo
-    onClick && 'image--interactive',
-
-    // Responsivo
-    responsive && 'image--responsive',
-
-    // Classes customizadas
-    className
-  ]
-    .filter(Boolean)
-    .join(' ')
 
   const resolvedSrc = resolveImageSrc(src)
   const isInteractive = Boolean(onClick)
+  const cssClasses = generateImageClasses({
+    size,
+    shape,
+    shadow,
+    hover,
+    neonFire,
+    float,
+    responsive,
+    onClick,
+    className
+  }).join(' ')
 
   // ============================================================================
   // RENDER
@@ -121,7 +142,7 @@ export const Image: React.FC<ImageProps> = ({
   if (isInteractive) {
     return (
       <div
-        className={classes}
+        className={cssClasses}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         tabIndex={0}
@@ -134,7 +155,7 @@ export const Image: React.FC<ImageProps> = ({
   }
 
   return (
-    <div className={classes}>
+    <div className={cssClasses}>
       <img src={resolvedSrc} alt={alt} className="image__element" />
     </div>
   )

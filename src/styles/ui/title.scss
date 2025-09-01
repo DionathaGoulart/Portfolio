@@ -1,59 +1,84 @@
+@use 'sass:map';
+
 // ============================================================================
-// TITLE SYSTEM - OTIMIZADO
+// SETTINGS - DESIGN TOKENS
 // ============================================================================
 
-// Configurações
-$colors:
-  primary, secondary, accent, text, textSecondary, error, success, warning;
-$levels: h1, h2, h3, h4, h5, h6;
-$weights: normal, medium, semibold, bold;
-$aligns: start, center, end;
-$borders: top, bottom;
+$title-colors: (
+  primary: 'rgb(var(--color-primary))',
+  secondary: 'rgb(var(--color-secondary))',
+  accent: 'rgb(var(--color-accent))',
+  text: 'rgb(var(--color-text))',
+  text-secondary: 'rgb(var(--color-text-secondary))',
+  error: 'rgb(var(--color-error))',
+  success: 'rgb(var(--color-success))',
+  warning: 'rgb(var(--color-warning))'
+);
 
-// Mixins
+$title-weights: (
+  normal: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700
+);
+
+$border-width: 4px;
+$border-radius: 12px;
+$badge-size: 20px;
+
+// ============================================================================
+// TOOLS - MIXINS
+// ============================================================================
+
 @mixin title-transition {
   @apply transition-all duration-200 ease-in-out;
 }
+
 @mixin title-interactive {
   @include title-transition;
   @apply cursor-pointer;
+
   &:hover {
     @apply opacity-80;
   }
+
   &:focus-visible {
     @apply outline-none ring-2 ring-theme-primary ring-offset-2 rounded;
   }
 }
-@mixin decorative-border($side, $align) {
+
+@mixin decorative-border($side: 'bottom', $align: 'start') {
   @apply relative;
 
-  @if $side == top {
+  @if $side == 'top' {
     @apply pt-4;
+
     &::before {
       content: '';
       @apply absolute top-0 w-24 h-1 bg-theme-primary rounded-xl;
 
-      @if $align == start {
+      @if $align == 'start' {
         // Alinha ao centro no mobile e à esquerda no desktop
         @apply left-1/2 -translate-x-1/2 md:left-0 md:transform-none;
-      } @else if $align == center {
+      } @else if $align == 'center' {
         @apply left-1/2 -translate-x-1/2;
-      } @else if $align == end {
+      } @else if $align == 'end' {
         @apply right-0;
       }
     }
-  } @else if $side == bottom {
+  } @else if $side == 'bottom' {
     @apply pb-4;
+
     &::after {
       content: '';
       @apply absolute bottom-0 w-24 h-1 bg-theme-primary rounded-xl;
 
-      @if $align == start {
+      @if $align == 'start' {
         // Alinha ao centro no mobile e à esquerda no desktop
         @apply left-1/2 -translate-x-1/2 md:left-0 md:transform-none;
-      } @else if $align == center {
+      } @else if $align == 'center' {
         @apply left-1/2 -translate-x-1/2;
-      } @else if $align == end {
+      } @else if $align == 'end' {
         @apply right-0;
       }
     }
@@ -61,52 +86,71 @@ $borders: top, bottom;
 }
 
 // ============================================================================
-// BASE
+// BASE - COMPONENTE PRINCIPAL
 // ============================================================================
 
 .title {
   @include title-transition;
 
-  // Estados
+  // ================================
+  // ESTADOS
+  // ================================
+
   &--interactive {
     @include title-interactive;
   }
+
   &--disabled {
     @apply opacity-50 cursor-not-allowed pointer-events-none;
   }
 
-  // Modificadores de estilo
+  // ================================
+  // MODIFICADORES DE ESTILO
+  // ================================
+
   &--uppercase {
     @apply uppercase;
   }
+
   &--italic {
     @apply italic;
   }
+
   &--underline {
     @apply underline;
   }
+
   &--line-through {
     @apply line-through;
   }
+
   &--gradient {
     @apply bg-gradient-to-r from-theme-primary to-theme-accent bg-clip-text text-transparent;
   }
+
   &--shadow {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+
   &--shadow-strong {
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
+
   &--underlined {
     @apply border-b-2 border-theme-primary pb-2;
   }
+
   &--highlighted {
     @apply bg-theme-primary/10 px-4 py-2 rounded;
   }
 
-  // Layout com extras
+  // ================================
+  // LAYOUT COM ELEMENTOS EXTRAS
+  // ================================
+
   &--with-icon {
     @apply flex items-center gap-2;
+
     .title__icon {
       @apply flex-shrink-0;
     }
@@ -114,6 +158,7 @@ $borders: top, bottom;
 
   &--with-badge {
     @apply relative;
+
     .title__badge {
       @apply absolute -top-2 -right-2 min-w-5 h-5 flex items-center justify-center text-xs rounded-full bg-red-500 text-white px-1;
     }
@@ -121,96 +166,220 @@ $borders: top, bottom;
 }
 
 // ============================================================================
-// NÍVEIS (TAMANHOS)
+// COMPONENTS - NÍVEIS E VARIANTES
 // ============================================================================
 
+// Níveis semânticos (h1-h6)
 .title--h1 {
-  @apply text-4xl sm:text-5xl md:text-6xl leading-tight;
-}
-.title--h2 {
-  @apply text-3xl sm:text-4xl md:text-5xl leading-tight;
-}
-.title--h3 {
-  @apply text-2xl sm:text-3xl md:text-4xl leading-snug;
-}
-.title--h4 {
-  @apply text-xl sm:text-2xl md:text-3xl leading-snug;
-}
-.title--h5 {
-  @apply text-lg sm:text-xl md:text-2xl leading-normal;
-}
-.title--h6 {
-  @apply text-base sm:text-lg md:text-xl leading-normal;
-}
+  @apply text-4xl leading-tight font-bold;
 
-// ============================================================================
-// VARIANTES ESPECIAIS
-// ============================================================================
+  @screen sm {
+    @apply text-5xl;
+  }
 
-.title--hero {
-  @apply text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-none;
-}
-.title--display {
-  @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight;
-}
-.title--section {
-  @apply text-2xl sm:text-3xl md:text-4xl leading-snug;
-}
-.title--subsection {
-  @apply text-xl sm:text-2xl md:text-3xl leading-normal;
-}
-
-// ============================================================================
-// CORES, PESOS E ALINHAMENTOS
-// ============================================================================
-
-// Cores
-@each $color in $colors {
-  .title--#{$color} {
-    color: rgb(var(--color-#{$color}));
+  @screen md {
+    @apply text-6xl;
   }
 }
 
-// Pesos
-@each $weight in $weights {
-  .title--#{$weight} {
+.title--h2 {
+  @apply text-3xl leading-tight font-bold;
+
+  @screen sm {
+    @apply text-4xl;
+  }
+
+  @screen md {
+    @apply text-5xl;
+  }
+}
+
+.title--h3 {
+  @apply text-2xl leading-snug font-semibold;
+
+  @screen sm {
+    @apply text-3xl;
+  }
+
+  @screen md {
+    @apply text-4xl;
+  }
+}
+
+.title--h4 {
+  @apply text-xl leading-snug font-semibold;
+
+  @screen sm {
+    @apply text-2xl;
+  }
+
+  @screen md {
+    @apply text-3xl;
+  }
+}
+
+.title--h5 {
+  @apply text-lg leading-normal font-medium;
+
+  @screen sm {
+    @apply text-xl;
+  }
+
+  @screen md {
+    @apply text-2xl;
+  }
+}
+
+.title--h6 {
+  @apply text-base leading-normal font-medium;
+
+  @screen sm {
+    @apply text-lg;
+  }
+
+  @screen md {
+    @apply text-xl;
+  }
+}
+
+// Variantes especiais
+.title--hero {
+  @apply text-5xl leading-none font-black;
+
+  @screen sm {
+    @apply text-6xl;
+  }
+
+  @screen md {
+    @apply text-7xl;
+  }
+
+  @screen lg {
+    @apply text-8xl;
+  }
+}
+
+.title--display {
+  @apply text-4xl leading-tight font-bold;
+
+  @screen sm {
+    @apply text-5xl;
+  }
+
+  @screen md {
+    @apply text-6xl;
+  }
+
+  @screen lg {
+    @apply text-7xl;
+  }
+}
+
+.title--section {
+  @apply text-2xl leading-snug font-semibold;
+
+  @screen sm {
+    @apply text-3xl;
+  }
+
+  @screen md {
+    @apply text-4xl;
+  }
+}
+
+.title--subsection {
+  @apply text-xl leading-normal font-medium;
+
+  @screen sm {
+    @apply text-2xl;
+  }
+
+  @screen md {
+    @apply text-3xl;
+  }
+}
+
+// ============================================================================
+// UTILITIES - CORES, PESOS E ALINHAMENTOS
+// ============================================================================
+
+// Cores dinâmicas
+@each $name, $color in $title-colors {
+  .title--#{$name} {
+    color: #{$color};
+  }
+}
+
+// Pesos de fonte
+@each $name, $weight in $title-weights {
+  .title--#{$name} {
     font-weight: #{$weight};
   }
 }
 
-// Alinhamentos
+// Alinhamentos responsivos
 .title--start {
-  @apply text-center md:text-left;
+  @apply text-center;
+
+  @screen md {
+    @apply text-left;
+  }
 }
+
 .title--center {
   @apply text-center;
 }
+
 .title--end {
-  @apply text-center md:text-right;
-}
+  @apply text-center;
 
-// ============================================================================
-// BORDAS DECORATIVAS
-// ============================================================================
-
-@each $side in $borders {
-  @each $align in $aligns {
-    .title--border-#{$side}-#{$align} {
-      @include decorative-border($side, $align);
-    }
+  @screen md {
+    @apply text-right;
   }
 }
 
 // ============================================================================
-// GRUPO DE TÍTULOS
+// UTILITIES - BORDAS DECORATIVAS
+// ============================================================================
+
+// Bordas superiores
+.title--border-top-start {
+  @include decorative-border('top', 'start');
+}
+
+.title--border-top-center {
+  @include decorative-border('top', 'center');
+}
+
+.title--border-top-end {
+  @include decorative-border('top', 'end');
+}
+
+// Bordas inferiores
+.title--border-bottom-start {
+  @include decorative-border('bottom', 'start');
+}
+
+.title--border-bottom-center {
+  @include decorative-border('bottom', 'center');
+}
+
+.title--border-bottom-end {
+  @include decorative-border('bottom', 'end');
+}
+
+// ============================================================================
+// UTILITIES - GRUPO DE TÍTULOS
 // ============================================================================
 
 .title-group {
   @apply space-y-2;
+
   .title-group__main {
     @apply mb-1;
   }
+
   .title-group__subtitle {
-    @apply text-theme-secondary;
+    @apply text-theme-text-secondary;
   }
 }

@@ -1,13 +1,36 @@
+@use 'sass:color';
+@use 'sass:map';
+
 // ============================================================================
-// NAV FILTER SYSTEM - OTIMIZADO
+// SETTINGS - Design tokens and variables
 // ============================================================================
 
-// Configurações
 $filter-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 $filter-shadow-base: 0 2px 4px rgba(0, 0, 0, 0.05);
 $filter-shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.1);
 
-// Mixins
+$filter-sizes: (
+  small: (
+    padding-x: 1rem,
+    padding-y: 0.5rem,
+    font-size: 0.75rem
+  ),
+  medium: (
+    padding-x: 1.5rem,
+    padding-y: 0.75rem,
+    font-size: 0.875rem
+  ),
+  large: (
+    padding-x: 2rem,
+    padding-y: 1rem,
+    font-size: 1rem
+  )
+);
+
+// ============================================================================
+// TOOLS - Mixins and functions
+// ============================================================================
+
 @mixin filter-transition {
   transition: $filter-transition;
 }
@@ -21,61 +44,84 @@ $filter-shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 }
 
-@mixin filter-button-variant($active: false) {
+@mixin filter-base-button {
+  @apply rounded-full font-medium cursor-pointer inline-flex items-center justify-center;
   @include filter-transition;
   @include filter-focus;
-  @apply rounded-full font-medium cursor-pointer inline-flex items-center justify-center;
+
+  border: 2px solid transparent;
   box-shadow: $filter-shadow-base;
+}
 
-  @if $active {
-    background-color: rgb(var(--color-primary));
-    color: rgb(var(--color-textSecondary));
-    border: 2px solid rgb(var(--color-primary));
-    box-shadow: $filter-shadow-elevated;
-    transform: scale(1.02);
+@mixin filter-button-active {
+  background-color: rgb(var(--color-primary));
+  color: rgb(var(--color-textSecondary));
+  border-color: rgb(var(--color-primary));
+  box-shadow: $filter-shadow-elevated;
+  transform: scale(1.02);
 
-    &:hover:not(:disabled) {
-      background-color: rgb(var(--color-primary) / 0.9);
-      transform: scale(1.05);
-    }
-  } @else {
-    background-color: rgb(var(--color-surface));
-    color: rgb(var(--color-text));
-    border: 2px solid rgb(var(--color-surface));
-
-    &:hover:not(:disabled) {
-      background-color: rgb(var(--color-primary) / 0.1);
-      color: rgb(var(--color-primary));
-      border-color: rgb(var(--color-primary) / 0.3);
-      transform: scale(1.02);
-      box-shadow: $filter-shadow-elevated;
-    }
+  &:hover:not(:disabled) {
+    background-color: rgb(var(--color-primary) / 0.9);
+    transform: scale(1.05);
   }
+}
 
-  &:disabled {
-    @apply opacity-50 cursor-not-allowed;
-    transform: none !important;
+@mixin filter-button-inactive {
+  background-color: rgb(var(--color-surface));
+  color: rgb(var(--color-text));
+  border-color: rgb(var(--color-surface));
+
+  &:hover:not(:disabled) {
+    background-color: rgb(var(--color-primary) / 0.1);
+    color: rgb(var(--color-primary));
+    border-color: rgb(var(--color-primary) / 0.3);
+    transform: scale(1.02);
+    box-shadow: $filter-shadow-elevated;
+  }
+}
+
+@mixin filter-button-disabled {
+  @apply opacity-50 cursor-not-allowed;
+  transform: none !important;
+}
+
+@mixin filter-size($size-key) {
+  $size-config: map.get($filter-sizes, $size-key);
+
+  @if $size-config {
+    padding-left: map.get($size-config, padding-x);
+    padding-right: map.get($size-config, padding-x);
+    padding-top: map.get($size-config, padding-y);
+    padding-bottom: map.get($size-config, padding-y);
+    font-size: map.get($size-config, font-size);
   }
 }
 
 // ============================================================================
-// COMPONENTE
+// COMPONENTS - Main component styles
 // ============================================================================
 
 .nav-filter {
   @apply flex flex-wrap justify-center gap-3 mb-12;
 
-  &__button {
-    @apply px-6 py-3 text-sm;
-    @include filter-button-variant(false);
+  // ============================================================================
+  // Button base styles
+  // ============================================================================
 
+  &__button {
+    @include filter-base-button;
+    @include filter-size(medium);
+    @include filter-button-inactive;
+
+    // Active state
     &--active {
-      @include filter-button-variant(true);
+      @include filter-button-active;
     }
 
-    // Estados de loading se necessário
+    // Loading state
     &--loading {
       @apply relative;
+
       &::after {
         content: '';
         @apply absolute inset-0 rounded-full;
@@ -83,61 +129,101 @@ $filter-shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.1);
         animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
       }
     }
+
+    // Disabled state
+    &:disabled {
+      @include filter-button-disabled;
+    }
   }
 
-  // Tamanhos
-  &--small .nav-filter__button {
-    @apply px-4 py-2 text-xs;
-  }
-  &--large .nav-filter__button {
-    @apply px-8 py-4 text-base;
+  // ============================================================================
+  // Size modifiers
+  // ============================================================================
+
+  &--small &__button {
+    @include filter-size(small);
   }
 
-  // Layouts
+  &--large &__button {
+    @include filter-size(large);
+  }
+
+  // ============================================================================
+  // Layout modifiers
+  // ============================================================================
+
   &--vertical {
     @apply flex-col items-center gap-2;
   }
+
   &--start {
     @apply justify-start;
   }
+
   &--end {
     @apply justify-end;
+  }
+
+  // ============================================================================
+  // Responsive behavior - Mobile specific adjustments
+  // ============================================================================
+
+  @media (max-width: 480px) {
+    @apply gap-2 mb-8;
+
+    &__button {
+      @include filter-size(small);
+    }
+
+    // Force horizontal layout on very small screens for better usability
+    &--vertical {
+      @apply flex-row flex-wrap;
+    }
+  }
+
+  // ============================================================================
+  // Tablet adjustments
+  // ============================================================================
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    @apply gap-2;
   }
 }
 
 // ============================================================================
-// MEDIA QUERIES PERSONALIZADAS (se necessário)
+// UTILITIES - Helper classes and overrides
 // ============================================================================
 
-// Caso precise de breakpoints específicos não cobertos pelo Tailwind
-@media (max-width: 480px) {
-  .nav-filter {
-    // Estilos para telas muito pequenas se necessário
-    nav {
-      // Ajustes específicos para mobile
+// Animation keyframes for loading state
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .nav-filter__button {
+    border-width: 3px;
+
+    &:focus-visible {
+      outline: 3px solid rgb(var(--color-primary));
+      outline-offset: 3px;
     }
   }
 }
 
-// ============================================================================
-// ANIMAÇÕES PERSONALIZADAS (se necessário)
-// ============================================================================
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .nav-filter__button {
+    transition: none;
 
-// Caso queira adicionar animações mais complexas que as do Tailwind
-.nav-filter__button {
-  // Animação personalizada se necessário
-  // transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-// ============================================================================
-// ACESSIBILIDADE
-// ============================================================================
-
-// Estilos específicos para acessibilidade se necessário
-.nav-filter__button {
-  &:focus-visible {
-    // Tailwind já fornece focus-visible, mas pode personalizar aqui
-    outline: 2px solid rgb(var(--color-primary));
-    outline-offset: 2px;
+    &--loading::after {
+      animation: none;
+    }
   }
 }

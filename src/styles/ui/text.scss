@@ -1,24 +1,42 @@
-// ============================================================================
-// TEXT SYSTEM - OTIMIZADO COM SUPORTE A 5 COLUNAS E ALINHAMENTO RESPONSIVO
-// ============================================================================
+@use 'sass:map';
+@use 'sass:list';
 
-// Configurações
-$colors:
+// ================================
+// SETTINGS
+// ================================
+
+$text-colors:
   primary, secondary, accent, text, textSecondary, error, success, warning;
-$sizes: pequeno, medio, grande;
-$weights: light, normal, medium, semibold, bold;
-$aligns: start, center, end;
+$text-sizes: pequeno, medio, grande;
+$text-weights: light, normal, medium, semibold, bold;
+$text-alignments: start, center, end;
+$text-leading: tight, normal, relaxed, loose;
+$text-responsive-sizes: small, medium, large;
+$text-border-positions: start, center, end;
+$text-column-gaps: small, medium, large;
 
-// Mixins
+// ================================
+// TOOLS
+// ================================
+
+/**
+ * Mixin for smooth transitions on text elements
+ */
 @mixin text-transition {
   @apply transition-all duration-300 ease-in-out;
 }
 
+/**
+ * Mixin for creating decorative borders
+ * @param {string} $position - Position of the border (start, center, end)
+ */
 @mixin decorative-border($position) {
   @apply relative pt-3;
+
   &::before {
     content: '';
     @apply absolute top-0 w-24 h-1 bg-theme-primary rounded-xl;
+
     @if $position == start {
       @apply left-0;
     } @else if $position == center {
@@ -29,167 +47,203 @@ $aligns: start, center, end;
   }
 }
 
-// ============================================================================
-// BASE
-// ============================================================================
+/**
+ * Mixin for responsive column layouts
+ * @param {number} $columns - Number of columns
+ */
+@mixin column-layout($columns) {
+  .text__column {
+    @if $columns == 1 {
+      @apply w-full;
+    } @else if $columns == 2 {
+      @apply w-full md:w-1/2;
+    } @else if $columns == 3 {
+      @apply w-full md:w-1/3;
+    } @else if $columns == 4 {
+      @apply w-full md:w-1/4;
+    } @else if $columns == 5 {
+      @apply w-full md:w-1/5;
+    }
+  }
+}
+
+// ================================
+// BASE ELEMENTS
+// ================================
 
 .text {
   @include text-transition;
 
-  // Tipos de elemento
+  // Element types with semantic styling
   &--p {
     @apply block opacity-80;
   }
+
   &--span {
     @apply inline-block w-full;
   }
-
-  // Decorações
-  &--italic {
-    @apply italic;
-  }
-  &--underline {
-    @apply underline;
-  }
-  &--line-through {
-    @apply line-through;
-  }
-  &--uppercase {
-    @apply uppercase;
-  }
-  &--lowercase {
-    @apply lowercase;
-  }
-  &--capitalize {
-    @apply capitalize;
-  }
-  &--truncate {
-    @apply truncate;
-  }
-  &--break-words {
-    @apply break-words;
-  }
-  &--break-all {
-    @apply break-all;
-  }
-
-  // Alinhamentos
-  &--baseline {
-    @apply align-baseline;
-  }
-  &--top {
-    @apply align-top;
-  }
-  &--middle {
-    @apply align-middle;
-  }
-  &--bottom {
-    @apply align-bottom;
-  }
-
-  // Efeitos especiais
-  &--highlight {
-    @apply bg-theme-accent/20 px-1 rounded;
-  }
-  &--code {
-    @apply font-mono text-sm bg-theme-surface px-1.5 py-0.5 rounded border;
-  }
-  &--gradient {
-    @apply bg-gradient-to-r from-theme-primary to-theme-accent bg-clip-text text-transparent;
-  }
-  &--shadow {
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  &--shadow-strong {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
 }
 
-// ============================================================================
-// TAMANHOS E CORES
-// ============================================================================
+// ================================
+// COMPONENTS
+// ================================
 
-// Tamanhos
+// Text size variants
 .text--pequeno {
   @apply text-sm leading-relaxed;
 }
+
 .text--medio {
   @apply text-base leading-relaxed;
 }
+
 .text--grande {
   @apply text-lg leading-relaxed;
 }
 
-// Cores
-@each $color in $colors {
+// Color variants
+@each $color in $text-colors {
   .text--#{$color} {
     color: rgb(var(--color-#{$color}));
   }
 }
 
-// Pesos
-@each $weight in $weights {
+// Font weight variants
+@each $weight in $text-weights {
   .text--#{$weight} {
     font-weight: #{$weight};
   }
 }
 
-// ============================================================================
-// ALINHAMENTOS DE TEXTO - IGUAL AO TITLE
-// ============================================================================
-
-// Alinhamentos com comportamento responsivo igual ao Title
+// Text alignment with responsive behavior (consistent with Title component)
 .text--start {
   @apply text-center md:text-left;
 }
+
 .text--center {
   @apply text-center;
 }
+
 .text--end {
   @apply text-center md:text-right;
 }
 
-// Line heights
+// Line height variants
 .text--leading-tight {
   @apply leading-tight;
 }
+
 .text--leading-normal {
   @apply leading-normal;
 }
+
 .text--leading-relaxed {
   @apply leading-relaxed;
 }
+
 .text--leading-loose {
   @apply leading-loose;
 }
 
-// ============================================================================
-// BORDAS DECORATIVAS
-// ============================================================================
+// Style modifiers
+.text--italic {
+  @apply italic;
+}
 
-@each $position in $aligns {
+.text--underline {
+  @apply underline;
+}
+
+.text--line-through {
+  @apply line-through;
+}
+
+.text--uppercase {
+  @apply uppercase;
+}
+
+.text--lowercase {
+  @apply lowercase;
+}
+
+.text--capitalize {
+  @apply capitalize;
+}
+
+// Text behavior modifiers
+.text--truncate {
+  @apply truncate;
+}
+
+.text--break-words {
+  @apply break-words;
+}
+
+.text--break-all {
+  @apply break-all;
+}
+
+// Alignment variants
+.text--baseline {
+  @apply align-baseline;
+}
+
+.text--top {
+  @apply align-top;
+}
+
+.text--middle {
+  @apply align-middle;
+}
+
+.text--bottom {
+  @apply align-bottom;
+}
+
+// Visual effect modifiers
+.text--highlight {
+  @apply bg-theme-accent/20 px-1 rounded;
+}
+
+.text--code {
+  @apply font-mono text-sm bg-theme-surface px-1.5 py-0.5 rounded border;
+}
+
+.text--gradient {
+  @apply bg-gradient-to-r from-theme-primary to-theme-accent bg-clip-text text-transparent;
+}
+
+.text--shadow {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.text--shadow-strong {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+// Decorative border variants
+@each $position in $text-border-positions {
   .text--border-#{$position} {
     @include decorative-border($position);
   }
 }
 
-// ============================================================================
-// RESPONSIVIDADE
-// ============================================================================
-
+// Responsive text sizing
 .text--responsive-small {
   @apply text-base sm:text-base lg:text-lg;
 }
+
 .text--responsive-medium {
   @apply text-base md:text-lg lg:text-xl;
 }
+
 .text--responsive-large {
   @apply text-base md:text-xl lg:text-2xl;
 }
 
-// ============================================================================
-// LAYOUTS DE COLUNA - CORRIGIDO E EXPANDIDO
-// ============================================================================
+// ================================
+// COLUMN LAYOUT COMPONENT
+// ================================
 
 .text--column-layout {
   @apply w-full;
@@ -199,98 +253,90 @@ $aligns: start, center, end;
   }
 
   .text__column {
-    @apply flex-1 min-w-0; // min-w-0 ajuda com overflow em flex items
+    @apply flex-1 min-w-0; // min-w-0 prevents flex overflow issues
   }
 
   .text__column-content {
     @apply w-full h-full;
   }
 
-  // Configurações específicas por número de colunas
+  // Column count variants
   &.text--columns-1 .text__columns {
     @apply flex-col;
-    .text__column {
-      @apply w-full;
-    }
+    @include column-layout(1);
   }
 
   &.text--columns-2 .text__columns {
     @apply gap-4;
-    .text__column {
-      @apply w-full md:w-1/2;
-    }
+    @include column-layout(2);
   }
 
   &.text--columns-3 .text__columns {
     @apply gap-3;
-    .text__column {
-      @apply w-full md:w-1/3;
-    }
+    @include column-layout(3);
   }
 
   &.text--columns-4 .text__columns {
     @apply gap-2;
-    .text__column {
-      @apply w-full md:w-1/4;
-    }
+    @include column-layout(4);
   }
 
   &.text--columns-5 .text__columns {
     @apply gap-2;
-    .text__column {
-      @apply w-full md:w-1/5;
-    }
+    @include column-layout(5);
   }
 
-  // Gaps - aplicados aos containers de coluna
+  // Column gap variants
   &.text--gap-small .text__columns {
     @apply gap-2 md:gap-3;
   }
+
   &.text--gap-medium .text__columns {
     @apply gap-4 md:gap-6;
   }
+
   &.text--gap-large .text__columns {
     @apply gap-6 md:gap-8;
   }
 }
 
-// ============================================================================
-// RESPONSIVIDADE MOBILE
-// ============================================================================
+// ================================
+// UTILITIES & MEDIA QUERIES
+// ================================
 
-@media (max-width: 768px) {
-  .text--column-layout {
-    .text__columns {
-      @apply flex-col gap-4;
-    }
-    .text__column {
-      @apply w-full;
-    }
-  }
-}
-
-// ============================================================================
-// AJUSTES PARA MELHOR DISTRIBUIÇÃO DE COLUNAS
-// ============================================================================
-
-// Em telas menores que tablet, sempre em coluna única
+// Mobile-first responsive behavior for columns
 @media (max-width: 640px) {
   .text--column-layout .text__columns {
     @apply flex-col;
+
     .text__column {
       @apply w-full;
     }
   }
 }
 
-// Em tablets, ajustar colunas 4 e 5 para 2 colunas
+// Tablet adjustments for 4 and 5 column layouts
 @media (min-width: 641px) and (max-width: 1024px) {
   .text--column-layout {
     &.text--columns-4 .text__columns .text__column {
       @apply w-1/2;
     }
+
     &.text--columns-5 .text__columns .text__column {
       @apply w-1/2;
+    }
+  }
+}
+
+// Standard tablet and mobile column stacking
+@media (max-width: 768px) {
+  .text--column-layout {
+    .text__columns {
+      @apply flex-col gap-4;
+    }
+
+    .text__column {
+      @apply w-full;
     }
   }
 }

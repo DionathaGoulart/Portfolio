@@ -1,52 +1,80 @@
 import React from 'react'
 import { TextareaProps } from '@shared/types/ui/Form.types'
 
+// ============================================================================
+// TEXTAREA COMPONENT
+// ============================================================================
+
+/**
+ * Componente Textarea reutilizável
+ * @component Textarea
+ * @param {TextareaProps} props - Props do componente
+ * @returns {JSX.Element} Elemento textarea estilizado
+ */
 export const Textarea: React.FC<TextareaProps> = ({
   // Conteúdo
   value,
   placeholder,
+
   // Estrutura
   name,
   rows = 4,
+
   // Aparência
   size = 'medio',
   variant = 'outline',
+
   // Estados
   disabled = false,
   required = false,
   error = false,
   resize = 'vertical',
+
   // Funcionalidade
   onChange,
   onFocus,
   onBlur,
+
   // HTML attributes
   className = '',
   id
 }) => {
   // ============================================================================
-  // CLASSES CSS
+  // HELPERS - GERAÇÃO DE CLASSES CSS
   // ============================================================================
-  const classes = [
-    // Classe base
-    'textarea',
-    // Aparência
-    `textarea--${size}`,
-    `textarea--${variant}`,
-    // Estados
-    disabled && 'textarea--disabled',
-    error && 'textarea--error',
-    // Resize
-    `textarea--resize-${resize}`,
-    // Classes customizadas
-    className
-  ]
-    .filter(Boolean)
-    .join(' ')
+
+  /**
+   * Gera string de classes CSS combinando BEM com modificadores
+   */
+  const buildClasses = (): string => {
+    const classes = [
+      // Classe base
+      'textarea',
+
+      // Aparência
+      `textarea--${size}`,
+      `textarea--${variant}`,
+
+      // Estados
+      disabled && 'textarea--disabled',
+      error && 'textarea--error',
+
+      // Resize
+      `textarea--resize-${resize}`,
+
+      // Classes customizadas
+      className
+    ]
+      .filter(Boolean)
+      .join(' ')
+
+    return classes
+  }
 
   // ============================================================================
   // RENDER
   // ============================================================================
+
   return (
     <textarea
       name={name}
@@ -58,7 +86,7 @@ export const Textarea: React.FC<TextareaProps> = ({
       onChange={onChange}
       onFocus={onFocus}
       onBlur={onBlur}
-      className={classes}
+      className={buildClasses()}
       id={id}
     />
   )

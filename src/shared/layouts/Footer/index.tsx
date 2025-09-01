@@ -1,6 +1,14 @@
 import React from 'react'
 import { FooterProps } from '@shared/types'
 
+// ============================================================================
+// FOOTER COMPONENT
+// ============================================================================
+
+/**
+ * Componente Footer principal do layout
+ * Gerencia links, copyright e redes sociais
+ */
 export const Footer: React.FC<FooterProps> = ({
   // Estrutura
   containerSize = 'lg',
@@ -28,54 +36,48 @@ export const Footer: React.FC<FooterProps> = ({
   id
 }) => {
   // ============================================================================
-  // CONFIGURAÇÃO
+  // CONFIGURAÇÃO DERIVADA
   // ============================================================================
-  const currentYear = year || new Date().getFullYear()
+
+  const getCurrentYear = (): number => year || new Date().getFullYear()
   const hasLinks = links.length > 0
   const hasSocial = showSocial && socialLinks.length > 0
   const isExtended = variant === 'extended' && (hasLinks || hasSocial)
 
   // ============================================================================
-  // CLASSES CSS
+  // CLASSES CSS COM BEM + TAILWIND
   // ============================================================================
-  const footerClasses = [
-    // Classe base
-    'footer',
 
-    // Variante
-    `footer--${variant}`,
+  const getFooterClasses = (): string => {
+    const baseClasses = ['footer', `footer--${variant}`]
 
-    // Estados
-    compact && 'footer--compact',
+    if (compact) baseClasses.push('footer--compact')
+    if (className) baseClasses.push(className)
 
-    // Classes customizadas
-    className
-  ]
-    .filter(Boolean)
-    .join(' ')
+    return baseClasses.join(' ')
+  }
 
-  const contentClasses = [
-    'footer__content',
-    `layout-container--${containerSize}`
-  ]
-    .filter(Boolean)
-    .join(' ')
+  const getContentClasses = (): string => {
+    return ['footer__content', `layout-container--${containerSize}`].join(' ')
+  }
 
-  const linksClasses = [
-    'footer__links',
-    variant === 'extended' && 'footer__links--extended'
-  ]
-    .filter(Boolean)
-    .join(' ')
+  const getLinksClasses = (): string => {
+    const classes = ['footer__links']
+
+    if (variant === 'extended') classes.push('footer__links--extended')
+
+    return classes.join(' ')
+  }
 
   // ============================================================================
   // RENDER FUNCTIONS
   // ============================================================================
+
   const renderLinks = () => {
     if (!hasLinks) return null
 
     return (
-      <div className={linksClasses}>
+      <div className={getLinksClasses()}>
         {links.map((link) => (
           <a
             key={link.href}
@@ -119,7 +121,7 @@ export const Footer: React.FC<FooterProps> = ({
 
     return (
       <p className="footer__copyright">
-        © {currentYear} {companyName}. Todos os direitos reservados.
+        © {getCurrentYear()} {companyName}. Todos os direitos reservados.
       </p>
     )
   }
@@ -144,11 +146,12 @@ export const Footer: React.FC<FooterProps> = ({
   )
 
   // ============================================================================
-  // RENDER
+  // RENDER PRINCIPAL
   // ============================================================================
+
   return (
-    <footer className={footerClasses} id={id}>
-      <div className={contentClasses}>
+    <footer className={getFooterClasses()} id={id}>
+      <div className={getContentClasses()}>
         {isExtended ? renderExtendedLayout() : renderDefaultLayout()}
       </div>
     </footer>

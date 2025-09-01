@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 // ============================================================================
 // TYPES BASE
 // ============================================================================
+
 export type ContainerSize = 'sm' | 'md' | 'lg' | 'xl' | 'full'
 export type HeaderVariant = 'default' | 'minimal' | 'sticky' | 'transparent'
 export type FooterVariant = 'default' | 'minimal' | 'extended'
@@ -11,11 +12,18 @@ export type LayoutSpacing = 'compact' | 'normal' | 'relaxed'
 // ============================================================================
 // INTERFACES COMPARTILHADAS
 // ============================================================================
+
+/**
+ * Configuração de seção para navegação
+ */
 export interface SectionConfig {
   id: string
   label: string
 }
 
+/**
+ * Mapeamento de tamanhos de container
+ */
 export interface ContainerSizes {
   [key: string]: string
 }
@@ -23,6 +31,10 @@ export interface ContainerSizes {
 // ============================================================================
 // HEADER PROPS
 // ============================================================================
+
+/**
+ * Props do componente Header
+ */
 export interface HeaderProps {
   // Estrutura
   containerSize?: ContainerSize
@@ -54,12 +66,19 @@ export interface HeaderProps {
 // ============================================================================
 // FOOTER PROPS
 // ============================================================================
+
+/**
+ * Link do footer
+ */
 export interface FooterLink {
   href: string
   label: string
   external?: boolean
 }
 
+/**
+ * Props do componente Footer
+ */
 export interface FooterProps {
   // Estrutura
   containerSize?: ContainerSize
@@ -86,6 +105,10 @@ export interface FooterProps {
 // ============================================================================
 // MAIN LAYOUT PROPS
 // ============================================================================
+
+/**
+ * Props do componente MainLayout
+ */
 export interface MainLayoutProps {
   // Conteúdo
   children: ReactNode

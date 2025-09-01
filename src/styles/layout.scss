@@ -1,18 +1,19 @@
-// ============================================================================
-// LAYOUT COMPONENTS STYLES - OTIMIZADO COM TAILWIND
-// ============================================================================
+@use 'sass:map';
+@use 'sass:list';
 
 // ============================================================================
-// VARIÁVEIS E CONFIGURAÇÕES
+// SETTINGS - TOKENS DE DESIGN
 // ============================================================================
+
 :root {
   --transition-base: 300ms ease-in-out;
   --blur-backdrop: blur(8px);
 }
 
 // ============================================================================
-// MIXINS OTIMIZADOS COM TAILWIND
+// TOOLS - MIXINS E FUNÇÕES
 // ============================================================================
+
 @mixin smooth-transition($properties: all, $duration: 300ms) {
   transition: #{$properties} #{$duration} ease-in-out;
 }
@@ -24,9 +25,11 @@
   &:hover {
     @apply opacity-80;
   }
+
   &:focus {
     @apply outline-none;
   }
+
   &:disabled {
     @apply opacity-50 cursor-not-allowed pointer-events-none;
   }
@@ -47,6 +50,7 @@
   &--primary {
     color: rgb(var(--color-primary));
   }
+
   &--secondary {
     color: rgb(var(--color-secondary));
   }
@@ -72,16 +76,22 @@
   }
 }
 
-// Novo mixin para centralizar e alinhar conteúdo
 @mixin content-container {
   @apply mx-auto w-full px-4 md:px-6 max-w-7xl;
 }
 
 // ============================================================================
-// COMPONENTES BASE
+// BASE/ELEMENTS - ESTILOS GENÉRICOS
 // ============================================================================
 
-// HEADER COMPONENT
+.layout-container {
+  @include content-container;
+}
+
+// ============================================================================
+// COMPONENTS - HEADER
+// ============================================================================
+
 .header {
   @include smooth-transition;
   @apply w-full z-50;
@@ -116,7 +126,7 @@
     @apply opacity-50 pointer-events-none;
   }
 
-  // Layout principal - PADDING E ALINHAMENTO CONSISTENTE
+  // Layout principal
   &__nav {
     @include content-container;
     @apply py-3 md:py-4 flex items-center justify-between;
@@ -200,7 +210,10 @@
   }
 }
 
-// FOOTER COMPONENT
+// ============================================================================
+// COMPONENTS - FOOTER
+// ============================================================================
+
 .footer {
   @include smooth-transition;
   @apply mt-auto;
@@ -220,7 +233,7 @@
     @apply sticky bottom-0;
   }
 
-  // PADDING E ALINHAMENTO CONSISTENTE
+  // Layout principal
   &__content {
     @include content-container;
     @apply py-6;
@@ -285,7 +298,10 @@
   }
 }
 
-// MAIN LAYOUT
+// ============================================================================
+// COMPONENTS - MAIN LAYOUT
+// ============================================================================
+
 .main-layout {
   @apply min-h-screen flex flex-col;
   background-color: rgb(var(--color-background));
@@ -294,18 +310,18 @@
 
   // Espaçamento responsivo
   &--compact {
-    @apply space-y-24 sm:space-y-24;
+    @apply space-y-16 sm:space-y-20;
   }
 
   &--normal {
-    @apply space-y-24 sm:space-y-32;
+    @apply space-y-20 sm:space-y-24;
   }
 
   &--relaxed {
-    @apply space-y-24 sm:space-y-40;
+    @apply space-y-24 sm:space-y-32;
   }
 
-  // PADDING E ALINHAMENTO CONSISTENTE
+  // Layout do conteúdo
   &__content {
     @apply flex-grow pb-8;
   }
@@ -315,14 +331,10 @@
   }
 }
 
-// CONTAINERS - PADDING CONSISTENTE
-.layout-container {
-  @include content-container;
-}
+// ============================================================================
+// UTILITIES - ANIMAÇÕES
+// ============================================================================
 
-// ============================================================================
-// ANIMAÇÕES
-// ============================================================================
 @keyframes slideDown {
   from {
     @apply opacity-0;
@@ -331,5 +343,52 @@
   to {
     @apply opacity-100;
     transform: translateY(0);
+  }
+}
+
+// ============================================================================
+// MEDIA QUERIES - RESPONSIVIDADE
+// ============================================================================
+
+// Breakpoints específicos para componentes que precisam de customização adicional
+@media (max-width: 768px) {
+  .header {
+    &__nav {
+      @apply py-3;
+    }
+
+    &__logo {
+      @apply text-lg;
+    }
+  }
+
+  .footer {
+    &__content {
+      @apply py-4;
+    }
+
+    &__wrapper {
+      @apply space-y-3;
+    }
+
+    &__links {
+      @apply flex-col space-x-0 space-y-2;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .main-layout {
+    &--compact {
+      @apply space-y-24;
+    }
+
+    &--normal {
+      @apply space-y-32;
+    }
+
+    &--relaxed {
+      @apply space-y-40;
+    }
   }
 }

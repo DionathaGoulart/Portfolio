@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-
 import { analytics } from '@/features/Analytics/utils/analytics'
 import { useTheme } from '@/features/Theme'
 import { HeaderProps } from '@shared/types'
@@ -7,12 +6,19 @@ import { HeaderProps } from '@shared/types'
 // ============================================================================
 // ÍCONES SVG
 // ============================================================================
+
+/**
+ * Ícone do sol para tema claro
+ */
 const SunIcon = ({ className = 'w-5 h-5' }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
     <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
   </svg>
 )
 
+/**
+ * Ícone da lua para tema escuro
+ */
 const MoonIcon = ({ className = 'w-5 h-5' }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
     <path
@@ -23,6 +29,9 @@ const MoonIcon = ({ className = 'w-5 h-5' }: { className?: string }) => (
   </svg>
 )
 
+/**
+ * Ícone de menu hambúrguer
+ */
 const MenuIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
   <svg
     className={className}
@@ -39,6 +48,9 @@ const MenuIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
   </svg>
 )
 
+/**
+ * Ícone de fechar
+ */
 const CloseIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
   <svg
     className={className}
@@ -55,6 +67,14 @@ const CloseIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
   </svg>
 )
 
+// ============================================================================
+// HEADER COMPONENT
+// ============================================================================
+
+/**
+ * Componente Header principal do layout
+ * Gerencia navegação, tema e menu mobile
+ */
 export const Header: React.FC<HeaderProps> = ({
   // Estrutura
   containerSize = 'lg',
@@ -82,6 +102,10 @@ export const Header: React.FC<HeaderProps> = ({
   className = '',
   id
 }) => {
+  // ============================================================================
+  // HOOKS E ESTADO
+  // ============================================================================
+
   const { theme, toggleTheme } = useTheme()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
@@ -92,50 +116,47 @@ export const Header: React.FC<HeaderProps> = ({
   const navLinks = sections
 
   // ============================================================================
-  // CONFIGURAÇÃO
+  // CONFIGURAÇÃO DERIVADA
   // ============================================================================
+
   const hasNavigation = navLinks.length > 0
   const isInteractive = !disabled
 
   // ============================================================================
-  // CLASSES CSS
+  // CLASSES CSS COM BEM + TAILWIND
   // ============================================================================
-  const headerClasses = [
-    // Classe base
-    'header',
 
-    // Variante
-    `header--${variant}`,
+  const getHeaderClasses = (): string => {
+    const baseClasses = ['header', `header--${variant}`]
 
-    // Estados
-    fixed && 'header--fixed',
-    disabled && 'header--disabled',
-    isScrolled && 'header--scrolled',
+    if (fixed) baseClasses.push('header--fixed')
+    if (disabled) baseClasses.push('header--disabled')
+    if (isScrolled) baseClasses.push('header--scrolled')
+    if (className) baseClasses.push(className)
 
-    // Classes customizadas
-    className
-  ]
-    .filter(Boolean)
-    .join(' ')
+    return baseClasses.join(' ')
+  }
 
-  const navClasses = ['header__nav', `layout-container--${containerSize}`]
-    .filter(Boolean)
-    .join(' ')
+  const getNavClasses = (): string => {
+    return ['header__nav', `layout-container--${containerSize}`].join(' ')
+  }
 
   // ============================================================================
   // EFFECTS
   // ============================================================================
 
-  // Define a primeira section como ativa por padrão
+  // Define a primeira seção como ativa por padrão
   useEffect(() => {
     if (navLinks.length > 0 && !activeSection) {
       setActiveSection(navLinks[0].id)
     }
   }, [navLinks, activeSection])
 
-  // Atualiza o título da página E inicia o tracking por tempo
+  // Atualiza título da página e inicia tracking
   useEffect(() => {
-    if (pageTitle && activeSection) {
+    if (!pageTitle) return
+
+    if (activeSection) {
       const activeSectionLabel = sections.find(
         (section) => section.id === activeSection
       )?.label
@@ -143,16 +164,16 @@ export const Header: React.FC<HeaderProps> = ({
       if (activeSectionLabel) {
         const newTitle = `${pageTitle} | ${activeSectionLabel}`
         document.title = newTitle
-
-        // NOVO: Iniciar tracking por tempo no analytics
         analytics.trackTitleChange(newTitle, activeSection)
+        return
       }
-    } else if (pageTitle) {
-      document.title = pageTitle
-      analytics.trackTitleChange(pageTitle, 'home')
     }
+
+    document.title = pageTitle
+    analytics.trackTitleChange(pageTitle, 'home')
   }, [activeSection, pageTitle, sections])
 
+  // Observer para seções visíveis
   useEffect(() => {
     if (navLinks.length === 0) return
 
@@ -172,19 +193,12 @@ export const Header: React.FC<HeaderProps> = ({
     }
 
     const headerOffset = headerHeight || 80
+    const isMobile = window.innerWidth <= 768
 
-    // Lógica para determinar o rootMargin com base no tamanho da tela
-    let rootMarginValue
-    const isMobile = window.innerWidth <= 768 // Exemplo de breakpoint mobile
-
-    if (isMobile) {
-      // Usa a lógica simples para mobile
-      rootMarginValue = `-${headerOffset}px 0px 0px 0px`
-    } else {
-      // Usa a lógica centralizada para desktop
-      const verticalCenter = window.innerHeight * 0.5
-      rootMarginValue = `-${headerOffset}px 0px -${verticalCenter}px 0px`
-    }
+    // Root margin diferenciado por device
+    const rootMarginValue = isMobile
+      ? `-${headerOffset}px 0px 0px 0px`
+      : `-${headerOffset}px 0px -${window.innerHeight * 0.5}px 0px`
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -218,26 +232,28 @@ export const Header: React.FC<HeaderProps> = ({
   // Medir altura do header
   useEffect(() => {
     const headerElement = document.querySelector('header')
-    if (headerElement) {
-      const updateHeaderHeight = () => {
-        const height = headerElement.offsetHeight
-        setHeaderHeight(height)
-        if (fixed) {
-          document.body.style.paddingTop = `${height}px`
-        }
+    if (!headerElement) return
+
+    const updateHeaderHeight = () => {
+      const height = headerElement.offsetHeight
+      setHeaderHeight(height)
+
+      if (fixed) {
+        document.body.style.paddingTop = `${height}px`
       }
+    }
 
-      updateHeaderHeight()
-      const observer = new ResizeObserver(updateHeaderHeight)
-      observer.observe(headerElement)
-      window.addEventListener('resize', updateHeaderHeight)
+    updateHeaderHeight()
+    const observer = new ResizeObserver(updateHeaderHeight)
+    observer.observe(headerElement)
+    window.addEventListener('resize', updateHeaderHeight)
 
-      return () => {
-        observer.disconnect()
-        window.removeEventListener('resize', updateHeaderHeight)
-        if (fixed) {
-          document.body.style.paddingTop = '0'
-        }
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', updateHeaderHeight)
+
+      if (fixed) {
+        document.body.style.paddingTop = '0'
       }
     }
   }, [isMobileMenuOpen, fixed])
@@ -255,6 +271,7 @@ export const Header: React.FC<HeaderProps> = ({
   // ============================================================================
   // HANDLERS
   // ============================================================================
+
   const handleScrollTo = (id: string) => {
     if (!isInteractive) return
 
@@ -263,15 +280,16 @@ export const Header: React.FC<HeaderProps> = ({
 
     analytics.trackButtonClick(`nav_${id}`)
 
-    const el = document.getElementById(id)
-    if (el) {
+    const element = document.getElementById(id)
+    if (element) {
       const headerOffset = headerHeight + 20
-      const elementPosition = el.offsetTop - headerOffset
+      const elementPosition = element.offsetTop - headerOffset
 
       window.scrollTo({
         top: elementPosition,
         behavior: 'smooth'
       })
+
       setIsMobileMenuOpen(false)
 
       setTimeout(() => {
@@ -279,9 +297,7 @@ export const Header: React.FC<HeaderProps> = ({
       }, 1000)
     }
 
-    if (onSectionClick) {
-      onSectionClick(id)
-    }
+    onSectionClick?.(id)
   }
 
   const handleLogoClick = () => {
@@ -324,6 +340,7 @@ export const Header: React.FC<HeaderProps> = ({
   // ============================================================================
   // RENDER FUNCTIONS
   // ============================================================================
+
   const renderLogo = () => (
     <button
       onClick={handleLogoClick}
@@ -408,11 +425,12 @@ export const Header: React.FC<HeaderProps> = ({
   }
 
   // ============================================================================
-  // RENDER
+  // RENDER PRINCIPAL
   // ============================================================================
+
   return (
-    <header className={headerClasses} id={id}>
-      <nav className={navClasses}>
+    <header className={getHeaderClasses()} id={id}>
+      <nav className={getNavClasses()}>
         {renderLogo()}
         {renderDesktopNavigation()}
         {renderControls()}

@@ -4,6 +4,14 @@ import Footer from './Footer'
 import ScrollToTop from '../ui/ScroolToTop'
 import { MainLayoutProps } from '@shared/types'
 
+// ============================================================================
+// MAIN LAYOUT COMPONENT
+// ============================================================================
+
+/**
+ * Layout principal da aplicação
+ * Gerencia Header, Footer, conteúdo e funcionalidades extras
+ */
 export const MainLayout: React.FC<MainLayoutProps> = ({
   // Conteúdo
   children,
@@ -32,31 +40,28 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   id
 }) => {
   // ============================================================================
-  // CLASSES CSS
+  // CLASSES CSS COM BEM + TAILWIND
   // ============================================================================
-  const layoutClasses = [
-    // Classe base
-    'main-layout',
 
-    // Espaçamento
-    `main-layout--${spacing}`,
+  const getLayoutClasses = (): string => {
+    const baseClasses = ['main-layout', `main-layout--${spacing}`]
 
-    // Classes customizadas
-    className
-  ]
-    .filter(Boolean)
-    .join(' ')
+    if (className) baseClasses.push(className)
 
-  const containerClasses = [
-    'main-layout__container',
-    `layout-container--${containerSize}`
-  ]
-    .filter(Boolean)
-    .join(' ')
+    return baseClasses.join(' ')
+  }
+
+  const getContainerClasses = (): string => {
+    return [
+      'main-layout__container',
+      `layout-container--${containerSize}`
+    ].join(' ')
+  }
 
   // ============================================================================
   // RENDER FUNCTIONS
   // ============================================================================
+
   const renderHeader = () => {
     if (!showHeader) return null
 
@@ -91,15 +96,16 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
 
   const renderContent = () => (
     <main className="main-layout__content">
-      <div className={containerClasses}>{children}</div>
+      <div className={getContainerClasses()}>{children}</div>
     </main>
   )
 
   // ============================================================================
-  // RENDER
+  // RENDER PRINCIPAL
   // ============================================================================
+
   return (
-    <div className={layoutClasses} id={id}>
+    <div className={getLayoutClasses()} id={id}>
       {renderHeader()}
       {renderContent()}
       {renderFooter()}

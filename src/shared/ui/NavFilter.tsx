@@ -4,8 +4,7 @@ import {
   buildFilterContainerClasses,
   getSafeOptions,
   type NavFilterProps
-} from '../types/ui/NavFilter.types'
-
+} from '../types'
 import '@styles/ui/navfilter.scss'
 
 // ============================================================================

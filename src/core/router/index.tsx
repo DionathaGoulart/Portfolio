@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { RouteRenderer } from './components/RouteRenderer'
-import { RouteConfig, RouteGroup, FlattenedRouteConfig } from '../types/router'
+import { RouteConfig, RouteGroup, FlattenedRouteConfig } from '../types'
 
 const processRoutes = (
   configs: (RouteConfig | RouteGroup)[]

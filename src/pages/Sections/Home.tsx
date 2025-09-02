@@ -1,8 +1,6 @@
-import { analytics } from '@/features/Analytics/utils/analytics'
-import { Button } from '@/shared/ui/Button'
-import { GDLogo } from '@/shared/ui/Logo'
-import { P } from '@/shared/ui/Text'
-import { Title } from '@/shared/ui/Title'
+import { analytics } from '@features/Analytics/utils'
+import { Button, P, Title } from '@shared/ui'
+import { images } from '@assets/images'
 
 interface HomeSectionProps {
   id?: string
@@ -79,13 +77,13 @@ const HomeSection: React.FC<HomeSectionProps> = ({ id = '' }) => {
         <div className="hidden lg:flex justify-end">
           {/* Imagem para light mode */}
           <img
-            src="/light.png"
+            src={images.light}
             alt="Logo GD"
             className="block dark:hidden w-96 h-96"
           />
           {/* Imagem para dark mode */}
           <img
-            src="/dark.png"
+            src={images.dark}
             alt="Logo GD"
             className="hidden dark:block w-96 h-96"
           />

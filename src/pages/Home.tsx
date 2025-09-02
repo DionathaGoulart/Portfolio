@@ -1,13 +1,14 @@
 import { useEffect } from 'react'
-
-import HomeSection from './Sections/Home'
-import SobreSection from './Sections/Sobre'
 import { useSectionTracking } from '@/features/Analytics/hooks/useAnalytics'
-import { SectionConfig } from '@/shared/types'
-import ProjectsSection from './Sections/Projects'
-import SkillsSection from './Sections/Skill'
-import ExpSection from './Sections/Experience'
-import ContactSection from './Sections/Contact'
+import {
+  HomeSection,
+  SobreSection,
+  ProjectsSection,
+  SkillsSection,
+  ExpSection,
+  ContactSection
+} from '@pages/Sections'
+import { SectionConfig } from '@shared/types'
 
 interface HomePageProps {
   setSections: (sections: SectionConfig[]) => void

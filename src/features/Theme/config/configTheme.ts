@@ -1,4 +1,4 @@
-import { ThemeConfig } from '../../types/theme.types'
+import { ThemeConfig } from '@features/Theme/types/theme.types'
 
 export const lightTheme: ThemeConfig = {
   name: 'light',

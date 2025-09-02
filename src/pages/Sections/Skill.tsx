@@ -1,14 +1,7 @@
 import React, { useState } from 'react'
-import { analytics } from '@/features/Analytics/utils/analytics'
-import { P } from '@/shared/ui/Text'
-import { Title } from '@/shared/ui/Title'
-import {
-  Skill,
-  SkillsSectionProps,
-  SkillCategory
-} from '@/shared/types/ui/Skill.types'
-import { SkillGrid } from '@/shared/ui/Skill'
-import { NavFilter } from '@/shared/ui/NavFilter'
+import { analytics } from '@features/Analytics/utils'
+import { Title, P, NavFilter, SkillGrid } from '@/shared/ui'
+import { Skill, SkillsSectionProps } from '@/shared/types'
 
 // ============================================================================
 // DADOS DAS HABILIDADES

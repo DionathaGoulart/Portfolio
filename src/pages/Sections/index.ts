@@ -1,0 +1,6 @@
+export { default as HomeSection } from './Home'
+export { default as SobreSection } from './Sobre'
+export { default as ProjectsSection } from './Projects'
+export { default as SkillsSection } from './Skill'
+export { default as ExpSection } from './Experience'
+export { default as ContactSection } from './Contact'

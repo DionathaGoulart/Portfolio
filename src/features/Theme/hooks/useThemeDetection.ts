@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Theme } from '@features/Theme'
+import { Theme } from '@features/Theme/types'
 
 const THEME_STORAGE_KEY = 'app-theme'
 

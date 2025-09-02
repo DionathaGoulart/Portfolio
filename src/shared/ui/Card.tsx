@@ -1,5 +1,4 @@
-import { Title } from './Title'
-import { P } from './Text'
+import { Title, P } from '@shared/ui'
 import {
   CardProps,
   ContainerProps,
@@ -7,7 +6,6 @@ import {
   buildClasses,
   buildContainerClasses
 } from '@shared/types'
-
 import '@styles/ui/card.scss'
 
 const HorizontalCard: React.FC<Omit<CardProps, 'onClick'>> = ({

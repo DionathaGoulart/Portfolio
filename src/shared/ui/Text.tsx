@@ -1,6 +1,5 @@
 import React from 'react'
-import { TextProps } from '../types'
-
+import { TextProps } from '@shared/types'
 import '@styles/ui/text.scss'
 
 // ================================

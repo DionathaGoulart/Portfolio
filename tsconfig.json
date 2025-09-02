@@ -49,10 +49,10 @@
         "src/pages/*"
       ],
       "@routes": [
-        "src/routes"
+        "src/core/router/routes"
       ],
       "@routes/*": [
-        "src/routes/*"
+        "src/core/router/routes/*"
       ],
       "@shared": [
         "src/shared"

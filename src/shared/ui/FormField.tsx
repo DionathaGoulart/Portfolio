@@ -1,6 +1,5 @@
 import React from 'react'
-import { FormFieldProps } from '@shared/types/ui/Form.types'
-
+import { FormFieldProps } from '@shared/types'
 import '@styles/ui/form.scss'
 
 // ============================================================================

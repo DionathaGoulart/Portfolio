@@ -2,30 +2,20 @@
 // EMAILJS CONFIGURATION
 // ============================================================================
 
-/**
- * Configuração do EmailJS para envio de emails do formulário de contato
- *
- * Para configurar:
- * 1. Crie uma conta em https://emailjs.com
- * 2. Crie um serviço de email (Gmail, Outlook, etc.)
- * 3. Crie um template de email
- * 4. Copie as credenciais abaixo
- */
-
 // Função helper para acessar variáveis de ambiente do Vite
 const getEnvVar = (key: string): string => {
   return (import.meta as any).env?.[key] || ''
 }
 
 export const emailjsConfig = {
-  // Substitua pelas suas credenciais do EmailJS
+  // Credenciais do EmailJS
   SERVICE_ID: getEnvVar('VITE_EMAILJS_SERVICE_ID') || 'YOUR_SERVICE_ID',
   TEMPLATE_ID: getEnvVar('VITE_EMAILJS_TEMPLATE_ID') || 'YOUR_TEMPLATE_ID',
   PUBLIC_KEY: getEnvVar('VITE_EMAILJS_PUBLIC_KEY') || 'YOUR_PUBLIC_KEY'
 }
 
 /**
- * Template de email sugerido para o EmailJS:
+ * Template EmailJS:
  *
  * Subject: Nova mensagem de contato - {{subject}}
  *

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, ComponentType } from 'react'
-import { RouteConfig } from '@/core/types/router'
+import { RouteConfig } from '@/core/types'
 import { SectionConfig } from '@/shared/types'
 
 interface Props {

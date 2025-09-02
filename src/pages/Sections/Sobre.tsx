@@ -1,10 +1,7 @@
 import React from 'react'
-import { analytics } from '@/features/Analytics/utils/analytics'
-import { Title } from '@/shared/ui/Title'
-import { Text } from '@/shared/ui/Text'
-import { Image } from '@/shared/ui/Image'
-import { Card, CardsContainer } from '@/shared/ui/Card'
-import { images } from '@/assets/images'
+import { analytics } from '@features/Analytics/utils'
+import { Title, Text, Image, Card, CardsContainer } from '@shared/ui'
+import { images } from '@assets/images'
 
 interface SobreProps {
   id?: string

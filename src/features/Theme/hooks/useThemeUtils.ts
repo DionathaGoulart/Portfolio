@@ -1,4 +1,4 @@
-import { useTheme } from '@features/Theme'
+import { useTheme } from '@features/Theme/contexts'
 
 export function useThemeUtils() {
   const { colors, theme, isDarkMode } = useTheme()

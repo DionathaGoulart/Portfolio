@@ -1,14 +1,8 @@
 import React, { useState, useCallback, useMemo } from 'react'
 import emailjs from '@emailjs/browser'
-import { analytics } from '@/features/Analytics/utils/analytics'
-import { Button } from '@/shared/ui/Button'
-import { P } from '@/shared/ui/Text'
-import { Title } from '@/shared/ui/Title'
-import { Input } from '@/shared/ui/Input'
-import { Textarea } from '@/shared/ui/Textarea'
-import { FormField } from '@/shared/ui/FormField'
-import { Card } from '@/shared/ui/Card'
 import { emailjsConfig, isEmailJSConfigured } from '@features/Emailjs'
+import { analytics } from '@features/Analytics/utils'
+import { Button, Card, FormField, Input, P, Textarea, Title } from '@shared/ui'
 
 interface ContactSectionProps {
   id?: string

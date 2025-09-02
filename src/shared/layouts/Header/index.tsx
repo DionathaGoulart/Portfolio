@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { analytics } from '@/features/Analytics/utils/analytics'
-import { useTheme } from '@/features/Theme'
+import { analytics } from '@features/Analytics/utils'
+import { useTheme } from '@features/Theme/contexts'
 import { HeaderProps } from '@shared/types'
 
 // ============================================================================

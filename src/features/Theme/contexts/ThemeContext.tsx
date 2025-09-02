@@ -1,11 +1,11 @@
 import { createContext, ReactNode, useContext } from 'react'
-import { Theme, ThemeContextType } from '@features/Theme'
-import { themes } from '@features/Theme'
+import { themes } from '@features/Theme/config'
 import {
-  useSystemTheme,
   useThemeDetection,
+  useSystemTheme,
   useThemePersistence
-} from '@features/Theme'
+} from '@features/Theme/hooks'
+import { Theme, ThemeContextType } from '@features/Theme/types'
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 

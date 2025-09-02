@@ -1,9 +1,6 @@
 import React, { JSX } from 'react'
 import { Github, ExternalLink } from 'lucide-react'
-import { Button } from '@/shared/ui/Button'
-import { P } from '@/shared/ui/Text'
-import { Title } from '@/shared/ui/Title'
-import { Tag } from '@/shared/ui/Tag'
+import { Button, P, Title, Tag } from '@shared/ui'
 import {
   buildCardClasses,
   buildEmptyStateClasses,
@@ -11,8 +8,7 @@ import {
   type ProjectCardProps,
   type ProjectGridProps,
   type Project
-} from '../types/ui/ProjectCard.types'
-
+} from '@shared/types'
 import '@styles/ui/projectcard.scss'
 
 // ============================================================================

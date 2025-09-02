@@ -4,7 +4,6 @@ import type {
   ImageResource,
   KeyboardEventHandler
 } from '@shared/types'
-
 import '@styles/ui/image.scss'
 
 // ============================================================================
@@ -17,13 +16,25 @@ import '@styles/ui/image.scss'
  * @returns Resolved image URL string
  */
 const resolveImageSrc = (imageSrc: ImageResource): string => {
+  // Verificação de segurança para valores null/undefined
+  if (!imageSrc) {
+    console.warn('Image source is null or undefined')
+    return ''
+  }
+
   if (typeof imageSrc === 'string') {
     return imageSrc
   }
 
-  // If object, get first string value found
-  const firstValue = Object.values(imageSrc)[0]
-  return typeof firstValue === 'string' ? firstValue : ''
+  // Se for objeto, verificar se existe e pegar primeiro valor string
+  if (typeof imageSrc === 'object' && imageSrc !== null) {
+    const values = Object.values(imageSrc)
+    const firstValue = values[0]
+    return typeof firstValue === 'string' ? firstValue : ''
+  }
+
+  // Fallback para casos não esperados
+  return ''
 }
 
 /**
@@ -140,6 +151,11 @@ export const Image: React.FC<ImageProps> = ({
   // ============================================================================
   // RENDER
   // ============================================================================
+
+  // Se não há src válido, não renderizar nada ou mostrar placeholder
+  if (!resolvedSrc) {
+    return null // ou um placeholder se preferir
+  }
 
   if (isInteractive) {
     return (

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Theme } from '@features/Theme'
+import { Theme } from '@features/Theme/types'
 
 interface UseSystemThemeProps {
   isSystemTheme: boolean

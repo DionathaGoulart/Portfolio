@@ -1,6 +1,5 @@
 import React from 'react'
-import { InputProps } from '@shared/types/ui/Form.types'
-
+import { InputProps } from '@shared/types'
 import '@styles/ui/expcard.scss'
 
 // ============================================================================

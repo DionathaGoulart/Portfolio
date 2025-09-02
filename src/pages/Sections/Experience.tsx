@@ -1,8 +1,7 @@
 import React from 'react'
-import { analytics } from '@/features/Analytics/utils/analytics'
-import { Title } from '@/shared/ui/Title'
-import { P } from '@/shared/ui/Text'
-import { ExpCardProps, ExpList } from '@/shared/ui/ExpCard'
+import { analytics } from '@features/Analytics/utils'
+import { Title, P, ExpList } from '@shared/ui'
+import { ExpCardProps } from '@shared/ui/ExpCard'
 
 interface ExperienceSectionProps {
   id?: string

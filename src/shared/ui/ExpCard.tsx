@@ -1,8 +1,5 @@
 import React from 'react'
-import { Title } from '@/shared/ui/Title'
-import { P } from '@/shared/ui/Text'
-import { Tag, TagGroup } from '@/shared/ui/Tag'
-
+import { P, Tag, TagGroup, Title } from '@shared/ui'
 import '@styles/ui/expcard.scss'
 
 // ============================================================================

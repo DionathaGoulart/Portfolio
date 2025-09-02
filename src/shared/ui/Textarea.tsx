@@ -1,6 +1,5 @@
 import React from 'react'
-import { TextareaProps } from '@shared/types/ui/Form.types'
-
+import { TextareaProps } from '@shared/types'
 import '@styles/ui/form.scss'
 
 // ============================================================================

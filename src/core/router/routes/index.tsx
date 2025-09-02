@@ -1,6 +1,6 @@
-import { MainLayout } from '@/shared'
-import { RouteConfig, RouteGroup } from '@core/types/router'
+import { MainLayout } from '@shared/layouts'
 import { HomePage, NotFoundPage } from '@pages'
+import { RouteConfig, RouteGroup } from '@core/types'
 
 export const appRoutes: (RouteConfig | RouteGroup)[] = [
   {

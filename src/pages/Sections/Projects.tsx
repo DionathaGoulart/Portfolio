@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react'
-import { analytics } from '@/features/Analytics/utils/analytics'
-import { P } from '@/shared/ui/Text'
-import { Title } from '@/shared/ui/Title'
-import { Project } from '@/shared/types/ui/ProjectCard.types'
-import { ProjectGrid } from '@/shared/ui/ProjectCard'
-import { NavFilter } from '@/shared/ui/NavFilter'
-import { FilterOption } from '@/shared/types/ui/NavFilter.types'
+import { analytics } from '@features/Analytics/utils'
+import { Title, P, NavFilter, ProjectGrid } from '@shared/ui'
+import { FilterOption, Project } from '@shared/types'
 
 interface ProjectsSectionProps {
   id?: string

@@ -91,13 +91,13 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({
         {/* Header */}
         <div className="space-y-6">
           <Title level="h2" border="bottom-start">
-            experiência {''}
+            Experiência {''}
             <Title level="h2" element="span" color="primary">
-              profissional
+              Profissional
             </Title>
           </Title>
 
-          <P size="grande" className="max-w-2xl leading-relaxed">
+          <P size="grande" className="leading-relaxed md:max-w-md lg:max-w-2xl">
             Minha jornada profissional construindo soluções digitais inovadoras,
             desde os primeiros passos até projetos de alta complexidade.
           </P>

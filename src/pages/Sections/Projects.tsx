@@ -148,10 +148,13 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       {/* Header */}
       <div className="space-y-6">
         <Title level="h2" border="bottom-start">
-          meus projetos
+          Meus {''}
+          <Title level="h2" element="span" color="primary">
+            Projetos
+          </Title>
         </Title>
 
-        <P size="grande" className="max-w-lg leading-relaxed">
+        <P size="grande" className="leading-relaxed md:max-w-md lg:max-w-2xl">
           Aqui estão alguns dos projetos que desenvolvi, demonstrando minhas
           habilidades em diferentes tecnologias e áreas de desenvolvimento.
         </P>
@@ -159,6 +162,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
       {/* Filtros */}
       <NavFilter
+        className="mt-12"
         options={filterOptions}
         activeFilter={activeFilter}
         onFilterChange={handleFilterChange}

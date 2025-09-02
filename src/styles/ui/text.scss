@@ -14,6 +14,7 @@ $text-leading: tight, normal, relaxed, loose;
 $text-responsive-sizes: small, medium, large;
 $text-border-positions: start, center, end;
 $text-column-gaps: small, medium, large;
+$text-anchor-positions: left, right;
 
 // ================================
 // TOOLS
@@ -64,6 +65,18 @@ $text-column-gaps: small, medium, large;
     } @else if $columns == 5 {
       @apply w-full md:w-1/5;
     }
+  }
+}
+
+/**
+ * Mixin for anchor positioning
+ * @param {string} $position - Anchor position (left or right)
+ */
+@mixin anchor-position($position) {
+  @if $position == left {
+    @apply float-left mr-4 mb-2;
+  } @else if $position == right {
+    @apply float-right ml-4 mb-2;
   }
 }
 
@@ -228,6 +241,44 @@ $text-column-gaps: small, medium, large;
   }
 }
 
+// ================================
+// ANCHOR POSITIONING COMPONENT
+// ================================
+
+.text--anchored {
+  @apply w-fit max-w-xs lg:max-w-sm;
+
+  .text__anchored-content {
+    @apply w-full block;
+  }
+
+  // Anchor position variants
+  &.text--anchor-left {
+    @include anchor-position(left);
+  }
+
+  &.text--anchor-right {
+    @include anchor-position(right);
+  }
+
+  // Responsive behavior for anchored text
+  @media (max-width: 640px) {
+    @apply float-none w-full max-w-none m-0 mb-4;
+  }
+
+  // Auto-clear after anchored text
+  &::after {
+    content: '';
+    @apply table clear-both;
+  }
+}
+
+// Clear floats for elements that follow anchored text
+.text--anchor-left + *,
+.text--anchor-right + * {
+  @apply clear-both;
+}
+
 // Responsive text sizing
 .text--responsive-small {
   @apply text-base sm:text-base lg:text-lg;
@@ -339,4 +390,26 @@ $text-column-gaps: small, medium, large;
       @apply w-full;
     }
   }
+}
+
+// ================================
+// CLEAR FLOAT UTILITIES
+// ================================
+
+// Utility class to clear floated elements
+.text-clear {
+  @apply clear-both;
+}
+
+.text-clear-left {
+  @apply clear-left;
+}
+
+.text-clear-right {
+  @apply clear-right;
+}
+
+// Automatic clearfix for anchored text
+.text-clearfix {
+  @apply clear-both table w-full;
 }

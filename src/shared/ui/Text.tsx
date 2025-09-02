@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { TextProps } from '@shared/types'
 import '@styles/ui/text.scss'
 
@@ -18,12 +18,37 @@ const DEFAULT_PROPS = {
   highlight: false,
   code: false,
   gradient: false,
+  disableAnchorOnMobile: true,
   className: ''
 }
 
 // ================================
 // HELPER FUNCTIONS
 // ================================
+
+/**
+ * Hook to detect if screen is mobile size
+ * @returns boolean indicating if current screen is mobile
+ */
+const useIsMobile = (): boolean => {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768) // 768px = md breakpoint
+    }
+
+    // Check on mount
+    checkIsMobile()
+
+    // Listen for window resize
+    window.addEventListener('resize', checkIsMobile)
+
+    return () => window.removeEventListener('resize', checkIsMobile)
+  }, [])
+
+  return isMobile
+}
 
 /**
  * Calculates text weight based on character count
@@ -214,9 +239,13 @@ const splitTextIntoColumns = (
 /**
  * Generates CSS classes based on component props
  * @param props - Component props with defaults applied
+ * @param shouldUseAnchor - Whether anchor should be active
  * @returns Space-separated string of CSS classes
  */
-const generateClassNames = (props: Required<TextProps>): string => {
+const generateClassNames = (
+  props: Required<TextProps>,
+  shouldUseAnchor: boolean = true
+): string => {
   const {
     as,
     size,
@@ -235,6 +264,7 @@ const generateClassNames = (props: Required<TextProps>): string => {
     responsive,
     columns,
     columnGap,
+    anchor,
     className
   } = props
 
@@ -263,6 +293,8 @@ const generateClassNames = (props: Required<TextProps>): string => {
     shadow === 'strong' && 'text--shadow-strong',
     // Decorative borders
     border !== 'none' && `text--border-${border}`,
+    // Anchor positioning (only if should use anchor)
+    shouldUseAnchor && anchor && `text--anchor-${anchor}`,
     // Responsiveness
     responsive && `text--responsive-${responsive}`,
     // Column layout
@@ -298,6 +330,16 @@ const generateClassNames = (props: Required<TextProps>): string => {
  *   Long content that will be distributed across columns
  * </Text>
  *
+ * // Anchored text (disabled on mobile by default)
+ * <Text anchor="right" size="pequeno">
+ *   This text will float to the right on desktop only
+ * </Text>
+ *
+ * // Force anchor to work on mobile too
+ * <Text anchor="right" disableAnchorOnMobile={false}>
+ *   This text will float on all screen sizes
+ * </Text>
+ *
  * // With visual effects
  * <Text gradient shadow="strong" border="center">
  *   Stylized text content
@@ -306,10 +348,38 @@ const generateClassNames = (props: Required<TextProps>): string => {
  */
 export const Text: React.FC<TextProps> = (inputProps) => {
   const props = { ...DEFAULT_PROPS, ...inputProps } as Required<TextProps>
-  const { children, as: Element, columns, id } = props
+  const {
+    children,
+    as: Element,
+    columns,
+    anchor,
+    disableAnchorOnMobile,
+    id
+  } = props
+
+  // Detect if screen is mobile to disable anchor
+  const isMobile = useIsMobile()
+  const shouldUseAnchor = anchor && !(disableAnchorOnMobile && isMobile)
 
   const hasColumns = columns && columns > 1
-  const cssClasses = generateClassNames(props)
+  const cssClasses = generateClassNames(props, shouldUseAnchor)
+
+  // ================================
+  // ANCHORED TEXT RENDER
+  // ================================
+
+  if (shouldUseAnchor && !hasColumns) {
+    return (
+      <>
+        <div className={`${cssClasses} text--anchored`}>
+          <Element className="text__anchored-content" id={id}>
+            {children}
+          </Element>
+        </div>
+        <div className="text-clearfix" />
+      </>
+    )
+  }
 
   // ================================
   // COLUMN LAYOUT RENDER

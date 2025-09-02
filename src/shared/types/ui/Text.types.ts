@@ -25,6 +25,12 @@ export const TEXT_COLUMN_COUNTS = [1, 2, 3, 4, 5] as const
 export const TEXT_COLUMN_GAPS = ['small', 'medium', 'large'] as const
 
 // ================================
+// NOVA CONSTANTE PARA ANCHOR
+// ================================
+
+export const TEXT_ANCHOR_POSITIONS = ['left', 'right'] as const
+
+// ================================
 // BASE TYPES
 // ================================
 
@@ -58,6 +64,11 @@ export type TextColumns = (typeof TEXT_COLUMN_COUNTS)[number]
  */
 export type TextColumnGap = (typeof TEXT_COLUMN_GAPS)[number]
 
+/**
+ * Text anchor positions (left or right)
+ */
+export type TextAnchor = (typeof TEXT_ANCHOR_POSITIONS)[number]
+
 // ================================
 // INTERFACES
 // ================================
@@ -74,6 +85,7 @@ export type TextColumnGap = (typeof TEXT_COLUMN_GAPS)[number]
  *   color="primary"
  *   columns={2}
  *   align="center"
+ *   anchor="right"
  * >
  *   Content here
  * </Text>
@@ -148,6 +160,16 @@ export interface TextProps {
 
   /** Decorative border position */
   border?: TextBorder
+
+  // ================================
+  // Layout & Positioning
+  // ================================
+
+  /** Anchor position for floating text (left or right) */
+  anchor?: TextAnchor
+
+  /** Disable anchor on mobile devices (default: true) */
+  disableAnchorOnMobile?: boolean
 
   // ================================
   // Responsiveness

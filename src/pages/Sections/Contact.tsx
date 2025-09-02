@@ -315,14 +315,21 @@ const ContactSection: React.FC<ContactSectionProps> = ({ id = '' }) => {
   )
 
   return (
-    <section id={id} className="py-20">
-      <div className="container mx-auto px-4">
+    <section id={id}>
+      <div className="space-y-12">
         {/* Cabeçalho */}
-        <div className="text-center mb-16">
-          <Title level="h1" color="primary" className="mb-4">
-            Vamos Conversar
+        <div className="space-y-6">
+          <Title level="h2" align="center" border="bottom-center">
+            Vamos{' '}
+            <Title level="h2" element="span" color="primary">
+              Conversar
+            </Title>
           </Title>
-          <P size="grande" className="max-w-2xl mx-auto">
+          <P
+            size="grande"
+            align="center"
+            className="leading-relaxed md:max-w-md lg:max-w-none"
+          >
             Tem um projeto em mente? Quer discutir uma oportunidade? Estou
             sempre aberto para novas parcerias e desafios.
           </P>
@@ -330,11 +337,11 @@ const ContactSection: React.FC<ContactSectionProps> = ({ id = '' }) => {
 
         <div className="grid lg:grid-cols-2 gap-16">
           {/* Formulário */}
-          <div>
-            <Title level="h2" className="mb-4">
+          <div className="space-y-6">
+            <Title level="h3" color="primary" border="top-start">
               Envie uma Mensagem
             </Title>
-            <P className="mb-8">
+            <P className="leading-relaxed md:max-w-md lg:max-w-2xl">
               Preencha o formulário abaixo e entrarei em contato o mais breve
               possível.
             </P>
@@ -418,11 +425,15 @@ const ContactSection: React.FC<ContactSectionProps> = ({ id = '' }) => {
           </div>
 
           {/* Informações de contato */}
-          <div>
-            <Title level="h2" className="mb-4">
+          <div className="space-y-6">
+            <Title level="h3" align="end" color="primary" border="top-end">
               Informações de Contato
             </Title>
-            <P className="mb-8">
+            <P
+              anchor="right"
+              align="end"
+              className="leading-relaxed md:max-w-md lg:max-w-2xl"
+            >
               Prefere outro meio de contato? Aqui estão todas as formas de
               entrar em contato comigo.
             </P>

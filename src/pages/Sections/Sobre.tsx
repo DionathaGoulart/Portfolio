@@ -81,14 +81,12 @@ const SobreSection: React.FC<SobreProps> = ({ id = '' }) => {
     <section id={id}>
       <div className="space-y-12">
         {/* Título centralizado */}
-        <div className="text-center">
-          <Title level="h2" border="bottom-start">
-            Sobre {''}
-            <Title level="h2" element="span" color="primary">
-              Mim
-            </Title>
+        <Title level="h2" align="end" border="bottom-end">
+          Sobre {''}
+          <Title level="h2" element="span" color="primary">
+            Mim
           </Title>
-        </div>
+        </Title>
 
         {/* Texto em duas colunas */}
         <div className="grid md:grid-cols-1 gap-8">
@@ -126,22 +124,22 @@ const SobreSection: React.FC<SobreProps> = ({ id = '' }) => {
 
         {/* Tecnologias */}
         <div className="space-y-6">
-          <div className="text-center">
-            <Title level="h3">Principais Tecnologias</Title>
-          </div>
-          <CardsContainer type="grid" columns={5}>
-            {tecnologias.map((tech, index) => (
-              <Card
-                key={index}
-                title={tech.title}
-                subtitle={tech.subtitle}
-                icon={tech.icon}
-                size="pequeno"
-                color="primary"
-              />
-            ))}
-          </CardsContainer>
+          <Title level="h3" align="center" color="primary">
+            Principais Tecnologias
+          </Title>
         </div>
+        <CardsContainer type="grid" columns={5}>
+          {tecnologias.map((tech, index) => (
+            <Card
+              key={index}
+              title={tech.title}
+              subtitle={tech.subtitle}
+              icon={tech.icon}
+              size="pequeno"
+              color="primary"
+            />
+          ))}
+        </CardsContainer>
       </div>
     </section>
   )

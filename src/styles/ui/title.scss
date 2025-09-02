@@ -57,13 +57,16 @@ $badge-size: 20px;
       content: '';
       @apply absolute top-0 w-24 h-1 bg-theme-primary rounded-xl;
 
+      // Comportamento responsivo para todas as variações
       @if $align == 'start' {
-        // Alinha ao centro no mobile e à esquerda no desktop
+        // Center no mobile, left no desktop
         @apply left-1/2 -translate-x-1/2 md:left-0 md:transform-none;
       } @else if $align == 'center' {
+        // Center no mobile, center no desktop
         @apply left-1/2 -translate-x-1/2;
       } @else if $align == 'end' {
-        @apply right-0;
+        // Center no mobile, right no desktop
+        @apply left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:transform-none;
       }
     }
   } @else if $side == 'bottom' {
@@ -73,13 +76,16 @@ $badge-size: 20px;
       content: '';
       @apply absolute bottom-0 w-24 h-1 bg-theme-primary rounded-xl;
 
+      // Comportamento responsivo para todas as variações
       @if $align == 'start' {
-        // Alinha ao centro no mobile e à esquerda no desktop
+        // Center no mobile, left no desktop
         @apply left-1/2 -translate-x-1/2 md:left-0 md:transform-none;
       } @else if $align == 'center' {
+        // Center no mobile, center no desktop
         @apply left-1/2 -translate-x-1/2;
       } @else if $align == 'end' {
-        @apply right-0;
+        // Center no mobile, right no desktop
+        @apply left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:transform-none;
       }
     }
   }

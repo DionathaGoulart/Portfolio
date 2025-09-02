@@ -86,7 +86,7 @@ $button-sizes: (
       @apply border-transparent;
 
       &:hover:not(:disabled) {
-        @apply bg-transparent border-current;
+        @apply bg-transparent;
         color: rgb(var(--color-text));
         border-color: rgb(var(--color-text));
       }
@@ -106,13 +106,15 @@ $button-sizes: (
       @apply border-transparent;
 
       &:hover:not(:disabled) {
-        @apply bg-transparent border-current;
+        @apply bg-transparent;
         color: rgb(var(--color-#{$color}));
+        border-color: rgb(var(--color-#{$color}));
       }
     }
   } @else if $variant == outline {
-    @apply bg-transparent border-current;
+    @apply bg-transparent;
     color: rgb(var(--color-#{$color}));
+    border-color: rgb(var(--color-#{$color}));
 
     &:hover:not(:disabled) {
       background-color: rgb(var(--color-#{$color}));

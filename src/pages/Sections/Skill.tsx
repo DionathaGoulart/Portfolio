@@ -109,37 +109,47 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
     <section id={id}>
       {/* Header */}
       <div className="space-y-6">
-        <Title level="h2" border="bottom-start">
-          habilidades técnicas
+        <Title level="h2" align="end" border="bottom-end">
+          Habilidades {''}
+          <Title level="h2" element="span" color="primary">
+            Técnicas
+          </Title>
         </Title>
-        <P size="grande" className="max-w-2xl leading-relaxed">
+        <P
+          size="grande"
+          align="end"
+          className="leading-relaxed md:max-w-md lg:max-w-2xl "
+          anchor="right"
+        >
           Domínio em tecnologias modernas para desenvolvimento de aplicações
           robustas e escaláveis em todo o stack.
         </P>
       </div>
-
       {/* Filtros */}
-      <NavFilter
-        options={filterOptions}
-        activeFilter={activeFilter}
-        onFilterChange={handleFilterChange}
-        size="medium"
-        layout="horizontal"
-        align="center"
-        ariaLabel="Filtrar habilidades por categoria"
-      />
-
-      {/* Skills Grid */}
-      {getFilteredCategories().map(({ key, skills, delay }) => (
-        <SkillGrid
-          key={key}
-          skills={skills}
-          columns="responsive"
-          gap="medium"
-          animationDelay={delay}
-          showCategories={activeFilter === 'all'} // Só mostra títulos quando "Todas" está ativo
+      <div className="space-y-12">
+        <NavFilter
+          className="mt-12"
+          options={filterOptions}
+          activeFilter={activeFilter}
+          onFilterChange={handleFilterChange}
+          size="medium"
+          layout="horizontal"
+          align="center"
+          ariaLabel="Filtrar habilidades por categoria"
         />
-      ))}
+
+        {/* Skills Grid */}
+        {getFilteredCategories().map(({ key, skills, delay }) => (
+          <SkillGrid
+            key={key}
+            skills={skills}
+            columns="responsive"
+            gap="medium"
+            animationDelay={delay}
+            showCategories={activeFilter === 'all'} // Só mostra títulos quando "Todas" está ativo
+          />
+        ))}
+      </div>
     </section>
   )
 }

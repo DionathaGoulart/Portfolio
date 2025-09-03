@@ -1,3 +1,4 @@
+import { ExternalLink } from 'lucide-react'
 import { Title, P } from '@shared/ui'
 import {
   CardProps,
@@ -8,12 +9,15 @@ import {
 } from '@shared/types'
 import '@styles/ui/card.scss'
 
-const HorizontalCard: React.FC<Omit<CardProps, 'onClick'>> = ({
+const HorizontalCard: React.FC<
+  Omit<CardProps, 'onClick'> & { showExternalLink?: boolean }
+> = ({
   title,
   subtitle,
   icon,
   color = 'primary',
-  size = 'medio'
+  size = 'medio',
+  showExternalLink = false
 }) => {
   const { titleLevel, subtitleSize } = CONFIGS[size]
 
@@ -29,17 +33,27 @@ const HorizontalCard: React.FC<Omit<CardProps, 'onClick'>> = ({
           </P>
         )}
       </div>
-      {icon && <span className="card__icon">{icon}</span>}
+      <div className="card__icons">
+        {icon && <span className="card__icon">{icon}</span>}
+        {showExternalLink && (
+          <span className="card__icon card__icon--external">
+            <ExternalLink />
+          </span>
+        )}
+      </div>
     </div>
   )
 }
 
-const ContactCard: React.FC<Omit<CardProps, 'onClick'>> = ({
+const ContactCard: React.FC<
+  Omit<CardProps, 'onClick'> & { showExternalLink?: boolean }
+> = ({
   title,
   subtitle,
   icon,
   color = 'primary',
-  size = 'medio'
+  size = 'medio',
+  showExternalLink = false
 }) => {
   const { titleLevel, subtitleSize } = CONFIGS[size]
 
@@ -56,6 +70,11 @@ const ContactCard: React.FC<Omit<CardProps, 'onClick'>> = ({
           </P>
         )}
       </div>
+      {showExternalLink && (
+        <span className="card__icon card__icon--external card__icon--right">
+          <ExternalLink />
+        </span>
+      )}
     </div>
   )
 }
@@ -73,6 +92,8 @@ export const Card: React.FC<CardProps> = (props) => {
   } = props
 
   const canInteract = !disabled && !loading && onClick
+  const showExternalLink = !!onClick && !disabled && !loading
+
   const handleClick = () => canInteract && onClick()
   const handleKey = (e: React.KeyboardEvent) => {
     if ((e.key === 'Enter' || e.key === ' ') && canInteract) {
@@ -84,7 +105,7 @@ export const Card: React.FC<CardProps> = (props) => {
   const renderCardContent = () => {
     if (children) return children
 
-    const cardProps = { ...rest, color }
+    const cardProps = { ...rest, color, showExternalLink }
 
     switch (variant) {
       case 'contact':

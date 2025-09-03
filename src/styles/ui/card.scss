@@ -1,5 +1,5 @@
 // ============================================================================
-// CARD HORIZONTAL E CONTACT - OTIMIZADO E UNIFICADO
+// CARD HORIZONTAL E CONTACT - OTIMIZADO E UNIFICADO COM EXTERNAL LINK
 // ============================================================================
 
 @use 'sass:list';
@@ -45,6 +45,11 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 
+  // ✅ CONTAINER DE ÍCONES
+  &__icons {
+    @apply flex items-center gap-2 flex-shrink-0;
+  }
+
   // ✅ ÍCONE UNIFICADO - Herda cor do contexto
   &__icon {
     @apply flex-shrink-0;
@@ -62,6 +67,28 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
       svg {
         @apply w-6 h-6;
+      }
+    }
+
+    // ✅ External Link: ícone menor e mais sutil
+    &--external {
+      opacity: 0.6;
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      svg {
+        @apply w-4 h-4;
+      }
+
+      .card--clickable:hover & {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+
+      // ✅ Posicionamento fixo na direita
+      &.card__icon--right {
+        @apply ml-auto order-last;
       }
     }
   }
@@ -100,7 +127,7 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     &:hover:not(.card--disabled) {
       transform: scale(1.02) translateY(-4px);
       box-shadow: $shadow-elevated;
-      .card__icon {
+      .card__icon:not(.card__icon--external) {
         transform: scale(1.1);
       }
     }
@@ -240,6 +267,9 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         @apply w-5 h-5;
       }
     }
+    .card__icon--external svg {
+      @apply w-3 h-3;
+    }
   }
 
   &--grande {
@@ -254,6 +284,9 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       svg {
         @apply w-7 h-7;
       }
+    }
+    .card__icon--external svg {
+      @apply w-5 h-5;
     }
   }
 
@@ -272,6 +305,9 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       svg {
         @apply w-4 h-4;
       }
+    }
+    .card__icon--external svg {
+      @apply w-3 h-3;
     }
   }
 

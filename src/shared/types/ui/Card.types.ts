@@ -1,4 +1,3 @@
-// Card.types.ts
 import { Align, Size, ColorVariant } from './global.types'
 import { TitleLevel } from './Title.types'
 
@@ -17,7 +16,7 @@ export interface CardProps {
   loading?: boolean
   elevated?: boolean
   compact?: boolean
-  variant?: CardVariant // Nova prop
+  variant?: CardVariant
   onClick?: () => void
   className?: string
 }

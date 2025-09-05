@@ -3,9 +3,10 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import tailwindcss from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
+import { imagetools } from 'vite-imagetools'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), imagetools()],
   css: {
     postcss: {
       plugins: [tailwindcss(), autoprefixer()]
@@ -18,7 +19,6 @@ export default defineConfig({
       '@core': path.resolve(__dirname, './src/core'),
       '@features': path.resolve(__dirname, './src/features'),
       '@pages': path.resolve(__dirname, './src/pages'),
-      '@routes': path.resolve(__dirname, './src/routes'),
       '@shared': path.resolve(__dirname, './src/shared'),
       '@styles': path.resolve(__dirname, './src/styles')
     }

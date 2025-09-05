@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { analytics } from '@features/Analytics/utils'
-import { Title, P, NavFilter, ProjectGrid } from '@shared/ui'
+import { AnimatedContainer, Title, P, NavFilter, ProjectGrid } from '@shared/ui'
 import { FilterOption, Project } from '@shared/types'
 
 interface ProjectsSectionProps {
@@ -147,36 +147,44 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
     <section id={id}>
       {/* Header */}
       <div className="space-y-6">
-        <Title level="h2" border="bottom-start">
-          Meus {''}
-          <Title level="h2" element="span" color="primary">
-            Projetos
+        <AnimatedContainer animationType="fade-right">
+          <Title level="h2" border="bottom-start">
+            Meus {''}
+            <Title level="h2" element="span" color="primary">
+              Projetos
+            </Title>
           </Title>
-        </Title>
+        </AnimatedContainer>
 
-        <P size="grande" className="leading-relaxed md:max-w-md lg:max-w-2xl">
-          Aqui estão alguns dos projetos que desenvolvi, demonstrando minhas
-          habilidades em diferentes tecnologias e áreas de desenvolvimento.
-        </P>
+        <AnimatedContainer animationType="zoom-in-left">
+          <P size="grande" className="leading-relaxed md:max-w-md lg:max-w-2xl">
+            Aqui estão alguns dos projetos que desenvolvi, demonstrando minhas
+            habilidades em diferentes tecnologias e áreas de desenvolvimento.
+          </P>
+        </AnimatedContainer>
       </div>
 
       {/* Filtros */}
-      <NavFilter
-        className="mt-12"
-        options={filterOptions}
-        activeFilter={activeFilter}
-        onFilterChange={handleFilterChange}
-      />
+      <AnimatedContainer>
+        <NavFilter
+          className="mt-12"
+          options={filterOptions}
+          activeFilter={activeFilter}
+          onFilterChange={handleFilterChange}
+        />
+      </AnimatedContainer>
 
       {/* Grid de Projetos */}
-      <div key={animationKey} className={getGridClassName()}>
-        <ProjectGrid
-          projects={filteredProjects}
-          onGithubClick={handleGithubClick}
-          onDemoClick={handleDemoClick}
-          emptyMessage="Nenhum projeto encontrado para esta categoria."
-        />
-      </div>
+      <AnimatedContainer>
+        <div key={animationKey} className={getGridClassName()}>
+          <ProjectGrid
+            projects={filteredProjects}
+            onGithubClick={handleGithubClick}
+            onDemoClick={handleDemoClick}
+            emptyMessage="Nenhum projeto encontrado para esta categoria."
+          />
+        </div>
+      </AnimatedContainer>
     </section>
   )
 }

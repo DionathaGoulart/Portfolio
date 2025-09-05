@@ -1,7 +1,17 @@
 import React from 'react'
 import { analytics } from '@features/Analytics/utils'
-import { Title, Text, Image, Card, CardsContainer } from '@shared/ui'
-import { images } from '@assets/images'
+import {
+  AnimatedContainer,
+  Title,
+  Text,
+  Image,
+  Card,
+  CardsContainer
+} from '@shared/ui'
+import MeRaw from '@assets/images/me.jpg'
+import { getImage } from '@core/utils/getImage'
+
+const Me = getImage(`${MeRaw}?as=webp&width=400`)
 
 interface SobreProps {
   id?: string
@@ -89,57 +99,53 @@ const SobreSection: React.FC<SobreProps> = ({ id = '' }) => {
         </Title>
 
         {/* Texto em duas colunas */}
-        <div className="grid md:grid-cols-1 gap-8">
-          <div className="space-y-4">
-            {/* Layout sidebar com flexbox */}
-            <div className="flex flex-col md:flex-row items-start gap-8">
-              {/* Imagem como componente separado */}
-              <Image
-                src={images.me}
-                alt="Foto do desenvolvedor"
-                size="sidebar"
-                shape="rectangle"
-                shadow="strong"
-                neonFire="primary"
-                onClick={() => {
-                  // TRACKING: Rastrear clique na foto
-                  analytics.trackButtonClick('profile_photo')
-                }}
-              />
+        <AnimatedContainer>
+          <div className="flex flex-col md:flex-row items-start gap-8">
+            {/* Imagem como componente separado */}
+            <Image
+              src={Me}
+              alt="Foto do desenvolvedor"
+              size="sidebar"
+              shape="rectangle"
+              shadow="strong"
+              neonFire="primary"
+              onClick={() => analytics.trackButtonClick('profile_photo')}
+            />
 
-              {/* Texto em 3 colunas */}
-              <Text size="grande" columns={3} className="flex-1">
-                Desenvolvedor fullstack apaixonado por tecnologia e inovação,
-                com mais de 5 anos de experiência criando soluções digitais que
-                fazem a diferença. Especializado em arquiteturas modernas,
-                sempre buscando as melhores práticas para entregar produtos de
-                alta qualidade. Acredito que o código deve ser elegante,
-                performático e sustentável. Quando não estou codando, gosto de
-                contribuir com projetos open source, estudar novas tecnologias e
-                compartilhar conhecimento com a comunidade.
-              </Text>
-            </div>
+            {/* Texto em 3 colunas */}
+            <Text size="grande" columns={3} className="flex-1">
+              Desenvolvedor fullstack apaixonado por tecnologia e inovação, com
+              mais de 5 anos de experiência criando soluções digitais que fazem
+              a diferença. Especializado em arquiteturas modernas, sempre
+              buscando as melhores práticas para entregar produtos de alta
+              qualidade. Acredito que o código deve ser elegante, performático e
+              sustentável. Quando não estou codando, gosto de contribuir com
+              projetos open source, estudar novas tecnologias e compartilhar
+              conhecimento com a comunidade.
+            </Text>
           </div>
-        </div>
+        </AnimatedContainer>
 
         {/* Tecnologias */}
-        <div className="space-y-6">
+        <AnimatedContainer animationType="zoom-out-up">
           <Title level="h3" align="center" color="primary">
             Principais Tecnologias
           </Title>
-        </div>
-        <CardsContainer type="grid" columns={5}>
-          {tecnologias.map((tech, index) => (
-            <Card
-              key={index}
-              title={tech.title}
-              subtitle={tech.subtitle}
-              icon={tech.icon}
-              size="pequeno"
-              color="primary"
-            />
-          ))}
-        </CardsContainer>
+        </AnimatedContainer>
+        <AnimatedContainer>
+          <CardsContainer type="grid" columns={5}>
+            {tecnologias.map((tech, index) => (
+              <Card
+                key={index}
+                title={tech.title}
+                subtitle={tech.subtitle}
+                icon={tech.icon}
+                size="pequeno"
+                color="primary"
+              />
+            ))}
+          </CardsContainer>
+        </AnimatedContainer>
       </div>
     </section>
   )

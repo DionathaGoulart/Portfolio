@@ -2,7 +2,16 @@ import React, { useState, useCallback, useMemo } from 'react'
 import emailjs from '@emailjs/browser'
 import { emailjsConfig, isEmailJSConfigured } from '@features/Emailjs'
 import { analytics } from '@features/Analytics/utils'
-import { Button, Card, FormField, Input, P, Textarea, Title } from '@shared/ui'
+import {
+  AnimatedContainer,
+  Button,
+  Card,
+  FormField,
+  Input,
+  P,
+  Textarea,
+  Title
+} from '@shared/ui'
 
 interface ContactSectionProps {
   id?: string
@@ -319,156 +328,165 @@ const ContactSection: React.FC<ContactSectionProps> = ({ id = '' }) => {
       <div className="space-y-12">
         {/* Cabeçalho */}
         <div className="space-y-6">
-          <Title level="h2" align="center" border="bottom-center">
-            Vamos{' '}
-            <Title level="h2" element="span" color="primary">
-              Conversar
+          <AnimatedContainer animationType="zoom-in-down">
+            <Title level="h2" align="center" border="bottom-center">
+              Vamos{' '}
+              <Title level="h2" element="span" color="primary">
+                Conversar
+              </Title>
             </Title>
-          </Title>
-          <P
-            size="grande"
-            align="center"
-            className="leading-relaxed md:max-w-md lg:max-w-none"
-          >
-            Tem um projeto em mente? Quer discutir uma oportunidade? Estou
-            sempre aberto para novas parcerias e desafios.
-          </P>
+          </AnimatedContainer>
+          <AnimatedContainer animationType="zoom-in-up">
+            <P
+              size="grande"
+              align="center"
+              className="leading-relaxed md:max-w-md lg:max-w-none"
+            >
+              Tem um projeto em mente? Quer discutir uma oportunidade? Estou
+              sempre aberto para novas parcerias e desafios.
+            </P>
+          </AnimatedContainer>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16">
           {/* Formulário */}
-          <div className="space-y-6">
-            <Title level="h3" color="primary" border="top-start">
-              Envie uma Mensagem
-            </Title>
-            <P className="leading-relaxed md:max-w-md lg:max-w-2xl">
-              Preencha o formulário abaixo e entrarei em contato o mais breve
-              possível.
-            </P>
+          <AnimatedContainer animationType="fade-right">
+            <div className="space-y-6">
+              <Title level="h3" color="primary" border="top-start">
+                Envie uma Mensagem
+              </Title>
+              <P className="leading-relaxed md:max-w-md lg:max-w-2xl">
+                Preencha o formulário abaixo e entrarei em contato o mais breve
+                possível.
+              </P>
 
-            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-              <FormField label="Nome" required error={errors.nome}>
-                <Input
-                  name="nome"
-                  value={formData.nome}
-                  placeholder="Seu nome completo"
-                  onChange={handleInputChange}
-                  error={Boolean(errors.nome)}
-                  required
-                />
-              </FormField>
+              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                <FormField label="Nome" required error={errors.nome}>
+                  <Input
+                    name="nome"
+                    value={formData.nome}
+                    placeholder="Seu nome completo"
+                    onChange={handleInputChange}
+                    error={Boolean(errors.nome)}
+                    required
+                  />
+                </FormField>
 
-              <FormField label="Email" required error={errors.email}>
-                <Input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  placeholder="seu.email@exemplo.com"
-                  onChange={handleInputChange}
-                  error={Boolean(errors.email)}
-                  required
-                />
-              </FormField>
+                <FormField label="Email" required error={errors.email}>
+                  <Input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    placeholder="seu.email@exemplo.com"
+                    onChange={handleInputChange}
+                    error={Boolean(errors.email)}
+                    required
+                  />
+                </FormField>
 
-              <FormField label="Assunto" required error={errors.assunto}>
-                <Input
-                  name="assunto"
-                  value={formData.assunto}
-                  placeholder="Sobre o que você gostaria de conversar?"
-                  onChange={handleInputChange}
-                  error={Boolean(errors.assunto)}
-                  required
-                />
-              </FormField>
+                <FormField label="Assunto" required error={errors.assunto}>
+                  <Input
+                    name="assunto"
+                    value={formData.assunto}
+                    placeholder="Sobre o que você gostaria de conversar?"
+                    onChange={handleInputChange}
+                    error={Boolean(errors.assunto)}
+                    required
+                  />
+                </FormField>
 
-              <FormField label="Mensagem" required error={errors.mensagem}>
-                <Textarea
-                  name="mensagem"
-                  value={formData.mensagem}
-                  placeholder="Conte-me mais sobre seu projeto ou ideia..."
-                  rows={5}
-                  onChange={handleInputChange}
-                  error={Boolean(errors.mensagem)}
-                  required
-                />
-              </FormField>
+                <FormField label="Mensagem" required error={errors.mensagem}>
+                  <Textarea
+                    name="mensagem"
+                    value={formData.mensagem}
+                    placeholder="Conte-me mais sobre seu projeto ou ideia..."
+                    rows={5}
+                    onChange={handleInputChange}
+                    error={Boolean(errors.mensagem)}
+                    required
+                  />
+                </FormField>
 
-              {/* Status messages */}
-              {submitStatus === 'success' && (
-                <div className="p-4 bg-theme-success/10 border border-theme-success rounded-lg">
-                  <P color="success">
-                    Mensagem enviada com sucesso! Entrarei em contato em breve.
-                  </P>
-                </div>
-              )}
+                {/* Status messages */}
+                {submitStatus === 'success' && (
+                  <div className="p-4 bg-theme-success/10 border border-theme-success rounded-lg">
+                    <P color="success">
+                      Mensagem enviada com sucesso! Entrarei em contato em
+                      breve.
+                    </P>
+                  </div>
+                )}
 
-              {submitStatus === 'error' && (
-                <div className="p-4 bg-theme-error/10 border border-theme-error rounded-lg">
-                  <P color="error">
-                    Ocorreu um erro ao enviar a mensagem. Tente novamente ou
-                    entre em contato diretamente pelo email.
-                  </P>
-                </div>
-              )}
+                {submitStatus === 'error' && (
+                  <div className="p-4 bg-theme-error/10 border border-theme-error rounded-lg">
+                    <P color="error">
+                      Ocorreu um erro ao enviar a mensagem. Tente novamente ou
+                      entre em contato diretamente pelo email.
+                    </P>
+                  </div>
+                )}
 
-              <Button
-                type="submit"
-                variant="solid"
-                size="grande"
-                loading={isLoading}
-                disabled={isLoading || !isFormValid}
-                className="w-full"
-              >
-                {isLoading ? 'Enviando...' : 'Enviar Mensagem'}
-              </Button>
-            </form>
-          </div>
+                <Button
+                  type="submit"
+                  variant="solid"
+                  size="grande"
+                  loading={isLoading}
+                  disabled={isLoading || !isFormValid}
+                  className="w-full"
+                >
+                  {isLoading ? 'Enviando...' : 'Enviar Mensagem'}
+                </Button>
+              </form>
+            </div>
+          </AnimatedContainer>
 
           {/* Informações de contato */}
-          <div className="space-y-6">
-            <Title level="h3" align="end" color="primary" border="top-end">
-              Informações de Contato
-            </Title>
-            <P
-              anchor="right"
-              align="end"
-              className="leading-relaxed md:max-w-md lg:max-w-2xl"
-            >
-              Prefere outro meio de contato? Aqui estão todas as formas de
-              entrar em contato comigo.
-            </P>
+          <AnimatedContainer animationType="fade-left">
+            <div className="space-y-6">
+              <Title level="h3" align="end" color="primary" border="top-end">
+                Informações de Contato
+              </Title>
+              <P
+                anchor="right"
+                align="end"
+                className="leading-relaxed md:max-w-md lg:max-w-2xl"
+              >
+                Prefere outro meio de contato? Aqui estão todas as formas de
+                entrar em contato comigo.
+              </P>
 
-            {/* Contatos diretos */}
-            <div className="space-y-4 mb-12">
-              {directContactCards.map((card, index) => (
-                <Card
-                  key={index}
-                  variant="contact"
-                  icon={card.icon}
-                  title={card.title}
-                  subtitle={card.subtitle}
-                  onClick={card.onClick}
-                />
-              ))}
-            </div>
+              {/* Contatos diretos */}
+              <div className="space-y-4 mb-12">
+                {directContactCards.map((card, index) => (
+                  <Card
+                    key={index}
+                    variant="contact"
+                    icon={card.icon}
+                    title={card.title}
+                    subtitle={card.subtitle}
+                    onClick={card.onClick}
+                  />
+                ))}
+              </div>
 
-            {/* Redes sociais */}
-            <Title level="h3" className="mb-6">
-              Redes Sociais
-            </Title>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {socialCards.map((card, index) => (
-                <Card
-                  key={index}
-                  variant="contact"
-                  icon={card.icon}
-                  title={card.title}
-                  subtitle={card.subtitle}
-                  onClick={card.onClick}
-                />
-              ))}
+              {/* Redes sociais */}
+              <Title level="h3" className="mb-6">
+                Redes Sociais
+              </Title>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {socialCards.map((card, index) => (
+                  <Card
+                    key={index}
+                    variant="contact"
+                    icon={card.icon}
+                    title={card.title}
+                    subtitle={card.subtitle}
+                    onClick={card.onClick}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          </AnimatedContainer>
         </div>
       </div>
     </section>

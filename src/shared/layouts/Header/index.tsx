@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { analytics } from '@features/Analytics/utils'
 import { useTheme } from '@features/Theme/contexts'
+import { AnimatedContainer } from '@shared/ui'
 import { HeaderProps } from '@shared/types'
 
 // ============================================================================
@@ -342,61 +343,67 @@ export const Header: React.FC<HeaderProps> = ({
   // ============================================================================
 
   const renderLogo = () => (
-    <button
-      onClick={handleLogoClick}
-      className="header__logo"
-      disabled={disabled}
-      aria-label="Ir para o início"
-    >
-      {logoText}
-    </button>
+    <AnimatedContainer animationType="fade-right">
+      <button
+        onClick={handleLogoClick}
+        className="header__logo"
+        disabled={disabled}
+        aria-label="Ir para o início"
+      >
+        {logoText}
+      </button>
+    </AnimatedContainer>
   )
 
   const renderDesktopNavigation = () => {
     if (!hasNavigation) return null
 
     return (
-      <div className="header__nav-desktop">
-        {navLinks.map((link) => (
-          <button
-            key={link.id}
-            onClick={() => handleScrollTo(link.id)}
-            className={`header__nav-link ${
-              activeSection === link.id ? 'header__nav-link--active' : ''
-            }`}
-            disabled={disabled}
-          >
-            {link.label}
-          </button>
-        ))}
-      </div>
+      <AnimatedContainer animationType="fade-down">
+        <div className="header__nav-desktop">
+          {navLinks.map((link) => (
+            <button
+              key={link.id}
+              onClick={() => handleScrollTo(link.id)}
+              className={`header__nav-link ${
+                activeSection === link.id ? 'header__nav-link--active' : ''
+              }`}
+              disabled={disabled}
+            >
+              {link.label}
+            </button>
+          ))}
+        </div>
+      </AnimatedContainer>
     )
   }
 
   const renderControls = () => (
-    <div className="header__controls">
-      {showThemeToggle && (
-        <button
-          onClick={handleThemeToggle}
-          className="header__theme-toggle"
-          disabled={disabled}
-          aria-label={`Alternar para tema ${theme === 'light' ? 'escuro' : 'claro'}`}
-        >
-          {theme === 'light' ? <MoonIcon /> : <SunIcon />}
-        </button>
-      )}
+    <AnimatedContainer animationType="fade-left">
+      <div className="header__controls">
+        {showThemeToggle && (
+          <button
+            onClick={handleThemeToggle}
+            className="header__theme-toggle"
+            disabled={disabled}
+            aria-label={`Alternar para tema ${theme === 'light' ? 'escuro' : 'claro'}`}
+          >
+            {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+          </button>
+        )}
 
-      {hasNavigation && (
-        <button
-          onClick={handleMobileMenuToggle}
-          className="header__mobile-toggle"
-          disabled={disabled}
-          aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
-        >
-          {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
-        </button>
-      )}
-    </div>
+        {hasNavigation && (
+          <button
+            onClick={handleMobileMenuToggle}
+            className="header__mobile-toggle"
+            disabled={disabled}
+            aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+          >
+            {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+          </button>
+        )}
+      </div>
+    </AnimatedContainer>
   )
 
   const renderMobileMenu = () => {

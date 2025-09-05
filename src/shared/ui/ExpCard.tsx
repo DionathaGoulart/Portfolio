@@ -1,6 +1,6 @@
 import React from 'react'
 import { P, Tag, TagGroup, Title } from '@shared/ui'
-import '@styles/ui/expcard.scss'
+import { AnimatedContainer } from './Animated'
 
 // ============================================================================
 // TYPES
@@ -204,11 +204,13 @@ export const ExpList: React.FC<ExpListProps> = ({
       {/* Experience cards */}
       <div className="experience-list__items">
         {experiences.map((experience, index) => (
-          <Exp
-            key={experience.id || index}
-            {...experience}
-            showTimeline={showTimeline}
-          />
+          <AnimatedContainer animationType="slide-left">
+            <Exp
+              key={experience.id || index}
+              {...experience}
+              showTimeline={showTimeline}
+            />
+          </AnimatedContainer>
         ))}
       </div>
     </div>

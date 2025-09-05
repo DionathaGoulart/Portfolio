@@ -3,6 +3,7 @@ import Header from './Header'
 import Footer from './Footer'
 import ScrollToTop from '../ui/ScroolToTop'
 import { MainLayoutProps } from '@shared/types'
+import '@styles/layout.scss'
 
 // ============================================================================
 // MAIN LAYOUT COMPONENT

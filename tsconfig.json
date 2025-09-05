@@ -48,12 +48,6 @@
       "@pages/*": [
         "src/pages/*"
       ],
-      "@routes": [
-        "src/core/router/routes"
-      ],
-      "@routes/*": [
-        "src/core/router/routes/*"
-      ],
       "@shared": [
         "src/shared"
       ],

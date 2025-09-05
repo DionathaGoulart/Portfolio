@@ -37,7 +37,7 @@ export function HomePage({ setSections, setPageTitle }: HomePageProps) {
   }, [setSections, setPageTitle])
 
   return (
-    <div className="space-y-72">
+    <div className="space-y-80">
       <HomeSection id="inicio" />
       <SobreSection id="sobre-mim" />
       <ProjectsSection id="meus-projetos" />

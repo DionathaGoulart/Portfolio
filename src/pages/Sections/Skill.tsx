@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { analytics } from '@features/Analytics/utils'
-import { Title, P, NavFilter, SkillGrid } from '@/shared/ui'
-import { Skill, SkillsSectionProps } from '@/shared/types'
+import { AnimatedContainer, Title, P, NavFilter, SkillGrid } from '@shared/ui'
+import { Skill, SkillsSectionProps } from '@shared/types'
 
 // ============================================================================
 // DADOS DAS HABILIDADES
@@ -109,45 +109,53 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
     <section id={id}>
       {/* Header */}
       <div className="space-y-6">
-        <Title level="h2" align="end" border="bottom-end">
-          Habilidades {''}
-          <Title level="h2" element="span" color="primary">
-            Técnicas
+        <AnimatedContainer animationType="fade-left">
+          <Title level="h2" align="end" border="bottom-end">
+            Habilidades {''}
+            <Title level="h2" element="span" color="primary">
+              Técnicas
+            </Title>
           </Title>
-        </Title>
-        <P
-          size="grande"
-          align="end"
-          className="leading-relaxed md:max-w-md lg:max-w-2xl "
-          anchor="right"
-        >
-          Domínio em tecnologias modernas para desenvolvimento de aplicações
-          robustas e escaláveis em todo o stack.
-        </P>
+        </AnimatedContainer>
+        <AnimatedContainer animationType="zoom-out-up">
+          <P
+            size="grande"
+            align="end"
+            className="leading-relaxed md:max-w-md lg:max-w-2xl "
+            anchor="right"
+          >
+            Domínio em tecnologias modernas para desenvolvimento de aplicações
+            robustas e escaláveis em todo o stack.
+          </P>
+        </AnimatedContainer>
       </div>
       {/* Filtros */}
       <div className="space-y-12">
-        <NavFilter
-          className="mt-12"
-          options={filterOptions}
-          activeFilter={activeFilter}
-          onFilterChange={handleFilterChange}
-          size="medium"
-          layout="horizontal"
-          align="center"
-          ariaLabel="Filtrar habilidades por categoria"
-        />
+        <AnimatedContainer animationType="fade-up">
+          <NavFilter
+            className="mt-12"
+            options={filterOptions}
+            activeFilter={activeFilter}
+            onFilterChange={handleFilterChange}
+            size="medium"
+            layout="horizontal"
+            align="center"
+            ariaLabel="Filtrar habilidades por categoria"
+          />
+        </AnimatedContainer>
 
         {/* Skills Grid */}
         {getFilteredCategories().map(({ key, skills, delay }) => (
-          <SkillGrid
-            key={key}
-            skills={skills}
-            columns="responsive"
-            gap="medium"
-            animationDelay={delay}
-            showCategories={activeFilter === 'all'} // Só mostra títulos quando "Todas" está ativo
-          />
+          <AnimatedContainer>
+            <SkillGrid
+              key={key}
+              skills={skills}
+              columns="responsive"
+              gap="medium"
+              animationDelay={delay}
+              showCategories={activeFilter === 'all'} // Só mostra títulos quando "Todas" está ativo
+            />
+          </AnimatedContainer>
         ))}
       </div>
     </section>

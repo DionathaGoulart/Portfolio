@@ -323,7 +323,7 @@
 
   // Layout do conteúdo
   &__content {
-    @apply flex-grow pb-8;
+    @apply flex-grow pb-8 overflow-x-hidden;
   }
 
   &__container {

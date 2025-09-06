@@ -3,14 +3,26 @@ import { analytics } from '@features/Analytics/utils'
 import { AnimatedContainer, Title, P, ExpList } from '@shared/ui'
 import { ExpCardProps } from '@shared/ui/ExpCard'
 
+// ================================
+// INTERFACES E TIPOS
+// ================================
+
+/**
+ * Props do componente ExperienceSection
+ */
 interface ExperienceSectionProps {
+  /** ID único da seção para âncoras e navegação */
   id?: string
 }
 
-// ============================================================================
-// DADOS DAS EXPERIÊNCIAS
-// ============================================================================
+// ================================
+// DADOS E CONFIGURAÇÕES
+// ================================
 
+/**
+ * Dados das experiências profissionais organizadas cronologicamente
+ * Do mais recente para o mais antigo
+ */
 const experiencesData: ExpCardProps[] = [
   {
     id: '1',
@@ -27,7 +39,6 @@ const experiencesData: ExpCardProps[] = [
       'AWS',
       'Docker'
     ],
-    // Removido variant - será aplicado o defaultVariant da lista
     interactive: true,
     onClick: () => analytics.trackButtonClick('experience_techcorp')
   },
@@ -73,50 +84,92 @@ const experiencesData: ExpCardProps[] = [
   }
 ]
 
-// ============================================================================
-// EXPERIENCE SECTION COMPONENT
-// ============================================================================
+// ================================
+// HOOKS E FUNÇÕES AUXILIARES
+// ================================
 
-const ExperienceSection: React.FC<ExperienceSectionProps> = ({
-  id = 'experiencia-profissional'
-}) => {
-  // Handlers com analytics
-  const handleSectionView = () => {
+/**
+ * Hook para gerenciar analytics da seção de experiência
+ */
+const useExperienceAnalytics = () => {
+  const trackSectionView = (): void => {
     analytics.trackButtonClick('experience_section_viewed')
   }
 
+  return { trackSectionView }
+}
+
+// ================================
+// COMPONENTES
+// ================================
+
+/**
+ * Cabeçalho da seção de experiência profissional
+ */
+const ExperienceHeader: React.FC = () => (
+  <header className="space-y-6">
+    <AnimatedContainer animationType="fade-right">
+      <Title level="h2" border="bottom-start">
+        Experiência{' '}
+        <Title level="h2" element="span" color="primary">
+          Profissional
+        </Title>
+      </Title>
+    </AnimatedContainer>
+
+    <AnimatedContainer animationType="zoom-out-up">
+      <P size="grande" className="leading-relaxed md:max-w-md lg:max-w-2xl">
+        Minha jornada profissional construindo soluções digitais inovadoras,
+        desde os primeiros passos até projetos de alta complexidade.
+      </P>
+    </AnimatedContainer>
+  </header>
+)
+
+/**
+ * Timeline de experiências profissionais
+ */
+const ExperienceTimeline: React.FC = () => (
+  <AnimatedContainer animationType="fade-up">
+    <ExpList
+      experiences={experiencesData}
+      showTimeline={true}
+      defaultVariant="highlight"
+      aria-label="Timeline de experiências profissionais"
+    />
+  </AnimatedContainer>
+)
+
+// ================================
+// COMPONENTE PRINCIPAL
+// ================================
+
+/**
+ * Seção de experiência profissional com timeline interativa
+ *
+ * Apresenta a trajetória profissional em formato de timeline,
+ * destacando conquistas, tecnologias utilizadas e responsabilidades
+ * em cada posição. Inclui rastreamento de analytics para interações.
+ *
+ * @param props - Propriedades do componente
+ * @returns JSX.Element
+ */
+const ExperienceSection: React.FC<ExperienceSectionProps> = ({
+  id = 'experiencia-profissional'
+}) => {
+  const { trackSectionView } = useExperienceAnalytics()
+
   return (
-    <section id={id} onLoad={handleSectionView}>
+    <section
+      id={id}
+      aria-labelledby={`${id}-cabeçalho`}
+      role="region"
+      aria-label="Seção de experiência profissional"
+      onLoad={trackSectionView}
+    >
       <div className="space-y-12">
-        {/* Header */}
-        <div className="space-y-6">
-          <AnimatedContainer animationType="fade-right">
-            <Title level="h2" border="bottom-start">
-              Experiência {''}
-              <Title level="h2" element="span" color="primary">
-                Profissional
-              </Title>
-            </Title>
-          </AnimatedContainer>
-
-          <AnimatedContainer animationType="zoom-out-up">
-            <P
-              size="grande"
-              className="leading-relaxed md:max-w-md lg:max-w-2xl"
-            >
-              Minha jornada profissional construindo soluções digitais
-              inovadoras, desde os primeiros passos até projetos de alta
-              complexidade.
-            </P>
-          </AnimatedContainer>
-        </div>
-
-        {/* Timeline de Experiências */}
-        <ExpList
-          experiences={experiencesData}
-          showTimeline={true}
-          defaultVariant="highlight"
-        />
+        <ExperienceHeader />
+        <ExperienceTimeline />
       </div>
     </section>
   )

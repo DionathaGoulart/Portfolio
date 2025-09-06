@@ -3,14 +3,25 @@ import { analytics } from '@features/Analytics/utils'
 import { AnimatedContainer, Title, P, NavFilter, ProjectGrid } from '@shared/ui'
 import { FilterOption, Project } from '@shared/types'
 
+// ================================
+// INTERFACES & TYPES
+// ================================
+
+/**
+ * Props para o componente ProjectsSection
+ */
 interface ProjectsSectionProps {
+  /** ID único da seção para navegação/âncora */
   id?: string
 }
 
-// ============================================================================
-// FILTROS DISPONÍVEIS
-// ============================================================================
+// ================================
+// CONSTANTES & CONFIGURAÇÕES
+// ================================
 
+/**
+ * Opções de filtro disponíveis para categorizar projetos
+ */
 const filterOptions: FilterOption[] = [
   { value: 'todos', label: 'Todos' },
   { value: 'frontend', label: 'Frontend' },
@@ -19,10 +30,10 @@ const filterOptions: FilterOption[] = [
   { value: 'progress', label: 'Em Progresso' }
 ]
 
-// ============================================================================
-// DADOS DOS PROJETOS
-// ============================================================================
-
+/**
+ * Base de dados dos projetos com informações completas
+ * Estruturado para facilitar filtros e exibição
+ */
 const projectsData: Project[] = [
   {
     id: '1',
@@ -92,63 +103,114 @@ const projectsData: Project[] = [
   }
 ]
 
-// ============================================================================
-// PROJECTS SECTION COMPONENT
-// ============================================================================
+// Tempo para considerar fim do carregamento inicial (ms)
+const INITIAL_LOAD_TIMEOUT = 2000
 
+// ================================
+// HOOKS & HELPERS
+// ================================
+
+/**
+ * Filtra projetos baseado na categoria ativa
+ */
+const useFilteredProjects = (activeFilter: string): Project[] => {
+  return activeFilter === 'todos'
+    ? projectsData
+    : projectsData.filter((project) => project.category === activeFilter)
+}
+
+/**
+ * Determina a classe CSS para animação do grid baseado no estado
+ */
+const getGridAnimationClass = (isInitialLoad: boolean): string => {
+  return isInitialLoad
+    ? 'project-grid--initial-load'
+    : 'project-grid--filter-change'
+}
+
+// ================================
+// COMPONENTE PRINCIPAL
+// ================================
+
+/**
+ * Seção de projetos com sistema de filtros e grid responsivo
+ * Inclui analytics tracking e animações baseadas em estado
+ */
 const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   id = 'meus-projetos'
 }) => {
+  // ================================
+  // ESTADO LOCAL
+  // ================================
+
   const [activeFilter, setActiveFilter] = useState<string>('todos')
   const [isInitialLoad, setIsInitialLoad] = useState(true)
   const [animationKey, setAnimationKey] = useState(0)
 
-  // Filtrar projetos baseado no filtro ativo
-  const filteredProjects =
-    activeFilter === 'todos'
-      ? projectsData
-      : projectsData.filter((project) => project.category === activeFilter)
+  // ================================
+  // DADOS COMPUTADOS
+  // ================================
 
-  // Marcar que não é mais carregamento inicial
+  const filteredProjects = useFilteredProjects(activeFilter)
+  const gridClassName = getGridAnimationClass(isInitialLoad)
+
+  // ================================
+  // EFEITOS
+  // ================================
+
+  /**
+   * Marca fim do carregamento inicial após timeout
+   * Necessário para diferenciar animações de primeira carga vs filtros
+   */
   useEffect(() => {
-    if (isInitialLoad) {
-      const timer = setTimeout(() => {
-        setIsInitialLoad(false)
-      }, 2000) // Após 2s, considera que já passou o carregamento inicial
+    if (!isInitialLoad) return
 
-      return () => clearTimeout(timer)
-    }
+    const timer = setTimeout(() => {
+      setIsInitialLoad(false)
+    }, INITIAL_LOAD_TIMEOUT)
+
+    return () => clearTimeout(timer)
   }, [isInitialLoad])
 
-  // Handlers com analytics
-  const handleFilterChange = (filter: string) => {
+  // ================================
+  // HANDLERS
+  // ================================
+
+  /**
+   * Manipula mudança de filtro com analytics e animação
+   */
+  const handleFilterChange = (filter: string): void => {
     setActiveFilter(filter)
-    setAnimationKey((prev) => prev + 1) // ← Força re-render com nova animação
+    setAnimationKey((prev) => prev + 1) // Força re-render para nova animação
     analytics.trackButtonClick(`filter_projects_${filter}`)
   }
 
-  const handleGithubClick = (projectId: string) => {
+  /**
+   * Manipula clique no link do GitHub com analytics
+   */
+  const handleGithubClick = (projectId: string): void => {
     analytics.trackButtonClick(`github_project_${projectId}`)
   }
 
-  const handleDemoClick = (projectId: string) => {
+  /**
+   * Manipula clique no link de demo com analytics
+   */
+  const handleDemoClick = (projectId: string): void => {
     analytics.trackButtonClick(`demo_project_${projectId}`)
   }
 
-  // Determina qual classe de animação usar
-  const getGridClassName = () => {
-    if (isInitialLoad) {
-      return 'project-grid--initial-load'
-    }
-    return 'project-grid--filter-change'
-  }
+  // ================================
+  // RENDER
+  // ================================
 
   return (
-    <section id={id}>
-      {/* Header */}
-      <div className="space-y-6">
+    <section id={id} aria-labelledby="lista-projetos" role="region">
+      {/* ================================ */}
+      {/* CABEÇALHO DA SEÇÃO */}
+      {/* ================================ */}
+      <header className="space-y-6">
         <AnimatedContainer animationType="fade-right">
-          <Title level="h2" border="bottom-start">
+          <Title id="projetos-título" level="h2" border="bottom-start">
             Meus {''}
             <Title level="h2" element="span" color="primary">
               Projetos
@@ -162,31 +224,50 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             habilidades em diferentes tecnologias e áreas de desenvolvimento.
           </P>
         </AnimatedContainer>
-      </div>
+      </header>
 
-      {/* Filtros */}
-      <AnimatedContainer>
-        <NavFilter
-          className="mt-12"
-          options={filterOptions}
-          activeFilter={activeFilter}
-          onFilterChange={handleFilterChange}
-        />
-      </AnimatedContainer>
-
-      {/* Grid de Projetos */}
-      <AnimatedContainer>
-        <div key={animationKey} className={getGridClassName()}>
-          <ProjectGrid
-            projects={filteredProjects}
-            onGithubClick={handleGithubClick}
-            onDemoClick={handleDemoClick}
-            emptyMessage="Nenhum projeto encontrado para esta categoria."
+      {/* ================================ */}
+      {/* NAVEGAÇÃO POR FILTROS */}
+      {/* ================================ */}
+      <nav aria-label="Filtros de projetos por categoria" role="navigation">
+        <AnimatedContainer>
+          <NavFilter
+            className="mt-12"
+            options={filterOptions}
+            activeFilter={activeFilter}
+            onFilterChange={handleFilterChange}
+            aria-label="Selecionar categoria de projetos"
           />
-        </div>
-      </AnimatedContainer>
+        </AnimatedContainer>
+      </nav>
+
+      {/* ================================ */}
+      {/* GRID DE PROJETOS */}
+      {/* ================================ */}
+      <main
+        aria-live="polite"
+        aria-label={`${filteredProjects.length} projetos encontrados na categoria ${
+          filterOptions.find((opt) => opt.value === activeFilter)?.label ||
+          'Todos'
+        }`}
+      >
+        <AnimatedContainer>
+          <div key={animationKey} className={gridClassName}>
+            <ProjectGrid
+              projects={filteredProjects}
+              onGithubClick={handleGithubClick}
+              onDemoClick={handleDemoClick}
+              emptyMessage="Nenhum projeto encontrado para esta categoria."
+            />
+          </div>
+        </AnimatedContainer>
+      </main>
     </section>
   )
 }
+
+// ================================
+// EXPORTAÇÃO
+// ================================
 
 export default ProjectsSection

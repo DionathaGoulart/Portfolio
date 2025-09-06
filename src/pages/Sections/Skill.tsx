@@ -1,12 +1,44 @@
 import React, { useState } from 'react'
 import { analytics } from '@features/Analytics/utils'
 import { AnimatedContainer, Title, P, NavFilter, SkillGrid } from '@shared/ui'
-import { Skill, SkillsSectionProps } from '@shared/types'
+import { Skill } from '@shared/types'
 
-// ============================================================================
-// DADOS DAS HABILIDADES
-// ============================================================================
+// ================================
+// INTERFACES E TIPOS
+// ================================
 
+/**
+ * Props do componente SkillsSection
+ */
+interface SkillsSectionProps {
+  /** ID único da seção para âncoras e navegação */
+  id?: string
+}
+
+/**
+ * Configuração de categoria de habilidades
+ */
+interface SkillCategory {
+  key: string
+  skills: Skill[]
+  delay: number
+}
+
+/**
+ * Opção de filtro para navegação
+ */
+interface FilterOption {
+  value: string
+  label: string
+}
+
+// ================================
+// DADOS E CONFIGURAÇÕES
+// ================================
+
+/**
+ * Dados das habilidades técnicas organizadas por categoria
+ */
 const skillsData: Skill[] = [
   // Frontend
   { id: '1', name: 'React', percentage: 95, category: 'frontend' },
@@ -35,42 +67,46 @@ const skillsData: Skill[] = [
   { id: '18', name: 'AWS', percentage: 70, category: 'tools' },
   { id: '19', name: 'Figma', percentage: 88, category: 'tools' },
 
-  // Em progresso
+  // Mobile
   { id: '20', name: 'React Native', percentage: 82, category: 'mobile' },
   { id: '21', name: 'Expo', percentage: 85, category: 'mobile' }
 ]
 
-// Categorias e suas configurações
-const skillCategories = [
+/**
+ * Configuração das categorias de habilidades com delays para animação
+ */
+const skillCategories: SkillCategory[] = [
   {
     key: 'frontend',
-    skills: skillsData.filter((s) => s.category === 'frontend'),
+    skills: skillsData.filter((skill) => skill.category === 'frontend'),
     delay: 100
   },
   {
     key: 'backend',
-    skills: skillsData.filter((s) => s.category === 'backend'),
+    skills: skillsData.filter((skill) => skill.category === 'backend'),
     delay: 150
   },
   {
     key: 'database',
-    skills: skillsData.filter((s) => s.category === 'database'),
+    skills: skillsData.filter((skill) => skill.category === 'database'),
     delay: 200
   },
   {
     key: 'tools',
-    skills: skillsData.filter((s) => s.category === 'tools'),
+    skills: skillsData.filter((skill) => skill.category === 'tools'),
     delay: 250
   },
   {
     key: 'mobile',
-    skills: skillsData.filter((s) => s.category === 'mobile'),
+    skills: skillsData.filter((skill) => skill.category === 'mobile'),
     delay: 300
   }
 ]
 
-// Opções para o filtro
-const filterOptions = [
+/**
+ * Opções de filtro para navegação entre categorias
+ */
+const filterOptions: FilterOption[] = [
   { value: 'all', label: 'Todas' },
   { value: 'frontend', label: 'Frontend' },
   { value: 'backend', label: 'Backend' },
@@ -79,58 +115,132 @@ const filterOptions = [
   { value: 'mobile', label: 'Mobile' }
 ]
 
-// ============================================================================
-// SKILLS SECTION COMPONENT
-// ============================================================================
+// ================================
+// HOOKS E FUNÇÕES AUXILIARES
+// ================================
 
-const SkillsSection: React.FC<SkillsSectionProps> = ({
-  id = 'habilidades-tecnicas'
-}) => {
+/**
+ * Hook customizado para gerenciar filtros e analytics das habilidades
+ */
+const useSkillsFiltering = () => {
   const [activeFilter, setActiveFilter] = useState<string>('all')
 
-  const trackSkillInteraction = (skillName: string) => {
+  const trackSkillInteraction = (skillName: string): void => {
     analytics.trackButtonClick(`skill_viewed_${skillName.toLowerCase()}`)
   }
 
-  const handleFilterChange = (filter: string) => {
+  const handleFilterChange = (filter: string): void => {
     setActiveFilter(filter)
     analytics.trackButtonClick(`skills_filter_${filter}`)
   }
 
-  // Filtra as categorias baseado no filtro ativo
-  const getFilteredCategories = () => {
+  const getFilteredCategories = (): SkillCategory[] => {
     if (activeFilter === 'all') {
       return skillCategories
     }
     return skillCategories.filter((category) => category.key === activeFilter)
   }
 
+  return {
+    activeFilter,
+    trackSkillInteraction,
+    handleFilterChange,
+    getFilteredCategories
+  }
+}
+
+// ================================
+// COMPONENTES
+// ================================
+
+/**
+ * Cabeçalho da seção de habilidades com título e descrição
+ */
+const SkillsHeader: React.FC = () => (
+  <header className="space-y-6">
+    <AnimatedContainer animationType="fade-left">
+      <Title level="h2" align="end" border="bottom-end">
+        Habilidades{' '}
+        <Title level="h2" element="span" color="primary">
+          Técnicas
+        </Title>
+      </Title>
+    </AnimatedContainer>
+    <AnimatedContainer animationType="zoom-out-up">
+      <P
+        size="grande"
+        align="end"
+        className="leading-relaxed md:max-w-md lg:max-w-2xl"
+        anchor="right"
+      >
+        Domínio em tecnologias modernas para desenvolvimento de aplicações
+        robustas e escaláveis em todo o stack.
+      </P>
+    </AnimatedContainer>
+  </header>
+)
+
+/**
+ * Grade de habilidades filtradas com animações
+ */
+interface SkillsGridSectionProps {
+  categories: SkillCategory[]
+  showCategories: boolean
+}
+
+const SkillsGridSection: React.FC<SkillsGridSectionProps> = ({
+  categories,
+  showCategories
+}) => (
+  <div className="space-y-12">
+    {categories.map(({ key, skills, delay }) => (
+      <AnimatedContainer key={key}>
+        <SkillGrid
+          skills={skills}
+          columns="responsive"
+          gap="medium"
+          animationDelay={delay}
+          showCategories={showCategories}
+        />
+      </AnimatedContainer>
+    ))}
+  </div>
+)
+
+// ================================
+// COMPONENTE PRINCIPAL
+// ================================
+
+/**
+ * Seção de habilidades técnicas com filtros interativos
+ *
+ * Apresenta as competências técnicas organizadas por categoria,
+ * com sistema de filtros para melhor navegação e experiência do usuário.
+ * Inclui analytics para rastreamento de interações.
+ *
+ * @param props - Propriedades do componente
+ * @returns JSX.Element
+ */
+const SkillsSection: React.FC<SkillsSectionProps> = ({
+  id = 'habilidades-tecnicas'
+}) => {
+  const { activeFilter, handleFilterChange, getFilteredCategories } =
+    useSkillsFiltering()
+
+  const filteredCategories = getFilteredCategories()
+  const showCategories = activeFilter === 'all'
+
   return (
-    <section id={id}>
-      {/* Header */}
-      <div className="space-y-6">
-        <AnimatedContainer animationType="fade-left">
-          <Title level="h2" align="end" border="bottom-end">
-            Habilidades {''}
-            <Title level="h2" element="span" color="primary">
-              Técnicas
-            </Title>
-          </Title>
-        </AnimatedContainer>
-        <AnimatedContainer animationType="zoom-out-up">
-          <P
-            size="grande"
-            align="end"
-            className="leading-relaxed md:max-w-md lg:max-w-2xl "
-            anchor="right"
-          >
-            Domínio em tecnologias modernas para desenvolvimento de aplicações
-            robustas e escaláveis em todo o stack.
-          </P>
-        </AnimatedContainer>
-      </div>
-      {/* Filtros */}
+    <section
+      id={id}
+      aria-labelledby={`${id}-cabeçalho`}
+      role="region"
+      aria-label="Seção de habilidades técnicas"
+    >
+      <SkillsHeader />
+
       <div className="space-y-12">
+        {/* Navegação de filtros */}
         <AnimatedContainer animationType="fade-up">
           <NavFilter
             className="mt-12"
@@ -144,19 +254,11 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
           />
         </AnimatedContainer>
 
-        {/* Skills Grid */}
-        {getFilteredCategories().map(({ key, skills, delay }) => (
-          <AnimatedContainer>
-            <SkillGrid
-              key={key}
-              skills={skills}
-              columns="responsive"
-              gap="medium"
-              animationDelay={delay}
-              showCategories={activeFilter === 'all'} // Só mostra títulos quando "Todas" está ativo
-            />
-          </AnimatedContainer>
-        ))}
+        {/* Grade de habilidades */}
+        <SkillsGridSection
+          categories={filteredCategories}
+          showCategories={showCategories}
+        />
       </div>
     </section>
   )

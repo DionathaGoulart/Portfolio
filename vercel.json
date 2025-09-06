@@ -4,5 +4,17 @@
       "source": "/(.*)",
       "destination": "/"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/github",
+      "destination": "https://dionatha.com.br/?utm_source=github&utm_medium=social&utm_campaign=portfolio",
+      "permanent": true
+    },
+    {
+      "source": "/linkedin",
+      "destination": "https://dionatha.com.br/linkedin",
+      "permanent": true
+    }
   ]
 }

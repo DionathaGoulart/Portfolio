@@ -1,5 +1,5 @@
 import React, { JSX } from 'react'
-import { Github, ExternalLink } from 'lucide-react'
+import { Github, ExternalLink, Clock } from 'lucide-react'
 import { Button, P, Title, Tag } from '@shared/ui'
 import {
   buildCardClasses,
@@ -51,13 +51,16 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   disabled = false,
   elevated = false
 }) => {
+  const isInProgress = project.category === 'progress'
+
   const cardClasses = buildCardClasses(
     size,
     variant,
     loading,
     disabled,
     elevated,
-    className
+    className,
+    isInProgress
   )
 
   const handleGithubClick = (): void => {
@@ -67,7 +70,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   }
 
   const handleDemoClick = (): void => {
-    if (shouldAllowInteraction() && onDemoClick) {
+    if (shouldAllowInteraction() && onDemoClick && !isInProgress) {
       onDemoClick(project.id)
     }
   }
@@ -75,7 +78,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   const handleKeyDown = (event: React.KeyboardEvent): void => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault()
-      handleDemoClick()
+      if (!isInProgress) {
+        handleDemoClick()
+      }
     }
   }
 
@@ -95,6 +100,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       role="button"
       aria-label={`Projeto ${project.title}`}
     >
+      {/* Progress Badge */}
+      {isInProgress && (
+        <div className="project-card__progress-badge">
+          <Clock size={12} />
+          <span>Em Progresso</span>
+        </div>
+      )}
+
       {/* Image Container */}
       <div className="project-card__image-container">
         <img
@@ -103,6 +116,15 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           className="project-card__image"
         />
         <div className="project-card__image-overlay" />
+
+        {/* Progress overlay for visual indication */}
+        {isInProgress && (
+          <div className="project-card__progress-overlay">
+            <div className="project-card__progress-indicator">
+              <Clock size={24} />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Card Content */}
@@ -137,10 +159,20 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           <Button
             size="pequeno"
             onClick={handleDemoClick}
-            disabled={!shouldAllowInteraction()}
+            disabled={!shouldAllowInteraction() || isInProgress}
+            variant={isInProgress ? 'outline' : 'solid'}
           >
-            <ExternalLink size={16} />
-            Demo
+            {isInProgress ? (
+              <>
+                <Clock size={16} />
+                Em Breve
+              </>
+            ) : (
+              <>
+                <ExternalLink size={16} />
+                Demo
+              </>
+            )}
           </Button>
         </div>
       </div>

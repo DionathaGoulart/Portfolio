@@ -35,7 +35,7 @@ const skillsData: Skill[] = [
   { id: '18', name: 'AWS', percentage: 70, category: 'tools' },
   { id: '19', name: 'Figma', percentage: 88, category: 'tools' },
 
-  // Mobile
+  // Em progresso
   { id: '20', name: 'React Native', percentage: 82, category: 'mobile' },
   { id: '21', name: 'Expo', percentage: 85, category: 'mobile' }
 ]

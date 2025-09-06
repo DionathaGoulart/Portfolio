@@ -16,7 +16,7 @@ const filterOptions: FilterOption[] = [
   { value: 'frontend', label: 'Frontend' },
   { value: 'backend', label: 'Backend' },
   { value: 'fullstack', label: 'Full Stack' },
-  { value: 'mobile', label: 'Mobile' }
+  { value: 'progress', label: 'Em Progresso' }
 ]
 
 // ============================================================================
@@ -64,7 +64,7 @@ const projectsData: Project[] = [
       'Aplicativo mobile para acompanhamento de treinos e dietas com sincronização na nuvem.',
     image: '/images/projects/fitness.jpg',
     tags: ['React Native', 'Firebase', 'Redux', 'Expo'],
-    category: 'mobile',
+    category: 'progress',
     githubUrl: 'https://github.com/username/fitness-app',
     demoUrl: 'https://fitness-app-demo.com'
   },

@@ -5,7 +5,7 @@
 /**
  * Categorias disponíveis para projetos
  */
-export type ProjectCategory = 'frontend' | 'backend' | 'fullstack' | 'mobile'
+export type ProjectCategory = 'frontend' | 'backend' | 'fullstack' | 'progress'
 
 /**
  * Interface que define a estrutura de um projeto
@@ -88,6 +88,7 @@ type GridGap = 'small' | 'medium' | 'large'
  * @param disabled - Se está desabilitado
  * @param elevated - Se deve ter sombra elevada
  * @param className - Classes adicionais
+ * @param isProgress - Se é um projeto em progresso
  * @returns String com as classes CSS
  */
 export const buildCardClasses = (
@@ -96,7 +97,8 @@ export const buildCardClasses = (
   loading: boolean = false,
   disabled: boolean = false,
   elevated: boolean = false,
-  className: string = ''
+  className: string = '',
+  isProgress: boolean = false
 ): string => {
   const classes = [
     'project-card',
@@ -105,6 +107,7 @@ export const buildCardClasses = (
     loading && 'project-card--loading',
     disabled && 'project-card--disabled',
     elevated && 'project-card--elevated',
+    isProgress && 'project-card--progress',
     className
   ].filter(Boolean)
 

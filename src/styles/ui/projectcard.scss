@@ -20,6 +20,12 @@ $card-easing: cubic-bezier(0.4, 0, 0.2, 1);
 $shimmer-duration: 2s;
 $pulse-duration: 2s;
 
+// Progress colors
+$progress-color: rgb(255, 165, 0);
+$progress-color-light: rgba(255, 165, 0, 0.1);
+$progress-color-medium: rgba(255, 165, 0, 0.3);
+$progress-color-strong: rgba(255, 165, 0, 0.9);
+
 // ============================================================================
 // BASE - Custom Properties (sem @layer)
 // ============================================================================
@@ -34,6 +40,7 @@ $pulse-duration: 2s;
   --card-accent: rgb(var(--color-accent));
   --card-focus-ring: rgb(var(--color-background));
   --card-focus-offset: rgb(var(--color-primary) / 0.5);
+  --card-progress: #{$progress-color};
 }
 
 // ============================================================================
@@ -98,6 +105,20 @@ $pulse-duration: 2s;
   border-radius: $card-border-radius;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
+  // Progress Badge
+  &__progress-badge {
+    @apply absolute top-3 right-3 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold;
+    background: $progress-color-strong;
+    backdrop-filter: blur(8px);
+    color: white;
+    box-shadow: 0 2px 8px $progress-color-medium;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    svg {
+      animation: spin 2s linear infinite;
+    }
+  }
+
   // Image structure
   &__image-container {
     @apply relative overflow-hidden;
@@ -117,6 +138,26 @@ $pulse-duration: 2s;
       rgba(0, 0, 0, 0.05) 70%,
       rgba(0, 0, 0, 0.15) 100%
     );
+  }
+
+  // Progress Overlay
+  &__progress-overlay {
+    @apply absolute inset-0 z-10 flex items-center justify-center;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &__progress-indicator {
+    @apply flex items-center justify-center w-16 h-16 rounded-full;
+    background: $progress-color-strong;
+    color: white;
+    box-shadow: 0 4px 16px $progress-color-medium;
+
+    svg {
+      animation: spin 2s linear infinite;
+    }
   }
 
   // Content area
@@ -184,6 +225,42 @@ $pulse-duration: 2s;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
   }
 
+  // Progress card variant
+  &--progress {
+    border-color: $progress-color-medium;
+    background: linear-gradient(135deg, $progress-color-light, var(--card-bg));
+
+    .project-card__title {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          $progress-color 50%,
+          transparent 100%
+        );
+        animation: progressBar 3s ease-in-out infinite;
+      }
+    }
+
+    &:hover {
+      .project-card__title {
+        color: var(--card-progress);
+      }
+
+      .project-card__progress-overlay {
+        opacity: 1;
+      }
+    }
+  }
+
   // Color variants using your custom theme colors
   &--primary {
     border-color: rgb(var(--color-primary) / 0.2);
@@ -236,6 +313,15 @@ $pulse-duration: 2s;
         @apply px-3 py-1.5 text-xs;
       }
     }
+
+    .project-card__progress-badge {
+      @apply text-xs px-2 py-1;
+
+      svg {
+        width: 10px;
+        height: 10px;
+      }
+    }
   }
 
   &--large {
@@ -253,6 +339,15 @@ $pulse-duration: 2s;
 
     .project-card__description {
       @apply mb-8 text-lg;
+    }
+
+    .project-card__progress-badge {
+      @apply text-sm px-4 py-2;
+
+      svg {
+        width: 14px;
+        height: 14px;
+      }
     }
   }
 }
@@ -283,7 +378,6 @@ $pulse-duration: 2s;
   }
 
   // Custom responsive system
-  // Mobile: 1 column | 640px+: 2 columns | 768px+: 3 columns | 1024px+: 4 columns
   &--responsive {
     @apply grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
   }
@@ -344,6 +438,27 @@ $pulse-duration: 2s;
 // ============================================================================
 // UTILITIES - Animations
 // ============================================================================
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes progressBar {
+  0%,
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
 
 @keyframes shimmer {
   from {
@@ -452,6 +567,10 @@ $pulse-duration: 2s;
         @apply w-full;
       }
     }
+
+    &__progress-badge {
+      @apply text-xs px-2 py-1 top-2 right-2;
+    }
   }
 
   .project-grid {
@@ -526,6 +645,16 @@ $pulse-duration: 2s;
         rgb(var(--color-surface) / 0.8),
         transparent
       );
+    }
+
+    // Progress badge adjustment for dark theme
+    &__progress-badge {
+      background: rgba(255, 165, 0, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    &__progress-indicator {
+      background: rgba(255, 165, 0, 0.95);
     }
   }
 }

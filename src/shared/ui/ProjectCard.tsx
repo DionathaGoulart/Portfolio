@@ -114,6 +114,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           src={project.image}
           alt={project.title}
           className="project-card__image"
+          loading="lazy"
         />
         <div className="project-card__image-overlay" />
 

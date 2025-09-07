@@ -40,7 +40,7 @@ const projectsData: Project[] = [
     title: 'E-commerce Platform',
     description:
       'Uma plataforma completa de e-commerce com carrinho de compras, pagamentos e painel administrativo.',
-    image: '/images/projects/ecommerce.jpg',
+    image: '/images/default.png',
     tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
     category: 'fullstack',
     githubUrl: 'https://github.com/username/ecommerce',
@@ -51,7 +51,7 @@ const projectsData: Project[] = [
     title: 'Dashboard Analytics',
     description:
       'Dashboard interativo para análise de dados com gráficos em tempo real e relatórios personalizados.',
-    image: '/images/projects/dashboard.jpg',
+    image: '/images/default.png',
     tags: ['React', 'TypeScript', 'Chart.js', 'Tailwind'],
     category: 'frontend',
     githubUrl: 'https://github.com/username/dashboard',
@@ -59,32 +59,32 @@ const projectsData: Project[] = [
   },
   {
     id: '3',
-    title: 'API RESTful',
+    title: 'Sistema de Assinatura de Contratos',
     description:
-      'API robusta com autenticação JWT, documentação Swagger e testes automatizados.',
-    image: '/images/projects/api.jpg',
-    tags: ['Node.js', 'Express', 'PostgreSQL', 'JWT'],
-    category: 'backend',
-    githubUrl: 'https://github.com/username/api',
-    demoUrl: 'https://api-docs.com'
+      'Plataforma web segura para gestão e assinatura digital de documentos contratuais com painel administrativo e envio automático por email.',
+    image: '/images/signature.png',
+    tags: ['React', 'Node.js', 'Express', 'Nodemailer'],
+    category: 'fullstack',
+    githubUrl: 'https://github.com/DionathaGoulart/signature-React',
+    demoUrl: 'https://termos.dionatha.com.br/'
   },
   {
     id: '4',
-    title: 'App Fitness',
+    title: 'Encurtador de Links',
     description:
-      'Aplicativo mobile para acompanhamento de treinos e dietas com sincronização na nuvem.',
-    image: '/images/projects/fitness.jpg',
-    tags: ['React Native', 'Firebase', 'Redux', 'Expo'],
-    category: 'progress',
-    githubUrl: 'https://github.com/username/fitness-app',
-    demoUrl: 'https://fitness-app-demo.com'
+      'Aplicativo fullstack para encurtar URLs longas com estatísticas de cliques, dashboard e interface responsiva moderna.',
+    image: '/images/short.png',
+    tags: ['Angular', 'Node.js', 'MongoDB', 'Bootstrap'],
+    category: 'fullstack',
+    githubUrl: 'https://github.com/DionathaGoulart/link-shortener--Angular',
+    demoUrl: 'https://linkspace.dionatha.com.br/'
   },
   {
     id: '5',
     title: 'Sistema de Blog',
     description:
       'CMS completo com editor rico, sistema de comentários e otimização SEO.',
-    image: '/images/projects/blog.jpg',
+    image: '/images/default.png',
     tags: ['Next.js', 'Prisma', 'MySQL', 'MDX'],
     category: 'fullstack',
     githubUrl: 'https://github.com/username/blog',
@@ -92,14 +92,14 @@ const projectsData: Project[] = [
   },
   {
     id: '6',
-    title: 'Landing Page',
+    title: 'PetMatch - Adoção de Animais',
     description:
-      'Landing page moderna e responsiva com animações suaves e alta conversão.',
-    image: '/images/projects/landing.jpg',
-    tags: ['React', 'Framer Motion', 'Tailwind', 'Vite'],
-    category: 'frontend',
-    githubUrl: 'https://github.com/username/landing',
-    demoUrl: 'https://landing-demo.com'
+      'Plataforma completa para adoção responsável de animais com sistema de login, cadastro de pets, perfis de usuários e matching inteligente.',
+    image: '/images/default.png',
+    tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
+    category: 'progress',
+    githubUrl: 'https://github.com/username/petmatch',
+    demoUrl: 'https://petmatch-demo.com'
   }
 ]
 

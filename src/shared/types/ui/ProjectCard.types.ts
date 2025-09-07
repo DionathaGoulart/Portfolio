@@ -16,7 +16,7 @@ export interface Project {
   description: string
   image: string
   tags: string[]
-  category: ProjectCategory
+  categories: ProjectCategory[] // ← MUDANÇA: array ao invés de string única
   githubUrl: string
   demoUrl: string
 }

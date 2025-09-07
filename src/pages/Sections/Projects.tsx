@@ -46,68 +46,68 @@ const filterOptions: FilterOption[] = [
 const projectsData: Project[] = [
   {
     id: '1',
-    title: 'E-commerce Platform',
-    description:
-      'Uma plataforma completa de e-commerce com carrinho de compras, pagamentos e painel administrativo.',
-    image: Default,
-    tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-    category: 'fullstack',
-    githubUrl: 'https://github.com/username/ecommerce',
-    demoUrl: 'https://ecommerce-demo.com'
-  },
-  {
-    id: '2',
-    title: 'Dashboard Analytics',
-    description:
-      'Dashboard interativo para análise de dados com gráficos em tempo real e relatórios personalizados.',
-    image: Default,
-    tags: ['React', 'TypeScript', 'Chart.js', 'Tailwind'],
-    category: 'frontend',
-    githubUrl: 'https://github.com/username/dashboard',
-    demoUrl: 'https://dashboard-demo.com'
-  },
-  {
-    id: '3',
-    title: 'Sistema de Assinatura de Contratos',
-    description:
-      'Plataforma web segura para gestão e assinatura digital de documentos contratuais com painel administrativo e envio automático por email.',
-    image: Signature,
-    tags: ['React', 'Node.js', 'Express', 'Nodemailer'],
-    category: 'fullstack',
-    githubUrl: 'https://github.com/DionathaGoulart/signature-React',
-    demoUrl: 'https://termos.dionatha.com.br/'
-  },
-  {
-    id: '4',
     title: 'Encurtador de Links',
     description:
       'Aplicativo fullstack para encurtar URLs longas com estatísticas de cliques, dashboard e interface responsiva moderna.',
     image: Short,
     tags: ['Angular', 'Node.js', 'MongoDB', 'Bootstrap'],
-    category: 'fullstack',
+    categories: ['frontend', 'backend', 'fullstack'],
     githubUrl: 'https://github.com/DionathaGoulart/link-shortener--Angular',
     demoUrl: 'https://linkspace.dionatha.com.br/'
   },
   {
-    id: '5',
-    title: 'Sistema de Blog',
+    id: '2',
+    title: 'Sistema de Assinatura de Contratos',
     description:
-      'CMS completo com editor rico, sistema de comentários e otimização SEO.',
-    image: Default,
-    tags: ['Next.js', 'Prisma', 'MySQL', 'MDX'],
-    category: 'fullstack',
-    githubUrl: 'https://github.com/username/blog',
-    demoUrl: 'https://blog-demo.com'
+      'Plataforma web segura para gestão e assinatura digital de documentos contratuais com painel administrativo e envio automático por email.',
+    image: Signature,
+    tags: ['React', 'Node.js', 'Express', 'Nodemailer'],
+    categories: ['frontend', 'backend', 'fullstack'],
+    githubUrl: 'https://github.com/DionathaGoulart/signature-React',
+    demoUrl: 'https://termos.dionatha.com.br/'
   },
   {
-    id: '6',
+    id: '3',
     title: 'PetMatch - Adoção de Animais',
     description:
       'Plataforma completa para adoção responsável de animais com sistema de login, cadastro de pets, perfis de usuários e matching inteligente.',
     image: Default,
     tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
-    category: 'progress',
+    categories: ['progress', 'frontend', 'backend', 'fullstack'],
     githubUrl: 'https://github.com/username/petmatch',
+    demoUrl: 'https://petmatch-demo.com'
+  },
+  {
+    id: '4',
+    title: 'Manual de Marca',
+    description:
+      'Plataforma completa para adoção responsável de animais com sistema de login, cadastro de pets, perfis de usuários e matching inteligente.',
+    image: Default,
+    tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
+    categories: ['progress', 'frontend'],
+    githubUrl: 'https://github.com/DionathaGoulart/Manual',
+    demoUrl: 'https://petmatch-demo.com'
+  },
+  {
+    id: '5',
+    title: 'Portifolio Minimalista',
+    description:
+      'Plataforma completa para adoção responsável de animais com sistema de login, cadastro de pets, perfis de usuários e matching inteligente.',
+    image: Default,
+    tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
+    categories: ['progress', 'frontend'],
+    githubUrl: 'https://github.com/DionathaGoulart/Darkning',
+    demoUrl: 'https://petmatch-demo.com'
+  },
+  {
+    id: '6',
+    title: 'Lp - Curriculo',
+    description:
+      'Plataforma completa para adoção responsável de animais com sistema de login, cadastro de pets, perfis de usuários e matching inteligente.',
+    image: Default,
+    tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
+    categories: ['progress', 'frontend'],
+    githubUrl: 'https://github.com/DionathaGoulart/Portfolio',
     demoUrl: 'https://petmatch-demo.com'
   }
 ]
@@ -121,11 +121,14 @@ const INITIAL_LOAD_TIMEOUT = 2000
 
 /**
  * Filtra projetos baseado na categoria ativa
+ * Agora suporta projetos com múltiplas categorias
  */
 const useFilteredProjects = (activeFilter: string): Project[] => {
   return activeFilter === 'todos'
     ? projectsData
-    : projectsData.filter((project) => project.category === activeFilter)
+    : projectsData.filter(
+        (project) => project.categories.includes(activeFilter as any) // ← MUDANÇA: verifica se a categoria está no array
+      )
 }
 
 /**

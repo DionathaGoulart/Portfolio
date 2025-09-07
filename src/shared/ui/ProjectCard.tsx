@@ -63,6 +63,54 @@ const getTagsVariant = (project: Project): 'few-tags' | 'many-tags' => {
 }
 
 // ============================================================================
+// HELPER FUNCTIONS PARA CATEGORIAS
+// ============================================================================
+
+/**
+ * Verifica se o projeto está em progresso
+ */
+const isProjectInProgress = (project: Project): boolean => {
+  return project.categories.includes('progress')
+}
+
+/**
+ * Obtém a categoria principal para classificação CSS
+ * Prioriza certas categorias sobre outras
+ */
+const getPrimaryCategory = (project: Project): string => {
+  const categoryPriority = ['progress', 'fullstack', 'backend', 'frontend']
+
+  for (const priority of categoryPriority) {
+    if (project.categories.includes(priority as any)) {
+      return priority
+    }
+  }
+
+  return project.categories[0] || 'frontend'
+}
+
+/**
+ * Gera classes CSS baseadas nas categorias do projeto
+ */
+const getCategoryClasses = (project: Project): string => {
+  const classes: string[] = []
+
+  // Adiciona classe para categoria principal
+  const primaryCategory = getPrimaryCategory(project)
+  classes.push(`project-card--${primaryCategory}`)
+
+  // Adiciona classes para categorias múltiplas se aplicável
+  if (project.categories.length > 1) {
+    classes.push('project-card--multi-category')
+    project.categories.forEach((category) => {
+      classes.push(`project-card--has-${category}`)
+    })
+  }
+
+  return classes.join(' ')
+}
+
+// ============================================================================
 // BUILD CLASS FUNCTIONS
 // ============================================================================
 
@@ -76,7 +124,8 @@ const buildCardClasses = (
   isInProgress: boolean,
   contentVariant?: string,
   tagsVariant?: string,
-  contentClasses?: string
+  contentClasses?: string,
+  categoryClasses?: string // ← NOVA: classes de categoria
 ): string => {
   const classes = [
     'project-card',
@@ -89,6 +138,7 @@ const buildCardClasses = (
     contentVariant && `project-card--${contentVariant}`,
     tagsVariant && `project-card--${tagsVariant}`,
     contentClasses,
+    categoryClasses, // ← NOVA: inclui classes de categoria
     className
   ].filter(Boolean)
 
@@ -129,7 +179,7 @@ const createSkeletonProject = (index: number): Project => ({
     'Loading project description that will be replaced with actual content when data loads...',
   image: '/placeholder.jpg',
   tags: ['Loading', 'Skeleton', 'Placeholder'],
-  category: 'frontend',
+  categories: ['frontend'], // ← ATUALIZADO: array ao invés de string
   githubUrl: '#',
   demoUrl: '#'
 })
@@ -152,7 +202,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   disabled = false,
   elevated = false
 }) => {
-  const isInProgress = project.category === 'progress'
+  const isInProgress = isProjectInProgress(project) // ← ATUALIZADO: função helper
 
   // Classes automáticas baseadas no conteúdo
   const contentClasses = !loading ? getContentClasses(project) : ''
@@ -160,6 +210,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     ? getContentVariant(project)
     : 'medium-content'
   const tagsVariant = !loading ? getTagsVariant(project) : 'few-tags'
+  const categoryClasses = !loading ? getCategoryClasses(project) : '' // ← NOVO: classes de categoria
 
   const cardClasses = buildCardClasses(
     size,
@@ -171,7 +222,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     isInProgress,
     contentVariant,
     tagsVariant,
-    contentClasses
+    contentClasses,
+    categoryClasses // ← NOVO: passa classes de categoria
   )
 
   const handleGithubClick = (): void => {
@@ -214,6 +266,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       tabIndex={getTabIndex()}
       role="button"
       aria-label={`Projeto ${project.title}`}
+      data-categories={project.categories.join(',')} // ← NOVO: data attribute para CSS/JS
     >
       {/* Progress Badge */}
       {isInProgress && (

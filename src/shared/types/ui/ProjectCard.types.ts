@@ -2,6 +2,8 @@
 // PROJECT CARD TYPES
 // ============================================================================
 
+import { ReactElement, ReactNode } from 'react'
+
 /**
  * Categorias disponíveis para projetos
  */
@@ -14,7 +16,7 @@ export interface Project {
   id: string
   title: string
   description: string
-  image: string
+  image: string | ReactNode
   tags: string[]
   category: ProjectCategory
   githubUrl: string

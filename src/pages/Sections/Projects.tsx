@@ -3,6 +3,11 @@ import { analytics } from '@features/Analytics/utils'
 import { AnimatedContainer, Title, P, NavFilter, ProjectGrid } from '@shared/ui'
 import { FilterOption, Project } from '@shared/types'
 
+import defaultRaw from '/images/default.png'
+import shortRaw from '/images/short.png'
+import signatureRaw from '/images/signature.png'
+import { getImage } from '@core/utils/getImage'
+
 // ================================
 // INTERFACES & TYPES
 // ================================
@@ -18,6 +23,10 @@ interface ProjectsSectionProps {
 // ================================
 // CONSTANTES & CONFIGURAÇÕES
 // ================================
+
+const Default = getImage(`${defaultRaw}?as=webp&width=300`)
+const Short = getImage(`${shortRaw}?as=webp&width=300`)
+const Signature = getImage(`${signatureRaw}?as=webp&width=300`)
 
 /**
  * Opções de filtro disponíveis para categorizar projetos
@@ -40,7 +49,7 @@ const projectsData: Project[] = [
     title: 'E-commerce Platform',
     description:
       'Uma plataforma completa de e-commerce com carrinho de compras, pagamentos e painel administrativo.',
-    image: '/images/default.png',
+    image: Default,
     tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
     category: 'fullstack',
     githubUrl: 'https://github.com/username/ecommerce',
@@ -51,7 +60,7 @@ const projectsData: Project[] = [
     title: 'Dashboard Analytics',
     description:
       'Dashboard interativo para análise de dados com gráficos em tempo real e relatórios personalizados.',
-    image: '/images/default.png',
+    image: Default,
     tags: ['React', 'TypeScript', 'Chart.js', 'Tailwind'],
     category: 'frontend',
     githubUrl: 'https://github.com/username/dashboard',
@@ -62,7 +71,7 @@ const projectsData: Project[] = [
     title: 'Sistema de Assinatura de Contratos',
     description:
       'Plataforma web segura para gestão e assinatura digital de documentos contratuais com painel administrativo e envio automático por email.',
-    image: '/images/signature.png',
+    image: Signature,
     tags: ['React', 'Node.js', 'Express', 'Nodemailer'],
     category: 'fullstack',
     githubUrl: 'https://github.com/DionathaGoulart/signature-React',
@@ -73,7 +82,7 @@ const projectsData: Project[] = [
     title: 'Encurtador de Links',
     description:
       'Aplicativo fullstack para encurtar URLs longas com estatísticas de cliques, dashboard e interface responsiva moderna.',
-    image: '/images/short.png',
+    image: Short,
     tags: ['Angular', 'Node.js', 'MongoDB', 'Bootstrap'],
     category: 'fullstack',
     githubUrl: 'https://github.com/DionathaGoulart/link-shortener--Angular',
@@ -84,7 +93,7 @@ const projectsData: Project[] = [
     title: 'Sistema de Blog',
     description:
       'CMS completo com editor rico, sistema de comentários e otimização SEO.',
-    image: '/images/default.png',
+    image: Default,
     tags: ['Next.js', 'Prisma', 'MySQL', 'MDX'],
     category: 'fullstack',
     githubUrl: 'https://github.com/username/blog',
@@ -95,7 +104,7 @@ const projectsData: Project[] = [
     title: 'PetMatch - Adoção de Animais',
     description:
       'Plataforma completa para adoção responsável de animais com sistema de login, cadastro de pets, perfis de usuários e matching inteligente.',
-    image: '/images/default.png',
+    image: Default,
     tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
     category: 'progress',
     githubUrl: 'https://github.com/username/petmatch',

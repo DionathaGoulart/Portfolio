@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
+import { getImage } from '@core/utils/getImage'
 import { analytics } from '@features/Analytics/utils'
 import { AnimatedContainer, Title, P, NavFilter, ProjectGrid } from '@shared/ui'
 import { FilterOption, Project } from '@shared/types'
 
-import defaultRaw from '/images/default.png'
-import shortRaw from '/images/short.png'
-import signatureRaw from '/images/signature.png'
-import { getImage } from '@core/utils/getImage'
+import defaultRaw from 'public/images/default.png'
+import shortRaw from 'public/images/short.png'
+import signatureRaw from 'public/images/signature.png'
 
 // ================================
 // INTERFACES & TYPES

@@ -130,7 +130,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
       {/* Card Content */}
       <div className="project-card__content">
-        <Title level="h3" className="project-card__title">
+        <Title level="h3" align="center" className="project-card__title">
           {project.title}
         </Title>
 

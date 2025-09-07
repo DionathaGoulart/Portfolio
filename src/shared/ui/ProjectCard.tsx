@@ -2,9 +2,6 @@ import React, { JSX } from 'react'
 import { Github, ExternalLink, Clock } from 'lucide-react'
 import { Button, P, Title, Tag } from '@shared/ui'
 import {
-  buildCardClasses,
-  buildEmptyStateClasses,
-  buildGridClasses,
   type ProjectCardProps,
   type ProjectGridProps,
   type Project
@@ -19,15 +16,119 @@ const SKELETON_CARDS_COUNT = 6
 const DEFAULT_EMPTY_MESSAGE = 'Nenhum projeto encontrado para esta categoria.'
 
 // ============================================================================
+// HELPER FUNCTIONS PARA CLASSIFICAR CONTEÚDO
+// ============================================================================
+
+const getContentClasses = (project: Project): string => {
+  const classes: string[] = []
+
+  // Classificar título (baseado no comprimento)
+  if (project.title.length <= 25) {
+    classes.push('card-title--1-line')
+  } else if (project.title.length <= 50) {
+    classes.push('card-title--2-lines')
+  }
+
+  // Classificar descrição
+  if (project.description.length <= 120) {
+    classes.push('card-description--short')
+  } else if (project.description.length <= 240) {
+    classes.push('card-description--medium')
+  } else {
+    classes.push('card-description--long')
+  }
+
+  // Classificar tags
+  if (project.tags.length <= 3) {
+    classes.push('card-tags--single-row')
+  } else {
+    classes.push('card-tags--double-row')
+  }
+
+  return classes.join(' ')
+}
+
+const getContentVariant = (
+  project: Project
+): 'short-content' | 'medium-content' | 'long-content' => {
+  const totalLength = project.title.length + project.description.length
+
+  if (totalLength <= 150) return 'short-content'
+  if (totalLength <= 300) return 'medium-content'
+  return 'long-content'
+}
+
+const getTagsVariant = (project: Project): 'few-tags' | 'many-tags' => {
+  return project.tags.length <= 3 ? 'few-tags' : 'many-tags'
+}
+
+// ============================================================================
+// BUILD CLASS FUNCTIONS
+// ============================================================================
+
+const buildCardClasses = (
+  size: string,
+  variant: string,
+  loading: boolean,
+  disabled: boolean,
+  elevated: boolean,
+  className: string,
+  isInProgress: boolean,
+  contentVariant?: string,
+  tagsVariant?: string,
+  contentClasses?: string
+): string => {
+  const classes = [
+    'project-card',
+    `project-card--${size}`,
+    `project-card--${variant}`,
+    loading && 'project-card--loading',
+    disabled && 'project-card--disabled',
+    elevated && 'project-card--elevated',
+    isInProgress && 'project-card--progress',
+    contentVariant && `project-card--${contentVariant}`,
+    tagsVariant && `project-card--${tagsVariant}`,
+    contentClasses,
+    className
+  ].filter(Boolean)
+
+  return classes.join(' ')
+}
+
+const buildGridClasses = (
+  columns: string | number,
+  gap: string,
+  loading: boolean,
+  className: string
+): string => {
+  const classes = [
+    'project-grid',
+    typeof columns === 'number'
+      ? `project-grid--${columns}`
+      : `project-grid--${columns}`,
+    `project-grid--gap-${gap}`,
+    loading && 'project-grid--loading',
+    className
+  ].filter(Boolean)
+
+  return classes.join(' ')
+}
+
+const buildEmptyStateClasses = (): string => {
+  return 'project-grid__empty'
+}
+
+// ============================================================================
 // SKELETON PROJECT DATA
 // ============================================================================
 
 const createSkeletonProject = (index: number): Project => ({
   id: `skeleton-${index}`,
-  title: 'Loading...',
-  description: 'Loading project description...',
+  title: 'Loading Project Title...',
+  description:
+    'Loading project description that will be replaced with actual content when data loads...',
   image: '/placeholder.jpg',
-  tags: ['Loading'],
+  tags: ['Loading', 'Skeleton', 'Placeholder'],
   category: 'frontend',
   githubUrl: '#',
   demoUrl: '#'
@@ -38,7 +139,7 @@ const createSkeletonProject = (index: number): Project => ({
 // ============================================================================
 
 /**
- * Componente que renderiza um card de projeto individual
+ * Componente que renderiza um card de projeto individual com alinhamento fixo
  */
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
@@ -53,6 +154,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 }) => {
   const isInProgress = project.category === 'progress'
 
+  // Classes automáticas baseadas no conteúdo
+  const contentClasses = !loading ? getContentClasses(project) : ''
+  const contentVariant = !loading
+    ? getContentVariant(project)
+    : 'medium-content'
+  const tagsVariant = !loading ? getTagsVariant(project) : 'few-tags'
+
   const cardClasses = buildCardClasses(
     size,
     variant,
@@ -60,7 +168,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     disabled,
     elevated,
     className,
-    isInProgress
+    isInProgress,
+    contentVariant,
+    tagsVariant,
+    contentClasses
   )
 
   const handleGithubClick = (): void => {
@@ -92,6 +203,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     return shouldAllowInteraction() ? 0 : -1
   }
 
+  // Truncar tags para evitar overflow
+  const displayTags = project.tags.slice(0, 6)
+  const remainingTagsCount = project.tags.length - 6
+
   return (
     <div
       className={cardClasses}
@@ -110,12 +225,16 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
       {/* Image Container */}
       <div className="project-card__image-container">
-        <img
-          src={project.image}
-          alt={project.title}
-          className="project-card__image"
-          loading="lazy"
-        />
+        {typeof project.image === 'string' ? (
+          <img
+            src={project.image}
+            alt={project.title}
+            className="project-card__image"
+            loading="lazy"
+          />
+        ) : (
+          project.image
+        )}
         <div className="project-card__image-overlay" />
 
         {/* Progress overlay for visual indication */}
@@ -128,7 +247,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         )}
       </div>
 
-      {/* Card Content */}
+      {/* Card Content - Estrutura Grid Fixa */}
       <div className="project-card__content">
         <Title level="h3" align="center" className="project-card__title">
           {project.title}
@@ -136,16 +255,21 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
         <P className="project-card__description">{project.description}</P>
 
-        {/* Tags */}
+        {/* Tags com altura fixa */}
         <div className="project-card__tags">
-          {project.tags.map((tag) => (
+          {displayTags.map((tag) => (
             <Tag size="pequeno" key={tag}>
               {tag}
             </Tag>
           ))}
+          {remainingTagsCount > 0 && (
+            <Tag size="pequeno" variant="outline">
+              +{remainingTagsCount}
+            </Tag>
+          )}
         </div>
 
-        {/* Action Buttons */}
+        {/* Action Buttons com altura fixa */}
         <div className="project-card__buttons">
           <Button
             variant="outline"
@@ -186,7 +310,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 // ============================================================================
 
 /**
- * Componente que renderiza uma grade de projetos
+ * Componente que renderiza uma grade de projetos com alinhamento consistente
  */
 export const ProjectGrid: React.FC<ProjectGridProps> = ({
   projects,

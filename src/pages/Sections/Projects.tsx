@@ -3,6 +3,11 @@ import { analytics } from '@features/Analytics/utils'
 import { AnimatedContainer, Title, P, NavFilter, ProjectGrid } from '@shared/ui'
 import { FilterOption, Project } from '@shared/types'
 
+import defaultRaw from '@assets/images/projects/default.png'
+import shortRaw from '@assets/images/projects/short.png'
+import signatureRaw from '@assets/images/projects/signature.png'
+import { getImage } from '@core/utils/getImage'
+
 // ================================
 // INTERFACES & TYPES
 // ================================
@@ -19,10 +24,9 @@ interface ProjectsSectionProps {
 // CONSTANTES & CONFIGURAÇÕES
 // ================================
 
-// Imagens usando caminhos seguros para build
-const Default = '/images/default.png?as=webp&width=300'
-const Short = '/images/short.png?as=webp&width=300'
-const Signature = '/images/signature.png?as=webp&width=300'
+const Default = getImage(`${defaultRaw}?as=webp&width=300`)
+const Short = getImage(`${shortRaw}?as=webp&width=300`)
+const Signature = getImage(`${signatureRaw}?as=webp&width=300`)
 
 /**
  * Opções de filtro disponíveis para categorizar projetos
@@ -122,8 +126,8 @@ const INITIAL_LOAD_TIMEOUT = 2000
 const useFilteredProjects = (activeFilter: string): Project[] => {
   return activeFilter === 'todos'
     ? projectsData
-    : projectsData.filter((project) =>
-        project.categories.includes(activeFilter as any)
+    : projectsData.filter(
+        (project) => project.categories.includes(activeFilter as any) // ← MUDANÇA: verifica se a categoria está no array
       )
 }
 
@@ -189,30 +193,22 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
    */
   const handleFilterChange = (filter: string): void => {
     setActiveFilter(filter)
-    setAnimationKey((prev) => prev + 1)
-
-    // Verificar se analytics está disponível antes de usar
-    if (analytics && analytics.trackButtonClick) {
-      analytics.trackButtonClick(`filter_projects_${filter}`)
-    }
+    setAnimationKey((prev) => prev + 1) // Força re-render para nova animação
+    analytics.trackButtonClick(`filter_projects_${filter}`)
   }
 
   /**
    * Manipula clique no link do GitHub com analytics
    */
   const handleGithubClick = (projectId: string): void => {
-    if (analytics && analytics.trackButtonClick) {
-      analytics.trackButtonClick(`github_project_${projectId}`)
-    }
+    analytics.trackButtonClick(`github_project_${projectId}`)
   }
 
   /**
    * Manipula clique no link de demo com analytics
    */
   const handleDemoClick = (projectId: string): void => {
-    if (analytics && analytics.trackButtonClick) {
-      analytics.trackButtonClick(`demo_project_${projectId}`)
-    }
+    analytics.trackButtonClick(`demo_project_${projectId}`)
   }
 
   // ================================

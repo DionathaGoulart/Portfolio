@@ -126,8 +126,8 @@ const INITIAL_LOAD_TIMEOUT = 2000
 const useFilteredProjects = (activeFilter: string): Project[] => {
   return activeFilter === 'todos'
     ? projectsData
-    : projectsData.filter(
-        (project) => project.categories.includes(activeFilter as any) // ← MUDANÇA: verifica se a categoria está no array
+    : projectsData.filter((project) =>
+        project.categories.includes(activeFilter as any)
       )
 }
 
@@ -138,6 +138,13 @@ const getGridAnimationClass = (isInitialLoad: boolean): string => {
   return isInitialLoad
     ? 'project-grid--initial-load'
     : 'project-grid--filter-change'
+}
+
+/**
+ * Encontra um projeto pelo ID
+ */
+const findProjectById = (projectId: string): Project | undefined => {
+  return projectsData.find((project) => project.id === projectId)
 }
 
 // ================================
@@ -198,17 +205,31 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   }
 
   /**
-   * Manipula clique no link do GitHub com analytics
+   * Manipula clique no link do GitHub com analytics E navegação
    */
   const handleGithubClick = (projectId: string): void => {
     analytics.trackButtonClick(`github_project_${projectId}`)
+
+    const project = findProjectById(projectId)
+    if (project?.githubUrl && project.githubUrl !== '#') {
+      window.open(project.githubUrl, '_blank', 'noopener,noreferrer')
+    }
   }
 
   /**
-   * Manipula clique no link de demo com analytics
+   * Manipula clique no link de demo com analytics E navegação
    */
   const handleDemoClick = (projectId: string): void => {
     analytics.trackButtonClick(`demo_project_${projectId}`)
+
+    const project = findProjectById(projectId)
+    if (project?.demoUrl && project.demoUrl !== '#') {
+      // Verifica se o projeto não está em progresso
+      const isInProgress = project.categories.includes('progress')
+      if (!isInProgress) {
+        window.open(project.demoUrl, '_blank', 'noopener,noreferrer')
+      }
+    }
   }
 
   // ================================

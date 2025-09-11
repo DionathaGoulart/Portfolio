@@ -1,30 +1,60 @@
 import { Theme } from '@features/Theme/types'
 
+// ================================
+// Color Conversion Types
+// ================================
+
+interface RgbColor {
+  r: number
+  g: number
+  b: number
+}
+
+// ================================
+// Theme Utilities
+// ================================
+
 export const themeUtils = {
-  // Gera classes CSS dinâmicas
+  /**
+   * Generates CSS classes with theme suffix
+   */
   getThemeClass: (baseClass: string, theme: Theme) => `${baseClass} ${theme}`,
 
-  // Interpola cores com opacidade
+  /**
+   * Adds opacity to a color using hex alpha notation
+   */
   withOpacity: (color: string, opacity: number) =>
     `${color}${Math.round(opacity * 255)
       .toString(16)
       .padStart(2, '0')}`,
 
-  // Converte tema para booleano
+  /**
+   * Converts theme to boolean for dark mode checks
+   */
   isDark: (theme: Theme) => theme === 'dark',
 
-  // Toggle tema
+  /**
+   * Toggles between light and dark themes
+   */
   toggle: (currentTheme: Theme): Theme =>
     currentTheme === 'light' ? 'dark' : 'light',
 
-  // Detecta preferência do sistema
+  /**
+   * Detects system color scheme preference
+   */
   getSystemPreference: (): Theme =>
     window.matchMedia?.('(prefers-color-scheme: dark)').matches
       ? 'dark'
       : 'light',
 
-  // Converte hex para RGB
-  hexToRgb: (hex: string) => {
+  // ================================
+  // Color Manipulation Functions
+  // ================================
+
+  /**
+   * Converts hex color to RGB object
+   */
+  hexToRgb: (hex: string): RgbColor | null => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
     return result
       ? {
@@ -35,7 +65,9 @@ export const themeUtils = {
       : null
   },
 
-  // Gera variação de cor mais clara
+  /**
+   * Creates a lighter variation of a color
+   */
   lighten: (color: string, amount: number) => {
     const rgb = themeUtils.hexToRgb(color)
     if (!rgb) return color
@@ -48,7 +80,9 @@ export const themeUtils = {
     return `rgb(${newR}, ${newG}, ${newB})`
   },
 
-  // Gera variação de cor mais escura
+  /**
+   * Creates a darker variation of a color
+   */
   darken: (color: string, amount: number) => {
     const rgb = themeUtils.hexToRgb(color)
     if (!rgb) return color

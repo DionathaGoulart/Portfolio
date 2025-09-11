@@ -7,13 +7,31 @@ import {
 } from '@features/Theme/hooks'
 import { Theme, ThemeContextType } from '@features/Theme/types'
 
+// ================================
+// Context Creation
+// ================================
+
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
+
+// ================================
+// Provider Interface
+// ================================
 
 interface ThemeProviderProps {
   children: ReactNode
   defaultTheme?: Theme
 }
 
+// ================================
+// Theme Provider Component
+// ================================
+
+/**
+ * ThemeProvider component that manages theme state and provides theme context
+ *
+ * @param children - React children to wrap with theme context
+ * @param defaultTheme - Default theme to use if no preference is found
+ */
 export function ThemeProvider({
   children,
   defaultTheme = 'light'
@@ -26,10 +44,10 @@ export function ThemeProvider({
     THEME_STORAGE_KEY
   } = useThemeDetection(defaultTheme)
 
-  // Escuta mudanças do sistema
+  // Listen for system theme changes
   useSystemTheme({ isSystemTheme, setTheme: setThemeState })
 
-  // Persiste tema e aplica CSS
+  // Persist theme and apply CSS
   const colors = themes[theme].colors
   useThemePersistence({
     theme,
@@ -38,15 +56,19 @@ export function ThemeProvider({
     storageKey: THEME_STORAGE_KEY
   })
 
+  // ================================
+  // Theme Control Functions
+  // ================================
+
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light'
     setThemeState(newTheme)
-    setIsSystemTheme(false) // Desabilita tema automático ao fazer toggle manual
+    setIsSystemTheme(false) // Disable automatic theme when toggling manually
   }
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme)
-    setIsSystemTheme(false) // Desabilita tema automático ao definir manualmente
+    setIsSystemTheme(false) // Disable automatic theme when setting manually
   }
 
   const enableSystemTheme = () => {
@@ -57,6 +79,10 @@ export function ThemeProvider({
       : 'light'
     setThemeState(systemTheme)
   }
+
+  // ================================
+  // Context Value
+  // ================================
 
   const value: ThemeContextType = {
     theme,
@@ -71,6 +97,14 @@ export function ThemeProvider({
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }
 
+// ================================
+// Theme Hook
+// ================================
+
+/**
+ * Hook to access theme context
+ * @throws Error if used outside of ThemeProvider
+ */
 export function useTheme(): ThemeContextType {
   const context = useContext(ThemeContext)
   if (context === undefined) {

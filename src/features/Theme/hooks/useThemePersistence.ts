@@ -1,6 +1,10 @@
 import { useEffect } from 'react'
 import { Theme, ThemeColors } from '@features/Theme/types'
 
+// ================================
+// Hook Interface
+// ================================
+
 interface UseThemePersistenceProps {
   theme: Theme
   colors: ThemeColors
@@ -8,6 +12,20 @@ interface UseThemePersistenceProps {
   storageKey: string
 }
 
+// ================================
+// Theme Persistence Hook
+// ================================
+
+/**
+ * Hook that handles theme persistence and CSS application
+ * - Saves theme to localStorage when not using system theme
+ * - Applies CSS classes and custom properties to document
+ *
+ * @param theme - Current theme
+ * @param colors - Theme color configuration
+ * @param isSystemTheme - Whether using system theme preference
+ * @param storageKey - localStorage key for theme persistence
+ */
 export function useThemePersistence({
   theme,
   colors,
@@ -32,27 +50,3 @@ export function useThemePersistence({
     })
   }, [theme, colors, isSystemTheme, storageKey])
 }
-
-// 📖 Exemplo de uso:
-// function App() {
-//   const theme = 'dark'
-//   const colors = { background: '#1a1a1a', text: '#fff', /* ... */ }
-//   const isSystemTheme = false
-//
-//   // Automaticamente:
-//   // 1. Salva 'dark' no localStorage (key: 'my-theme')
-//   // 2. Adiciona classe 'dark' no <html>
-//   // 3. Cria CSS vars: --color-background: #1a1a1a, --color-text: #fff
-//   useThemePersistence({
-//     theme,
-//     colors,
-//     isSystemTheme,     // false = salva no storage
-//     storageKey: 'my-theme'
-//   })
-//
-//   // Agora você pode usar no CSS:
-//   // .my-div { background: var(--color-background); color: var(--color-text); }
-//   // Ou classes: <div className={theme}> (será 'dark')
-//
-//   return <div>Theme persisted!</div>
-// }

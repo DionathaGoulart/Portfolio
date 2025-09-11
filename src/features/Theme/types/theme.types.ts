@@ -1,5 +1,13 @@
+// ================================
+// Theme Types & Interfaces
+// ================================
+
 export type Theme = 'light' | 'dark'
 
+/**
+ * Theme color configuration interface
+ * Colors are stored as RGB values without the 'rgb()' wrapper
+ */
 export interface ThemeColors {
   primary: string
   secondary: string
@@ -14,11 +22,17 @@ export interface ThemeColors {
   warning: string
 }
 
+/**
+ * Complete theme configuration including name and colors
+ */
 export interface ThemeConfig {
   name: Theme
   colors: ThemeColors
 }
 
+/**
+ * Theme context interface providing all theme-related functionality
+ */
 export interface ThemeContextType {
   theme: Theme
   colors: ThemeColors

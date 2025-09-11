@@ -1,9 +1,20 @@
 import { useTheme } from '@features/Theme/contexts'
 
+// ================================
+// Theme Utils Hook
+// ================================
+
+/**
+ * Hook that provides theme utilities for advanced styling operations
+ * Includes gradient generation, shadow creation, opacity handling, and conditional borders
+ */
 export function useThemeUtils() {
   const { colors, theme, isDarkMode } = useTheme()
 
-  // ✅ Apenas utilitários para casos específicos
+  // ================================
+  // Utility Functions
+  // ================================
+
   const utils = {
     // Para gradientes dinâmicos
     gradient: (color1: string, color2: string, direction = '45deg') =>

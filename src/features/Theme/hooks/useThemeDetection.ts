@@ -1,8 +1,25 @@
 import { useState } from 'react'
 import { Theme } from '@features/Theme/types'
 
+// ================================
+// Constants
+// ================================
+
 const THEME_STORAGE_KEY = 'app-theme'
 
+// ================================
+// Theme Detection Hook
+// ================================
+
+/**
+ * Hook for automatic theme detection with fallback strategy:
+ * 1. Check localStorage for saved preference
+ * 2. Detect system preference
+ * 3. Use provided default theme
+ *
+ * @param defaultTheme - Default theme to use if no preference is found
+ * @returns Object with theme state and control functions
+ */
 export function useThemeDetection(defaultTheme: Theme = 'light') {
   const [theme, setTheme] = useState<Theme>(() => {
     // 1. Verifica localStorage primeiro
@@ -32,28 +49,3 @@ export function useThemeDetection(defaultTheme: Theme = 'light') {
     THEME_STORAGE_KEY
   }
 }
-
-// 📖 Exemplo de uso:
-// function MyComponent() {
-//   // Detecta tema automaticamente com fallback para 'light'
-//   const {
-//     theme,           // 'light' | 'dark' - tema atual
-//     setTheme,        // função para alterar o tema
-//     isSystemTheme,   // true se está seguindo o sistema
-//     setIsSystemTheme // função para habilitar/desabilitar tema do sistema
-//   } = useThemeDetection('light')
-//
-//   return (
-//     <div>
-//       <p>Tema atual: {theme}</p>
-//       <button onClick={() => setTheme('dark')}>
-//         {/* Muda para dark e desabilita tema automático */}
-//         Mudar para Dark
-//       </button>
-//       <button onClick={() => setIsSystemTheme(true)}>
-//         {/* Habilita detecção automática do sistema */}
-//         Seguir Sistema
-//       </button>
-//     </div>
-//   )
-// }

@@ -1,11 +1,26 @@
 import { useEffect } from 'react'
 import { Theme } from '@features/Theme/types'
 
+// ================================
+// Hook Interface
+// ================================
+
 interface UseSystemThemeProps {
   isSystemTheme: boolean
   setTheme: (theme: Theme) => void
 }
 
+// ================================
+// System Theme Hook
+// ================================
+
+/**
+ * Hook that listens to system theme changes and updates the theme accordingly
+ * Only active when isSystemTheme is true
+ *
+ * @param isSystemTheme - Whether to listen for system theme changes
+ * @param setTheme - Function to update the current theme
+ */
 export function useSystemTheme({
   isSystemTheme,
   setTheme
@@ -22,26 +37,3 @@ export function useSystemTheme({
     return () => mediaQuery.removeEventListener('change', handleChange)
   }, [isSystemTheme, setTheme])
 }
-
-// 📖 Exemplo de uso:
-// function ThemeListener() {
-//   const [theme, setTheme] = useState<Theme>('light')
-//   const [isSystemTheme, setIsSystemTheme] = useState(true)
-//
-//   // Escuta mudanças automáticas do sistema operacional
-//   useSystemTheme({
-//     isSystemTheme,  // só escuta se estiver habilitado
-//     setTheme        // função chamada quando sistema muda
-//   })
-//
-//   // Quando usuário muda tema do SO de light para dark,
-//   // o hook automaticamente chama setTheme('dark')
-//
-//   return (
-//     <div>
-//       <p>Tema: {theme}</p>
-//       <p>Seguindo sistema: {isSystemTheme ? 'Sim' : 'Não'}</p>
-//       {/* Mude o tema do seu sistema operacional e veja a magia acontecer! */}
-//     </div>
-//   )
-// }

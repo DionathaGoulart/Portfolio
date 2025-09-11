@@ -1,5 +1,9 @@
 import { ThemeConfig } from '@features/Theme/types/theme.types'
 
+// ================================
+// Theme Configurations
+// ================================
+
 export const lightTheme: ThemeConfig = {
   name: 'light',
   colors: {

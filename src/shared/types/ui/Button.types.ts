@@ -1,9 +1,9 @@
 import { ReactNode } from 'react'
 import { Align, ColorVariant, Size } from './global.types'
 
-// ============================================================================
+// ================================
 // BUTTON SPECIFIC TYPES
-// ============================================================================
+// ================================
 
 /**
  * Button style variants for different visual appearances
@@ -15,9 +15,9 @@ export type ButtonVariant = 'solid' | 'outline' | 'ghost'
  */
 export type ButtonType = 'button' | 'submit' | 'reset'
 
-// ============================================================================
+// ================================
 // BUTTON PROPS INTERFACE
-// ============================================================================
+// ================================
 
 /**
  * Props interface for the Button component

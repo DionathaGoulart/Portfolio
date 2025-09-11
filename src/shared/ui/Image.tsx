@@ -1,22 +1,15 @@
 import React from 'react'
-import type {
-  ImageProps,
-  ImageResource,
-  KeyboardEventHandler
-} from '@shared/types'
+import { ImageProps, ImageResource, KeyboardEventHandler } from '@shared/types'
 import '@styles/ui/image.scss'
 
-// ============================================================================
-// IMAGE UTILITIES
-// ============================================================================
+// ================================
+// HELPER FUNCTIONS
+// ================================
 
 /**
  * Resolves image source from string or resource object
- * @param imageSrc - Image source to resolve
- * @returns Resolved image URL string
  */
 const resolveImageSrc = (imageSrc: ImageResource): string => {
-  // Verificação de segurança para valores null/undefined
   if (!imageSrc) {
     console.warn('Image source is null or undefined')
     return ''
@@ -26,21 +19,17 @@ const resolveImageSrc = (imageSrc: ImageResource): string => {
     return imageSrc
   }
 
-  // Se for objeto, verificar se existe e pegar primeiro valor string
   if (typeof imageSrc === 'object' && imageSrc !== null) {
     const values = Object.values(imageSrc)
     const firstValue = values[0]
     return typeof firstValue === 'string' ? firstValue : ''
   }
 
-  // Fallback para casos não esperados
   return ''
 }
 
 /**
  * Generates CSS classes array for image component
- * @param props - Component props
- * @returns Array of CSS class names
  */
 const generateImageClasses = (
   props: Omit<ImageProps, 'src' | 'alt'>
@@ -58,47 +47,42 @@ const generateImageClasses = (
   } = props
 
   return [
-    // Base class
     'image',
-
-    // Size variant
     `image--${size}`,
-
-    // Shape (not applied to sidebar as it has own styling)
     size !== 'sidebar' && `image--${shape}`,
-
-    // Float positioning
     float !== 'none' && `image--float-${float}`,
-
-    // Shadow effects (not applied to sidebar as it has shadow-xl)
     size !== 'sidebar' && shadow === true && 'image--shadow',
     size !== 'sidebar' && shadow === 'strong' && 'image--shadow-strong',
-
-    // Hover effects
     hover && 'image--hover',
-
-    // Neon fire effects
     neonFire === true && 'image--neon-fire',
     neonFire === 'primary' && 'image--neon-primary',
-
-    // Interactive state
     onClick && 'image--interactive',
-
-    // Responsive behavior
     responsive && 'image--responsive',
-
-    // Custom classes
     className
   ].filter(Boolean) as string[]
 }
 
-// ============================================================================
+// ================================
 // IMAGE COMPONENT
-// ============================================================================
+// ================================
 
 /**
  * Reusable Image component with various styling options and effects
  * Supports multiple sizes, shapes, effects, and interactive states
+ *
+ * @component Image
+ * @param {ImageProps} props - Image configuration props
+ * @returns {React.FC<ImageProps>} Rendered image component
+ *
+ * @example
+ * <Image
+ *   src="/path/to/image.jpg"
+ *   alt="Description"
+ *   size="large"
+ *   shape="circle"
+ *   shadow="strong"
+ *   onClick={handleImageClick}
+ * />
  */
 export const Image: React.FC<ImageProps> = ({
   src,
@@ -113,26 +97,9 @@ export const Image: React.FC<ImageProps> = ({
   float = 'none',
   responsive = true
 }) => {
-  // ============================================================================
-  // EVENT HANDLERS
-  // ============================================================================
-
-  const handleClick = (): void => {
-    if (onClick) {
-      onClick()
-    }
-  }
-
-  const handleKeyDown: KeyboardEventHandler = (e) => {
-    if (onClick && (e.key === 'Enter' || e.key === ' ')) {
-      e.preventDefault()
-      onClick()
-    }
-  }
-
-  // ============================================================================
-  // COMPUTED VALUES
-  // ============================================================================
+  // ================================
+  // DERIVED VALUES
+  // ================================
 
   const resolvedSrc = resolveImageSrc(src)
   const isInteractive = Boolean(onClick)
@@ -148,14 +115,34 @@ export const Image: React.FC<ImageProps> = ({
     className
   }).join(' ')
 
-  // ============================================================================
-  // RENDER
-  // ============================================================================
+  // ================================
+  // EVENT HANDLERS
+  // ================================
 
-  // Se não há src válido, não renderizar nada ou mostrar placeholder
-  if (!resolvedSrc) {
-    return null // ou um placeholder se preferir
+  const handleClick = (): void => {
+    if (onClick) {
+      onClick()
+    }
   }
+
+  const handleKeyDown: KeyboardEventHandler = (e): void => {
+    if (onClick && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault()
+      onClick()
+    }
+  }
+
+  // ================================
+  // EARLY RETURNS
+  // ================================
+
+  if (!resolvedSrc) {
+    return null
+  }
+
+  // ================================
+  // RENDER
+  // ================================
 
   if (isInteractive) {
     return (

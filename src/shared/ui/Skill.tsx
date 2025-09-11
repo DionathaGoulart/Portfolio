@@ -9,9 +9,9 @@ import {
 } from '@shared/types'
 import '@styles/ui/skill.scss'
 
-// ============================================================================
+// ================================
 // CONSTANTS
-// ============================================================================
+// ================================
 
 const ANIMATION_STEPS = 30
 const ANIMATION_DELAY_STEP = 200
@@ -24,25 +24,19 @@ const CATEGORY_LABELS = {
   mobile: 'Mobile'
 } as const
 
-// ============================================================================
+// ================================
 // HELPER FUNCTIONS
-// ============================================================================
+// ================================
 
 /**
- * Calcula o incremento para animação suave da porcentagem
- * @param targetPercentage - Porcentagem final desejada
- * @returns Valor do incremento por frame
+ * Calculates increment for smooth percentage animation
  */
 const calculateAnimationIncrement = (targetPercentage: number): number => {
   return targetPercentage / ANIMATION_STEPS
 }
 
 /**
- * Anima a porcentagem de forma suave usando requestAnimationFrame
- * @param currentValue - Valor atual
- * @param targetValue - Valor final
- * @param increment - Incremento por frame
- * @param setter - Função para atualizar o state
+ * Animates percentage smoothly using requestAnimationFrame
  */
 const animatePercentage = (
   currentValue: number,
@@ -62,14 +56,48 @@ const animatePercentage = (
   }
 }
 
-// ============================================================================
-// SKILL BAR COMPONENT
-// ============================================================================
+/**
+ * Groups skills by category for visual organization
+ */
+const groupSkillsByCategory = (skills: Skill[]): Record<string, Skill[]> => {
+  return skills.reduce(
+    (acc, skill) => {
+      if (!acc[skill.category]) acc[skill.category] = []
+      acc[skill.category].push(skill)
+      return acc
+    },
+    {} as Record<string, Skill[]>
+  )
+}
 
 /**
- * Componente que exibe uma skill com barra de progresso animada
- * @param props - Propriedades do componente SkillBar
- * @returns JSX.Element
+ * Gets display label for a category
+ */
+const getCategoryLabel = (category: string, fallbackTitle?: string): string => {
+  return (
+    CATEGORY_LABELS[category as keyof typeof CATEGORY_LABELS] ||
+    fallbackTitle ||
+    category
+  )
+}
+
+// ================================
+// SKILL BAR COMPONENT
+// ================================
+
+/**
+ * Skill bar component displaying individual skill with animated progress bar
+ *
+ * @component SkillBar
+ * @param {SkillBarProps} props - SkillBar configuration props
+ * @returns {React.FC<SkillBarProps>} Rendered skill bar component
+ *
+ * @example
+ * <SkillBar
+ *   skill={{ name: 'React', percentage: 90, category: 'frontend' }}
+ *   animationDelay={200}
+ *   showAnimation={true}
+ * />
  */
 export const SkillBar: React.FC<SkillBarProps> = ({
   skill,
@@ -80,10 +108,34 @@ export const SkillBar: React.FC<SkillBarProps> = ({
   showAnimation = true,
   className = ''
 }) => {
+  // ================================
+  // COMPONENT STATE
+  // ================================
+
   const [isVisible, setIsVisible] = useState(!showAnimation)
   const [animatedPercentage, setAnimatedPercentage] = useState(
     showAnimation ? 0 : skill.percentage
   )
+
+  // ================================
+  // DERIVED VALUES
+  // ================================
+
+  const skillBarClasses = buildSkillBarClasses(
+    size,
+    variant,
+    showAnimation,
+    className
+  )
+
+  const skillDataAttributes = {
+    'data-category': skill.category,
+    'data-skill': skill.name.toLowerCase().replace(/[^a-z0-9]/g, '')
+  }
+
+  // ================================
+  // EFFECTS
+  // ================================
 
   useEffect(() => {
     if (!showAnimation) return
@@ -101,16 +153,9 @@ export const SkillBar: React.FC<SkillBarProps> = ({
     return () => clearTimeout(timer)
   }, [skill.percentage, animationDelay, showAnimation])
 
-  const skillBarClasses = buildSkillBarClasses(
-    size,
-    variant,
-    showAnimation,
-    className
-  )
-  const skillDataAttributes = {
-    'data-category': skill.category,
-    'data-skill': skill.name.toLowerCase().replace(/[^a-z0-9]/g, '')
-  }
+  // ================================
+  // RENDER
+  // ================================
 
   return (
     <div
@@ -143,44 +188,25 @@ export const SkillBar: React.FC<SkillBarProps> = ({
   )
 }
 
-// ============================================================================
+// ================================
 // SKILL GRID COMPONENT
-// ============================================================================
+// ================================
 
 /**
- * Agrupa skills por categoria para organização visual
- * @param skills - Lista de skills
- * @returns Objeto com skills agrupadas por categoria
- */
-const groupSkillsByCategory = (skills: Skill[]): Record<string, Skill[]> => {
-  return skills.reduce(
-    (acc, skill) => {
-      if (!acc[skill.category]) acc[skill.category] = []
-      acc[skill.category].push(skill)
-      return acc
-    },
-    {} as Record<string, Skill[]>
-  )
-}
-
-/**
- * Obtém o label de exibição para uma categoria
- * @param category - Categoria da skill
- * @param fallbackTitle - Título fallback se categoria não encontrada
- * @returns Label formatado para exibição
- */
-const getCategoryLabel = (category: string, fallbackTitle?: string): string => {
-  return (
-    CATEGORY_LABELS[category as keyof typeof CATEGORY_LABELS] ||
-    fallbackTitle ||
-    category
-  )
-}
-
-/**
- * Componente grid que organiza e exibe múltiplas skills
- * @param props - Propriedades do componente SkillGrid
- * @returns JSX.Element
+ * Grid container component for organizing and displaying multiple skills
+ * with optional category grouping and animations
+ *
+ * @component SkillGrid
+ * @param {SkillGridProps} props - SkillGrid configuration props
+ * @returns {React.FC<SkillGridProps>} Rendered skill grid component
+ *
+ * @example
+ * <SkillGrid
+ *   skills={skillsData}
+ *   showCategories={true}
+ *   columns="responsive"
+ *   animationDelay={100}
+ * />
  */
 export const SkillGrid: React.FC<SkillGridProps> = ({
   skills,
@@ -191,11 +217,18 @@ export const SkillGrid: React.FC<SkillGridProps> = ({
   animationDelay = 100,
   className = ''
 }) => {
-  const gridClasses = buildSkillGridClasses(columns, gap, className)
+  // ================================
+  // DERIVED VALUES
+  // ================================
 
+  const gridClasses = buildSkillGridClasses(columns, gap, className)
   const groupedSkills = showCategories
     ? groupSkillsByCategory(skills)
     : { all: skills }
+
+  // ================================
+  // RENDER
+  // ================================
 
   return (
     <div className="skill-grid-wrapper">

@@ -2,16 +2,18 @@ import React from 'react'
 import { TitleProps } from '@shared/types'
 import '@styles/ui/title.scss'
 
-// ============================================================================
+// ================================
 // TITLE COMPONENT
-// ============================================================================
+// ================================
 
 /**
- * Componente de título flexível com múltiplas variantes e estilos
+ * Flexible title component with multiple variants and styling options
  *
- * @component
+ * @component Title
+ * @param {TitleProps} props - Title configuration props
+ * @returns {React.FC<TitleProps>} Rendered title component
+ *
  * @example
- * ```tsx
  * <Title
  *   level="h1"
  *   color="primary"
@@ -19,25 +21,24 @@ import '@styles/ui/title.scss'
  *   border="bottom-start"
  *   icon={<IconStar />}
  * >
- *   Título Principal
+ *   Main Title
  * </Title>
- * ```
  */
 export const Title: React.FC<TitleProps> = ({
-  // Conteúdo
+  // Content
   children,
 
-  // Estrutura
+  // Structure
   level = 'h1',
   element,
 
-  // Aparência
+  // Appearance
   align = 'start',
   color = 'text',
   weight = 'bold',
   variant,
 
-  // Modificadores
+  // Modifiers
   uppercase = false,
   style,
   gradient = false,
@@ -46,12 +47,12 @@ export const Title: React.FC<TitleProps> = ({
   highlighted = false,
   border = 'none',
 
-  // Interatividade
+  // Interactivity
   interactive = false,
   disabled = false,
   onClick,
 
-  // Elementos adicionais
+  // Additional elements
   icon,
   badge,
 
@@ -60,34 +61,25 @@ export const Title: React.FC<TitleProps> = ({
   id
 }) => {
   // ================================
-  // CONFIGURAÇÃO
+  // DERIVED VALUES
   // ================================
 
   const Element = element || level
   const isInteractive = Boolean(onClick || interactive)
 
   // ================================
-  // CLASSES CSS
+  // CSS CLASS GENERATORS
   // ================================
 
   const buildClasses = (): string => {
     const classes = [
-      // Classe base
       'title',
-
-      // Tamanho (nível ou variante)
       variant ? `title--${variant}` : `title--${level}`,
-
-      // Aparência
       `title--${color}`,
       `title--${weight}`,
       `title--${align}`,
-
-      // Estados
       isInteractive && 'title--interactive',
       disabled && 'title--disabled',
-
-      // Modificadores
       uppercase && 'title--uppercase',
       style && `title--${style}`,
       gradient && 'title--gradient',
@@ -95,15 +87,9 @@ export const Title: React.FC<TitleProps> = ({
       shadow === 'strong' && 'title--shadow-strong',
       underlined && 'title--underlined',
       highlighted && 'title--highlighted',
-
-      // Border decorativa
       border !== 'none' && `title--border-${border}`,
-
-      // Layout
       icon && 'title--with-icon',
       badge && 'title--with-badge',
-
-      // Classes customizadas
       className
     ]
 
@@ -137,7 +123,7 @@ export const Title: React.FC<TitleProps> = ({
     const hasIcon = Boolean(icon)
     const hasBadge = Boolean(badge)
 
-    // Ícone + Badge
+    // Icon + Badge
     if (hasIcon && hasBadge) {
       return (
         <>
@@ -148,7 +134,7 @@ export const Title: React.FC<TitleProps> = ({
       )
     }
 
-    // Apenas ícone
+    // Icon only
     if (hasIcon) {
       return (
         <>
@@ -158,7 +144,7 @@ export const Title: React.FC<TitleProps> = ({
       )
     }
 
-    // Apenas badge
+    // Badge only
     if (hasBadge) {
       return (
         <>
@@ -168,13 +154,9 @@ export const Title: React.FC<TitleProps> = ({
       )
     }
 
-    // Apenas conteúdo
+    // Content only
     return children
   }
-
-  // ================================
-  // ACCESSIBILITY ATTRIBUTES
-  // ================================
 
   const getAccessibilityProps = () => ({
     tabIndex: isInteractive && !disabled ? 0 : undefined,

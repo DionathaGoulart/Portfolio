@@ -2,12 +2,12 @@ import React from 'react'
 import { FormFieldProps } from '@shared/types'
 import '@styles/ui/form.scss'
 
-// ============================================================================
-// HELPERS PRIVADOS
-// ============================================================================
+// ================================
+// HELPER FUNCTIONS
+// ================================
 
 /**
- * Gera classes CSS para o container do FormField
+ * Generates CSS classes for FormField container
  */
 const buildContainerClasses = (error?: string, className?: string): string => {
   const classes = ['form-field', error && 'form-field--error', className]
@@ -15,39 +15,43 @@ const buildContainerClasses = (error?: string, className?: string): string => {
   return classes.filter(Boolean).join(' ')
 }
 
-// ============================================================================
+// ================================
 // FORM FIELD COMPONENT
-// ============================================================================
+// ================================
 
 /**
- * Componente FormField para estruturação de campos de formulário
- * @param children - Elemento input/textarea a ser envolvido
- * @param label - Texto do label
- * @param error - Mensagem de erro
- * @param required - Define se o campo é obrigatório
- * @param className - Classes CSS customizadas
+ * FormField component for structuring form input elements with label and error handling
+ *
+ * @component FormField
+ * @param {FormFieldProps} props - FormField configuration props
+ * @returns {React.FC<FormFieldProps>} Rendered form field component
+ *
+ * @example
+ * <FormField label="Email" error={errors.email} required>
+ *   <Input type="email" value={email} onChange={handleEmailChange} />
+ * </FormField>
  */
 export const FormField: React.FC<FormFieldProps> = ({
-  // Conteúdo
+  // Content
   children,
   label,
   error,
 
-  // Configuração
+  // Configuration
   required = false,
 
   // HTML attributes
   className = ''
 }) => {
-  // ============================================================================
-  // CLASSES CSS
-  // ============================================================================
+  // ================================
+  // CSS CLASS GENERATORS
+  // ================================
 
   const containerClasses = buildContainerClasses(error, className)
 
-  // ============================================================================
+  // ================================
   // RENDER
-  // ============================================================================
+  // ================================
 
   return (
     <div className={containerClasses}>

@@ -1,19 +1,13 @@
 import React from 'react'
 import { InputProps } from '@shared/types'
-import '@styles/ui/expcard.scss'
+import '@styles/ui/form.scss'
 
-// ============================================================================
-// HELPERS PRIVADOS
-// ============================================================================
+// ================================
+// HELPER FUNCTIONS
+// ================================
 
 /**
- * Constrói as classes CSS para o componente Input
- * @param size - Tamanho do input
- * @param variant - Variante visual do input
- * @param disabled - Estado de desabilitado
- * @param error - Estado de erro
- * @param className - Classes CSS customizadas
- * @returns String com todas as classes concatenadas
+ * Builds CSS classes for Input component based on props
  */
 const buildInputClasses = (
   size: string,
@@ -23,66 +17,58 @@ const buildInputClasses = (
   className: string
 ): string => {
   const classes = [
-    // Classe base
     'input',
-
-    // Aparência
     `input--${size}`,
     `input--${variant}`,
-
-    // Estados
     disabled && 'input--disabled',
     error && 'input--error',
-
-    // Classes customizadas
     className
   ]
 
   return classes.filter(Boolean).join(' ')
 }
 
-// ============================================================================
+// ================================
 // INPUT COMPONENT
-// ============================================================================
+// ================================
 
 /**
- * Componente Input reutilizável
- * Suporta diferentes tamanhos, variantes visuais e estados
+ * Reusable Input component with multiple sizes, variants and states
+ * Supports various input types and interactive states
  *
- * @param value - Valor atual do input
- * @param placeholder - Texto de placeholder
- * @param type - Tipo do input HTML
- * @param name - Nome do campo
- * @param size - Tamanho do input (pequeno, medio, grande)
- * @param variant - Variante visual (outline, filled, ghost)
- * @param disabled - Estado de desabilitado
- * @param required - Campo obrigatório
- * @param error - Estado de erro
- * @param onChange - Callback de mudança
- * @param onFocus - Callback de foco
- * @param onBlur - Callback de perda de foco
- * @param className - Classes CSS customizadas
- * @param id - ID do elemento
+ * @component Input
+ * @param {InputProps} props - Input configuration props
+ * @returns {React.FC<InputProps>} Rendered input component
+ *
+ * @example
+ * <Input
+ *   type="email"
+ *   size="medio"
+ *   variant="outline"
+ *   placeholder="Enter your email"
+ *   onChange={handleChange}
+ *   error={!!errors.email}
+ * />
  */
 export const Input: React.FC<InputProps> = ({
-  // Conteúdo
+  // Content
   value,
   placeholder,
 
-  // Estrutura
+  // Structure
   type = 'text',
   name,
 
-  // Aparência
+  // Appearance
   size = 'medio',
   variant = 'outline',
 
-  // Estados
+  // States
   disabled = false,
   required = false,
   error = false,
 
-  // Funcionalidade
+  // Functionality
   onChange,
   onFocus,
   onBlur,
@@ -91,9 +77,9 @@ export const Input: React.FC<InputProps> = ({
   className = '',
   id
 }) => {
-  // ============================================================================
-  // CLASSES CSS
-  // ============================================================================
+  // ================================
+  // CSS CLASS GENERATORS
+  // ================================
 
   const inputClasses = buildInputClasses(
     size,
@@ -103,9 +89,9 @@ export const Input: React.FC<InputProps> = ({
     className
   )
 
-  // ============================================================================
+  // ================================
   // RENDER
-  // ============================================================================
+  // ================================
 
   return (
     <input

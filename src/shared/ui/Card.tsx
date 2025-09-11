@@ -1,3 +1,4 @@
+import React from 'react'
 import { ExternalLink } from 'lucide-react'
 import { Title, P } from '@shared/ui'
 import {
@@ -8,6 +9,10 @@ import {
   buildContainerClasses
 } from '@shared/types'
 import '@styles/ui/card.scss'
+
+// ================================
+// HELPER COMPONENTS
+// ================================
 
 const HorizontalCard: React.FC<
   Omit<CardProps, 'onClick'> & { showExternalLink?: boolean }
@@ -79,6 +84,18 @@ const ContactCard: React.FC<
   )
 }
 
+// ================================
+// MAIN CARD COMPONENT
+// ================================
+
+/**
+ * Versatile card component supporting horizontal and contact variants
+ * with interactive and static modes
+ *
+ * @component Card
+ * @param {CardProps} props - Card configuration props
+ * @returns {React.FC<CardProps>} Rendered card component
+ */
 export const Card: React.FC<CardProps> = (props) => {
   const {
     onClick,
@@ -91,18 +108,33 @@ export const Card: React.FC<CardProps> = (props) => {
     ...rest
   } = props
 
+  // ================================
+  // DERIVED VALUES
+  // ================================
+
   const canInteract = !disabled && !loading && onClick
   const showExternalLink = !!onClick && !disabled && !loading
 
-  const handleClick = () => canInteract && onClick()
-  const handleKey = (e: React.KeyboardEvent) => {
+  // ================================
+  // EVENT HANDLERS
+  // ================================
+
+  const handleClick = (): void => {
+    if (canInteract) onClick()
+  }
+
+  const handleKey = (e: React.KeyboardEvent): void => {
     if ((e.key === 'Enter' || e.key === ' ') && canInteract) {
       e.preventDefault()
       onClick()
     }
   }
 
-  const renderCardContent = () => {
+  // ================================
+  // RENDER HELPERS
+  // ================================
+
+  const renderCardContent = (): React.ReactNode => {
     if (children) return children
 
     const cardProps = { ...rest, color, showExternalLink }
@@ -115,6 +147,10 @@ export const Card: React.FC<CardProps> = (props) => {
         return <HorizontalCard {...cardProps} />
     }
   }
+
+  // ================================
+  // RENDER
+  // ================================
 
   return (
     <div
@@ -130,6 +166,17 @@ export const Card: React.FC<CardProps> = (props) => {
   )
 }
 
+// ================================
+// CARDS CONTAINER COMPONENT
+// ================================
+
+/**
+ * Container component for organizing multiple cards in grid or list layout
+ *
+ * @component CardsContainer
+ * @param {ContainerProps} props - Container configuration props
+ * @returns {React.FC<ContainerProps>} Rendered container component
+ */
 export const CardsContainer: React.FC<ContainerProps> = ({
   type = 'grid',
   columns = 2,

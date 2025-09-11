@@ -14,14 +14,14 @@ import '@styles/ui/tag.scss'
 // ================================
 
 /**
- * Verifica se uma tecla é de ativação (Enter ou Space)
+ * Checks if key is an activation key (Enter or Space)
  */
 const isActivationKey = (key: string): boolean => {
   return key === 'Enter' || key === ' '
 }
 
 /**
- * Verifica se uma tecla é de remoção (Delete ou Backspace)
+ * Checks if key is a removal key (Delete or Backspace)
  */
 const isRemovalKey = (key: string): boolean => {
   return key === 'Delete' || key === 'Backspace'
@@ -32,7 +32,23 @@ const isRemovalKey = (key: string): boolean => {
 // ================================
 
 /**
- * Componente Tag principal com suporte a ícones, badges e remoção
+ * Versatile tag component with support for icons, badges, removal and interactions
+ *
+ * @component Tag
+ * @param {TagProps} props - Tag configuration props
+ * @returns {React.FC<TagProps>} Rendered tag component
+ *
+ * @example
+ * <Tag
+ *   color="primary"
+ *   size="medio"
+ *   variant="solid"
+ *   removable
+ *   onRemove={handleRemove}
+ *   icon={<Icon />}
+ * >
+ *   Tag Content
+ * </Tag>
  */
 export const Tag: React.FC<TagProps> = ({
   children,
@@ -48,6 +64,13 @@ export const Tag: React.FC<TagProps> = ({
   onRemove,
   badge
 }) => {
+  // ================================
+  // DERIVED VALUES
+  // ================================
+
+  const isInteractive = onClick || interactive
+  const needsKeyHandler = isInteractive || removable
+
   const tagClasses = buildTagClasses({
     color,
     size,
@@ -61,35 +84,40 @@ export const Tag: React.FC<TagProps> = ({
     className
   })
 
-  const handleClick = (e: React.MouseEvent) => {
+  // ================================
+  // EVENT HANDLERS
+  // ================================
+
+  const handleClick = (e: React.MouseEvent): void => {
     if (disabled) return
     if (onClick) onClick()
   }
 
-  const handleRemove = (e: React.MouseEvent) => {
+  const handleRemove = (e: React.MouseEvent): void => {
     e.stopPropagation()
     if (disabled) return
     if (onRemove) onRemove()
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent): void => {
     if (disabled) return
 
-    // Ativação do tag
+    // Tag activation
     if ((onClick || interactive) && isActivationKey(e.key)) {
       e.preventDefault()
       if (onClick) onClick()
     }
 
-    // Remoção do tag
+    // Tag removal
     if (removable && onRemove && isRemovalKey(e.key)) {
       e.preventDefault()
       onRemove()
     }
   }
 
-  const isInteractive = onClick || interactive
-  const needsKeyHandler = isInteractive || removable
+  // ================================
+  // RENDER
+  // ================================
 
   return (
     <span
@@ -130,14 +158,32 @@ export const Tag: React.FC<TagProps> = ({
 // ================================
 
 /**
- * Componente para agrupar múltiplos Tags
+ * Container component for grouping multiple tags with layout options
+ *
+ * @component TagGroup
+ * @param {TagGroupProps} props - TagGroup configuration props
+ * @returns {React.FC<TagGroupProps>} Rendered tag group component
+ *
+ * @example
+ * <TagGroup compact>
+ *   <Tag>Tag 1</Tag>
+ *   <Tag>Tag 2</Tag>
+ * </TagGroup>
  */
 export const TagGroup: React.FC<TagGroupProps> = ({
   children,
   compact = false,
   className = ''
 }) => {
+  // ================================
+  // DERIVED VALUES
+  // ================================
+
   const groupClasses = buildTagGroupClasses({ compact, className })
+
+  // ================================
+  // RENDER
+  // ================================
 
   return <div className={groupClasses}>{children}</div>
 }
@@ -147,14 +193,31 @@ export const TagGroup: React.FC<TagGroupProps> = ({
 // ================================
 
 /**
- * Componente Tag especializado para indicação de status
+ * Specialized tag component for status indication with predefined styling
+ *
+ * @component StatusTag
+ * @param {StatusTagProps} props - StatusTag configuration props
+ * @returns {React.FC<StatusTagProps>} Rendered status tag component
+ *
+ * @example
+ * <StatusTag status="online">
+ *   Active
+ * </StatusTag>
  */
 export const StatusTag: React.FC<StatusTagProps> = ({
   status,
   children,
   className = ''
 }) => {
+  // ================================
+  // DERIVED VALUES
+  // ================================
+
   const statusClasses = buildStatusTagClasses({ status, className })
+
+  // ================================
+  // RENDER
+  // ================================
 
   return <span className={statusClasses}>{children}</span>
 }

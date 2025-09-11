@@ -1,41 +1,71 @@
 import { ReactNode, ChangeEvent, FocusEvent } from 'react'
 
-// ============================================================================
-// TYPES BASE PARA FORMULÁRIOS
-// ============================================================================
-
-export type InputSize = 'pequeno' | 'medio' | 'grande'
-export type InputVariant = 'outline' | 'filled' | 'ghost'
-export type TextareaResize = 'none' | 'vertical' | 'horizontal' | 'both'
-export type ContactCardVariant = 'default' | 'social'
-
-// ============================================================================
-// INPUT PROPS
-// ============================================================================
+// ================================
+// FORM SPECIFIC TYPES
+// ================================
 
 /**
- * Props para componente Input
+ * Input and textarea size variants
+ */
+export type InputSize = 'pequeno' | 'medio' | 'grande'
+
+/**
+ * Input and textarea visual variants
+ */
+export type InputVariant = 'outline' | 'filled' | 'ghost'
+
+/**
+ * Textarea resize behavior options
+ */
+export type TextareaResize = 'none' | 'vertical' | 'horizontal' | 'both'
+
+/**
+ * Contact card display variants
+ */
+export type ContactCardVariant = 'default' | 'social'
+
+// ================================
+// INPUT INTERFACE
+// ================================
+
+/**
+ * Props interface for the Input component
+ *
  * @interface InputProps
+ * @property {string} value - Input current value
+ * @property {string} placeholder - Placeholder text
+ * @property {'text' | 'email' | 'password' | 'tel' | 'url' | 'search' | 'number'} type - HTML input type
+ * @property {string} name - HTML name attribute
+ * @property {InputSize} size - Input size variant
+ * @property {InputVariant} variant - Input visual variant
+ * @property {boolean} disabled - Disable input interaction
+ * @property {boolean} required - Mark input as required
+ * @property {boolean} error - Show error state styling
+ * @property {(e: ChangeEvent<HTMLInputElement>) => void} onChange - Value change handler
+ * @property {(e: FocusEvent<HTMLInputElement>) => void} onFocus - Focus event handler
+ * @property {(e: FocusEvent<HTMLInputElement>) => void} onBlur - Blur event handler
+ * @property {string} className - Additional CSS classes
+ * @property {string} id - HTML id attribute
  */
 export interface InputProps {
-  // Conteúdo
+  // Content
   value?: string
   placeholder?: string
 
-  // Estrutura
+  // Structure
   type?: 'text' | 'email' | 'password' | 'tel' | 'url' | 'search' | 'number'
   name?: string
 
-  // Aparência
+  // Appearance
   size?: InputSize
   variant?: InputVariant
 
-  // Estados
+  // States
   disabled?: boolean
   required?: boolean
   error?: boolean
 
-  // Funcionalidade
+  // Functionality
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
   onFocus?: (e: FocusEvent<HTMLInputElement>) => void
   onBlur?: (e: FocusEvent<HTMLInputElement>) => void
@@ -45,34 +75,50 @@ export interface InputProps {
   id?: string
 }
 
-// ============================================================================
-// TEXTAREA PROPS
-// ============================================================================
+// ================================
+// TEXTAREA INTERFACE
+// ================================
 
 /**
- * Props para componente Textarea
+ * Props interface for the Textarea component
+ *
  * @interface TextareaProps
+ * @property {string} value - Textarea current value
+ * @property {string} placeholder - Placeholder text
+ * @property {string} name - HTML name attribute
+ * @property {number} rows - Number of visible text rows
+ * @property {InputSize} size - Textarea size variant
+ * @property {InputVariant} variant - Textarea visual variant
+ * @property {boolean} disabled - Disable textarea interaction
+ * @property {boolean} required - Mark textarea as required
+ * @property {boolean} error - Show error state styling
+ * @property {TextareaResize} resize - Textarea resize behavior
+ * @property {(e: ChangeEvent<HTMLTextAreaElement>) => void} onChange - Value change handler
+ * @property {(e: FocusEvent<HTMLTextAreaElement>) => void} onFocus - Focus event handler
+ * @property {(e: FocusEvent<HTMLTextAreaElement>) => void} onBlur - Blur event handler
+ * @property {string} className - Additional CSS classes
+ * @property {string} id - HTML id attribute
  */
 export interface TextareaProps {
-  // Conteúdo
+  // Content
   value?: string
   placeholder?: string
 
-  // Estrutura
+  // Structure
   name?: string
   rows?: number
 
-  // Aparência
+  // Appearance
   size?: InputSize
   variant?: InputVariant
 
-  // Estados
+  // States
   disabled?: boolean
   required?: boolean
   error?: boolean
   resize?: TextareaResize
 
-  // Funcionalidade
+  // Functionality
   onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void
   onFocus?: (e: FocusEvent<HTMLTextAreaElement>) => void
   onBlur?: (e: FocusEvent<HTMLTextAreaElement>) => void
@@ -82,46 +128,60 @@ export interface TextareaProps {
   id?: string
 }
 
-// ============================================================================
-// FORM FIELD PROPS
-// ============================================================================
+// ================================
+// FORM FIELD INTERFACE
+// ================================
 
 /**
- * Props para componente FormField
+ * Props interface for the FormField component
+ *
  * @interface FormFieldProps
+ * @property {ReactNode} children - Form input element to be wrapped
+ * @property {string} label - Label text for the form field
+ * @property {string} error - Error message to display
+ * @property {boolean} required - Mark field as required with asterisk
+ * @property {string} className - Additional CSS classes
  */
 export interface FormFieldProps {
-  // Conteúdo
+  // Content
   children: ReactNode
   label?: string
   error?: string
 
-  // Configuração
+  // Configuration
   required?: boolean
 
   // HTML attributes
   className?: string
 }
 
-// ============================================================================
-// CONTACT CARD PROPS
-// ============================================================================
+// ================================
+// CONTACT CARD INTERFACE
+// ================================
 
 /**
- * Props para componente ContactCard
+ * Props interface for the ContactCard component
+ *
  * @interface ContactCardProps
+ * @property {ReactNode} icon - Icon element to display
+ * @property {string} title - Contact method title
+ * @property {string} value - Contact value (email, phone, etc.)
+ * @property {string} href - Optional href for clickable contact
+ * @property {() => void} onClick - Click handler function
+ * @property {ContactCardVariant} variant - Contact card visual variant
+ * @property {string} className - Additional CSS classes
  */
 export interface ContactCardProps {
-  // Conteúdo
+  // Content
   icon: ReactNode
   title: string
   value: string
 
-  // Funcionalidade
+  // Functionality
   href?: string
   onClick?: () => void
 
-  // Aparência
+  // Appearance
   variant?: ContactCardVariant
 
   // HTML attributes

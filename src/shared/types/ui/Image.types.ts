@@ -1,6 +1,8 @@
-// ============================================================================
-// IMAGE COMPONENT TYPES
-// ============================================================================
+import React from 'react'
+
+// ================================
+// IMAGE SPECIFIC TYPES
+// ================================
 
 /**
  * Image resource type - can be a direct URL string or an object with string values
@@ -8,53 +10,83 @@
 export type ImageResource = string | Record<string, string>
 
 /**
- * Props for the Image component
+ * Predefined image size variants including sidebar
  */
-export interface ImageProps {
-  /** Image source - URL string or resource object */
-  src: ImageResource
+export type ImageSize = 'small' | 'medium' | 'large' | 'xlarge' | 'sidebar'
 
-  /** Alt text for accessibility */
-  alt: string
+/**
+ * Image shape format options
+ */
+export type ImageShape = 'square' | 'rectangle' | 'circle'
 
-  /** Additional CSS classes */
-  className?: string
+/**
+ * Shadow effect intensity options
+ */
+export type ImageShadow = boolean | 'strong'
 
-  /** Click handler for interactive images */
-  onClick?: () => void
+/**
+ * Neon fire effect variants
+ */
+export type ImageNeonFire = boolean | 'primary'
 
-  /** Predefined size variants including sidebar */
-  size?: 'small' | 'medium' | 'large' | 'xlarge' | 'sidebar'
+/**
+ * Float positioning options
+ */
+export type ImageFloat = 'left' | 'right' | 'none'
 
-  /** Shape format of the image */
-  shape?: 'square' | 'rectangle' | 'circle'
+/**
+ * Keyboard event handler type
+ */
+export type KeyboardEventHandler = (e: React.KeyboardEvent) => void
 
-  /** Shadow effect - boolean for normal shadow, 'strong' for heavy shadow */
-  shadow?: boolean | 'strong'
-
-  /** Enable hover effects */
-  hover?: boolean
-
-  /** Neon fire effect - true for fire colors, 'primary' for theme colors */
-  neonFire?: boolean | 'primary'
-
-  /** Float positioning */
-  float?: 'left' | 'right' | 'none'
-
-  /** Enable responsive sizing */
-  responsive?: boolean
-}
-
-// ============================================================================
+// ================================
 // UTILITY TYPES
-// ============================================================================
+// ================================
 
 /**
  * Internal type for CSS class generation
  */
 export type ImageClassNames = string[]
 
+// ================================
+// MAIN INTERFACE
+// ================================
+
 /**
- * Keyboard event handler type
+ * Props interface for the Image component
+ *
+ * @interface ImageProps
+ * @property {ImageResource} src - Image source - URL string or resource object
+ * @property {string} alt - Alt text for accessibility
+ * @property {string} className - Additional CSS classes
+ * @property {() => void} onClick - Click handler for interactive images
+ * @property {ImageSize} size - Predefined size variants including sidebar
+ * @property {ImageShape} shape - Shape format of the image
+ * @property {ImageShadow} shadow - Shadow effect - boolean for normal shadow, 'strong' for heavy shadow
+ * @property {boolean} hover - Enable hover effects
+ * @property {ImageNeonFire} neonFire - Neon fire effect - true for fire colors, 'primary' for theme colors
+ * @property {ImageFloat} float - Float positioning
+ * @property {boolean} responsive - Enable responsive sizing
  */
-export type KeyboardEventHandler = (e: React.KeyboardEvent) => void
+export interface ImageProps {
+  // Content
+  src: ImageResource
+  alt: string
+
+  // Appearance
+  size?: ImageSize
+  shape?: ImageShape
+  shadow?: ImageShadow
+  hover?: boolean
+  neonFire?: ImageNeonFire
+
+  // Layout
+  float?: ImageFloat
+  responsive?: boolean
+
+  // Functionality
+  onClick?: () => void
+
+  // HTML attributes
+  className?: string
+}

@@ -1,35 +1,34 @@
 import React, { JSX } from 'react'
 import { Github, ExternalLink, Clock } from 'lucide-react'
 import { Button, P, Title, Tag } from '@shared/ui'
-import {
-  type ProjectCardProps,
-  type ProjectGridProps,
-  type Project
-} from '@shared/types'
+import { ProjectCardProps, ProjectGridProps, Project } from '@shared/types'
 import '@styles/ui/projectcard.scss'
 
-// ============================================================================
+// ================================
 // CONSTANTS
-// ============================================================================
+// ================================
 
 const SKELETON_CARDS_COUNT = 6
 const DEFAULT_EMPTY_MESSAGE = 'Nenhum projeto encontrado para esta categoria.'
 
-// ============================================================================
-// HELPER FUNCTIONS PARA CLASSIFICAR CONTEÚDO
-// ============================================================================
+// ================================
+// HELPER FUNCTIONS
+// ================================
 
+/**
+ * Generates content-based CSS classes for dynamic styling
+ */
 const getContentClasses = (project: Project): string => {
   const classes: string[] = []
 
-  // Classificar título (baseado no comprimento)
+  // Title classification (based on length)
   if (project.title.length <= 25) {
     classes.push('card-title--1-line')
   } else if (project.title.length <= 50) {
     classes.push('card-title--2-lines')
   }
 
-  // Classificar descrição
+  // Description classification
   if (project.description.length <= 120) {
     classes.push('card-description--short')
   } else if (project.description.length <= 240) {
@@ -38,7 +37,7 @@ const getContentClasses = (project: Project): string => {
     classes.push('card-description--long')
   }
 
-  // Classificar tags
+  // Tags classification
   if (project.tags.length <= 3) {
     classes.push('card-tags--single-row')
   } else {
@@ -48,6 +47,9 @@ const getContentClasses = (project: Project): string => {
   return classes.join(' ')
 }
 
+/**
+ * Determines content variant based on total content length
+ */
 const getContentVariant = (
   project: Project
 ): 'short-content' | 'medium-content' | 'long-content' => {
@@ -58,24 +60,22 @@ const getContentVariant = (
   return 'long-content'
 }
 
+/**
+ * Determines tags variant based on quantity
+ */
 const getTagsVariant = (project: Project): 'few-tags' | 'many-tags' => {
   return project.tags.length <= 3 ? 'few-tags' : 'many-tags'
 }
 
-// ============================================================================
-// HELPER FUNCTIONS PARA CATEGORIAS
-// ============================================================================
-
 /**
- * Verifica se o projeto está em progresso
+ * Checks if project is in progress
  */
 const isProjectInProgress = (project: Project): boolean => {
   return project.categories.includes('progress')
 }
 
 /**
- * Obtém a categoria principal para classificação CSS
- * Prioriza certas categorias sobre outras
+ * Gets primary category for CSS classification with priority order
  */
 const getPrimaryCategory = (project: Project): string => {
   const categoryPriority = ['progress', 'fullstack', 'backend', 'frontend']
@@ -90,16 +90,16 @@ const getPrimaryCategory = (project: Project): string => {
 }
 
 /**
- * Gera classes CSS baseadas nas categorias do projeto
+ * Generates category-based CSS classes
  */
 const getCategoryClasses = (project: Project): string => {
   const classes: string[] = []
 
-  // Adiciona classe para categoria principal
+  // Add primary category class
   const primaryCategory = getPrimaryCategory(project)
   classes.push(`project-card--${primaryCategory}`)
 
-  // Adiciona classes para categorias múltiplas se aplicável
+  // Add multi-category classes if applicable
   if (project.categories.length > 1) {
     classes.push('project-card--multi-category')
     project.categories.forEach((category) => {
@@ -110,10 +110,9 @@ const getCategoryClasses = (project: Project): string => {
   return classes.join(' ')
 }
 
-// ============================================================================
-// BUILD CLASS FUNCTIONS
-// ============================================================================
-
+/**
+ * Builds CSS classes for project card
+ */
 const buildCardClasses = (
   size: string,
   variant: string,
@@ -125,7 +124,7 @@ const buildCardClasses = (
   contentVariant?: string,
   tagsVariant?: string,
   contentClasses?: string,
-  categoryClasses?: string // ← NOVA: classes de categoria
+  categoryClasses?: string
 ): string => {
   const classes = [
     'project-card',
@@ -138,13 +137,16 @@ const buildCardClasses = (
     contentVariant && `project-card--${contentVariant}`,
     tagsVariant && `project-card--${tagsVariant}`,
     contentClasses,
-    categoryClasses, // ← NOVA: inclui classes de categoria
+    categoryClasses,
     className
   ].filter(Boolean)
 
   return classes.join(' ')
 }
 
+/**
+ * Builds CSS classes for project grid
+ */
 const buildGridClasses = (
   columns: string | number,
   gap: string,
@@ -164,14 +166,9 @@ const buildGridClasses = (
   return classes.join(' ')
 }
 
-const buildEmptyStateClasses = (): string => {
-  return 'project-grid__empty'
-}
-
-// ============================================================================
-// SKELETON PROJECT DATA
-// ============================================================================
-
+/**
+ * Creates skeleton project data for loading states
+ */
 const createSkeletonProject = (index: number): Project => ({
   id: `skeleton-${index}`,
   title: 'Loading Project Title...',
@@ -179,17 +176,22 @@ const createSkeletonProject = (index: number): Project => ({
     'Loading project description that will be replaced with actual content when data loads...',
   image: '/placeholder.jpg',
   tags: ['Loading', 'Skeleton', 'Placeholder'],
-  categories: ['frontend'], // ← ATUALIZADO: array ao invés de string
+  categories: ['frontend'],
   githubUrl: '#',
   demoUrl: '#'
 })
 
-// ============================================================================
+// ================================
 // PROJECT CARD COMPONENT
-// ============================================================================
+// ================================
 
 /**
- * Componente que renderiza um card de projeto individual com alinhamento fixo
+ * Project card component that displays individual project information
+ * with interactive buttons and progress indicators
+ *
+ * @component ProjectCard
+ * @param {ProjectCardProps} props - Project card configuration props
+ * @returns {React.FC<ProjectCardProps>} Rendered project card component
  */
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
@@ -202,15 +204,19 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   disabled = false,
   elevated = false
 }) => {
-  const isInProgress = isProjectInProgress(project) // ← ATUALIZADO: função helper
+  // ================================
+  // DERIVED VALUES
+  // ================================
 
-  // Classes automáticas baseadas no conteúdo
+  const isInProgress = isProjectInProgress(project)
   const contentClasses = !loading ? getContentClasses(project) : ''
   const contentVariant = !loading
     ? getContentVariant(project)
     : 'medium-content'
   const tagsVariant = !loading ? getTagsVariant(project) : 'few-tags'
-  const categoryClasses = !loading ? getCategoryClasses(project) : '' // ← NOVO: classes de categoria
+  const categoryClasses = !loading ? getCategoryClasses(project) : ''
+  const displayTags = project.tags.slice(0, 6)
+  const remainingTagsCount = project.tags.length - 6
 
   const cardClasses = buildCardClasses(
     size,
@@ -223,8 +229,12 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     contentVariant,
     tagsVariant,
     contentClasses,
-    categoryClasses // ← NOVO: passa classes de categoria
+    categoryClasses
   )
+
+  // ================================
+  // EVENT HANDLERS
+  // ================================
 
   const handleGithubClick = (): void => {
     if (shouldAllowInteraction() && onGithubClick) {
@@ -247,6 +257,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     }
   }
 
+  // ================================
+  // UTILITY FUNCTIONS
+  // ================================
+
   const shouldAllowInteraction = (): boolean => {
     return !disabled && !loading
   }
@@ -255,9 +269,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     return shouldAllowInteraction() ? 0 : -1
   }
 
-  // Truncar tags para evitar overflow
-  const displayTags = project.tags.slice(0, 6)
-  const remainingTagsCount = project.tags.length - 6
+  // ================================
+  // RENDER
+  // ================================
 
   return (
     <div
@@ -266,7 +280,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       tabIndex={getTabIndex()}
       role="button"
       aria-label={`Projeto ${project.title}`}
-      data-categories={project.categories.join(',')} // ← NOVO: data attribute para CSS/JS
+      data-categories={project.categories.join(',')}
     >
       {/* Progress Badge */}
       {isInProgress && (
@@ -300,7 +314,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         )}
       </div>
 
-      {/* Card Content - Estrutura Grid Fixa */}
+      {/* Card Content - Fixed Grid Structure */}
       <div className="project-card__content">
         <Title level="h3" align="center" className="project-card__title">
           {project.title}
@@ -308,7 +322,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
         <P className="project-card__description">{project.description}</P>
 
-        {/* Tags com altura fixa */}
+        {/* Tags with fixed height */}
         <div className="project-card__tags">
           {displayTags.map((tag) => (
             <Tag size="pequeno" key={tag}>
@@ -322,7 +336,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           )}
         </div>
 
-        {/* Action Buttons com altura fixa */}
+        {/* Action Buttons with fixed height */}
         <div className="project-card__buttons">
           <Button
             variant="outline"
@@ -358,12 +372,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   )
 }
 
-// ============================================================================
+// ================================
 // PROJECT GRID COMPONENT
-// ============================================================================
+// ================================
 
 /**
- * Componente que renderiza uma grade de projetos com alinhamento consistente
+ * Grid container component for displaying multiple project cards
+ * with responsive layout and loading states
+ *
+ * @component ProjectGrid
+ * @param {ProjectGridProps} props - Project grid configuration props
+ * @returns {React.FC<ProjectGridProps>} Rendered project grid component
  */
 export const ProjectGrid: React.FC<ProjectGridProps> = ({
   projects,
@@ -375,20 +394,19 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({
   gap = 'medium',
   loading = false
 }) => {
-  const gridClasses = buildGridClasses(columns, gap, loading, className)
-  const emptyStateClasses = buildEmptyStateClasses()
+  // ================================
+  // DERIVED VALUES
+  // ================================
 
+  const gridClasses = buildGridClasses(columns, gap, loading, className)
+  const emptyStateClasses = 'project-grid__empty'
   const hasNoProjects = projects.length === 0
   const shouldShowEmptyState = hasNoProjects && !loading
   const shouldShowSkeletons = loading && hasNoProjects
 
-  if (shouldShowEmptyState) {
-    return (
-      <div className={emptyStateClasses}>
-        <P className="project-grid__empty-text">{emptyMessage}</P>
-      </div>
-    )
-  }
+  // ================================
+  // RENDER HELPERS
+  // ================================
 
   const renderProjectCard = (project: Project): JSX.Element => (
     <ProjectCard
@@ -410,6 +428,22 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({
       />
     ))
   }
+
+  // ================================
+  // EARLY RETURNS
+  // ================================
+
+  if (shouldShowEmptyState) {
+    return (
+      <div className={emptyStateClasses}>
+        <P className="project-grid__empty-text">{emptyMessage}</P>
+      </div>
+    )
+  }
+
+  // ================================
+  // RENDER
+  // ================================
 
   return (
     <div className={gridClasses}>

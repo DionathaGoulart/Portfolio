@@ -1,38 +1,8 @@
 import React from 'react'
 import { P, Tag, TagGroup, Title } from '@shared/ui'
 import { AnimatedContainer } from './Animated'
-
-// ============================================================================
-// TYPES
-// ============================================================================
-
-export interface ExpCardProps {
-  // Conteúdo
-  title: string
-  company: string
-  period: string
-  description: string
-  technologies: string[]
-
-  // Aparência
-  variant?: 'default' | 'highlight'
-  showTimeline?: boolean
-
-  // Interatividade
-  interactive?: boolean
-  onClick?: () => void
-
-  // HTML attributes
-  className?: string
-  id?: string
-}
-
-export interface ExpListProps {
-  experiences: ExpCardProps[]
-  showTimeline?: boolean
-  defaultVariant?: 'default' | 'highlight' | 'secondary' | 'accent'
-  className?: string
-}
+import { ExpCardProps, ExpListProps } from '../types/ui'
+import '@styles/ui/expcard.scss'
 
 // ============================================================================
 // EXPERIENCE CARD COMPONENT

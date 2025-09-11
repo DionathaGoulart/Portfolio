@@ -1,22 +1,32 @@
 import React from 'react'
 import {
+  NavFilterProps,
   buildFilterButtonClasses,
   buildFilterContainerClasses,
-  getSafeOptions,
-  type NavFilterProps
-} from '../types'
+  getSafeOptions
+} from '@shared/types'
 import '@styles/ui/navfilter.scss'
 
-// ============================================================================
+// ================================
 // NAV FILTER COMPONENT
-// ============================================================================
+// ================================
 
 /**
- * NavFilter Component
- * Renders a navigation filter with clickable buttons for filtering content
+ * Navigation filter component with clickable buttons for filtering content
+ * Supports horizontal/vertical layouts and various size variants
  *
- * @param props - NavFilterProps
- * @returns JSX.Element | null
+ * @component NavFilter
+ * @param {NavFilterProps} props - NavFilter configuration props
+ * @returns {React.FC<NavFilterProps>} Rendered navigation filter component
+ *
+ * @example
+ * <NavFilter
+ *   options={[{ value: 'all', label: 'All' }, { value: 'active', label: 'Active' }]}
+ *   activeFilter="all"
+ *   onFilterChange={handleFilterChange}
+ *   size="medium"
+ *   layout="horizontal"
+ * />
  */
 export const NavFilter: React.FC<NavFilterProps> = ({
   options = [],
@@ -29,25 +39,28 @@ export const NavFilter: React.FC<NavFilterProps> = ({
   align = 'center',
   loading = false
 }) => {
-  // ============================================================================
-  // HANDLERS
-  // ============================================================================
+  // ================================
+  // DERIVED VALUES
+  // ================================
 
-  /**
-   * Handles filter button click
-   * @param filter - Filter value to set as active
-   */
+  const safeOptions = getSafeOptions(options)
+  const containerClasses = buildFilterContainerClasses(
+    layout,
+    align,
+    size,
+    className
+  )
+
+  // ================================
+  // EVENT HANDLERS
+  // ================================
+
   const handleFilterClick = (filter: string): void => {
     if (!loading) {
       onFilterChange(filter)
     }
   }
 
-  /**
-   * Handles keyboard navigation for filter buttons
-   * @param e - Keyboard event
-   * @param filter - Filter value to set as active
-   */
   const handleKeyDown = (e: React.KeyboardEvent, filter: string): void => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
@@ -55,11 +68,9 @@ export const NavFilter: React.FC<NavFilterProps> = ({
     }
   }
 
-  // ============================================================================
-  // VALIDATION & EARLY RETURNS
-  // ============================================================================
-
-  const safeOptions = getSafeOptions(options)
+  // ================================
+  // EARLY RETURNS
+  // ================================
 
   if (safeOptions.length === 0) {
     console.warn(
@@ -68,20 +79,9 @@ export const NavFilter: React.FC<NavFilterProps> = ({
     return null
   }
 
-  // ============================================================================
-  // CLASS BUILDING
-  // ============================================================================
-
-  const containerClasses = buildFilterContainerClasses(
-    layout,
-    align,
-    size,
-    className
-  )
-
-  // ============================================================================
+  // ================================
   // RENDER
-  // ============================================================================
+  // ================================
 
   return (
     <nav className={containerClasses} aria-label={ariaLabel}>

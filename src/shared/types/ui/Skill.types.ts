@@ -1,9 +1,9 @@
-// ============================================================================
-// SKILL TYPES
-// ============================================================================
+// ================================
+// SKILL SPECIFIC TYPES
+// ================================
 
 /**
- * Categorias disponíveis para classificação de skills técnicas
+ * Available skill categories for technical classification
  */
 export type SkillCategory =
   | 'frontend'
@@ -13,84 +13,125 @@ export type SkillCategory =
   | 'mobile'
 
 /**
- * Representa uma skill técnica com sua respectiva proficiência
+ * Skill bar size variants
+ */
+export type SkillBarSize = 'small' | 'medium' | 'large'
+
+/**
+ * Skill bar visual variants
+ */
+export type SkillBarVariant = 'default' | 'minimal' | 'detailed'
+
+/**
+ * Skill grid column options
+ */
+export type SkillGridColumns = 1 | 2 | 3 | 'responsive'
+
+/**
+ * Skill grid gap spacing options
+ */
+export type SkillGridGap = 'small' | 'medium' | 'large'
+
+// ================================
+// MAIN INTERFACES
+// ================================
+
+/**
+ * Technical skill data structure with proficiency level
+ *
+ * @interface Skill
+ * @property {string} id - Unique skill identifier
+ * @property {string} name - Display name of the skill
+ * @property {number} percentage - Proficiency percentage (0-100)
+ * @property {SkillCategory} category - Classification category
+ * @property {string} icon - Optional icon for visual representation
  */
 export interface Skill {
-  /** Identificador único da skill */
   id: string
-  /** Nome exibido da skill */
   name: string
-  /** Percentual de proficiência (0-100) */
   percentage: number
-  /** Categoria de classificação */
   category: SkillCategory
-  /** Ícone opcional para representação visual */
   icon?: string
 }
 
 /**
- * Propriedades do componente SkillBar
+ * Props interface for the SkillBar component
+ *
+ * @interface SkillBarProps
+ * @property {Skill} skill - Skill data to display
+ * @property {number} animationDelay - Animation delay in milliseconds
+ * @property {SkillBarSize} size - Component size variant
+ * @property {SkillBarVariant} variant - Visual variant of the component
+ * @property {boolean} showPercentage - Whether to show percentage value
+ * @property {boolean} showAnimation - Whether to execute animations
+ * @property {string} className - Additional CSS classes
  */
 export interface SkillBarProps {
-  /** Skill a ser exibida */
+  // Content
   skill: Skill
-  /** Delay da animação em milissegundos */
-  animationDelay?: number
-  /** Tamanho do componente */
-  size?: 'small' | 'medium' | 'large'
-  /** Variante visual do componente */
-  variant?: 'default' | 'minimal' | 'detailed'
-  /** Se deve mostrar a porcentagem */
+
+  // Appearance
+  size?: SkillBarSize
+  variant?: SkillBarVariant
   showPercentage?: boolean
-  /** Se deve executar animações */
+
+  // Animation
+  animationDelay?: number
   showAnimation?: boolean
-  /** Classes CSS adicionais */
+
+  // HTML attributes
   className?: string
 }
 
 /**
- * Propriedades do componente SkillGrid
+ * Props interface for the SkillGrid component
+ *
+ * @interface SkillGridProps
+ * @property {Skill[]} skills - Array of skills to display
+ * @property {string} title - Optional section title
+ * @property {boolean} showCategories - Whether to group by categories
+ * @property {SkillGridColumns} columns - Number of grid columns
+ * @property {SkillGridGap} gap - Spacing between items
+ * @property {number} animationDelay - Base delay between animations in milliseconds
+ * @property {string} className - Additional CSS classes
  */
 export interface SkillGridProps {
-  /** Lista de skills a serem exibidas */
+  // Content
   skills: Skill[]
-  /** Título opcional da seção */
   title?: string
-  /** Se deve agrupar por categorias */
+
+  // Layout
   showCategories?: boolean
-  /** Número de colunas do grid */
-  columns?: 1 | 2 | 3 | 'responsive'
-  /** Espaçamento entre items */
-  gap?: 'small' | 'medium' | 'large'
-  /** Delay base entre animações em milissegundos */
+  columns?: SkillGridColumns
+  gap?: SkillGridGap
+
+  // Animation
   animationDelay?: number
-  /** Classes CSS adicionais */
+
+  // HTML attributes
   className?: string
 }
 
 /**
- * Propriedades da seção completa de skills
+ * Props interface for complete skills section
+ *
+ * @interface SkillsSectionProps
+ * @property {string} id - Optional ID for anchors/navigation
  */
 export interface SkillsSectionProps {
-  /** ID opcional para âncoras/navegação */
   id?: string
 }
 
-// ============================================================================
-// CLASS BUILDERS
-// ============================================================================
+// ================================
+// UTILITY FUNCTIONS
+// ================================
 
 /**
- * Constrói classes CSS para o componente SkillBar
- * @param size - Tamanho do componente
- * @param variant - Variante visual
- * @param showAnimation - Se deve incluir classes de animação
- * @param className - Classes adicionais
- * @returns String com todas as classes concatenadas
+ * Builds CSS classes for the SkillBar component
  */
 export const buildSkillBarClasses = (
-  size: SkillBarProps['size'] = 'medium',
-  variant: SkillBarProps['variant'] = 'default',
+  size: SkillBarSize = 'medium',
+  variant: SkillBarVariant = 'default',
   showAnimation = true,
   className = ''
 ): string => {
@@ -106,15 +147,11 @@ export const buildSkillBarClasses = (
 }
 
 /**
- * Constrói classes CSS para o componente SkillGrid
- * @param columns - Configuração de colunas
- * @param gap - Espaçamento entre items
- * @param className - Classes adicionais
- * @returns String com todas as classes concatenadas
+ * Builds CSS classes for the SkillGrid component
  */
 export const buildSkillGridClasses = (
-  columns: SkillGridProps['columns'] = 'responsive',
-  gap: SkillGridProps['gap'] = 'medium',
+  columns: SkillGridColumns = 'responsive',
+  gap: SkillGridGap = 'medium',
   className = ''
 ): string => {
   return [

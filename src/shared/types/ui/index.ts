@@ -1,5 +1,6 @@
 export * from './Button.types'
 export * from './Card.types'
+export * from './ExpCard.types'
 export * from './Image.types'
 export * from './Form.types'
 export * from './NavFilter.types'

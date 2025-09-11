@@ -1,27 +1,27 @@
 import { ReactNode } from 'react'
 import { Align, ColorVariant, Shadow, Style, Weight } from './global.types'
 
-// ============================================================================
-// BASE TYPES
-// ============================================================================
+// ================================
+// TITLE SPECIFIC TYPES
+// ================================
 
 /**
- * Níveis semânticos de título (h1-h6)
+ * Semantic title levels (h1-h6)
  */
 export type TitleLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 
 /**
- * Elementos HTML permitidos para renderização
+ * HTML elements allowed for rendering
  */
 export type TitleElement = TitleLevel | 'div' | 'span' | 'p'
 
 /**
- * Variantes especiais de tamanho
+ * Special size variants for different contexts
  */
 export type TitleVariant = 'hero' | 'display' | 'section' | 'subsection'
 
 /**
- * Opções de bordas decorativas
+ * Decorative border position options
  */
 export type TitleBorder =
   | 'none'
@@ -32,115 +32,79 @@ export type TitleBorder =
   | 'bottom-center'
   | 'bottom-end'
 
-// ============================================================================
+// ================================
 // MAIN INTERFACE
-// ============================================================================
+// ================================
 
 /**
- * Props do componente Title
+ * Props interface for the Title component
  *
  * @interface TitleProps
+ * @property {ReactNode} children - Title content
+ * @property {TitleLevel} level - Semantic level (h1-h6)
+ * @property {TitleElement} element - HTML element for rendering
+ * @property {Align} align - Text alignment
+ * @property {ColorVariant} color - Color variant
+ * @property {Weight} weight - Font weight
+ * @property {TitleVariant} variant - Special size variant
+ * @property {boolean} uppercase - Transform to uppercase
+ * @property {Style} style - Text style (italic, underline, etc)
+ * @property {boolean} gradient - Apply color gradient
+ * @property {Shadow} shadow - Text shadow variant
+ * @property {boolean} underlined - Decorative underline
+ * @property {boolean} highlighted - Background highlight
+ * @property {TitleBorder} border - Decorative border position
+ * @property {boolean} interactive - Enable interactive behavior
+ * @property {boolean} disabled - Disabled state
+ * @property {() => void} onClick - Click handler
+ * @property {ReactNode} icon - Icon next to title
+ * @property {string | number} badge - Badge with number or text
+ * @property {string} className - Custom CSS classes
+ * @property {string} id - Element ID
+ *
  * @example
- * ```tsx
  * <Title
  *   level="h1"
  *   color="primary"
  *   weight="bold"
  *   border="bottom-start"
  * >
- *   Meu Título
+ *   My Title
  * </Title>
- * ```
  */
 export interface TitleProps {
-  // ================================
-  // CONTEÚDO
-  // ================================
-
-  /** Conteúdo do título */
+  // Content
   children: ReactNode
 
-  // ================================
-  // ESTRUTURA
-  // ================================
-
-  /** Nível semântico (h1-h6) */
+  // Structure
   level?: TitleLevel
-
-  /** Elemento HTML para renderização */
   element?: TitleElement
 
-  // ================================
-  // APARÊNCIA
-  // ================================
-
-  /** Alinhamento do texto */
+  // Appearance
   align?: Align
-
-  /** Variante de cor */
   color?: ColorVariant
-
-  /** Peso da fonte */
   weight?: Weight
-
-  /** Variante especial de tamanho */
   variant?: TitleVariant
 
-  // ================================
-  // MODIFICADORES DE ESTILO
-  // ================================
-
-  /** Transformar em maiúsculas */
+  // Style Modifiers
   uppercase?: boolean
-
-  /** Estilo de texto (italic, underline, etc) */
   style?: Style
-
-  /** Aplicar gradiente de cor */
   gradient?: boolean
-
-  /** Sombra no texto */
   shadow?: Shadow
-
-  /** Linha decorativa embaixo */
   underlined?: boolean
-
-  /** Fundo destacado */
   highlighted?: boolean
-
-  /** Borda decorativa */
   border?: TitleBorder
 
-  // ================================
-  // INTERATIVIDADE
-  // ================================
-
-  /** Habilitar comportamento interativo */
+  // Interactivity
   interactive?: boolean
-
-  /** Estado desabilitado */
   disabled?: boolean
-
-  /** Handler de clique */
   onClick?: () => void
 
-  // ================================
-  // ELEMENTOS ADICIONAIS
-  // ================================
-
-  /** Ícone ao lado do título */
+  // Additional Elements
   icon?: ReactNode
-
-  /** Badge com número ou texto */
   badge?: string | number
 
-  // ================================
-  // HTML ATTRIBUTES
-  // ================================
-
-  /** Classes CSS customizadas */
+  // HTML Attributes
   className?: string
-
-  /** ID do elemento */
   id?: string
 }

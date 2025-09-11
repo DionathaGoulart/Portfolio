@@ -23,45 +23,39 @@ const DEFAULT_PROPS = {
 }
 
 // ================================
-// HELPER FUNCTIONS
+// HOOKS
 // ================================
 
 /**
  * Hook to detect if screen is mobile size
- * @returns boolean indicating if current screen is mobile
  */
 const useIsMobile = (): boolean => {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768) // 768px = md breakpoint
+      setIsMobile(window.innerWidth < 768)
     }
 
-    // Check on mount
     checkIsMobile()
-
-    // Listen for window resize
     window.addEventListener('resize', checkIsMobile)
-
     return () => window.removeEventListener('resize', checkIsMobile)
   }, [])
 
   return isMobile
 }
 
+// ================================
+// HELPER FUNCTIONS
+// ================================
+
 /**
  * Calculates text weight based on character count
- * @param text - Text content to weigh
- * @returns Weight value based on character count
  */
 const calculateTextWeight = (text: string): number => text.length
 
 /**
  * Splits content into balanced sections for text distribution
- * @param content - Text content to split
- * @param sectionCount - Number of sections to create
- * @returns Array of text sections
  */
 const splitContentIntoSections = (
   content: string,
@@ -101,22 +95,17 @@ const splitContentIntoSections = (
 
 /**
  * Distributes text sections across columns using balanced algorithm
- * @param sections - Array of text sections
- * @param columnCount - Number of columns to distribute to
- * @returns Array of column content strings
  */
 const distributeTextAcrossColumns = (
   sections: string[],
   columnCount: number
 ): string[] => {
-  // Calculate weight for each section
   const sectionsWithWeight = sections.map((section, index) => ({
     content: section,
     weight: calculateTextWeight(section),
     originalIndex: index
   }))
 
-  // Initialize columns with empty arrays
   const columns = Array(columnCount)
     .fill(null)
     .map(() => ({
@@ -124,11 +113,9 @@ const distributeTextAcrossColumns = (
       totalWeight: 0
     }))
 
-  // Sort sections by weight (heaviest first) for better distribution
   sectionsWithWeight
     .sort((a, b) => b.weight - a.weight)
     .forEach((section) => {
-      // Find column with minimum weight
       const lightestColumnIndex = columns.reduce(
         (minIndex, currentColumn, currentIndex) =>
           currentColumn.totalWeight < columns[minIndex].totalWeight
@@ -137,7 +124,6 @@ const distributeTextAcrossColumns = (
         0
       )
 
-      // Add section to lightest column
       columns[lightestColumnIndex].sections.push(section.content)
       columns[lightestColumnIndex].totalWeight += section.weight
     })
@@ -179,7 +165,6 @@ const distributeTextAcrossColumns = (
           column1.totalWeight - column2.totalWeight
         )
 
-        // Attempt rebalancing if weight difference is significant
         if (
           weightDifference > 50 &&
           column1.sections.length > 0 &&
@@ -190,7 +175,6 @@ const distributeTextAcrossColumns = (
           const lighterColumn =
             column1.totalWeight > column2.totalWeight ? column2 : column1
 
-          // Find small section to move
           const smallSectionIndex = heavierColumn.sections.findIndex(
             (section) => calculateTextWeight(section) < weightDifference / 2
           )
@@ -215,16 +199,12 @@ const distributeTextAcrossColumns = (
 
 /**
  * Splits content into balanced columns for multi-column layout
- * @param content - React node content to split
- * @param columnCount - Number of columns to create
- * @returns Array of content for each column
  */
 const splitTextIntoColumns = (
   content: React.ReactNode,
   columnCount: number
 ): React.ReactNode[] => {
   if (typeof content !== 'string') {
-    // For non-string content, duplicate across all columns
     return Array(columnCount)
       .fill(null)
       .map((_, index) => <React.Fragment key={index}>{content}</React.Fragment>)
@@ -238,9 +218,6 @@ const splitTextIntoColumns = (
 
 /**
  * Generates CSS classes based on component props
- * @param props - Component props with defaults applied
- * @param shouldUseAnchor - Whether anchor should be active
- * @returns Space-separated string of CSS classes
  */
 const generateClassNames = (
   props: Required<TextProps>,
@@ -271,37 +248,27 @@ const generateClassNames = (
   const hasColumns = columns && columns > 1
 
   const classes = [
-    // Base class
     'text',
-    // Element and basic appearance
     `text--${as}`,
     `text--${size}`,
     `text--${color}`,
     `text--${align}`,
-    // Style modifiers
     weight && `text--${weight}`,
     style && `text--${style}`,
     leading && `text--leading-${leading}`,
-    // Text behaviors
     truncate && 'text--truncate',
     breakWords && 'text--break-words',
-    // Visual modifiers
     highlight && 'text--highlight',
     code && 'text--code',
     gradient && 'text--gradient',
     shadow === true && 'text--shadow',
     shadow === 'strong' && 'text--shadow-strong',
-    // Decorative borders
     border !== 'none' && `text--border-${border}`,
-    // Anchor positioning (only if should use anchor)
     shouldUseAnchor && anchor && `text--anchor-${anchor}`,
-    // Responsiveness
     responsive && `text--responsive-${responsive}`,
-    // Column layout
     hasColumns && 'text--column-layout',
     hasColumns && `text--columns-${columns}`,
     hasColumns && `text--gap-${columnGap}`,
-    // Custom classes
     className
   ]
 
@@ -309,44 +276,26 @@ const generateClassNames = (
 }
 
 // ================================
-// COMPONENTS
+// MAIN TEXT COMPONENT
 // ================================
 
 /**
- * Text component with support for multiple layouts, styles, and column distribution
+ * Versatile text component with support for multiple layouts, styles, and column distribution
  *
- * @param props - Text component props
- * @returns JSX element
+ * @component Text
+ * @param {TextProps} props - Text configuration props
+ * @returns {React.FC<TextProps>} Rendered text component
  *
  * @example
- * ```tsx
- * // Basic usage
- * <Text size="grande" color="primary">
- *   Content here
+ * <Text size="grande" color="primary" columns={2}>
+ *   Multi-column text content
  * </Text>
- *
- * // Multi-column layout
- * <Text columns={2} columnGap="large" align="center">
- *   Long content that will be distributed across columns
- * </Text>
- *
- * // Anchored text (disabled on mobile by default)
- * <Text anchor="right" size="pequeno">
- *   This text will float to the right on desktop only
- * </Text>
- *
- * // Force anchor to work on mobile too
- * <Text anchor="right" disableAnchorOnMobile={false}>
- *   This text will float on all screen sizes
- * </Text>
- *
- * // With visual effects
- * <Text gradient shadow="strong" border="center">
- *   Stylized text content
- * </Text>
- * ```
  */
 export const Text: React.FC<TextProps> = (inputProps) => {
+  // ================================
+  // DERIVED VALUES
+  // ================================
+
   const props = { ...DEFAULT_PROPS, ...inputProps } as Required<TextProps>
   const {
     children,
@@ -357,15 +306,13 @@ export const Text: React.FC<TextProps> = (inputProps) => {
     id
   } = props
 
-  // Detect if screen is mobile to disable anchor
   const isMobile = useIsMobile()
   const shouldUseAnchor = anchor && !(disableAnchorOnMobile && isMobile)
-
   const hasColumns = columns && columns > 1
   const cssClasses = generateClassNames(props, shouldUseAnchor)
 
   // ================================
-  // ANCHORED TEXT RENDER
+  // EARLY RETURNS - ANCHORED TEXT
   // ================================
 
   if (shouldUseAnchor && !hasColumns) {
@@ -382,7 +329,7 @@ export const Text: React.FC<TextProps> = (inputProps) => {
   }
 
   // ================================
-  // COLUMN LAYOUT RENDER
+  // EARLY RETURNS - COLUMN LAYOUT
   // ================================
 
   if (hasColumns) {
@@ -402,7 +349,7 @@ export const Text: React.FC<TextProps> = (inputProps) => {
   }
 
   // ================================
-  // STANDARD RENDER
+  // RENDER - STANDARD
   // ================================
 
   return (
@@ -419,8 +366,9 @@ export const Text: React.FC<TextProps> = (inputProps) => {
 /**
  * Paragraph text component
  *
- * @param props - Text props without 'as' property
- * @returns Paragraph element
+ * @component P
+ * @param {Omit<TextProps, 'as'>} props - Text props without 'as' property
+ * @returns {React.FC<Omit<TextProps, 'as'>>} Paragraph element
  */
 export const P: React.FC<Omit<TextProps, 'as'>> = (props) => (
   <Text as="p" {...props} />
@@ -429,8 +377,9 @@ export const P: React.FC<Omit<TextProps, 'as'>> = (props) => (
 /**
  * Span text component
  *
- * @param props - Text props without 'as' property
- * @returns Span element
+ * @component Span
+ * @param {Omit<TextProps, 'as'>} props - Text props without 'as' property
+ * @returns {React.FC<Omit<TextProps, 'as'>>} Span element
  */
 export const Span: React.FC<Omit<TextProps, 'as'>> = (props) => (
   <Text as="span" {...props} />

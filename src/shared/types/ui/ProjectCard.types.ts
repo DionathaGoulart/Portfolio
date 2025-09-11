@@ -1,14 +1,48 @@
-// ============================================================================
-// PROJECT CARD TYPES
-// ============================================================================
+// ================================
+// PROJECT SPECIFIC TYPES
+// ================================
 
 /**
- * Categorias disponíveis para projetos
+ * Available project categories
  */
 export type ProjectCategory = 'frontend' | 'backend' | 'fullstack' | 'progress'
 
 /**
- * Interface que define a estrutura de um projeto
+ * Project card size variants
+ */
+export type CardSize = 'compact' | 'medium' | 'large'
+
+/**
+ * Project card visual variants
+ */
+export type CardVariant = 'default' | 'primary' | 'accent'
+
+/**
+ * Project grid column options
+ */
+export type GridColumns = 1 | 2 | 3 | 4 | 'responsive'
+
+/**
+ * Project grid gap spacing options
+ */
+export type GridGap = 'small' | 'medium' | 'large'
+
+// ================================
+// MAIN INTERFACES
+// ================================
+
+/**
+ * Project data structure interface
+ *
+ * @interface Project
+ * @property {string} id - Unique project identifier
+ * @property {string} title - Project title
+ * @property {string} description - Project description
+ * @property {string} image - Project image URL or component
+ * @property {string[]} tags - Array of technology tags
+ * @property {ProjectCategory[]} categories - Array of project categories
+ * @property {string} githubUrl - GitHub repository URL
+ * @property {string} demoUrl - Live demo URL
  */
 export interface Project {
   id: string
@@ -16,80 +50,81 @@ export interface Project {
   description: string
   image: string
   tags: string[]
-  categories: ProjectCategory[] // ← MUDANÇA: array ao invés de string única
+  categories: ProjectCategory[]
   githubUrl: string
   demoUrl: string
 }
 
 /**
- * Props do componente ProjectCard
+ * Props interface for the ProjectCard component
+ *
+ * @interface ProjectCardProps
+ * @property {Project} project - Project data to display
+ * @property {(projectId: string) => void} onGithubClick - GitHub button click handler
+ * @property {(projectId: string) => void} onDemoClick - Demo button click handler
+ * @property {string} className - Additional CSS classes
+ * @property {CardSize} size - Card size variant
+ * @property {CardVariant} variant - Card visual variant
+ * @property {boolean} loading - Loading state
+ * @property {boolean} disabled - Disabled state
+ * @property {boolean} elevated - Elevated shadow effect
  */
 export interface ProjectCardProps {
-  /** Dados do projeto a ser exibido */
+  // Content
   project: Project
-  /** Callback executado ao clicar no botão GitHub */
+
+  // Functionality
   onGithubClick?: (projectId: string) => void
-  /** Callback executado ao clicar no botão Demo */
   onDemoClick?: (projectId: string) => void
-  /** Classes CSS adicionais */
-  className?: string
-  /** Tamanho do card */
+
+  // Appearance
   size?: CardSize
-  /** Variante visual do card */
   variant?: CardVariant
-  /** Se o card está em estado de loading */
   loading?: boolean
-  /** Se o card está desabilitado */
   disabled?: boolean
-  /** Se o card deve ter sombra elevada */
   elevated?: boolean
+
+  // HTML attributes
+  className?: string
 }
 
 /**
- * Props do componente ProjectGrid
+ * Props interface for the ProjectGrid component
+ *
+ * @interface ProjectGridProps
+ * @property {Project[]} projects - Array of projects to display
+ * @property {(projectId: string) => void} onGithubClick - GitHub button click handler
+ * @property {(projectId: string) => void} onDemoClick - Demo button click handler
+ * @property {string} emptyMessage - Message displayed when no projects
+ * @property {string} className - Additional CSS classes
+ * @property {GridColumns} columns - Number of grid columns
+ * @property {GridGap} gap - Spacing between cards
+ * @property {boolean} loading - Loading state
  */
 export interface ProjectGridProps {
-  /** Lista de projetos a serem exibidos */
+  // Content
   projects: Project[]
-  /** Callback executado ao clicar no botão GitHub */
-  onGithubClick?: (projectId: string) => void
-  /** Callback executado ao clicar no botão Demo */
-  onDemoClick?: (projectId: string) => void
-  /** Mensagem exibida quando não há projetos */
   emptyMessage?: string
-  /** Classes CSS adicionais */
-  className?: string
-  /** Número de colunas do grid */
+
+  // Functionality
+  onGithubClick?: (projectId: string) => void
+  onDemoClick?: (projectId: string) => void
+
+  // Layout
   columns?: GridColumns
-  /** Espaçamento entre os cards */
   gap?: GridGap
-  /** Se o grid está em estado de loading */
   loading?: boolean
+
+  // HTML attributes
+  className?: string
 }
 
-// ============================================================================
-// AUXILIARY TYPES
-// ============================================================================
-
-type CardSize = 'compact' | 'medium' | 'large'
-type CardVariant = 'default' | 'primary' | 'accent'
-type GridColumns = 1 | 2 | 3 | 4 | 'responsive'
-type GridGap = 'small' | 'medium' | 'large'
-
-// ============================================================================
-// CLASS BUILDERS
-// ============================================================================
+// ================================
+// UTILITY FUNCTIONS
+// ================================
 
 /**
- * Constrói as classes CSS para o ProjectCard
- * @param size - Tamanho do card
- * @param variant - Variante visual do card
- * @param loading - Se está carregando
- * @param disabled - Se está desabilitado
- * @param elevated - Se deve ter sombra elevada
- * @param className - Classes adicionais
- * @param isProgress - Se é um projeto em progresso
- * @returns String com as classes CSS
+ * Builds CSS classes for the ProjectCard component
  */
 export const buildCardClasses = (
   size: CardSize = 'medium',
@@ -115,12 +150,7 @@ export const buildCardClasses = (
 }
 
 /**
- * Constrói as classes CSS para o ProjectGrid
- * @param columns - Número de colunas
- * @param gap - Espaçamento entre cards
- * @param loading - Se está carregando
- * @param className - Classes adicionais
- * @returns String com as classes CSS
+ * Builds CSS classes for the ProjectGrid component
  */
 export const buildGridClasses = (
   columns: GridColumns = 'responsive',
@@ -140,8 +170,7 @@ export const buildGridClasses = (
 }
 
 /**
- * Constrói as classes CSS para o estado vazio do grid
- * @returns String com as classes CSS
+ * Builds CSS classes for the empty state
  */
 export const buildEmptyStateClasses = (): string => {
   return 'project-grid__empty'

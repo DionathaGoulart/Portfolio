@@ -15,7 +15,7 @@ export type CardSize = 'compact' | 'medium' | 'large'
 /**
  * Project card visual variants
  */
-export type CardVariant = 'default' | 'primary' | 'accent'
+export type CardVar = 'default' | 'primary' | 'accent'
 
 /**
  * Project grid column options
@@ -79,7 +79,7 @@ export interface ProjectCardProps {
 
   // Appearance
   size?: CardSize
-  variant?: CardVariant
+  variant?: CardVar
   loading?: boolean
   disabled?: boolean
   elevated?: boolean
@@ -128,7 +128,7 @@ export interface ProjectGridProps {
  */
 export const buildCardClasses = (
   size: CardSize = 'medium',
-  variant: CardVariant = 'default',
+  variant: CardVar = 'default',
   loading: boolean = false,
   disabled: boolean = false,
   elevated: boolean = false,

@@ -1,29 +1,29 @@
 import React from 'react'
 import { analytics } from '@features/Analytics/utils'
 import { AnimatedContainer, Title, P, ExpList } from '@shared/ui'
-import { ExpCardProps } from '@shared/ui/ExpCard'
+import { ExpCardProps } from '@shared/types/ui/ExpCard.types'
 
 // ================================
-// Types & Interfaces
+// INTERFACES E TIPOS
 // ================================
 
 /**
- * Props for the ExperienceSection component
+ * Props do componente ExperienceSection
  */
 interface ExperienceSectionProps {
-  /** Unique section ID for anchors and navigation */
+  /** ID único da seção para âncoras e navegação */
   id?: string
 }
 
 // ================================
-// Constants
+// DADOS E CONFIGURAÇÕES
 // ================================
 
 /**
- * Professional experience data organized chronologically
- * From most recent to oldest
+ * Dados das experiências profissionais organizadas cronologicamente
+ * Do mais recente para o mais antigo
  */
-const EXPERIENCES_DATA: ExpCardProps[] = [
+const experiencesData: ExpCardProps[] = [
   {
     id: '1',
     title: 'Desenvolvedor Full Stack Senior',
@@ -85,11 +85,11 @@ const EXPERIENCES_DATA: ExpCardProps[] = [
 ]
 
 // ================================
-// Custom Hooks
+// HOOKS E FUNÇÕES AUXILIARES
 // ================================
 
 /**
- * Hook for managing experience section analytics
+ * Hook para gerenciar analytics da seção de experiência
  */
 const useExperienceAnalytics = () => {
   const trackSectionView = (): void => {
@@ -100,11 +100,11 @@ const useExperienceAnalytics = () => {
 }
 
 // ================================
-// Helper Components
+// COMPONENTES
 // ================================
 
 /**
- * Experience section header
+ * Cabeçalho da seção de experiência profissional
  */
 const ExperienceHeader: React.FC = () => (
   <header className="space-y-6">
@@ -127,12 +127,12 @@ const ExperienceHeader: React.FC = () => (
 )
 
 /**
- * Professional experience timeline
+ * Timeline de experiências profissionais
  */
 const ExperienceTimeline: React.FC = () => (
   <AnimatedContainer animationType="fade-up">
     <ExpList
-      experiences={EXPERIENCES_DATA}
+      experiences={experiencesData}
       showTimeline={true}
       defaultVariant="highlight"
       aria-label="Timeline de experiências profissionais"
@@ -141,15 +141,18 @@ const ExperienceTimeline: React.FC = () => (
 )
 
 // ================================
-// Main Component
+// COMPONENTE PRINCIPAL
 // ================================
 
 /**
- * Professional experience section with interactive timeline
+ * Seção de experiência profissional com timeline interativa
  *
- * Presents professional journey in timeline format,
- * highlighting achievements, technologies used and responsibilities
- * in each position. Includes analytics tracking for interactions.
+ * Apresenta a trajetória profissional em formato de timeline,
+ * destacando conquistas, tecnologias utilizadas e responsabilidades
+ * em cada posição. Inclui rastreamento de analytics para interações.
+ *
+ * @param props - Propriedades do componente
+ * @returns JSX.Element
  */
 const ExperienceSection: React.FC<ExperienceSectionProps> = ({
   id = 'experiencia-profissional'
@@ -171,9 +174,5 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({
     </section>
   )
 }
-
-// ================================
-// Exports
-// ================================
 
 export default ExperienceSection

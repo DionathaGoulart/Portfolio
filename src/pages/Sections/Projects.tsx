@@ -1,37 +1,41 @@
 import { useState, useEffect } from 'react'
+import { getImage } from '@core/utils/getImage'
 import { analytics } from '@features/Analytics/utils'
 import { AnimatedContainer, Title, P, NavFilter, ProjectGrid } from '@shared/ui'
 import { FilterOption, Project } from '@shared/types'
-
 import defaultRaw from '@assets/images/projects/default.png'
 import shortRaw from '@assets/images/projects/short.png'
 import signatureRaw from '@assets/images/projects/signature.png'
-import { getImage } from '@core/utils/getImage'
 
 // ================================
-// INTERFACES & TYPES
+// Types & Interfaces
 // ================================
 
 /**
- * Props para o componente ProjectsSection
+ * Props for the ProjectsSection component
  */
 interface ProjectsSectionProps {
-  /** ID único da seção para navegação/âncora */
+  /** Unique section ID for navigation/anchors */
   id?: string
 }
 
 // ================================
-// CONSTANTES & CONFIGURAÇÕES
+// Constants
 // ================================
 
-const Default = getImage(`${defaultRaw}?as=webp&width=300`)
-const Short = getImage(`${shortRaw}?as=webp&width=300`)
-const Signature = getImage(`${signatureRaw}?as=webp&width=300`)
+/**
+ * Optimized project images with WebP conversion
+ */
+const PROJECT_IMAGES = {
+  default: getImage(`${defaultRaw}?as=webp&width=300`),
+  short: getImage(`${shortRaw}?as=webp&width=300`),
+  signature: getImage(`${signatureRaw}?as=webp&width=300`)
+} as const
 
 /**
- * Opções de filtro disponíveis para categorizar projetos
+ * Available filter options for project categorization
  */
-const filterOptions: FilterOption[] = [
+const FILTER_OPTIONS: FilterOption[] = [
   { value: 'todos', label: 'Todos' },
   { value: 'frontend', label: 'Frontend' },
   { value: 'backend', label: 'Backend' },
@@ -40,16 +44,16 @@ const filterOptions: FilterOption[] = [
 ]
 
 /**
- * Base de dados dos projetos com informações completas
- * Estruturado para facilitar filtros e exibição
+ * Complete projects database with full information
+ * Structured for easy filtering and display
  */
-const projectsData: Project[] = [
+const PROJECTS_DATA: Project[] = [
   {
     id: '1',
     title: 'Encurtador de Links',
     description:
       'Aplicativo fullstack para encurtar URLs longas com estatísticas de cliques, dashboard e interface responsiva moderna.',
-    image: Short,
+    image: PROJECT_IMAGES.short,
     tags: ['Angular', 'Node.js', 'MongoDB', 'Bootstrap'],
     categories: ['frontend', 'backend', 'fullstack'],
     githubUrl: 'https://github.com/DionathaGoulart/link-shortener--Angular',
@@ -60,7 +64,7 @@ const projectsData: Project[] = [
     title: 'Sistema de Assinatura de Contratos',
     description:
       'Plataforma web segura para gestão e assinatura digital de documentos contratuais com painel administrativo e envio automático por email.',
-    image: Signature,
+    image: PROJECT_IMAGES.signature,
     tags: ['React', 'Node.js', 'Express', 'Nodemailer'],
     categories: ['frontend', 'backend', 'fullstack'],
     githubUrl: 'https://github.com/DionathaGoulart/signature-React',
@@ -71,7 +75,7 @@ const projectsData: Project[] = [
     title: 'PetMatch - Adoção de Animais',
     description:
       'Plataforma completa para adoção responsável de animais com sistema de login, cadastro de pets, perfis de usuários e matching inteligente.',
-    image: Default,
+    image: PROJECT_IMAGES.default,
     tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
     categories: ['progress', 'frontend', 'backend', 'fullstack'],
     githubUrl: 'https://github.com/username/petmatch',
@@ -82,7 +86,7 @@ const projectsData: Project[] = [
     title: 'Manual de Marca',
     description:
       'Plataforma completa para adoção responsável de animais com sistema de login, cadastro de pets, perfis de usuários e matching inteligente.',
-    image: Default,
+    image: PROJECT_IMAGES.default,
     tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
     categories: ['progress', 'frontend'],
     githubUrl: 'https://github.com/DionathaGoulart/Manual',
@@ -93,7 +97,7 @@ const projectsData: Project[] = [
     title: 'Portifolio Minimalista',
     description:
       'Plataforma completa para adoção responsável de animais com sistema de login, cadastro de pets, perfis de usuários e matching inteligente.',
-    image: Default,
+    image: PROJECT_IMAGES.default,
     tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
     categories: ['progress', 'frontend'],
     githubUrl: 'https://github.com/DionathaGoulart/Darkning',
@@ -104,7 +108,7 @@ const projectsData: Project[] = [
     title: 'Lp - Curriculo',
     description:
       'Plataforma completa para adoção responsável de animais com sistema de login, cadastro de pets, perfis de usuários e matching inteligente.',
-    image: Default,
+    image: PROJECT_IMAGES.default,
     tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
     categories: ['progress', 'frontend'],
     githubUrl: 'https://github.com/DionathaGoulart/Portfolio',
@@ -112,27 +116,26 @@ const projectsData: Project[] = [
   }
 ]
 
-// Tempo para considerar fim do carregamento inicial (ms)
-const INITIAL_LOAD_TIMEOUT = 2000
+/**
+ * Animation and timing configuration
+ */
+const ANIMATION_CONFIG = {
+  initialLoadTimeout: 2000
+} as const
 
 // ================================
-// HOOKS & HELPERS
+// Helper Functions
 // ================================
 
 /**
- * Filtra projetos baseado na categoria ativa
- * Agora suporta projetos com múltiplas categorias
+ * Finds a project by ID
  */
-const useFilteredProjects = (activeFilter: string): Project[] => {
-  return activeFilter === 'todos'
-    ? projectsData
-    : projectsData.filter((project) =>
-        project.categories.includes(activeFilter as any)
-      )
+const findProjectById = (projectId: string): Project | undefined => {
+  return PROJECTS_DATA.find((project) => project.id === projectId)
 }
 
 /**
- * Determina a classe CSS para animação do grid baseado no estado
+ * Determines CSS class for grid animation based on state
  */
 const getGridAnimationClass = (isInitialLoad: boolean): string => {
   return isInitialLoad
@@ -141,166 +144,207 @@ const getGridAnimationClass = (isInitialLoad: boolean): string => {
 }
 
 /**
- * Encontra um projeto pelo ID
+ * Handles external link navigation with safety checks
  */
-const findProjectById = (projectId: string): Project | undefined => {
-  return projectsData.find((project) => project.id === projectId)
+const navigateToUrl = (url: string | undefined): void => {
+  if (url && url !== '#') {
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
 }
 
 // ================================
-// COMPONENTE PRINCIPAL
+// Custom Hooks
 // ================================
 
 /**
- * Seção de projetos com sistema de filtros e grid responsivo
- * Inclui analytics tracking e animações baseadas em estado
+ * Filters projects based on active category
+ * Supports projects with multiple categories
+ */
+const useFilteredProjects = (activeFilter: string): Project[] => {
+  return activeFilter === 'todos'
+    ? PROJECTS_DATA
+    : PROJECTS_DATA.filter((project) =>
+        project.categories.includes(activeFilter as any)
+      )
+}
+
+/**
+ * Manages project interaction handlers with analytics
+ */
+const useProjectHandlers = () => {
+  const handleGithubClick = (projectId: string): void => {
+    analytics.trackButtonClick(`github_project_${projectId}`)
+    const project = findProjectById(projectId)
+    navigateToUrl(project?.githubUrl)
+  }
+
+  const handleDemoClick = (projectId: string): void => {
+    analytics.trackButtonClick(`demo_project_${projectId}`)
+    const project = findProjectById(projectId)
+
+    if (project) {
+      const isInProgress = project.categories.includes('progress')
+      if (!isInProgress) {
+        navigateToUrl(project.demoUrl)
+      }
+    }
+  }
+
+  return {
+    handleGithubClick,
+    handleDemoClick
+  }
+}
+
+// ================================
+// Helper Components
+// ================================
+
+/**
+ * Projects section header
+ */
+const ProjectsHeader: React.FC = () => (
+  <header className="space-y-6">
+    <AnimatedContainer animationType="fade-right">
+      <Title id="projetos-título" level="h2" border="bottom-start">
+        Meus{' '}
+        <Title level="h2" element="span" color="primary">
+          Projetos
+        </Title>
+      </Title>
+    </AnimatedContainer>
+
+    <AnimatedContainer animationType="zoom-in-left">
+      <P size="grande" className="leading-relaxed md:max-w-md lg:max-w-2xl">
+        Aqui estão alguns dos projetos que desenvolvi, demonstrando minhas
+        habilidades em diferentes tecnologias e áreas de desenvolvimento.
+      </P>
+    </AnimatedContainer>
+  </header>
+)
+
+/**
+ * Project filter navigation
+ */
+const ProjectsFilter: React.FC<{
+  activeFilter: string
+  onFilterChange: (filter: string) => void
+}> = ({ activeFilter, onFilterChange }) => (
+  <nav aria-label="Filtros de projetos por categoria" role="navigation">
+    <AnimatedContainer>
+      <NavFilter
+        className="mt-12"
+        options={FILTER_OPTIONS}
+        activeFilter={activeFilter}
+        onFilterChange={onFilterChange}
+        aria-label="Selecionar categoria de projetos"
+      />
+    </AnimatedContainer>
+  </nav>
+)
+
+/**
+ * Projects grid display
+ */
+const ProjectsGrid: React.FC<{
+  projects: Project[]
+  animationKey: number
+  isInitialLoad: boolean
+  onGithubClick: (projectId: string) => void
+  onDemoClick: (projectId: string) => void
+  activeFilter: string
+}> = ({
+  projects,
+  animationKey,
+  isInitialLoad,
+  onGithubClick,
+  onDemoClick,
+  activeFilter
+}) => {
+  const gridClassName = getGridAnimationClass(isInitialLoad)
+  const filterLabel =
+    FILTER_OPTIONS.find((opt) => opt.value === activeFilter)?.label || 'Todos'
+
+  return (
+    <main
+      aria-live="polite"
+      aria-label={`${projects.length} projetos encontrados na categoria ${filterLabel}`}
+    >
+      <AnimatedContainer>
+        <div key={animationKey} className={gridClassName}>
+          <ProjectGrid
+            projects={projects}
+            onGithubClick={onGithubClick}
+            onDemoClick={onDemoClick}
+            emptyMessage="Nenhum projeto encontrado para esta categoria."
+          />
+        </div>
+      </AnimatedContainer>
+    </main>
+  )
+}
+
+// ================================
+// Main Component
+// ================================
+
+/**
+ * Projects section with filter system and responsive grid
+ * Includes analytics tracking and state-based animations
  */
 const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   id = 'meus-projetos'
 }) => {
-  // ================================
-  // ESTADO LOCAL
-  // ================================
-
+  // State management
   const [activeFilter, setActiveFilter] = useState<string>('todos')
   const [isInitialLoad, setIsInitialLoad] = useState(true)
   const [animationKey, setAnimationKey] = useState(0)
 
-  // ================================
-  // DADOS COMPUTADOS
-  // ================================
-
+  // Data and handlers
   const filteredProjects = useFilteredProjects(activeFilter)
-  const gridClassName = getGridAnimationClass(isInitialLoad)
+  const { handleGithubClick, handleDemoClick } = useProjectHandlers()
 
-  // ================================
-  // EFEITOS
-  // ================================
-
-  /**
-   * Marca fim do carregamento inicial após timeout
-   * Necessário para diferenciar animações de primeira carga vs filtros
-   */
+  // Effects
   useEffect(() => {
     if (!isInitialLoad) return
 
     const timer = setTimeout(() => {
       setIsInitialLoad(false)
-    }, INITIAL_LOAD_TIMEOUT)
+    }, ANIMATION_CONFIG.initialLoadTimeout)
 
     return () => clearTimeout(timer)
   }, [isInitialLoad])
 
-  // ================================
-  // HANDLERS
-  // ================================
-
-  /**
-   * Manipula mudança de filtro com analytics e animação
-   */
+  // Handlers
   const handleFilterChange = (filter: string): void => {
     setActiveFilter(filter)
-    setAnimationKey((prev) => prev + 1) // Força re-render para nova animação
+    setAnimationKey((prev) => prev + 1)
     analytics.trackButtonClick(`filter_projects_${filter}`)
   }
 
-  /**
-   * Manipula clique no link do GitHub com analytics E navegação
-   */
-  const handleGithubClick = (projectId: string): void => {
-    analytics.trackButtonClick(`github_project_${projectId}`)
-
-    const project = findProjectById(projectId)
-    if (project?.githubUrl && project.githubUrl !== '#') {
-      window.open(project.githubUrl, '_blank', 'noopener,noreferrer')
-    }
-  }
-
-  /**
-   * Manipula clique no link de demo com analytics E navegação
-   */
-  const handleDemoClick = (projectId: string): void => {
-    analytics.trackButtonClick(`demo_project_${projectId}`)
-
-    const project = findProjectById(projectId)
-    if (project?.demoUrl && project.demoUrl !== '#') {
-      // Verifica se o projeto não está em progresso
-      const isInProgress = project.categories.includes('progress')
-      if (!isInProgress) {
-        window.open(project.demoUrl, '_blank', 'noopener,noreferrer')
-      }
-    }
-  }
-
-  // ================================
-  // RENDER
-  // ================================
-
   return (
     <section id={id} aria-labelledby="lista-projetos" role="region">
-      {/* ================================ */}
-      {/* CABEÇALHO DA SEÇÃO */}
-      {/* ================================ */}
-      <header className="space-y-6">
-        <AnimatedContainer animationType="fade-right">
-          <Title id="projetos-título" level="h2" border="bottom-start">
-            Meus {''}
-            <Title level="h2" element="span" color="primary">
-              Projetos
-            </Title>
-          </Title>
-        </AnimatedContainer>
+      <ProjectsHeader />
 
-        <AnimatedContainer animationType="zoom-in-left">
-          <P size="grande" className="leading-relaxed md:max-w-md lg:max-w-2xl">
-            Aqui estão alguns dos projetos que desenvolvi, demonstrando minhas
-            habilidades em diferentes tecnologias e áreas de desenvolvimento.
-          </P>
-        </AnimatedContainer>
-      </header>
+      <ProjectsFilter
+        activeFilter={activeFilter}
+        onFilterChange={handleFilterChange}
+      />
 
-      {/* ================================ */}
-      {/* NAVEGAÇÃO POR FILTROS */}
-      {/* ================================ */}
-      <nav aria-label="Filtros de projetos por categoria" role="navigation">
-        <AnimatedContainer>
-          <NavFilter
-            className="mt-12"
-            options={filterOptions}
-            activeFilter={activeFilter}
-            onFilterChange={handleFilterChange}
-            aria-label="Selecionar categoria de projetos"
-          />
-        </AnimatedContainer>
-      </nav>
-
-      {/* ================================ */}
-      {/* GRID DE PROJETOS */}
-      {/* ================================ */}
-      <main
-        aria-live="polite"
-        aria-label={`${filteredProjects.length} projetos encontrados na categoria ${
-          filterOptions.find((opt) => opt.value === activeFilter)?.label ||
-          'Todos'
-        }`}
-      >
-        <AnimatedContainer>
-          <div key={animationKey} className={gridClassName}>
-            <ProjectGrid
-              projects={filteredProjects}
-              onGithubClick={handleGithubClick}
-              onDemoClick={handleDemoClick}
-              emptyMessage="Nenhum projeto encontrado para esta categoria."
-            />
-          </div>
-        </AnimatedContainer>
-      </main>
+      <ProjectsGrid
+        projects={filteredProjects}
+        animationKey={animationKey}
+        isInitialLoad={isInitialLoad}
+        onGithubClick={handleGithubClick}
+        onDemoClick={handleDemoClick}
+        activeFilter={activeFilter}
+      />
     </section>
   )
 }
 
 // ================================
-// EXPORTAÇÃO
+// Exports
 // ================================
 
 export default ProjectsSection

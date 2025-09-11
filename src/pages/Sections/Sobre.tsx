@@ -1,4 +1,5 @@
 import React from 'react'
+import { getImage } from '@core/utils/getImage'
 import { analytics } from '@features/Analytics/utils'
 import {
   AnimatedContainer,
@@ -9,49 +10,48 @@ import {
   CardsContainer
 } from '@shared/ui'
 import MeRaw from '@assets/images/me.jpg'
-import { getImage } from '@core/utils/getImage'
 
 // ================================
-// INTERFACES & TYPES
+// Types & Interfaces
 // ================================
 
 /**
- * Props para o componente SobreSection
+ * Props for the SobreSection component
  */
 interface SobreSectionProps {
-  /** ID único da seção para navegação/âncora */
+  /** Unique section ID for navigation/anchors */
   id?: string
 }
 
 /**
- * Interface para estrutura de tecnologia
+ * Technology structure interface
  */
-interface Tecnologia {
-  /** Nome da tecnologia */
+interface Technology {
+  /** Technology name */
   title: string
-  /** Categoria ou área de aplicação */
+  /** Category or application area */
   subtitle: string
-  /** Ícone SVG da tecnologia */
+  /** Technology SVG icon */
   icon: React.ReactNode
 }
 
 // ================================
-// CONSTANTES & IMAGENS
+// Constants
 // ================================
 
 /**
- * Imagem otimizada do perfil
- * Convertida para WebP com width otimizado para performance
+ * Optimized profile image
+ * Converted to WebP with optimized width for performance
  */
-const Me = getImage(`${MeRaw}?as=webp&width=400`)
+const PROFILE_IMAGE = getImage(`${MeRaw}?as=webp&width=400`)
 
 // ================================
-// COMPONENTES DE ÍCONES
+// Icon Components
 // ================================
 
 /**
- * Ícone SVG do React
- * Usado para representar expertise em desenvolvimento frontend
+ * React SVG icon
+ * Used to represent frontend development expertise
  */
 const ReactIcon: React.FC = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -60,8 +60,8 @@ const ReactIcon: React.FC = () => (
 )
 
 /**
- * Ícone SVG do Node.js
- * Representa expertise em desenvolvimento backend
+ * Node.js SVG icon
+ * Represents backend development expertise
  */
 const NodeIcon: React.FC = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -70,8 +70,8 @@ const NodeIcon: React.FC = () => (
 )
 
 /**
- * Ícone SVG do TypeScript
- * Representa uso de tipagem estática para JavaScript
+ * TypeScript SVG icon
+ * Represents static typing for JavaScript
  */
 const TypeScriptIcon: React.FC = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -80,8 +80,8 @@ const TypeScriptIcon: React.FC = () => (
 )
 
 /**
- * Ícone SVG do Next.js
- * Framework React para aplicações full-stack
+ * Next.js SVG icon
+ * React framework for full-stack applications
  */
 const NextJSIcon: React.FC = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -90,8 +90,8 @@ const NextJSIcon: React.FC = () => (
 )
 
 /**
- * Ícone SVG do PostgreSQL
- * Sistema de gerenciamento de banco de dados relacional
+ * PostgreSQL SVG icon
+ * Relational database management system
  */
 const PostgreSQLIcon: React.FC = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -100,8 +100,8 @@ const PostgreSQLIcon: React.FC = () => (
 )
 
 /**
- * Ícone SVG do Docker
- * Plataforma de containerização para DevOps
+ * Docker SVG icon
+ * Containerization platform for DevOps
  */
 const DockerIcon: React.FC = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -109,15 +109,11 @@ const DockerIcon: React.FC = () => (
   </svg>
 )
 
-// ================================
-// DADOS DAS TECNOLOGIAS
-// ================================
-
 /**
- * Array com as principais tecnologias e suas informações
- * Organizado por categoria para facilitar manutenção
+ * Main technologies array with information
+ * Organized by category for easy maintenance
  */
-const tecnologias: Tecnologia[] = [
+const TECHNOLOGIES: Technology[] = [
   {
     title: 'React',
     subtitle: 'Frontend',
@@ -151,126 +147,135 @@ const tecnologias: Tecnologia[] = [
 ]
 
 // ================================
-// HANDLERS & HELPERS
+// Helper Functions
 // ================================
 
 /**
- * Manipula clique na foto do perfil com analytics
+ * Handles profile photo click with analytics
  */
 const handleProfilePhotoClick = (): void => {
   analytics.trackButtonClick('profile_photo')
 }
 
 // ================================
-// COMPONENTE PRINCIPAL
+// Helper Components
 // ================================
 
 /**
- * Seção "Sobre Mim" com informações pessoais e tecnologias
- * Inclui foto de perfil, biografia e stack tecnológico
+ * Section header
+ */
+const SobreHeader: React.FC = () => (
+  <header>
+    <Title id="sobre-título" level="h2" align="end" border="bottom-end">
+      Sobre{' '}
+      <Title level="h2" element="span" color="primary">
+        Mim
+      </Title>
+    </Title>
+  </header>
+)
+
+/**
+ * Profile and biography section
+ */
+const ProfileSection: React.FC = () => (
+  <AnimatedContainer>
+    <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+      <div
+        role="img"
+        aria-label="Foto de perfil do desenvolvedor"
+        className="flex justify-center"
+      >
+        <Image
+          src={PROFILE_IMAGE}
+          alt="Foto do desenvolvedor"
+          size="sidebar"
+          shape="rectangle"
+          shadow="strong"
+          neonFire="primary"
+          onClick={handleProfilePhotoClick}
+        />
+      </div>
+
+      <div className="flex-1" role="main">
+        <Text
+          size="grande"
+          columns={3}
+          className="flex-1"
+          aria-label="Biografia profissional"
+        >
+          Desenvolvedor fullstack apaixonado por tecnologia e inovação, com mais
+          de 5 anos de experiência criando soluções digitais que fazem a
+          diferença. Especializado em arquiteturas modernas, sempre buscando as
+          melhores práticas para entregar produtos de alta qualidade. Acredito
+          que o código deve ser elegante, performático e sustentável. Quando não
+          estou codando, gosto de contribuir com projetos open source, estudar
+          novas tecnologias e compartilhar conhecimento com a comunidade.
+        </Text>
+      </div>
+    </div>
+  </AnimatedContainer>
+)
+
+/**
+ * Technologies showcase section
+ */
+const TechnologiesSection: React.FC = () => (
+  <section aria-labelledby="principais-tecnologias" role="complementary">
+    <div className="space-y-6">
+      <AnimatedContainer animationType="zoom-out-up">
+        <Title id="tech-título" level="h3" align="center" color="primary">
+          Principais Tecnologias
+        </Title>
+      </AnimatedContainer>
+
+      <AnimatedContainer>
+        <div role="list" aria-label="Lista de tecnologias dominadas">
+          <CardsContainer type="grid" columns={5}>
+            {TECHNOLOGIES.map((tech, index) => (
+              <div
+                key={`tech-${index}`}
+                role="listitem"
+                aria-label={`${tech.title} - ${tech.subtitle}`}
+              >
+                <Card
+                  title={tech.title}
+                  subtitle={tech.subtitle}
+                  icon={tech.icon}
+                  size="pequeno"
+                  color="primary"
+                />
+              </div>
+            ))}
+          </CardsContainer>
+        </div>
+      </AnimatedContainer>
+    </div>
+  </section>
+)
+
+// ================================
+// Main Component
+// ================================
+
+/**
+ * "About Me" section with personal information and technologies
+ * Includes profile photo, biography and technology stack
  */
 const SobreSection: React.FC<SobreSectionProps> = ({ id = 'sobre-mim' }) => {
   return (
     <section id={id} aria-labelledby="sobre-min" role="region">
       <div className="space-y-12">
-        {/* ================================ */}
-        {/* CABEÇALHO DA SEÇÃO */}
-        {/* ================================ */}
-        <header>
-          <Title id="sobre-título" level="h2" align="end" border="bottom-end">
-            Sobre {''}
-            <Title level="h2" element="span" color="primary">
-              Mim
-            </Title>
-          </Title>
-        </header>
-
-        {/* ================================ */}
-        {/* PERFIL E BIOGRAFIA */}
-        {/* ================================ */}
-        <AnimatedContainer>
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-            {/* Foto do perfil */}
-            <div
-              role="img"
-              aria-label="Foto de perfil do desenvolvedor"
-              className="flex justify-center"
-            >
-              <Image
-                src={Me}
-                alt="Foto do desenvolvedor"
-                size="sidebar"
-                shape="rectangle"
-                shadow="strong"
-                neonFire="primary"
-                onClick={handleProfilePhotoClick}
-              />
-            </div>
-
-            {/* Biografia em colunas responsivas */}
-            <div className="flex-1" role="main">
-              <Text
-                size="grande"
-                columns={3}
-                className="flex-1"
-                aria-label="Biografia profissional"
-              >
-                Desenvolvedor fullstack apaixonado por tecnologia e inovação,
-                com mais de 5 anos de experiência criando soluções digitais que
-                fazem a diferença. Especializado em arquiteturas modernas,
-                sempre buscando as melhores práticas para entregar produtos de
-                alta qualidade. Acredito que o código deve ser elegante,
-                performático e sustentável. Quando não estou codando, gosto de
-                contribuir com projetos open source, estudar novas tecnologias e
-                compartilhar conhecimento com a comunidade.
-              </Text>
-            </div>
-          </div>
-        </AnimatedContainer>
-
-        {/* ================================ */}
-        {/* SEÇÃO DE TECNOLOGIAS */}
-        {/* ================================ */}
-        <section aria-labelledby="principais-tecnologias" role="complementary">
-          {/* Título das tecnologias */}
-          <div className="space-y-6">
-            <AnimatedContainer animationType="zoom-out-up">
-              <Title id="tech-título" level="h3" align="center" color="primary">
-                Principais Tecnologias
-              </Title>
-            </AnimatedContainer>
-
-            {/* Grid de tecnologias */}
-            <AnimatedContainer>
-              <div role="list" aria-label="Lista de tecnologias dominadas">
-                <CardsContainer type="grid" columns={5}>
-                  {tecnologias.map((tech, index) => (
-                    <div
-                      key={`tech-${index}`}
-                      role="listitem"
-                      aria-label={`${tech.title} - ${tech.subtitle}`}
-                    >
-                      <Card
-                        title={tech.title}
-                        subtitle={tech.subtitle}
-                        icon={tech.icon}
-                        size="pequeno"
-                        color="primary"
-                      />
-                    </div>
-                  ))}
-                </CardsContainer>
-              </div>
-            </AnimatedContainer>
-          </div>
-        </section>
+        <SobreHeader />
+        <ProfileSection />
+        <TechnologiesSection />
       </div>
     </section>
   )
 }
 
 // ================================
-// EXPORTAÇÃO
+// Exports
 // ================================
 
 export default SobreSection

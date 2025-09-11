@@ -10,27 +10,47 @@ import {
 } from '@pages/Sections'
 import { SectionConfig } from '@shared/types'
 
+// ================================
+// Types & Interfaces
+// ================================
+
+/**
+ * Props for the HomePage component
+ */
 interface HomePageProps {
   setSections: (sections: SectionConfig[]) => void
   setPageTitle: (title: string) => void
 }
 
-export function HomePage({ setSections, setPageTitle }: HomePageProps) {
-  const homePageSections: SectionConfig[] = [
-    { id: 'inicio', label: 'Início' },
-    { id: 'sobre-mim', label: 'Sobre Mim' },
-    { id: 'meus-projetos', label: 'Projetos' },
-    { id: 'habilidades-tecnicas', label: 'Habilidades' },
-    { id: 'experiencia', label: 'Experiencia' },
-    { id: 'contato', label: 'Contato' }
-  ]
+// ================================
+// Constants
+// ================================
 
-  // TRACKING: Ativar tracking automático das seções
-  useSectionTracking(homePageSections)
+const HOME_PAGE_SECTIONS: SectionConfig[] = [
+  { id: 'inicio', label: 'Início' },
+  { id: 'sobre-mim', label: 'Sobre Mim' },
+  { id: 'meus-projetos', label: 'Projetos' },
+  { id: 'habilidades-tecnicas', label: 'Habilidades' },
+  { id: 'experiencia', label: 'Experiencia' },
+  { id: 'contato', label: 'Contato' }
+]
+
+// ================================
+// Main Component
+// ================================
+
+/**
+ * HomePage component - Main landing page with all sections
+ * Handles section tracking and page title management
+ */
+export function HomePage({ setSections, setPageTitle }: HomePageProps) {
+  // Enable automatic section tracking
+  useSectionTracking(HOME_PAGE_SECTIONS)
 
   useEffect(() => {
-    setSections(homePageSections)
+    setSections(HOME_PAGE_SECTIONS)
     setPageTitle('Dionatha')
+
     return () => {
       setSections([])
     }

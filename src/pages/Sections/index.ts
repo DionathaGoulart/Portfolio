@@ -1,3 +1,7 @@
+// ================================
+// Section Exports
+// ================================
+
 export { default as HomeSection } from './Home'
 export { default as SobreSection } from './Sobre'
 export { default as ProjectsSection } from './Projects'

@@ -14,19 +14,19 @@ import {
 } from '@shared/ui'
 
 // ================================
-// INTERFACES E TIPOS
+// Types & Interfaces
 // ================================
 
 /**
- * Props do componente ContactSection
+ * Props for the ContactSection component
  */
 interface ContactSectionProps {
-  /** ID único da seção para âncoras e navegação */
+  /** Unique section ID for anchors and navigation */
   id?: string
 }
 
 /**
- * Estrutura dos dados do formulário de contato
+ * Contact form data structure
  */
 interface FormData {
   nome: string
@@ -36,7 +36,7 @@ interface FormData {
 }
 
 /**
- * Props para cards de contato
+ * Props for contact cards
  */
 interface ContactCard {
   icon: React.ReactNode
@@ -50,11 +50,11 @@ type FormErrors = Partial<Record<FormField, string>>
 type SubmitStatus = 'idle' | 'success' | 'error'
 
 // ================================
-// CONSTANTES E CONFIGURAÇÕES
+// Constants
 // ================================
 
 /**
- * Configurações de validação do formulário
+ * Form validation configuration
  */
 const FORM_VALIDATION = {
   MIN_MESSAGE_LENGTH: 10,
@@ -62,7 +62,7 @@ const FORM_VALIDATION = {
 } as const
 
 /**
- * Informações de contato direto
+ * Direct contact information
  */
 const CONTACT_INFO = {
   email: 'dionatha.work@gmail.com',
@@ -73,7 +73,7 @@ const CONTACT_INFO = {
 } as const
 
 /**
- * Links das redes sociais
+ * Social media links
  */
 const SOCIAL_LINKS = {
   github: 'https://github.com/dionathagoulart',
@@ -81,7 +81,7 @@ const SOCIAL_LINKS = {
 } as const
 
 // ================================
-// COMPONENTES DE ÍCONES SVG
+// Icon Components
 // ================================
 
 const EmailIcon: React.FC = () => (
@@ -158,11 +158,11 @@ const LinkedInIcon: React.FC = () => (
 )
 
 // ================================
-// HOOKS E FUNÇÕES AUXILIARES
+// Custom Hooks
 // ================================
 
 /**
- * Hook para gerenciar estado e lógica do formulário de contato
+ * Hook for managing contact form state and logic
  */
 const useContactForm = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -285,7 +285,7 @@ const useContactForm = () => {
 }
 
 /**
- * Hook para gerenciar handlers de contato e redes sociais
+ * Hook for managing contact handlers and social media actions
  */
 const useContactHandlers = () => {
   return useMemo(
@@ -316,11 +316,11 @@ const useContactHandlers = () => {
 }
 
 // ================================
-// COMPONENTES
+// Helper Components
 // ================================
 
 /**
- * Cabeçalho da seção de contato
+ * Contact section header
  */
 const ContactHeader: React.FC = () => (
   <header className="space-y-6">
@@ -346,7 +346,7 @@ const ContactHeader: React.FC = () => (
 )
 
 /**
- * Formulário de contato com validação
+ * Contact form with validation
  */
 const ContactForm: React.FC = () => {
   const {
@@ -425,7 +425,6 @@ const ContactForm: React.FC = () => {
           />
         </FormField>
 
-        {/* Status messages */}
         {submitStatus === 'success' && (
           <div
             className="p-4 bg-theme-success/10 border border-theme-success rounded-lg"
@@ -471,7 +470,7 @@ const ContactForm: React.FC = () => {
 }
 
 /**
- * Seção de informações de contato direto e redes sociais
+ * Direct contact information and social media section
  */
 const ContactInfo: React.FC = () => {
   const contactHandlers = useContactHandlers()
@@ -531,7 +530,6 @@ const ContactInfo: React.FC = () => {
         contato comigo.
       </P>
 
-      {/* Contatos diretos */}
       <div className="space-y-4 mb-12">
         {directContactCards.map((card, index) => (
           <Card
@@ -546,7 +544,6 @@ const ContactInfo: React.FC = () => {
         ))}
       </div>
 
-      {/* Redes sociais */}
       <Title level="h3" className="mb-6">
         Redes Sociais
       </Title>
@@ -568,18 +565,15 @@ const ContactInfo: React.FC = () => {
 }
 
 // ================================
-// COMPONENTE PRINCIPAL
+// Main Component
 // ================================
 
 /**
- * Seção de contato com formulário e informações de contato
+ * Contact section with form and contact information
  *
- * Apresenta múltiplas formas de contato incluindo formulário com validação,
- * contatos diretos (email, WhatsApp, localização) e redes sociais.
- * Implementa analytics completo para rastreamento de interações.
- *
- * @param props - Propriedades do componente
- * @returns JSX.Element
+ * Presents multiple contact methods including validated form,
+ * direct contacts (email, WhatsApp, location) and social media.
+ * Implements complete analytics for interaction tracking.
  */
 const ContactSection: React.FC<ContactSectionProps> = ({ id = 'contato' }) => {
   return (
@@ -593,12 +587,10 @@ const ContactSection: React.FC<ContactSectionProps> = ({ id = 'contato' }) => {
         <ContactHeader />
 
         <div className="grid lg:grid-cols-2 gap-16">
-          {/* Formulário */}
           <AnimatedContainer animationType="fade-right">
             <ContactForm />
           </AnimatedContainer>
 
-          {/* Informações de contato */}
           <AnimatedContainer animationType="fade-left">
             <ContactInfo />
           </AnimatedContainer>
@@ -607,5 +599,9 @@ const ContactSection: React.FC<ContactSectionProps> = ({ id = 'contato' }) => {
     </section>
   )
 }
+
+// ================================
+// Exports
+// ================================
 
 export default ContactSection

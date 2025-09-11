@@ -6,24 +6,24 @@ import Light from '@assets/images/light.png'
 import Dark from '@assets/images/dark.png'
 
 // ================================
-// INTERFACES E TIPOS
+// Types & Interfaces
 // ================================
 
 /**
- * Props do componente HomeSection
+ * Props for the HomeSection component
  */
 interface HomeSectionProps {
-  /** ID único da seção para âncoras e navegação */
+  /** Unique section ID for anchors and navigation */
   id?: string
 }
 
 // ================================
-// CONSTANTES E CONFIGURAÇÕES
+// Constants
 // ================================
 
 /**
- * URLs das imagens processadas com otimização WebP
- * Pré-processadas para melhor performance
+ * Optimized image URLs processed with WebP optimization
+ * Pre-processed for better performance
  */
 const OPTIMIZED_IMAGES = {
   light: getImage(`${Light}?as=webp&width=400`),
@@ -31,7 +31,7 @@ const OPTIMIZED_IMAGES = {
 } as const
 
 /**
- * Configuração dos botões de ação principal
+ * Main action buttons configuration
  */
 const ACTION_BUTTONS = {
   trabalhos: {
@@ -48,40 +48,53 @@ const ACTION_BUTTONS = {
   }
 } as const
 
+/**
+ * Scroll navigation configuration
+ */
+const NAVIGATION_CONFIG = {
+  headerOffset: 95
+} as const
+
 // ================================
-// HOOKS E FUNÇÕES AUXILIARES
+// Helper Functions
 // ================================
 
 /**
- * Hook para gerenciar navegação e analytics da seção home
+ * Handles smooth scroll to target section with offset
+ */
+const scrollToSection = (targetId: string, analyticsEvent: string): void => {
+  analytics.trackButtonClick(analyticsEvent)
+
+  const targetSection = document.getElementById(targetId)
+  if (targetSection) {
+    const elementPosition = targetSection.getBoundingClientRect().top
+    const offsetPosition =
+      elementPosition + window.pageYOffset - NAVIGATION_CONFIG.headerOffset
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    })
+  }
+}
+
+// ================================
+// Custom Hooks
+// ================================
+
+/**
+ * Hook for managing home section navigation and analytics
  */
 const useHomeNavigation = () => {
-  const handleScrollToSection = (targetId: string, analyticsEvent: string) => {
-    analytics.trackButtonClick(analyticsEvent)
-
-    const targetSection = document.getElementById(targetId)
-    if (targetSection) {
-      // Offset para compensar header fixo e dar espaçamento extra
-      const headerOffset = 95
-      const elementPosition = targetSection.getBoundingClientRect().top
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      })
-    }
-  }
-
   const handleVerTrabalhos = (): void => {
-    handleScrollToSection(
+    scrollToSection(
       ACTION_BUTTONS.trabalhos.targetId,
       ACTION_BUTTONS.trabalhos.analyticsEvent
     )
   }
 
   const handleContato = (): void => {
-    handleScrollToSection(
+    scrollToSection(
       ACTION_BUTTONS.contato.targetId,
       ACTION_BUTTONS.contato.analyticsEvent
     )
@@ -94,11 +107,11 @@ const useHomeNavigation = () => {
 }
 
 // ================================
-// COMPONENTES
+// Helper Components
 // ================================
 
 /**
- * Área de apresentação principal com título e subtítulo
+ * Main presentation area with title and subtitle
  */
 const HeroPresentationArea: React.FC = () => (
   <div className="space-y-6">
@@ -127,7 +140,7 @@ const HeroPresentationArea: React.FC = () => (
 )
 
 /**
- * Área de botões de ação principal
+ * Main action buttons area
  */
 const HeroActionButtons: React.FC = () => {
   const { handleVerTrabalhos, handleContato } = useHomeNavigation()
@@ -162,7 +175,7 @@ const HeroActionButtons: React.FC = () => {
 }
 
 /**
- * Área de conteúdo textual do hero (lado esquerdo)
+ * Hero text content area (left side)
  */
 const HeroContent: React.FC = () => (
   <div className="space-y-6">
@@ -172,7 +185,7 @@ const HeroContent: React.FC = () => (
 )
 
 /**
- * Logo adaptativo com suporte a tema claro/escuro
+ * Adaptive logo with light/dark theme support
  */
 const AdaptiveLogo: React.FC = () => (
   <AnimatedContainer animationType="zoom-in-left">
@@ -196,18 +209,15 @@ const AdaptiveLogo: React.FC = () => (
 )
 
 // ================================
-// COMPONENTE PRINCIPAL
+// Main Component
 // ================================
 
 /**
- * Seção home/hero principal do portfólio
+ * Main home/hero section of the portfolio
  *
- * Apresenta a introdução principal com nome, função e call-to-actions.
- * Inclui logo adaptativo para temas claro/escuro e navegação suave
- * para outras seções. Implementa analytics para rastreamento de interações.
- *
- * @param props - Propriedades do componente
- * @returns JSX.Element
+ * Presents the main introduction with name, role and call-to-actions.
+ * Includes adaptive logo for light/dark themes and smooth navigation
+ * to other sections. Implements analytics for interaction tracking.
  */
 const HomeSection: React.FC<HomeSectionProps> = ({ id = 'home' }) => {
   return (
@@ -218,14 +228,15 @@ const HomeSection: React.FC<HomeSectionProps> = ({ id = 'home' }) => {
       aria-label="Seção principal de apresentação"
     >
       <div className="grid lg:grid-cols-2">
-        {/* Lado esquerdo - Conteúdo textual */}
         <HeroContent />
-
-        {/* Lado direito - Logo adaptativo */}
         <AdaptiveLogo />
       </div>
     </section>
   )
 }
+
+// ================================
+// Exports
+// ================================
 
 export default HomeSection

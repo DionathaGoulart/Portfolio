@@ -1,7 +1,16 @@
 import { MainLayout } from '@shared/layouts'
 import { HomePage, NotFoundPage } from '@pages'
+
 import { RouteConfig, RouteGroup } from '@core/types'
 
+// ================================
+// Route Configuration
+// ================================
+
+/**
+ * Application routes configuration
+ * Defines all routes with their layouts and properties
+ */
 export const appRoutes: (RouteConfig | RouteGroup)[] = [
   {
     layout: MainLayout,
@@ -17,7 +26,6 @@ export const appRoutes: (RouteConfig | RouteGroup)[] = [
       }
     ]
   },
-
   {
     path: '/404',
     element: NotFoundPage,

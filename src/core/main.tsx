@@ -1,22 +1,32 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+
 import App from './App'
 import { analytics } from '@features/Analytics/utils'
 import { ThemeProvider } from '@features/Theme/contexts'
 import { removeUTMParameters } from '@core/utils/urlCleaner'
+
 import '@styles/index'
 
-// Capturar dados UTM antes de limpar a URL
+// ================================
+// Application Initialization
+// ================================
+
+// Capture UTM data before cleaning the URL for analytics
 const utmData = removeUTMParameters(true)
 
-// Processar dados UTM no analytics (se houver)
+// Process UTM data in analytics if available
 if (utmData) {
   analytics.processUTMData(utmData)
   console.log('Dados UTM processados:', utmData)
 }
 
-// Inicializar o GA
+// Initialize Google Analytics
 analytics.init()
+
+// ================================
+// React Application Mount
+// ================================
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

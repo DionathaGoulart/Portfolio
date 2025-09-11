@@ -1,42 +1,79 @@
-// Hook atualizado para usar o novo sistema de tracking
-// hooks/useAnalytics.ts
 import { useEffect } from 'react'
 import { analytics } from '../utils/analytics'
 
-export const useSectionTracking = (
-  sections: { id: string; label: string }[]
-) => {
+// ================================
+// TYPES & INTERFACES
+// ================================
+
+/**
+ * Section configuration for analytics tracking
+ */
+interface Section {
+  /** Unique identifier for the section */
+  id: string
+  /** Human-readable label for the section */
+  label: string
+}
+
+// ================================
+// CONSTANTS
+// ================================
+const INTERSECTION_OPTIONS = {
+  rootMargin: '-20% 0px -20% 0px',
+  threshold: 0.3 // Section must be at least 30% visible
+} as const
+
+// ================================
+// MAIN HOOK
+// ================================
+
+/**
+ * Hook for tracking section visibility and updating page title dynamically
+ *
+ * @param sections - Array of sections to track with their IDs and labels
+ *
+ * @example
+ * ```tsx
+ * const sections = [
+ *   { id: 'home', label: 'Home' },
+ *   { id: 'about', label: 'About Me' },
+ *   { id: 'projects', label: 'Projects' }
+ * ]
+ *
+ * useSectionTracking(sections)
+ * ```
+ */
+export const useSectionTracking = (sections: Section[]) => {
   useEffect(() => {
+    // Early return if no sections to track
     if (sections.length === 0) return
 
-    // Observer para detectar mudanças de seção
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const sectionId = entry.target.id
-          const section = sections.find((s) => s.id === sectionId)
+    // ================================
+    // INTERSECTION OBSERVER SETUP
+    // ================================
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const sectionId = entry.target.id
+        const section = sections.find((s) => s.id === sectionId)
 
-          if (!section) return
+        if (!section) return
 
-          // Quando uma seção fica visível, atualizar o título
-          if (entry.isIntersecting) {
-            const newTitle = `Dionatha | ${section.label}`
+        // Update title when section becomes visible
+        if (entry.isIntersecting) {
+          const newTitle = `Dionatha | ${section.label}`
 
-            // Atualizar título da página
-            document.title = newTitle
+          // Update page title
+          document.title = newTitle
 
-            // Iniciar tracking por tempo
-            analytics.trackTitleChange(newTitle, sectionId)
-          }
-        })
-      },
-      {
-        rootMargin: '-20% 0px -20% 0px',
-        threshold: 0.3 // Seção deve estar pelo menos 30% visível
-      }
-    )
+          // Start time-based tracking
+          analytics.trackTitleChange(newTitle, sectionId)
+        }
+      })
+    }, INTERSECTION_OPTIONS)
 
-    // Observar todas as seções
+    // ================================
+    // OBSERVER INITIALIZATION
+    // ================================
     sections.forEach((section) => {
       const element = document.getElementById(section.id)
       if (element) {
@@ -44,9 +81,12 @@ export const useSectionTracking = (
       }
     })
 
+    // ================================
+    // CLEANUP
+    // ================================
     return () => {
       observer.disconnect()
-      analytics.clearTitleTimer() // Limpar timer quando o componente desmontar
+      analytics.clearTitleTimer()
     }
   }, [sections])
 }

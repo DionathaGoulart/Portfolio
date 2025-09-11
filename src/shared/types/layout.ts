@@ -1,20 +1,20 @@
 import { ReactNode } from 'react'
 
-// ============================================================================
-// TYPES BASE
-// ============================================================================
+// ================================
+// BASE TYPES
+// ================================
 
 export type ContainerSize = 'sm' | 'md' | 'lg' | 'xl' | 'full'
 export type HeaderVariant = 'default' | 'minimal' | 'sticky' | 'transparent'
 export type FooterVariant = 'default' | 'minimal' | 'extended'
 export type LayoutSpacing = 'compact' | 'normal' | 'relaxed'
 
-// ============================================================================
-// INTERFACES COMPARTILHADAS
-// ============================================================================
+// ================================
+// SHARED INTERFACES
+// ================================
 
 /**
- * Configuração de seção para navegação
+ * Navigation section configuration
  */
 export interface SectionConfig {
   id: string
@@ -22,18 +22,27 @@ export interface SectionConfig {
 }
 
 /**
- * Mapeamento de tamanhos de container
+ * Footer link configuration
+ */
+export interface FooterLink {
+  href: string
+  label: string
+  external?: boolean
+}
+
+/**
+ * Container sizes mapping
  */
 export interface ContainerSizes {
   [key: string]: string
 }
 
-// ============================================================================
-// HEADER PROPS
-// ============================================================================
+// ================================
+// COMPONENT PROPS
+// ================================
 
 /**
- * Props do componente Header
+ * Header component props
  */
 export interface HeaderProps {
   // Estrutura
@@ -63,21 +72,8 @@ export interface HeaderProps {
   id?: string
 }
 
-// ============================================================================
-// FOOTER PROPS
-// ============================================================================
-
 /**
- * Link do footer
- */
-export interface FooterLink {
-  href: string
-  label: string
-  external?: boolean
-}
-
-/**
- * Props do componente Footer
+ * Footer component props
  */
 export interface FooterProps {
   // Estrutura
@@ -102,12 +98,8 @@ export interface FooterProps {
   id?: string
 }
 
-// ============================================================================
-// MAIN LAYOUT PROPS
-// ============================================================================
-
 /**
- * Props do componente MainLayout
+ * Main layout component props
  */
 export interface MainLayoutProps {
   // Conteúdo

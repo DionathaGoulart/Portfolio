@@ -2,47 +2,72 @@ import React from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import ScrollToTop from '../ui/ScroolToTop'
-import { MainLayoutProps } from '@shared/types'
 import '@styles/layout.scss'
 
-// ============================================================================
-// MAIN LAYOUT COMPONENT
-// ============================================================================
+// ================================
+// INTERFACES
+// ================================
 
-/**
- * Layout principal da aplicação
- * Gerencia Header, Footer, conteúdo e funcionalidades extras
- */
-export const MainLayout: React.FC<MainLayoutProps> = ({
+interface MainLayoutSection {
+  id: string
+  label: string
+}
+
+interface MainLayoutProps {
   // Conteúdo
-  children,
+  children: React.ReactNode
 
   // Estrutura
+  containerSize?: 'sm' | 'md' | 'lg' | 'xl'
+  sections?: MainLayoutSection[]
+  pageTitle?: string
+
+  // Aparência
+  spacing?: 'tight' | 'normal' | 'loose'
+  headerVariant?: 'default' | 'minimal' | 'transparent'
+  footerVariant?: 'default' | 'extended'
+
+  // Configuração
+  showHeader?: boolean
+  showFooter?: boolean
+  showScrollToTop?: boolean
+
+  // Props passthrough
+  headerProps?: Record<string, any>
+  footerProps?: Record<string, any>
+
+  // HTML attributes
+  className?: string
+  id?: string
+}
+
+// ================================
+// MAIN COMPONENT
+// ================================
+
+/**
+ * Main application layout component
+ * Manages Header, Footer, content and additional features like scroll to top
+ */
+export const MainLayout: React.FC<MainLayoutProps> = ({
+  children,
   containerSize = 'lg',
   sections = [],
   pageTitle,
-
-  // Aparência
   spacing = 'normal',
   headerVariant = 'default',
   footerVariant = 'default',
-
-  // Configuração
   showHeader = true,
   showFooter = true,
   showScrollToTop = true,
-
-  // Props passthrough
   headerProps = {},
   footerProps = {},
-
-  // HTML attributes
   className = '',
   id
 }) => {
-  // ============================================================================
-  // CLASSES CSS COM BEM + TAILWIND
-  // ============================================================================
+  // ================================
+  // CLASS BUILDERS
+  // ================================
 
   const getLayoutClasses = (): string => {
     const baseClasses = ['main-layout', `main-layout--${spacing}`]
@@ -59,9 +84,9 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
     ].join(' ')
   }
 
-  // ============================================================================
-  // RENDER FUNCTIONS
-  // ============================================================================
+  // ================================
+  // RENDER HELPERS
+  // ================================
 
   const renderHeader = () => {
     if (!showHeader) return null
@@ -101,9 +126,9 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
     </main>
   )
 
-  // ============================================================================
-  // RENDER PRINCIPAL
-  // ============================================================================
+  // ================================
+  // MAIN RENDER
+  // ================================
 
   return (
     <div className={getLayoutClasses()} id={id}>

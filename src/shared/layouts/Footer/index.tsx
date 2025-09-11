@@ -1,19 +1,53 @@
 import React from 'react'
-import { FooterProps } from '@shared/types'
 
-// ============================================================================
-// FOOTER COMPONENT
-// ============================================================================
+// ================================
+// INTERFACES
+// ================================
 
-/**
- * Componente Footer principal do layout
- * Gerencia links, copyright e redes sociais
- */
-export const Footer: React.FC<FooterProps> = ({
+interface FooterLink {
+  href: string
+  label: string
+  external?: boolean
+}
+
+interface SocialLink {
+  href: string
+  label: string
+}
+
+interface FooterProps {
   // Estrutura
-  containerSize = 'lg',
+  containerSize?: 'sm' | 'md' | 'lg' | 'xl'
 
   // Conteúdo
+  companyName?: string
+  year?: number
+  links?: FooterLink[]
+  socialLinks?: SocialLink[]
+
+  // Aparência
+  variant?: 'default' | 'extended'
+  showCopyright?: boolean
+  showSocial?: boolean
+
+  // Layout
+  compact?: boolean
+
+  // HTML attributes
+  className?: string
+  id?: string
+}
+
+// ================================
+// MAIN COMPONENT
+// ================================
+
+/**
+ * Footer component with links, copyright and social media
+ * Manages navigation links, company information and social connections
+ */
+export const Footer: React.FC<FooterProps> = ({
+  containerSize = 'lg',
   companyName = 'GD',
   year,
   links = [
@@ -22,31 +56,25 @@ export const Footer: React.FC<FooterProps> = ({
     { href: '/contact', label: 'Contato' }
   ],
   socialLinks = [],
-
-  // Aparência
   variant = 'default',
   showCopyright = true,
   showSocial = false,
-
-  // Layout
   compact = false,
-
-  // HTML attributes
   className = '',
   id
 }) => {
-  // ============================================================================
-  // CONFIGURAÇÃO DERIVADA
-  // ============================================================================
+  // ================================
+  // DERIVED STATE
+  // ================================
 
   const getCurrentYear = (): number => year || new Date().getFullYear()
   const hasLinks = links.length > 0
   const hasSocial = showSocial && socialLinks.length > 0
   const isExtended = variant === 'extended' && (hasLinks || hasSocial)
 
-  // ============================================================================
-  // CLASSES CSS COM BEM + TAILWIND
-  // ============================================================================
+  // ================================
+  // CLASS BUILDERS
+  // ================================
 
   const getFooterClasses = (): string => {
     const baseClasses = ['footer', `footer--${variant}`]
@@ -69,9 +97,9 @@ export const Footer: React.FC<FooterProps> = ({
     return classes.join(' ')
   }
 
-  // ============================================================================
-  // RENDER FUNCTIONS
-  // ============================================================================
+  // ================================
+  // RENDER HELPERS
+  // ================================
 
   const renderLinks = () => {
     if (!hasLinks) return null
@@ -145,9 +173,9 @@ export const Footer: React.FC<FooterProps> = ({
     </div>
   )
 
-  // ============================================================================
-  // RENDER PRINCIPAL
-  // ============================================================================
+  // ================================
+  // MAIN RENDER
+  // ================================
 
   return (
     <footer className={getFooterClasses()} id={id}>

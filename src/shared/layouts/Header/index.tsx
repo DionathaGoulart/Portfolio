@@ -2,24 +2,54 @@ import React, { useState, useEffect, useRef } from 'react'
 import { analytics } from '@features/Analytics/utils'
 import { useTheme } from '@features/Theme/contexts'
 import { AnimatedContainer } from '@shared/ui'
-import { HeaderProps } from '@shared/types'
 
-// ============================================================================
-// ÍCONES SVG
-// ============================================================================
+// ================================
+// INTERFACES
+// ================================
 
-/**
- * Ícone do sol para tema claro
- */
+interface HeaderSection {
+  id: string
+  label: string
+}
+
+interface HeaderProps {
+  // Estrutura
+  containerSize?: 'sm' | 'md' | 'lg' | 'xl'
+  sections?: HeaderSection[]
+
+  // Conteúdo
+  pageTitle?: string
+  logoText?: string
+
+  // Aparência
+  variant?: 'default' | 'minimal' | 'transparent'
+  showThemeToggle?: boolean
+  fixed?: boolean
+  transparent?: boolean
+
+  // Estados
+  disabled?: boolean
+
+  // Callbacks
+  onLogoClick?: () => void
+  onSectionClick?: (sectionId: string) => void
+  onThemeToggle?: () => void
+
+  // HTML attributes
+  className?: string
+  id?: string
+}
+
+// ================================
+// ICON COMPONENTS
+// ================================
+
 const SunIcon = ({ className = 'w-5 h-5' }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
     <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
   </svg>
 )
 
-/**
- * Ícone da lua para tema escuro
- */
 const MoonIcon = ({ className = 'w-5 h-5' }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
     <path
@@ -30,9 +60,6 @@ const MoonIcon = ({ className = 'w-5 h-5' }: { className?: string }) => (
   </svg>
 )
 
-/**
- * Ícone de menu hambúrguer
- */
 const MenuIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
   <svg
     className={className}
@@ -49,9 +76,6 @@ const MenuIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
   </svg>
 )
 
-/**
- * Ícone de fechar
- */
 const CloseIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
   <svg
     className={className}
@@ -68,44 +92,33 @@ const CloseIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
   </svg>
 )
 
-// ============================================================================
-// HEADER COMPONENT
-// ============================================================================
+// ================================
+// MAIN COMPONENT
+// ================================
 
 /**
- * Componente Header principal do layout
- * Gerencia navegação, tema e menu mobile
+ * Header component with navigation, theme toggle and responsive menu
+ * Manages page navigation, theme switching and mobile menu interactions
  */
 export const Header: React.FC<HeaderProps> = ({
-  // Estrutura
   containerSize = 'lg',
   sections = [],
-
-  // Conteúdo
   pageTitle,
   logoText = 'GD.',
-
-  // Aparência
   variant = 'default',
   showThemeToggle = true,
   fixed = true,
   transparent = false,
-
-  // Estados
   disabled = false,
-
-  // Callbacks
   onLogoClick,
   onSectionClick,
   onThemeToggle,
-
-  // HTML attributes
   className = '',
   id
 }) => {
-  // ============================================================================
-  // HOOKS E ESTADO
-  // ============================================================================
+  // ================================
+  // HOOKS & STATE
+  // ================================
 
   const { theme, toggleTheme } = useTheme()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -114,18 +127,17 @@ export const Header: React.FC<HeaderProps> = ({
   const [isScrolled, setIsScrolled] = useState(false)
 
   const isScrolling = useRef(false)
-  const navLinks = sections
 
-  // ============================================================================
-  // CONFIGURAÇÃO DERIVADA
-  // ============================================================================
+  // ================================
+  // DERIVED STATE
+  // ================================
 
-  const hasNavigation = navLinks.length > 0
+  const hasNavigation = sections.length > 0
   const isInteractive = !disabled
 
-  // ============================================================================
-  // CLASSES CSS COM BEM + TAILWIND
-  // ============================================================================
+  // ================================
+  // CLASS BUILDERS
+  // ================================
 
   const getHeaderClasses = (): string => {
     const baseClasses = ['header', `header--${variant}`]
@@ -142,136 +154,9 @@ export const Header: React.FC<HeaderProps> = ({
     return ['header__nav', `layout-container--${containerSize}`].join(' ')
   }
 
-  // ============================================================================
-  // EFFECTS
-  // ============================================================================
-
-  // Define a primeira seção como ativa por padrão
-  useEffect(() => {
-    if (navLinks.length > 0 && !activeSection) {
-      setActiveSection(navLinks[0].id)
-    }
-  }, [navLinks, activeSection])
-
-  // Atualiza título da página e inicia tracking
-  useEffect(() => {
-    if (!pageTitle) return
-
-    if (activeSection) {
-      const activeSectionLabel = sections.find(
-        (section) => section.id === activeSection
-      )?.label
-
-      if (activeSectionLabel) {
-        const newTitle = `${pageTitle} | ${activeSectionLabel}`
-        document.title = newTitle
-        analytics.trackTitleChange(newTitle, activeSection)
-        return
-      }
-    }
-
-    document.title = pageTitle
-    analytics.trackTitleChange(pageTitle, 'home')
-  }, [activeSection, pageTitle, sections])
-
-  // Observer para seções visíveis
-  useEffect(() => {
-    if (navLinks.length === 0) return
-
-    const sectionsElements = navLinks
-      .map((link) => {
-        const element = document.getElementById(link.id)
-        if (!element) {
-          console.warn(`Seção com ID "${link.id}" não encontrada`)
-        }
-        return element
-      })
-      .filter(Boolean) as HTMLElement[]
-
-    if (sectionsElements.length === 0) {
-      console.warn('Nenhuma seção encontrada para observar')
-      return
-    }
-
-    const headerOffset = headerHeight || 80
-    const isMobile = window.innerWidth <= 768
-
-    // Root margin diferenciado por device
-    const rootMarginValue = isMobile
-      ? `-${headerOffset}px 0px 0px 0px`
-      : `-${headerOffset}px 0px -${window.innerHeight * 0.5}px 0px`
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (isScrolling.current) return
-
-        const visibleSections = entries.filter((entry) => entry.isIntersecting)
-
-        if (visibleSections.length > 0) {
-          const mostVisible = visibleSections.reduce((prev, current) =>
-            prev.intersectionRatio > current.intersectionRatio ? prev : current
-          )
-
-          const newActiveSection = mostVisible.target.id
-          setActiveSection(newActiveSection)
-        }
-      },
-      {
-        rootMargin: rootMarginValue,
-        threshold: 0.1
-      }
-    )
-
-    sectionsElements.forEach((section) => observer.observe(section))
-
-    return () => {
-      sectionsElements.forEach((section) => observer.unobserve(section))
-      analytics.clearTitleTimer()
-    }
-  }, [navLinks, headerHeight])
-
-  // Medir altura do header
-  useEffect(() => {
-    const headerElement = document.querySelector('header')
-    if (!headerElement) return
-
-    const updateHeaderHeight = () => {
-      const height = headerElement.offsetHeight
-      setHeaderHeight(height)
-
-      if (fixed) {
-        document.body.style.paddingTop = `${height}px`
-      }
-    }
-
-    updateHeaderHeight()
-    const observer = new ResizeObserver(updateHeaderHeight)
-    observer.observe(headerElement)
-    window.addEventListener('resize', updateHeaderHeight)
-
-    return () => {
-      observer.disconnect()
-      window.removeEventListener('resize', updateHeaderHeight)
-
-      if (fixed) {
-        document.body.style.paddingTop = '0'
-      }
-    }
-  }, [isMobileMenuOpen, fixed])
-
-  // Detectar scroll para efeitos visuais
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  // ============================================================================
-  // HANDLERS
-  // ============================================================================
+  // ================================
+  // EVENT HANDLERS
+  // ================================
 
   const handleScrollTo = (id: string) => {
     if (!isInteractive) return
@@ -308,8 +193,8 @@ export const Header: React.FC<HeaderProps> = ({
 
     if (onLogoClick) {
       onLogoClick()
-    } else if (navLinks.length > 0) {
-      handleScrollTo(navLinks[0].id)
+    } else if (sections.length > 0) {
+      handleScrollTo(sections[0].id)
     } else {
       window.location.href = '/'
     }
@@ -338,9 +223,135 @@ export const Header: React.FC<HeaderProps> = ({
     analytics.trackButtonClick(`mobile_menu_${newState ? 'open' : 'close'}`)
   }
 
-  // ============================================================================
-  // RENDER FUNCTIONS
-  // ============================================================================
+  // ================================
+  // EFFECTS
+  // ================================
+
+  // Set first section as active by default
+  useEffect(() => {
+    if (sections.length > 0 && !activeSection) {
+      setActiveSection(sections[0].id)
+    }
+  }, [sections, activeSection])
+
+  // Update page title and track changes
+  useEffect(() => {
+    if (!pageTitle) return
+
+    if (activeSection) {
+      const activeSectionLabel = sections.find(
+        (section) => section.id === activeSection
+      )?.label
+
+      if (activeSectionLabel) {
+        const newTitle = `${pageTitle} | ${activeSectionLabel}`
+        document.title = newTitle
+        analytics.trackTitleChange(newTitle, activeSection)
+        return
+      }
+    }
+
+    document.title = pageTitle
+    analytics.trackTitleChange(pageTitle, 'home')
+  }, [activeSection, pageTitle, sections])
+
+  // Intersection observer for visible sections
+  useEffect(() => {
+    if (sections.length === 0) return
+
+    const sectionsElements = sections
+      .map((link) => {
+        const element = document.getElementById(link.id)
+        if (!element) {
+          console.warn(`Seção com ID "${link.id}" não encontrada`)
+        }
+        return element
+      })
+      .filter(Boolean) as HTMLElement[]
+
+    if (sectionsElements.length === 0) {
+      console.warn('Nenhuma seção encontrada para observar')
+      return
+    }
+
+    const headerOffset = headerHeight || 80
+    const isMobile = window.innerWidth <= 768
+
+    const rootMarginValue = isMobile
+      ? `-${headerOffset}px 0px 0px 0px`
+      : `-${headerOffset}px 0px -${window.innerHeight * 0.5}px 0px`
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isScrolling.current) return
+
+        const visibleSections = entries.filter((entry) => entry.isIntersecting)
+
+        if (visibleSections.length > 0) {
+          const mostVisible = visibleSections.reduce((prev, current) =>
+            prev.intersectionRatio > current.intersectionRatio ? prev : current
+          )
+
+          const newActiveSection = mostVisible.target.id
+          setActiveSection(newActiveSection)
+        }
+      },
+      {
+        rootMargin: rootMarginValue,
+        threshold: 0.1
+      }
+    )
+
+    sectionsElements.forEach((section) => observer.observe(section))
+
+    return () => {
+      sectionsElements.forEach((section) => observer.unobserve(section))
+      analytics.clearTitleTimer()
+    }
+  }, [sections, headerHeight])
+
+  // Measure header height
+  useEffect(() => {
+    const headerElement = document.querySelector('header')
+    if (!headerElement) return
+
+    const updateHeaderHeight = () => {
+      const height = headerElement.offsetHeight
+      setHeaderHeight(height)
+
+      if (fixed) {
+        document.body.style.paddingTop = `${height}px`
+      }
+    }
+
+    updateHeaderHeight()
+    const observer = new ResizeObserver(updateHeaderHeight)
+    observer.observe(headerElement)
+    window.addEventListener('resize', updateHeaderHeight)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', updateHeaderHeight)
+
+      if (fixed) {
+        document.body.style.paddingTop = '0'
+      }
+    }
+  }, [isMobileMenuOpen, fixed])
+
+  // Detect scroll for visual effects
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // ================================
+  // RENDER HELPERS
+  // ================================
 
   const renderLogo = () => (
     <AnimatedContainer animationType="fade-right">
@@ -361,7 +372,7 @@ export const Header: React.FC<HeaderProps> = ({
     return (
       <AnimatedContainer animationType="fade-down">
         <div className="header__nav-desktop">
-          {navLinks.map((link) => (
+          {sections.map((link) => (
             <button
               key={link.id}
               onClick={() => handleScrollTo(link.id)}
@@ -414,7 +425,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div
           className={`header__mobile-nav layout-container--${containerSize}`}
         >
-          {navLinks.map((link) => (
+          {sections.map((link) => (
             <button
               key={link.id}
               onClick={() => handleScrollTo(link.id)}
@@ -431,9 +442,9 @@ export const Header: React.FC<HeaderProps> = ({
     )
   }
 
-  // ============================================================================
-  // RENDER PRINCIPAL
-  // ============================================================================
+  // ================================
+  // MAIN RENDER
+  // ================================
 
   return (
     <header className={getHeaderClasses()} id={id}>

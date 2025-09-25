@@ -1,19 +1,30 @@
 <!doctype html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/icon-16.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/icon-192.png" />
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dionatha</title>
+<meta charset="UTF-8" />
 
-  <!-- Google tag -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<!-- Ícones para tema claro (usa pasta dark) -->
+<link rel="icon" type="image/png" sizes="32x32" href="/dark/icon-32.png" media="(prefers-color-scheme: light)" />
+<link rel="icon" type="image/png" sizes="16x16" href="/dark/icon-16.png" media="(prefers-color-scheme: light)" />
+<link rel="apple-touch-icon" sizes="180x180" href="/dark/icon-192.png" media="(prefers-color-scheme: light)" />
+
+<!-- Ícones para tema escuro (usa pasta light) -->
+<link rel="icon" type="image/png" sizes="32x32" href="/light/icon-32.png" media="(prefers-color-scheme: dark)" />
+<link rel="icon" type="image/png" sizes="16x16" href="/light/icon-16.png" media="(prefers-color-scheme: dark)" />
+<link rel="apple-touch-icon" sizes="180x180" href="/light/icon-192.png" media="(prefers-color-scheme: dark)" />
+
+<!-- Fallback para navegadores que não suportam prefers-color-scheme -->
+<link rel="icon" type="image/png" sizes="32x32" href="/light/icon-32.png" media="(prefers-color-scheme: no-preference)" />
+<link rel="icon" type="image/png" sizes="16x16" href="/light/icon-16.png" media="(prefers-color-scheme: no-preference)" />
+<link rel="apple-touch-icon" sizes="180x180" href="/light/icon-192.png" media="(prefers-color-scheme: no-preference)" />
+
+<link rel="manifest" href="/manifest.json" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dionatha</title>
+
 </head>
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/core/main.tsx"></script>
+<div id="root"></div>
+<script type="module" src="/src/core/main.tsx"></script>
 </body>
 </html>

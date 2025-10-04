@@ -49,61 +49,61 @@ const FILTER_OPTIONS: FilterOption[] = [
 const PROJECTS_DATA: Project[] = [
   {
     id: '1',
-    title: 'Encurtador de Links',
+    title: 'LinkSpace - Encurtador de URLs',
     description:
-      'Aplicativo fullstack para encurtar URLs com dashboard avançado e estatísticas detalhadas de cliques.',
+      'Plataforma moderna de encurtamento de URLs com interface intuitiva, analytics em tempo real e dashboard avançado.',
     image: PROJECT_IMAGES.short,
-    tags: ['Angular', 'Node.js', 'MongoDB', 'Bootstrap'],
+    tags: ['Angular', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'Bootstrap 5'],
     categories: ['frontend', 'backend', 'fullstack'],
     githubUrl: 'https://github.com/DionathaGoulart/link-shortener--Angular',
-    demoUrl: 'https://linkspace.dionatha.com.br/'
+    demoUrl: 'https://link-shortener-angular.vercel.app'
   },
   {
     id: '2',
-    title: 'Contratos Digital',
+    title: 'Sistema de Assinatura Digital',
     description:
-      'Plataforma web segura para gestão e assinatura digital de documentos contratuais.',
+      'Plataforma segura para gestão e assinatura digital de documentos contratuais com geração de PDF e envio automático por email.',
     image: PROJECT_IMAGES.signature,
-    tags: ['React', 'Node.js', 'Express', 'Nodemailer'],
+    tags: ['React', 'TypeScript', 'Tailwind', 'Node.js', 'Express'],
     categories: ['frontend', 'backend', 'fullstack'],
     githubUrl: 'https://github.com/DionathaGoulart/signature-React',
-    demoUrl: 'https://termos.dionatha.com.br/'
+    demoUrl: 'https://signature-react.vercel.app'
+  },
+  {
+    id: '3',
+    title: 'Dark Links - Linktree Profissional',
+    description:
+      'Linktree profissional com tema escuro, analytics integrado, suporte multilíngue e design minimalista.',
+    image: PROJECT_IMAGES.darkLinks,
+    tags: ['React', 'TypeScript', 'Tailwind',  'Google Analytics'],
+    categories: ['frontend'],
+    githubUrl: 'https://github.com/DionathaGoulart/Dark-Links',
+    demoUrl: 'https://dark-links.vercel.app'
   },
   {
     id: '4',
-    title: 'Linktree Profissional',
+    title: 'Dark Portfolio - Portfolio Artístico',
     description:
-      'Linktree profissional com tema escuro, analytics integrado e suporte multilíngue.',
-    image: PROJECT_IMAGES.darkLinks,
-    tags: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
+      'Portfolio profissional com design minimalista, galeria de imagens, tema claro/escuro e performance otimizada.',
+    image: PROJECT_IMAGES.darkPortfolio,
+    tags: ['React', 'TypeScript', 'Tailwind', 'Google Analytics', 'EmailJS'],
     categories: ['frontend'],
-    githubUrl: 'https://github.com/DionathaGoulart/Dark-Links',
-    demoUrl: 'https://dark-links.vercel.app/'
+    githubUrl: 'https://github.com/DionathaGoulart/Dark-Portifolio',
+    demoUrl: 'https://dionatha.com.br'
   },
   {
     id: '5',
-    title: 'Portfolio Artístico',
+    title: 'Containner Portfolio - Branding',
     description:
-      'Portfolio profissional com design minimalista, galeria de imagens e analytics completo.',
-    image: PROJECT_IMAGES.darkPortfolio,
-    tags: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
+      'Portfolio especializado em branding com projetos criativos, gerador de padrões interativo e comparação visual.',
+    image: PROJECT_IMAGES.containnerPortfolio,
+    tags: ['React', 'TypeScript', 'Tailwind', 'Google Analytics'],
     categories: ['frontend'],
-    githubUrl: 'https://github.com/DionathaGoulart/Dark-Portifolio',
-    demoUrl: 'https://dark-portifolio.vercel.app/'
+    githubUrl: 'https://github.com/DionathaGoulart/containner-portfolio',
+    demoUrl: 'https://containner.netlify.app'
   },
   {
     id: '6',
-    title: 'Branding Portfolio',
-    description:
-      'Portfolio especializado em branding com projetos Vextro® e Korri®, gerador de padrões.',
-    image: PROJECT_IMAGES.containnerPortfolio,
-    tags: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
-    categories: ['frontend'],
-    githubUrl: 'https://github.com/containner-archived/Containner',
-    demoUrl: 'https://containner.netlify.app/vextro'
-  },
-  {
-    id: '7',
     title: 'Adoção de Pets',
     description:
       'Plataforma para adoção responsável de animais com sistema de matching inteligente.',

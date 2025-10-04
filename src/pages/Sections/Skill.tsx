@@ -17,38 +17,40 @@ import {
 
 /**
  * Technical skills data organized by category
+ * Based on technologies used in real projects and proficiency levels
  */
 const SKILLS_DATA: Skill[] = [
-  // Frontend
-  { id: '1', name: 'React', percentage: 95, category: 'frontend' },
-  { id: '2', name: 'TypeScript', percentage: 90, category: 'frontend' },
-  { id: '3', name: 'Next.js', percentage: 88, category: 'frontend' },
-  { id: '4', name: 'JavaScript', percentage: 95, category: 'frontend' },
-  { id: '5', name: 'CSS/SCSS', percentage: 92, category: 'frontend' },
-  { id: '6', name: 'Tailwind CSS', percentage: 90, category: 'frontend' },
+  // Frontend - Manjo muito (90-95%)
+  { id: '1', name: 'JavaScript', percentage: 95, category: 'frontend' },
+  { id: '2', name: 'CSS', percentage: 93, category: 'frontend' },
+  { id: '3', name: 'TypeScript', percentage: 93, category: 'frontend' },
+  { id: '4', name: 'Tailwind CSS', percentage: 92, category: 'frontend' },
+  { id: '5', name: 'Sass', percentage: 91, category: 'frontend' },
+  { id: '6', name: 'React', percentage: 90, category: 'frontend' },
+  { id: '7', name: 'Bootstrap', percentage: 90, category: 'frontend' },
+  { id: '8', name: 'Styled Components', percentage: 90, category: 'frontend' },
+  { id: '9', name: 'Git', percentage: 95, category: 'tools' },
+  { id: '10', name: 'Vite', percentage: 90, category: 'tools' },
+  { id: '11', name: 'Figma', percentage: 90, category: 'tools' },
 
-  // Backend
-  { id: '7', name: 'Node.js', percentage: 85, category: 'backend' },
-  { id: '8', name: 'Express.js', percentage: 83, category: 'backend' },
-  { id: '9', name: 'Python', percentage: 78, category: 'backend' },
-  { id: '10', name: 'REST APIs', percentage: 90, category: 'backend' },
-  { id: '11', name: 'GraphQL', percentage: 75, category: 'backend' },
+  // Frontend/Backend - Entendo ok (70-85%)
+  { id: '12', name: 'Python', percentage: 85, category: 'backend' },
+  { id: '13', name: 'Django', percentage: 82, category: 'backend' },
+  { id: '14', name: 'Node.js', percentage: 80, category: 'backend' },
+  { id: '15', name: 'Express.js', percentage: 78, category: 'backend' },
+  { id: '16', name: 'REST APIs', percentage: 80, category: 'backend' },
+  { id: '17', name: 'PostgreSQL', percentage: 75, category: 'database' },
+  { id: '18', name: 'MongoDB', percentage: 78, category: 'database' },
+  { id: '19', name: 'Docker', percentage: 72, category: 'tools' },
 
-  // Database
-  { id: '12', name: 'MongoDB', percentage: 82, category: 'database' },
-  { id: '13', name: 'PostgreSQL', percentage: 80, category: 'database' },
-  { id: '14', name: 'MySQL', percentage: 85, category: 'database' },
-  { id: '15', name: 'Prisma', percentage: 78, category: 'database' },
+  // Frontend/Backend/Tools - Sei o básico (30-65%)
+  { id: '20', name: 'MySQL', percentage: 65, category: 'database' },
+  { id: '21', name: 'Angular', percentage: 40, category: 'frontend' },
+  { id: '22', name: 'AWS', percentage: 30, category: 'tools' },
+  { id: '23', name: 'React Native', percentage: 30, category: 'frontend' },
+  { id: '24', name: 'Prisma', percentage: 30, category: 'tools' },
+  { id: '25', name: 'Next.js', percentage: 30, category: 'frontend' },
 
-  // Tools
-  { id: '16', name: 'Git', percentage: 92, category: 'tools' },
-  { id: '17', name: 'Docker', percentage: 75, category: 'tools' },
-  { id: '18', name: 'AWS', percentage: 70, category: 'tools' },
-  { id: '19', name: 'Figma', percentage: 88, category: 'tools' },
-
-  // Mobile
-  { id: '20', name: 'React Native', percentage: 82, category: 'mobile' },
-  { id: '21', name: 'Expo', percentage: 85, category: 'mobile' }
 ]
 
 /**
@@ -76,8 +78,8 @@ const SKILL_CATEGORIES: SkillCategory[] = [
     delay: 250
   },
   {
-    key: 'mobile',
-    skills: SKILLS_DATA.filter((skill) => skill.category === 'mobile'),
+    key: 'integrations',
+    skills: SKILLS_DATA.filter((skill) => skill.category === 'integrations'),
     delay: 300
   }
 ]
@@ -91,7 +93,7 @@ const FILTER_OPTIONS: FilterOption[] = [
   { value: 'backend', label: 'Backend' },
   { value: 'database', label: 'Database' },
   { value: 'tools', label: 'Ferramentas' },
-  { value: 'mobile', label: 'Mobile' }
+  { value: 'integrations', label: 'Integrações' }
 ]
 
 // ================================

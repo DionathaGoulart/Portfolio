@@ -14,61 +14,61 @@ import { ExpCardProps, ExperienceSectionProps } from '@types'
 const experiencesData: ExpCardProps[] = [
   {
     id: '1',
-    title: 'Desenvolvedor Full Stack Senior',
-    company: 'TechCorp Solutions',
-    period: '2023 - Atual',
+    title: 'Desenvolvedor Fullstack',
+    company: 'Parcer',
+    period: 'Jan 2025 - Out 2025',
     description:
-      'Lidero o desenvolvimento de aplicações web modernas utilizando React, Node.js e PostgreSQL. Responsável pela arquitetura de microsserviços e implementação de CI/CD. Mentoreio desenvolvedores júnior e colaboro diretamente com stakeholders para definir requisitos técnicos.',
+      'Atuei como desenvolvedor fullstack em projetos freelancer, especializado em tecnologias modernas como React, TypeScript e Node.js. Desenvolvi interfaces responsivas, criei APIs RESTful robustas e implementei soluções completas do frontend ao backend. Colaborei diretamente com clientes para levantamento de requisitos e entrega de soluções personalizadas.',
     technologies: [
       'React',
       'TypeScript',
       'Node.js',
+      'Express.js',
+      'MongoDB',
       'PostgreSQL',
-      'AWS',
-      'Docker'
+      'Django',
+      'Docker',
+      'Tailwind CSS',
+      'Git'
     ],
     interactive: true,
-    onClick: () => analytics.trackButtonClick('experience_techcorp')
+    onClick: () => analytics.trackButtonClick('experience_parcer')
   },
   {
     id: '2',
-    title: 'Desenvolvedor Full Stack',
-    company: 'Digital Innovations Ltd.',
-    period: '2021 - 2023',
+    title: 'Suporte técnico Nível 2',
+    company: 'Cybernetrs',
+    period: 'Mar 2023 - Out 2024',
     description:
-      'Desenvolvi e mantive múltiplas aplicações web para clientes diversos. Implementei integrações com APIs de terceiros, otimizei performance de aplicações legadas e participei ativamente de code reviews. Colaborei em equipe ágil usando Scrum.',
+      'Atuei como Suporte Técnico Nível 2, desenvolvendo competências técnicas e analíticas essenciais para resolução de problemas complexos. Investiguei e resolvi problemas de infraestrutura de rede, mantive documentação técnica detalhada e utilizei ferramentas especializadas para monitoramento contínuo de performance.',
     technologies: [
-      'React',
-      'Next.js',
-      'Express',
-      'MongoDB',
-      'Firebase',
-      'Tailwind'
+      'Monitoramento de Sistemas',
+      'Debugging',
+      'Documentação Técnica',
+      'Gestão de Infraestrutura',
+      'Análise de Performance',
+      'Resolução de Problemas'
     ],
     interactive: true,
-    onClick: () => analytics.trackButtonClick('experience_digital_innovations')
+    onClick: () => analytics.trackButtonClick('experience_cybernetrs')
   },
   {
     id: '3',
-    title: 'Desenvolvedor Frontend',
-    company: 'StartupX',
-    period: '2020 - 2021',
+    title: 'Auxiliar de Escritório em Geral',
+    company: 'Condomínio da Estação Rodoviária de Porto Alegre',
+    period: 'Set 2021 - Ago 2022',
     description:
-      'Construí interfaces de usuário responsivas e acessíveis para plataforma SaaS. Trabalhei closely com designers UX/UI para implementar designs pixel-perfect. Implementei testes automatizados e melhorei a experiência do usuário.',
-    technologies: ['Vue.js', 'JavaScript', 'SCSS', 'Jest', 'Cypress', 'Figma'],
+      'Atuei como Auxiliar de Escritório em ambiente corporativo de alto fluxo, desenvolvendo competências organizacionais e de atendimento essenciais. Gerenciei comunicações telefônicas, organizei arquivos físicos e digitais, executei tarefas administrativas e coordenei compromissos da equipe em ambiente de alta demanda.',
+    technologies: [
+      'Atendimento ao Cliente',
+      'Gestão de Dados',
+      'Processos Administrativos',
+      'Organização',
+      'Multitarefa',
+      'Comunicação Eficaz'
+    ],
     interactive: true,
-    onClick: () => analytics.trackButtonClick('experience_startupx')
-  },
-  {
-    id: '4',
-    title: 'Desenvolvedor Junior',
-    company: 'WebDev Agency',
-    period: '2019 - 2020',
-    description:
-      'Iniciativa na carreira desenvolvendo sites institucionais e e-commerces. Aprendi fundamentos de desenvolvimento web, trabalhei com WordPress e PHP, e participei de projetos de refatoração de código legado.',
-    technologies: ['PHP', 'WordPress', 'jQuery', 'MySQL', 'Bootstrap', 'Git'],
-    interactive: true,
-    onClick: () => analytics.trackButtonClick('experience_webdev_agency')
+    onClick: () => analytics.trackButtonClick('experience_estacao_rodoviaria')
   }
 ]
 

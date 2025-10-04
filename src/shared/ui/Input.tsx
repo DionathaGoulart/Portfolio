@@ -1,5 +1,5 @@
 import React from 'react'
-import { InputProps } from '@shared/types'
+import { InputProps } from '@types'
 import '@styles/ui/form.scss'
 
 // ================================
@@ -7,7 +7,13 @@ import '@styles/ui/form.scss'
 // ================================
 
 /**
- * Builds CSS classes for Input component based on props
+ * Constrói classes CSS para o componente Input baseado nas propriedades
+ * @param {string} size - Tamanho do input
+ * @param {string} variant - Variante do input
+ * @param {boolean} disabled - Se o input está desabilitado
+ * @param {boolean} error - Se o input tem erro
+ * @param {string} className - Classes CSS adicionais
+ * @returns {string} String de classes CSS
  */
 const buildInputClasses = (
   size: string,
@@ -33,22 +39,23 @@ const buildInputClasses = (
 // ================================
 
 /**
- * Reusable Input component with multiple sizes, variants and states
- * Supports various input types and interactive states
+ * Componente de input reutilizável com múltiplos tamanhos, variantes e estados
+ * Suporta vários tipos de input e estados interativos
  *
- * @component Input
- * @param {InputProps} props - Input configuration props
- * @returns {React.FC<InputProps>} Rendered input component
+ * @param {InputProps} props - Propriedades de configuração do input
+ * @returns {JSX.Element} Componente de input renderizado
  *
  * @example
+ * ```tsx
  * <Input
  *   type="email"
  *   size="medio"
  *   variant="outline"
- *   placeholder="Enter your email"
+ *   placeholder="Digite seu email"
  *   onChange={handleChange}
  *   error={!!errors.email}
  * />
+ * ```
  */
 export const Input: React.FC<InputProps> = ({
   // Content

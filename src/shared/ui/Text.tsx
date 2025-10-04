@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { TextProps } from '@shared/types'
+import { TextProps } from '@types'
 import '@styles/ui/text.scss'
 
 // ================================
@@ -27,7 +27,8 @@ const DEFAULT_PROPS = {
 // ================================
 
 /**
- * Hook to detect if screen is mobile size
+ * Hook para detectar se a tela é de tamanho mobile
+ * @returns {boolean} True se a tela for menor que 768px
  */
 const useIsMobile = (): boolean => {
   const [isMobile, setIsMobile] = useState(false)
@@ -50,12 +51,17 @@ const useIsMobile = (): boolean => {
 // ================================
 
 /**
- * Calculates text weight based on character count
+ * Calcula peso do texto baseado no número de caracteres
+ * @param {string} text - Texto para calcular peso
+ * @returns {number} Número de caracteres no texto
  */
 const calculateTextWeight = (text: string): number => text.length
 
 /**
- * Splits content into balanced sections for text distribution
+ * Divide conteúdo em seções balanceadas para distribuição de texto
+ * @param {string} content - Conteúdo a ser dividido
+ * @param {number} sectionCount - Número de seções desejadas
+ * @returns {string[]} Array de seções de texto
  */
 const splitContentIntoSections = (
   content: string,
@@ -280,16 +286,18 @@ const generateClassNames = (
 // ================================
 
 /**
- * Versatile text component with support for multiple layouts, styles, and column distribution
+ * Componente de texto versátil com suporte a múltiplos layouts, estilos e distribuição em colunas
+ * Inclui algoritmo inteligente de balanceamento de texto para layouts multi-coluna
  *
- * @component Text
- * @param {TextProps} props - Text configuration props
- * @returns {React.FC<TextProps>} Rendered text component
+ * @param {TextProps} props - Propriedades de configuração do texto
+ * @returns {JSX.Element} Componente de texto renderizado
  *
  * @example
+ * ```tsx
  * <Text size="grande" color="primary" columns={2}>
- *   Multi-column text content
+ *   Conteúdo de texto em múltiplas colunas
  * </Text>
+ * ```
  */
 export const Text: React.FC<TextProps> = (inputProps) => {
   // ================================
@@ -364,22 +372,20 @@ export const Text: React.FC<TextProps> = (inputProps) => {
 // ================================
 
 /**
- * Paragraph text component
+ * Componente de parágrafo - atalho para elemento <p>
  *
- * @component P
- * @param {Omit<TextProps, 'as'>} props - Text props without 'as' property
- * @returns {React.FC<Omit<TextProps, 'as'>>} Paragraph element
+ * @param {Omit<TextProps, 'as'>} props - Propriedades de texto sem a propriedade 'as'
+ * @returns {JSX.Element} Elemento de parágrafo renderizado
  */
 export const P: React.FC<Omit<TextProps, 'as'>> = (props) => (
   <Text as="p" {...props} />
 )
 
 /**
- * Span text component
+ * Componente de span - atalho para elemento <span>
  *
- * @component Span
- * @param {Omit<TextProps, 'as'>} props - Text props without 'as' property
- * @returns {React.FC<Omit<TextProps, 'as'>>} Span element
+ * @param {Omit<TextProps, 'as'>} props - Propriedades de texto sem a propriedade 'as'
+ * @returns {JSX.Element} Elemento de span renderizado
  */
 export const Span: React.FC<Omit<TextProps, 'as'>> = (props) => (
   <Text as="span" {...props} />

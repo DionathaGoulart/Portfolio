@@ -1,86 +1,38 @@
-// ================================
-// GLOBAL DECLARATIONS
-// ================================
-declare global {
-  interface Window {
-    gtag: (...args: any[]) => void
-    dataLayer: any[]
-  }
-}
-
-// ================================
-// TYPES & INTERFACES
-// ================================
-
-/**
- * UTM parameters and tracking identifiers structure
- */
-interface UTMData {
-  /** UTM source parameter */
-  utm_source?: string
-  /** UTM medium parameter */
-  utm_medium?: string
-  /** UTM campaign parameter */
-  utm_campaign?: string
-  /** UTM term parameter (keywords) */
-  utm_term?: string
-  /** UTM content parameter (ad content) */
-  utm_content?: string
-  /** Google Click Identifier */
-  gclid?: string
-  /** Facebook Click Identifier */
-  fbclid?: string
-  /** Microsoft Click Identifier */
-  msclkid?: string
-  /** DoubleClick Identifier */
-  dclid?: string
-  /** Google Click Source */
-  gclsrc?: string
-  /** Google Ads Broad Match Identifier */
-  gbraid?: string
-  /** Google Ads Exact Match Identifier */
-  wbraid?: string
-}
-
-/**
- * Google Analytics event data structure
- */
-interface AnalyticsEventData {
-  event_category: string
-  event_label?: string
-  page_title?: string
-  utm_source?: string
-  utm_campaign?: string
-  custom_parameter_1?: string
-  [key: string]: any
-}
+import { UTMData, AnalyticsEventData } from '../types'
 
 // ================================
 // CONSTANTS
 // ================================
-const TIME_THRESHOLD = 3000 // 3 seconds for section read tracking
+
+/**
+ * Limite de tempo para tracking de leitura de seção (3 segundos)
+ */
+const TIME_THRESHOLD = 3000
 
 // ================================
 // HELPER FUNCTIONS
 // ================================
 
 /**
- * Safely get environment variable
+ * Obtém variável de ambiente de forma segura
+ * @param {string} key - Chave da variável de ambiente
+ * @returns {string} Valor da variável ou string vazia
  */
 const getEnvVar = (key: string): string => {
   try {
-    return (import.meta as any).env?.[key] || ''
+    return (import.meta as { env?: Record<string, string> }).env?.[key] || ''
   } catch {
     return ''
   }
 }
 
 /**
- * Check if running in development mode
+ * Verifica se está rodando em modo de desenvolvimento
+ * @returns {boolean} True se em desenvolvimento, false caso contrário
  */
 const isDev = (): boolean => {
   try {
-    return (import.meta as any).env?.DEV || false
+    return Boolean((import.meta as { env?: Record<string, unknown> }).env?.DEV)
   } catch {
     return false
   }
@@ -171,7 +123,6 @@ class GoogleAnalytics {
       })
     }
 
-    console.log('UTM data sent to Google Analytics')
   }
 
   /**
@@ -196,7 +147,6 @@ class GoogleAnalytics {
    */
   init(): void {
     if (!this.isEnabled) {
-      console.log('Analytics disabled (development or missing measurement ID)')
       return
     }
 
@@ -208,14 +158,14 @@ class GoogleAnalytics {
 
     // Initialize gtag function
     window.dataLayer = window.dataLayer || []
-    window.gtag = function (...args: any[]) {
+    window.gtag = function (...args: unknown[]) {
       window.dataLayer.push(args)
     }
 
     window.gtag('js', new Date())
 
     // Basic GA configuration
-    const config: any = {
+    const config: Record<string, unknown> = {
       page_title: document.title,
       page_location: window.location.href,
       send_page_view: true
@@ -237,8 +187,6 @@ class GoogleAnalytics {
     window.gtag('config', this.measurementId, config)
     this.isInitialized = true
 
-    console.log('Google Analytics initialized:', this.measurementId)
-
     // Send UTM data if it was processed before initialization
     if (this.utmData) {
       this.trackUTMData(this.utmData)
@@ -255,12 +203,6 @@ class GoogleAnalytics {
 
     this.utmData = utmData
 
-    const logMessage = this.isDevelopment
-      ? 'UTM data captured (dev mode):'
-      : 'UTM data processed:'
-
-    console.log(logMessage, utmData)
-
     // Send UTM data immediately if GA is already initialized
     if (this.isGALoaded()) {
       this.trackUTMData(utmData)
@@ -275,7 +217,6 @@ class GoogleAnalytics {
    */
   trackTitleChange(newTitle: string, sectionId?: string): void {
     if (!this.isEnabled) {
-      console.log('Title change (dev):', newTitle)
       return
     }
 
@@ -303,8 +244,6 @@ class GoogleAnalytics {
         }
 
         window.gtag('event', 'section_read', this.addUTMContext(eventData))
-
-        console.log('Section read for 3+ seconds:', newTitle)
       }
     }, TIME_THRESHOLD)
   }
@@ -316,7 +255,6 @@ class GoogleAnalytics {
    */
   trackButtonClick(buttonName: string): void {
     if (!this.isEnabled) {
-      console.log('Button click (dev):', buttonName)
       return
     }
 

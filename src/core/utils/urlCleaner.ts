@@ -1,8 +1,11 @@
 // ================================
-// URL Cleaning Utility
+// URL CLEANING UTILITY
 // ================================
 
-// Common tracking parameters to remove from URLs
+/**
+ * Parâmetros de tracking comuns para remover de URLs
+ * Inclui UTM parameters e outros identificadores de campanha
+ */
 const TRACKING_PARAMS = [
   'utm_source',
   'utm_medium',
@@ -18,17 +21,33 @@ const TRACKING_PARAMS = [
   'wbraid' // Google Analytics Enhanced Conversions
 ]
 
+// ================================
+// URL CLEANING FUNCTIONS
+// ================================
+
 /**
- * Remove UTM and tracking parameters from the current URL
- * Optionally preserves tracking data for analytics before removal
+ * Remove parâmetros UTM e de tracking da URL atual
+ * Opcionalmente preserva dados de tracking para analytics antes da remoção
  *
- * @param preserveForAnalytics - Whether to capture UTM data before removal
- * @returns UTM data object if preserved, null otherwise
+ * @param {boolean} preserveForAnalytics - Se deve capturar dados UTM antes da remoção
+ * @returns {Record<string, string> | null} Objeto com dados UTM se preservados, null caso contrário
+ *
+ * @example
+ * ```typescript
+ * // Remove parâmetros e preserva para analytics
+ * const utmData = removeUTMParameters(true)
+ * if (utmData) {
+ *   analytics.processUTMData(utmData)
+ * }
+ *
+ * // Remove parâmetros sem preservar
+ * removeUTMParameters(false)
+ * ```
  */
 export const removeUTMParameters = (
   preserveForAnalytics = true
 ): Record<string, string> | null => {
-  // Early return for server-side rendering
+  // Retorno antecipado para server-side rendering
   if (typeof window === 'undefined') return null
 
   const url = new URL(window.location.href)
@@ -36,7 +55,7 @@ export const removeUTMParameters = (
   const utmData: Record<string, string> = {}
   let hasTrackingParams = false
 
-  // Capture UTM data before removal if requested
+  // Captura dados UTM antes da remoção se solicitado
   if (preserveForAnalytics) {
     TRACKING_PARAMS.forEach((param) => {
       const value = params.get(param)
@@ -46,7 +65,7 @@ export const removeUTMParameters = (
     })
   }
 
-  // Remove tracking parameters from URL
+  // Remove parâmetros de tracking da URL
   TRACKING_PARAMS.forEach((param) => {
     if (params.has(param)) {
       params.delete(param)
@@ -54,13 +73,12 @@ export const removeUTMParameters = (
     }
   })
 
-  // Update URL without page reload if tracking params were found
+  // Atualiza URL sem recarregar página se parâmetros de tracking foram encontrados
   if (hasTrackingParams) {
     const cleanUrl = url.pathname + (url.search ? url.search : '') + url.hash
     window.history.replaceState({}, '', cleanUrl)
-    console.log('UTM parameters removidos da URL')
 
-    // Return captured UTM data for analytics
+    // Retorna dados UTM capturados para analytics
     if (preserveForAnalytics && Object.keys(utmData).length > 0) {
       return utmData
     }

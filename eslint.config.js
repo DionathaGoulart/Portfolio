@@ -21,6 +21,11 @@ export default defineConfig([
   pluginReact.configs.flat.recommended,
   {
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
     rules: {
       "@typescript-eslint/no-unused-vars": "off",
       "no-empty": "off",
@@ -32,5 +37,10 @@ export default defineConfig([
     plugins: { css },
     language: "css/css",
     extends: ["css/recommended"],
+  },
+
+  // Ignore dist folder
+  {
+    ignores: ["dist/**", "node_modules/**", "*.config.js", "*.config.ts"],
   },
 ]);

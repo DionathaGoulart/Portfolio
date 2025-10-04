@@ -1,26 +1,31 @@
 import { useState } from 'react'
-import { Theme } from '@features/Theme/types'
+
+import { Theme } from '../types'
+import { UseThemeDetectionReturn } from '../types/ThemeHooks.types'
 
 // ================================
-// Constants
-// ================================
-
-const THEME_STORAGE_KEY = 'app-theme'
-
-// ================================
-// Theme Detection Hook
+// CONSTANTS
 // ================================
 
 /**
- * Hook for automatic theme detection with fallback strategy:
- * 1. Check localStorage for saved preference
- * 2. Detect system preference
- * 3. Use provided default theme
- *
- * @param defaultTheme - Default theme to use if no preference is found
- * @returns Object with theme state and control functions
+ * Chave para armazenamento do tema no localStorage
  */
-export function useThemeDetection(defaultTheme: Theme = 'light') {
+const THEME_STORAGE_KEY = 'app-theme'
+
+// ================================
+// THEME DETECTION HOOK
+// ================================
+
+/**
+ * Hook para detecção automática de tema com estratégia de fallback:
+ * 1. Verifica localStorage para preferência salva
+ * 2. Detecta preferência do sistema
+ * 3. Usa tema padrão fornecido
+ *
+ * @param {Theme} defaultTheme - Tema padrão a usar se nenhuma preferência for encontrada
+ * @returns {UseThemeDetectionReturn} Objeto com estado do tema e funções de controle
+ */
+export function useThemeDetection(defaultTheme: Theme = 'light'): UseThemeDetectionReturn {
   const [theme, setTheme] = useState<Theme>(() => {
     // 1. Verifica localStorage primeiro
     const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as Theme

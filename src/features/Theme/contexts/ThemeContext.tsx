@@ -1,41 +1,42 @@
-import { createContext, ReactNode, useContext } from 'react'
+import React, { createContext, useContext } from 'react'
+
 import { themes } from '@features/Theme/config'
 import {
   useThemeDetection,
   useSystemTheme,
   useThemePersistence
 } from '@features/Theme/hooks'
-import { Theme, ThemeContextType } from '@features/Theme/types'
+import { Theme, ThemeContextType, ThemeProviderProps } from '../types'
 
 // ================================
-// Context Creation
-// ================================
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
-
-// ================================
-// Provider Interface
-// ================================
-
-interface ThemeProviderProps {
-  children: ReactNode
-  defaultTheme?: Theme
-}
-
-// ================================
-// Theme Provider Component
+// CONTEXT CREATION
 // ================================
 
 /**
- * ThemeProvider component that manages theme state and provides theme context
+ * Contexto de tema para gerenciamento global de temas
+ * Fornece estado do tema e funções de controle para toda a aplicação
+ */
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
+
+// ================================
+// THEME PROVIDER COMPONENT
+// ================================
+
+/**
+ * Componente ThemeProvider que gerencia estado do tema e fornece contexto de tema
+ * Integra detecção automática, persistência e sincronização com tema do sistema
  *
- * @param children - React children to wrap with theme context
- * @param defaultTheme - Default theme to use if no preference is found
+ * @param {ThemeProviderProps} props - Propriedades do provider
+ * @returns {JSX.Element} Provider de tema renderizado
  */
 export function ThemeProvider({
   children,
   defaultTheme = 'light'
 }: ThemeProviderProps) {
+  // ================================
+  // HOOKS
+  // ================================
+
   const {
     theme,
     setTheme: setThemeState,
@@ -44,11 +45,11 @@ export function ThemeProvider({
     THEME_STORAGE_KEY
   } = useThemeDetection(defaultTheme)
 
-  // Listen for system theme changes
+  // Escuta mudanças no tema do sistema
   useSystemTheme({ isSystemTheme, setTheme: setThemeState })
 
-  // Persist theme and apply CSS
-  const colors = themes[theme].colors
+  // Persiste tema e aplica CSS
+  const colors = themes[theme as keyof typeof themes].colors
   useThemePersistence({
     theme,
     colors,
@@ -57,21 +58,31 @@ export function ThemeProvider({
   })
 
   // ================================
-  // Theme Control Functions
+  // FUNÇÕES DE CONTROLE DO TEMA
   // ================================
 
-  const toggleTheme = () => {
+  /**
+   * Alterna entre tema claro e escuro
+   */
+  const toggleTheme = (): void => {
     const newTheme = theme === 'light' ? 'dark' : 'light'
     setThemeState(newTheme)
-    setIsSystemTheme(false) // Disable automatic theme when toggling manually
+    setIsSystemTheme(false) // Desabilita tema automático ao alternar manualmente
   }
 
-  const setTheme = (newTheme: Theme) => {
+  /**
+   * Define um tema específico
+   * @param {Theme} newTheme - Novo tema a ser definido
+   */
+  const setTheme = (newTheme: Theme): void => {
     setThemeState(newTheme)
-    setIsSystemTheme(false) // Disable automatic theme when setting manually
+    setIsSystemTheme(false) // Desabilita tema automático ao definir manualmente
   }
 
-  const enableSystemTheme = () => {
+  /**
+   * Habilita sincronização com tema do sistema
+   */
+  const enableSystemTheme = (): void => {
     setIsSystemTheme(true)
     const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
       .matches
@@ -81,7 +92,7 @@ export function ThemeProvider({
   }
 
   // ================================
-  // Context Value
+  // VALOR DO CONTEXTO
   // ================================
 
   const value: ThemeContextType = {
@@ -98,12 +109,13 @@ export function ThemeProvider({
 }
 
 // ================================
-// Theme Hook
+// THEME HOOK
 // ================================
 
 /**
- * Hook to access theme context
- * @throws Error if used outside of ThemeProvider
+ * Hook para acessar contexto de tema
+ * @returns {ThemeContextType} Contexto de tema
+ * @throws {Error} Se usado fora de um ThemeProvider
  */
 export function useTheme(): ThemeContextType {
   const context = useContext(ThemeContext)

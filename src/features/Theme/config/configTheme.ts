@@ -1,4 +1,4 @@
-import { ThemeConfig } from '@features/Theme/types/theme.types'
+import { ThemeConfig } from '../types'
 
 // ================================
 // Theme Configurations

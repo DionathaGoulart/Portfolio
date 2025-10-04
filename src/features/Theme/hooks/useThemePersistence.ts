@@ -1,30 +1,21 @@
 import { useEffect } from 'react'
-import { Theme, ThemeColors } from '@features/Theme/types'
-
-// ================================
-// Hook Interface
-// ================================
-
-interface UseThemePersistenceProps {
-  theme: Theme
-  colors: ThemeColors
-  isSystemTheme: boolean
-  storageKey: string
-}
+import { Theme, ThemeColors } from '../types'
+import { UseThemePersistenceProps } from '../types/ThemeHooks.types'
 
 // ================================
 // Theme Persistence Hook
 // ================================
 
 /**
- * Hook that handles theme persistence and CSS application
- * - Saves theme to localStorage when not using system theme
- * - Applies CSS classes and custom properties to document
+ * Hook que gerencia persistência do tema e aplicação de CSS
+ * - Salva tema no localStorage quando não está usando tema do sistema
+ * - Aplica classes CSS e propriedades customizadas ao documento
  *
- * @param theme - Current theme
- * @param colors - Theme color configuration
- * @param isSystemTheme - Whether using system theme preference
- * @param storageKey - localStorage key for theme persistence
+ * @param {UseThemePersistenceProps} props - Propriedades do hook
+ * @param {Theme} props.theme - Tema atual
+ * @param {ThemeColors} props.colors - Configuração de cores do tema
+ * @param {boolean} props.isSystemTheme - Se está usando preferência de tema do sistema
+ * @param {string} props.storageKey - Chave do localStorage para persistência do tema
  */
 export function useThemePersistence({
   theme,
@@ -46,7 +37,7 @@ export function useThemePersistence({
     // Aplica variáveis CSS customizadas
     const root = document.documentElement
     Object.entries(colors).forEach(([key, value]) => {
-      root.style.setProperty(`--color-${key}`, value)
+      root.style.setProperty(`--color-${key}`, value as string)
     })
   }, [theme, colors, isSystemTheme, storageKey])
 }

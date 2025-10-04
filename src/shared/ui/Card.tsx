@@ -1,22 +1,24 @@
 import React from 'react'
 import { ExternalLink } from 'lucide-react'
-import { Title, P } from '@shared/ui'
+
+import { Title, P } from '@shared'
 import {
   CardProps,
   ContainerProps,
   CONFIGS,
   buildClasses,
-  buildContainerClasses
-} from '@shared/types'
+  buildContainerClasses,
+  HorizontalCardProps,
+  ContactCardProps
+} from '@types'
+
 import '@styles/ui/card.scss'
 
 // ================================
 // HELPER COMPONENTS
 // ================================
 
-const HorizontalCard: React.FC<
-  Omit<CardProps, 'onClick'> & { showExternalLink?: boolean }
-> = ({
+const HorizontalCard: React.FC<HorizontalCardProps> = ({
   title,
   subtitle,
   icon,
@@ -50,9 +52,7 @@ const HorizontalCard: React.FC<
   )
 }
 
-const ContactCard: React.FC<
-  Omit<CardProps, 'onClick'> & { showExternalLink?: boolean }
-> = ({
+const ContactCard: React.FC<ContactCardProps> = ({
   title,
   subtitle,
   icon,
@@ -89,12 +89,22 @@ const ContactCard: React.FC<
 // ================================
 
 /**
- * Versatile card component supporting horizontal and contact variants
- * with interactive and static modes
+ * Componente de card versátil com suporte a variantes horizontal e contato
+ * com modos interativo e estático
  *
- * @component Card
- * @param {CardProps} props - Card configuration props
- * @returns {React.FC<CardProps>} Rendered card component
+ * @param {CardProps} props - Propriedades de configuração do card
+ * @returns {JSX.Element} Componente de card renderizado
+ *
+ * @example
+ * ```tsx
+ * <Card
+ *   title="Título do Card"
+ *   subtitle="Subtítulo opcional"
+ *   variant="horizontal"
+ *   size="medio"
+ *   onClick={() => handleCardClick()}
+ * />
+ * ```
  */
 export const Card: React.FC<CardProps> = (props) => {
   const {
@@ -171,11 +181,19 @@ export const Card: React.FC<CardProps> = (props) => {
 // ================================
 
 /**
- * Container component for organizing multiple cards in grid or list layout
+ * Componente container para organizar múltiplos cards em layout de grid ou lista
  *
- * @component CardsContainer
- * @param {ContainerProps} props - Container configuration props
- * @returns {React.FC<ContainerProps>} Rendered container component
+ * @param {ContainerProps} props - Propriedades de configuração do container
+ * @returns {JSX.Element} Componente container renderizado
+ *
+ * @example
+ * ```tsx
+ * <CardsContainer type="grid" columns={3} compact>
+ *   <Card title="Card 1" />
+ *   <Card title="Card 2" />
+ *   <Card title="Card 3" />
+ * </CardsContainer>
+ * ```
  */
 export const CardsContainer: React.FC<ContainerProps> = ({
   type = 'grid',

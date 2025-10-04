@@ -1,6 +1,6 @@
 import React from 'react'
-import { getImage } from '@core/utils/getImage'
-import { analytics } from '@features/Analytics/utils'
+import { analytics } from '@features/Analytics'
+import { SobreSectionProps, Technology } from '@types'
 import {
   AnimatedContainer,
   Title,
@@ -12,30 +12,6 @@ import {
 import MeRaw from '@assets/images/me.jpg'
 
 // ================================
-// Types & Interfaces
-// ================================
-
-/**
- * Props for the SobreSection component
- */
-interface SobreSectionProps {
-  /** Unique section ID for navigation/anchors */
-  id?: string
-}
-
-/**
- * Technology structure interface
- */
-interface Technology {
-  /** Technology name */
-  title: string
-  /** Category or application area */
-  subtitle: string
-  /** Technology SVG icon */
-  icon: React.ReactNode
-}
-
-// ================================
 // Constants
 // ================================
 
@@ -43,7 +19,7 @@ interface Technology {
  * Optimized profile image
  * Converted to WebP with optimized width for performance
  */
-const PROFILE_IMAGE = getImage(`${MeRaw}?as=webp&width=400`)
+const PROFILE_IMAGE = `${MeRaw}?as=webp&width=400`
 
 // ================================
 // Icon Components
@@ -204,13 +180,18 @@ const ProfileSection: React.FC = () => (
           className="flex-1"
           aria-label="Biografia profissional"
         >
-          Desenvolvedor fullstack apaixonado por tecnologia e inovação, com mais
-          de 5 anos de experiência criando soluções digitais que fazem a
-          diferença. Especializado em arquiteturas modernas, sempre buscando as
-          melhores práticas para entregar produtos de alta qualidade. Acredito
-          que o código deve ser elegante, performático e sustentável. Quando não
-          estou codando, gosto de contribuir com projetos open source, estudar
-          novas tecnologias e compartilhar conhecimento com a comunidade.
+          Desenvolvedor fullstack com mais de 2 anos de experiência prática
+          através de freelances e projetos pessoais. Apesar de ainda não ter
+          experiência formal no mercado, compenso com dedicação intensa aos
+          estudos, velocidade de aprendizado e capacidade de adaptação a
+          qualquer desafio. Meu diferencial está na capacidade de improvisar
+          soluções criativas e absorver novas tecnologias rapidamente. Contribuo
+          com projetos open source, estudo constantemente as melhores práticas
+          do mercado e aplico esse conhecimento em cada projeto que desenvolvo.
+          Procuro minha primeira oportunidade profissional onde possa demonstrar
+          meu potencial, crescer como desenvolvedor e agregar valor real à
+          equipe. Acredito que código bem escrito é resultado de curiosidade,
+          prática constante e vontade genuína de resolver problemas.
         </Text>
       </div>
     </div>

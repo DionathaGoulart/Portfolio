@@ -1,55 +1,50 @@
 import { useEffect } from 'react'
+
 import { analytics } from '../utils/analytics'
-
-// ================================
-// TYPES & INTERFACES
-// ================================
-
-/**
- * Section configuration for analytics tracking
- */
-interface Section {
-  /** Unique identifier for the section */
-  id: string
-  /** Human-readable label for the section */
-  label: string
-}
+import { Section } from '../types'
 
 // ================================
 // CONSTANTS
 // ================================
+
+/**
+ * Opções para o Intersection Observer
+ * Define quando uma seção é considerada visível
+ */
 const INTERSECTION_OPTIONS = {
   rootMargin: '-20% 0px -20% 0px',
-  threshold: 0.3 // Section must be at least 30% visible
+  threshold: 0.3 // Seção deve estar pelo menos 30% visível
 } as const
 
 // ================================
-// MAIN HOOK
+// ANALYTICS HOOK
 // ================================
 
 /**
- * Hook for tracking section visibility and updating page title dynamically
+ * Hook para tracking de visibilidade de seções e atualização dinâmica do título da página
+ * Usa Intersection Observer para detectar quando seções entram na viewport
+ * e atualiza o título da página automaticamente
  *
- * @param sections - Array of sections to track with their IDs and labels
+ * @param {Section[]} sections - Array de seções para trackear com seus IDs e labels
  *
  * @example
  * ```tsx
  * const sections = [
  *   { id: 'home', label: 'Home' },
- *   { id: 'about', label: 'About Me' },
- *   { id: 'projects', label: 'Projects' }
+ *   { id: 'about', label: 'Sobre Mim' },
+ *   { id: 'projects', label: 'Projetos' }
  * ]
  *
  * useSectionTracking(sections)
  * ```
  */
-export const useSectionTracking = (sections: Section[]) => {
+export const useSectionTracking = (sections: Section[]): void => {
   useEffect(() => {
-    // Early return if no sections to track
+    // Retorno antecipado se não há seções para trackear
     if (sections.length === 0) return
 
     // ================================
-    // INTERSECTION OBSERVER SETUP
+    // CONFIGURAÇÃO DO INTERSECTION OBSERVER
     // ================================
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -58,21 +53,21 @@ export const useSectionTracking = (sections: Section[]) => {
 
         if (!section) return
 
-        // Update title when section becomes visible
+        // Atualiza título quando seção se torna visível
         if (entry.isIntersecting) {
           const newTitle = `Dionatha | ${section.label}`
 
-          // Update page title
+          // Atualiza título da página
           document.title = newTitle
 
-          // Start time-based tracking
+          // Inicia tracking baseado em tempo
           analytics.trackTitleChange(newTitle, sectionId)
         }
       })
     }, INTERSECTION_OPTIONS)
 
     // ================================
-    // OBSERVER INITIALIZATION
+    // INICIALIZAÇÃO DO OBSERVER
     // ================================
     sections.forEach((section) => {
       const element = document.getElementById(section.id)

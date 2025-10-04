@@ -1,5 +1,5 @@
 import React from 'react'
-import { ImageProps, ImageResource, KeyboardEventHandler } from '@shared/types'
+import { ImageProps, ImageResource, KeyboardEventHandler } from '@types'
 import '@styles/ui/image.scss'
 
 // ================================

@@ -1,25 +1,17 @@
 import { useEffect } from 'react'
-import { Theme } from '@features/Theme/types'
-
-// ================================
-// Hook Interface
-// ================================
-
-interface UseSystemThemeProps {
-  isSystemTheme: boolean
-  setTheme: (theme: Theme) => void
-}
+import { UseSystemThemeProps } from '../types/ThemeHooks.types'
 
 // ================================
 // System Theme Hook
 // ================================
 
 /**
- * Hook that listens to system theme changes and updates the theme accordingly
- * Only active when isSystemTheme is true
+ * Hook que escuta mudanças no tema do sistema e atualiza o tema correspondente
+ * Só é ativo quando isSystemTheme é true
  *
- * @param isSystemTheme - Whether to listen for system theme changes
- * @param setTheme - Function to update the current theme
+ * @param {UseSystemThemeProps} props - Propriedades do hook
+ * @param {boolean} props.isSystemTheme - Se deve escutar mudanças no tema do sistema
+ * @param {function} props.setTheme - Função para atualizar o tema atual
  */
 export function useSystemTheme({
   isSystemTheme,

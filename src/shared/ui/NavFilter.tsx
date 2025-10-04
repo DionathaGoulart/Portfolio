@@ -4,7 +4,7 @@ import {
   buildFilterButtonClasses,
   buildFilterContainerClasses,
   getSafeOptions
-} from '@shared/types'
+} from '@types'
 import '@styles/ui/navfilter.scss'
 
 // ================================

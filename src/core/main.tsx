@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
+import { removeUTMParameters } from '@core'
+import { analytics } from '@features/Analytics'
+import { ThemeProvider } from '@features/Theme'
 import App from './App'
-import { analytics } from '@features/Analytics/utils'
-import { ThemeProvider } from '@features/Theme/contexts'
-import { removeUTMParameters } from '@core/utils/urlCleaner'
 
 import '@styles/index'
 
@@ -18,7 +18,6 @@ const utmData = removeUTMParameters(true)
 // Process UTM data in analytics if available
 if (utmData) {
   analytics.processUTMData(utmData)
-  console.log('Dados UTM processados:', utmData)
 }
 
 // Initialize Google Analytics

@@ -1,37 +1,26 @@
 import React from 'react'
-import { getImage } from '@core/utils/getImage'
-import { analytics } from '@features/Analytics/utils'
-import { AnimatedContainer, Button, P, Title } from '@shared/ui'
+
+import { analytics } from '@features/Analytics/'
+import { AnimatedContainer, Button, P, Title } from '@shared'
 import Light from '@assets/images/light.png'
 import Dark from '@assets/images/dark.png'
+import { HomeSectionProps } from '@types'
 
 // ================================
-// Types & Interfaces
-// ================================
-
-/**
- * Props for the HomeSection component
- */
-interface HomeSectionProps {
-  /** Unique section ID for anchors and navigation */
-  id?: string
-}
-
-// ================================
-// Constants
+// CONSTANTS
 // ================================
 
 /**
- * Optimized image URLs processed with WebP optimization
- * Pre-processed for better performance
+ * URLs de imagens otimizadas processadas com WebP
+ * Pré-processadas para melhor performance
  */
 const OPTIMIZED_IMAGES = {
-  light: getImage(`${Light}?as=webp&width=400`),
-  dark: getImage(`${Dark}?as=webp&width=400`)
+  light: `${Light}?as=webp&width=400`,
+  dark: `${Dark}?as=webp&width=400`
 } as const
 
 /**
- * Main action buttons configuration
+ * Configuração dos botões de ação principais
  */
 const ACTION_BUTTONS = {
   trabalhos: {
@@ -49,18 +38,20 @@ const ACTION_BUTTONS = {
 } as const
 
 /**
- * Scroll navigation configuration
+ * Configuração de navegação por scroll
  */
 const NAVIGATION_CONFIG = {
   headerOffset: 95
 } as const
 
 // ================================
-// Helper Functions
+// HELPER FUNCTIONS
 // ================================
 
 /**
- * Handles smooth scroll to target section with offset
+ * Manipula scroll suave para seção alvo com offset
+ * @param {string} targetId - ID da seção alvo
+ * @param {string} analyticsEvent - Evento de analytics para tracking
  */
 const scrollToSection = (targetId: string, analyticsEvent: string): void => {
   analytics.trackButtonClick(analyticsEvent)
@@ -79,13 +70,17 @@ const scrollToSection = (targetId: string, analyticsEvent: string): void => {
 }
 
 // ================================
-// Custom Hooks
+// CUSTOM HOOKS
 // ================================
 
 /**
- * Hook for managing home section navigation and analytics
+ * Hook para gerenciar navegação e analytics da seção inicial
+ * @returns {object} Handlers para navegação
  */
 const useHomeNavigation = () => {
+  /**
+   * Manipula navegação para seção de trabalhos
+   */
   const handleVerTrabalhos = (): void => {
     scrollToSection(
       ACTION_BUTTONS.trabalhos.targetId,
@@ -93,6 +88,9 @@ const useHomeNavigation = () => {
     )
   }
 
+  /**
+   * Manipula navegação para seção de contato
+   */
   const handleContato = (): void => {
     scrollToSection(
       ACTION_BUTTONS.contato.targetId,
@@ -107,11 +105,12 @@ const useHomeNavigation = () => {
 }
 
 // ================================
-// Helper Components
+// HELPER COMPONENTS
 // ================================
 
 /**
- * Main presentation area with title and subtitle
+ * Área principal de apresentação com título e subtítulo
+ * @returns {JSX.Element} Área de apresentação renderizada
  */
 const HeroPresentationArea: React.FC = () => (
   <div className="space-y-6">
@@ -132,15 +131,17 @@ const HeroPresentationArea: React.FC = () => (
 
     <AnimatedContainer animationType="zoom-out-up">
       <P size="grande" className="leading-relaxed md:max-w-md lg:max-w-none">
-        Desenvolvedor apaixonado por criar soluções digitais inovadoras,
-        combinando design elegante com código limpo e funcional.
+        Desenvolvedor apaixonado em busca da primeira oportunidade, com mais de
+        2 anos de estudo intenso e experiência em freelances. Aprendo rápido,
+        não fujo de desafios e estou pronto para provar meu valor.
       </P>
     </AnimatedContainer>
   </div>
 )
 
 /**
- * Main action buttons area
+ * Área dos botões de ação principais
+ * @returns {JSX.Element} Botões de ação renderizados
  */
 const HeroActionButtons: React.FC = () => {
   const { handleVerTrabalhos, handleContato } = useHomeNavigation()
@@ -175,7 +176,8 @@ const HeroActionButtons: React.FC = () => {
 }
 
 /**
- * Hero text content area (left side)
+ * Área de conteúdo de texto do hero (lado esquerdo)
+ * @returns {JSX.Element} Conteúdo do hero renderizado
  */
 const HeroContent: React.FC = () => (
   <div className="space-y-6">
@@ -185,7 +187,8 @@ const HeroContent: React.FC = () => (
 )
 
 /**
- * Adaptive logo with light/dark theme support
+ * Logo adaptativo com suporte a temas claro/escuro
+ * @returns {JSX.Element} Logo adaptativo renderizado
  */
 const AdaptiveLogo: React.FC = () => (
   <AnimatedContainer animationType="zoom-in-left">
@@ -209,15 +212,18 @@ const AdaptiveLogo: React.FC = () => (
 )
 
 // ================================
-// Main Component
+// MAIN COMPONENT
 // ================================
 
 /**
- * Main home/hero section of the portfolio
+ * Seção principal/hero do portfólio
  *
- * Presents the main introduction with name, role and call-to-actions.
- * Includes adaptive logo for light/dark themes and smooth navigation
- * to other sections. Implements analytics for interaction tracking.
+ * Apresenta a introdução principal com nome, função e call-to-actions.
+ * Inclui logo adaptativo para temas claro/escuro e navegação suave
+ * para outras seções. Implementa analytics para tracking de interações.
+ *
+ * @param {HomeSectionProps} props - Propriedades do componente
+ * @returns {JSX.Element} Seção inicial renderizada
  */
 const HomeSection: React.FC<HomeSectionProps> = ({ id = 'home' }) => {
   return (
@@ -236,7 +242,7 @@ const HomeSection: React.FC<HomeSectionProps> = ({ id = 'home' }) => {
 }
 
 // ================================
-// Exports
+// EXPORTS
 // ================================
 
 export default HomeSection

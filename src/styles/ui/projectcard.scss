@@ -162,8 +162,9 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
 
   // Content area
   &__content {
-    @apply relative;
+    @apply relative flex flex-col;
     padding: $card-content-padding;
+    min-height: 200px; // Altura mínima para alinhar os botões
   }
 
   &__title {
@@ -174,7 +175,7 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
 
   &__description {
     @include text-clamp(3);
-    @apply mb-6 text-base leading-relaxed;
+    @apply mb-6 text-base leading-relaxed flex-grow;
     color: var(--card-text-muted);
   }
 
@@ -183,7 +184,7 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
   }
 
   &__buttons {
-    @apply flex gap-3;
+    @apply flex gap-3 mt-auto; // mt-auto empurra os botões para o final
 
     .btn {
       @include card-transition;
@@ -292,6 +293,7 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
   &--compact {
     .project-card__content {
       padding: $card-content-padding-compact;
+      min-height: 160px; // Altura menor para compact
     }
 
     .project-card__image-container {
@@ -327,6 +329,7 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
   &--large {
     .project-card__content {
       padding: $card-content-padding-large;
+      min-height: 240px; // Altura maior para large
     }
 
     .project-card__image-container {

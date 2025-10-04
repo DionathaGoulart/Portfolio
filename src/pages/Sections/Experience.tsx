@@ -1,19 +1,7 @@
 import React from 'react'
-import { analytics } from '@features/Analytics/utils'
-import { AnimatedContainer, Title, P, ExpList } from '@shared/ui'
-import { ExpCardProps } from '@shared/types/ui/ExpCard.types'
-
-// ================================
-// INTERFACES E TIPOS
-// ================================
-
-/**
- * Props do componente ExperienceSection
- */
-interface ExperienceSectionProps {
-  /** ID único da seção para âncoras e navegação */
-  id?: string
-}
+import { analytics } from '@features/Analytics'
+import { AnimatedContainer, Title, P, ExpList } from '@shared'
+import { ExpCardProps, ExperienceSectionProps } from '@types'
 
 // ================================
 // DADOS E CONFIGURAÇÕES
@@ -119,8 +107,9 @@ const ExperienceHeader: React.FC = () => (
 
     <AnimatedContainer animationType="zoom-out-up">
       <P size="grande" className="leading-relaxed md:max-w-md lg:max-w-2xl">
-        Minha jornada profissional construindo soluções digitais inovadoras,
-        desde os primeiros passos até projetos de alta complexidade.
+        A jornada que me trouxe até aqui: da transição de carreira à imersão
+        total no desenvolvimento, transformando paixão por tecnologia em
+        expertise prática através de projetos freelance e dedicação incansável
       </P>
     </AnimatedContainer>
   </header>
@@ -165,7 +154,6 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({
       aria-labelledby={`${id}-cabeçalho`}
       role="region"
       aria-label="Seção de experiência profissional"
-      onLoad={trackSectionView}
     >
       <div className="space-y-12">
         <ExperienceHeader />

@@ -2,44 +2,8 @@ import React from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import ScrollToTop from '../ui/ScroolToTop'
+import { MainLayoutComponentProps } from '@types'
 import '@styles/layout.scss'
-
-// ================================
-// INTERFACES
-// ================================
-
-interface MainLayoutSection {
-  id: string
-  label: string
-}
-
-interface MainLayoutProps {
-  // Conteúdo
-  children: React.ReactNode
-
-  // Estrutura
-  containerSize?: 'sm' | 'md' | 'lg' | 'xl'
-  sections?: MainLayoutSection[]
-  pageTitle?: string
-
-  // Aparência
-  spacing?: 'tight' | 'normal' | 'loose'
-  headerVariant?: 'default' | 'minimal' | 'transparent'
-  footerVariant?: 'default' | 'extended'
-
-  // Configuração
-  showHeader?: boolean
-  showFooter?: boolean
-  showScrollToTop?: boolean
-
-  // Props passthrough
-  headerProps?: Record<string, any>
-  footerProps?: Record<string, any>
-
-  // HTML attributes
-  className?: string
-  id?: string
-}
 
 // ================================
 // MAIN COMPONENT
@@ -49,7 +13,7 @@ interface MainLayoutProps {
  * Main application layout component
  * Manages Header, Footer, content and additional features like scroll to top
  */
-export const MainLayout: React.FC<MainLayoutProps> = ({
+export const MainLayout: React.FC<MainLayoutComponentProps> = ({
   children,
   containerSize = 'lg',
   sections = [],

@@ -1,5 +1,6 @@
 import React from 'react'
-import { ButtonProps } from '@shared/types'
+
+import { ButtonProps } from '@types'
 import '@styles/ui/button.scss'
 
 // ================================
@@ -7,53 +8,59 @@ import '@styles/ui/button.scss'
 // ================================
 
 /**
- * Versatile button component with multiple variants, sizes and states
+ * Componente de botão versátil com múltiplas variantes, tamanhos e estados
+ * Suporta loading, ícones, diferentes cores e alinhamentos
  *
- * @component Button
- * @param {ButtonProps} props - Button configuration props
- * @returns {React.FC<ButtonProps>} Rendered button component
+ * @param {ButtonProps} props - Propriedades de configuração do botão
+ * @returns {JSX.Element} Componente de botão renderizado
  *
  * @example
+ * ```tsx
  * <Button size="medio" variant="solid" color="primary" onClick={handleClick}>
- *   Click me
+ *   Clique aqui
  * </Button>
+ * ```
  */
 export const Button: React.FC<ButtonProps> = ({
-  // Content properties
+  // Propriedades de conteúdo
   children,
 
-  // Appearance properties
+  // Propriedades de aparência
   size = 'medio',
   color = 'primary',
   variant = 'solid',
 
-  // Layout properties
+  // Propriedades de layout
   align = 'start',
 
-  // Functionality properties
+  // Propriedades de funcionalidade
   onClick,
   type = 'button',
   disabled = false,
   loading = false,
 
-  // Additional elements
+  // Elementos adicionais
   icon,
 
-  // HTML attributes
+  // Atributos HTML
   className = '',
   id
 }) => {
   // ================================
-  // COMPONENT STATE & DERIVED VALUES
+  // VALORES DERIVADOS
   // ================================
 
   const isDisabled = disabled || loading
   const hasIcon = Boolean(icon)
 
   // ================================
-  // CSS CLASS GENERATORS
+  // HELPER FUNCTIONS
   // ================================
 
+  /**
+   * Gera classes CSS para o botão baseado nas propriedades
+   * @returns {string} String de classes CSS
+   */
   const getButtonClasses = (): string => {
     const classes = [
       'btn',
@@ -67,24 +74,27 @@ export const Button: React.FC<ButtonProps> = ({
     return classes.filter(Boolean).join(' ')
   }
 
+  /**
+   * Gera classes CSS para o container do botão
+   * @returns {string} String de classes CSS
+   */
   const getContainerClasses = (): string => {
     return ['btn-container', `btn-container--${align}`].join(' ')
   }
 
-  // ================================
-  // EVENT HANDLERS
-  // ================================
-
+  /**
+   * Manipula o clique do botão
+   */
   const handleClick = (): void => {
     if (!isDisabled && onClick) {
       onClick()
     }
   }
 
-  // ================================
-  // RENDER HELPERS
-  // ================================
-
+  /**
+   * Renderiza o conteúdo do botão (texto, ícone ou loading)
+   * @returns {React.ReactNode} Conteúdo renderizado
+   */
   const renderContent = (): React.ReactNode => {
     if (loading) {
       return (

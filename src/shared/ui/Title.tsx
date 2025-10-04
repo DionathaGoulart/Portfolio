@@ -1,5 +1,5 @@
 import React from 'react'
-import { TitleProps } from '@shared/types'
+import { TitleProps } from '@types'
 import '@styles/ui/title.scss'
 
 // ================================
@@ -7,13 +7,14 @@ import '@styles/ui/title.scss'
 // ================================
 
 /**
- * Flexible title component with multiple variants and styling options
+ * Componente de título flexível com múltiplas variantes e opções de estilo
+ * Suporta diferentes níveis de cabeçalho, cores, pesos, bordas e elementos interativos
  *
- * @component Title
- * @param {TitleProps} props - Title configuration props
- * @returns {React.FC<TitleProps>} Rendered title component
+ * @param {TitleProps} props - Propriedades de configuração do título
+ * @returns {JSX.Element} Componente de título renderizado
  *
  * @example
+ * ```tsx
  * <Title
  *   level="h1"
  *   color="primary"
@@ -21,8 +22,9 @@ import '@styles/ui/title.scss'
  *   border="bottom-start"
  *   icon={<IconStar />}
  * >
- *   Main Title
+ *   Título Principal
  * </Title>
+ * ```
  */
 export const Title: React.FC<TitleProps> = ({
   // Content

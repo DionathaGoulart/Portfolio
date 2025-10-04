@@ -1,53 +1,30 @@
 import React, { useState, useCallback, useMemo } from 'react'
 import emailjs from '@emailjs/browser'
 import { emailjsConfig, isEmailJSConfigured } from '@features/Emailjs'
-import { analytics } from '@features/Analytics/utils'
+import { analytics } from '@features/Analytics'
 import {
   AnimatedContainer,
   Button,
   Card,
-  FormField,
+  FormField as FormFieldComponent,
   Input,
   P,
   Textarea,
   Title
-} from '@shared/ui'
+} from '@shared'
 
 // ================================
 // Types & Interfaces
 // ================================
 
-/**
- * Props for the ContactSection component
- */
-interface ContactSectionProps {
-  /** Unique section ID for anchors and navigation */
-  id?: string
-}
-
-/**
- * Contact form data structure
- */
-interface FormData {
-  nome: string
-  email: string
-  assunto: string
-  mensagem: string
-}
-
-/**
- * Props for contact cards
- */
-interface ContactCard {
-  icon: React.ReactNode
-  title: string
-  subtitle: string
-  onClick?: () => void
-}
-
-type FormField = keyof FormData
-type FormErrors = Partial<Record<FormField, string>>
-type SubmitStatus = 'idle' | 'success' | 'error'
+import {
+  ContactSectionProps,
+  FormData,
+  ContactCard,
+  FormField,
+  FormErrors,
+  SubmitStatus
+} from '@types'
 
 // ================================
 // Constants
@@ -336,10 +313,11 @@ const ContactHeader: React.FC = () => (
       <P
         size="grande"
         align="center"
-        className="leading-relaxed md:max-w-md lg:max-w-none"
+        className="leading-relaxed  md:max-w-none lg:max-w-none"
       >
-        Tem um projeto em mente? Quer discutir uma oportunidade? Estou sempre
-        aberto para novas parcerias e desafios.
+        Procurando um desenvolvedor motivado, que aprende rápido e encara
+        qualquer desafio? Vamos conversar sobre como posso contribuir com seu
+        time.
       </P>
     </AnimatedContainer>
   </header>
@@ -375,7 +353,7 @@ const ContactForm: React.FC = () => {
         noValidate
         aria-label="Formulário de contato"
       >
-        <FormField label="Nome" required error={errors.nome}>
+        <FormFieldComponent label="Nome" required error={errors.nome}>
           <Input
             name="nome"
             value={formData.nome}
@@ -385,9 +363,9 @@ const ContactForm: React.FC = () => {
             required
             aria-describedby={errors.nome ? 'nome-error' : undefined}
           />
-        </FormField>
+        </FormFieldComponent>
 
-        <FormField label="Email" required error={errors.email}>
+        <FormFieldComponent label="Email" required error={errors.email}>
           <Input
             type="email"
             name="email"
@@ -398,9 +376,9 @@ const ContactForm: React.FC = () => {
             required
             aria-describedby={errors.email ? 'email-error' : undefined}
           />
-        </FormField>
+        </FormFieldComponent>
 
-        <FormField label="Assunto" required error={errors.assunto}>
+        <FormFieldComponent label="Assunto" required error={errors.assunto}>
           <Input
             name="assunto"
             value={formData.assunto}
@@ -410,9 +388,9 @@ const ContactForm: React.FC = () => {
             required
             aria-describedby={errors.assunto ? 'assunto-error' : undefined}
           />
-        </FormField>
+        </FormFieldComponent>
 
-        <FormField label="Mensagem" required error={errors.mensagem}>
+        <FormFieldComponent label="Mensagem" required error={errors.mensagem}>
           <Textarea
             name="mensagem"
             value={formData.mensagem}
@@ -423,7 +401,7 @@ const ContactForm: React.FC = () => {
             required
             aria-describedby={errors.mensagem ? 'mensagem-error' : undefined}
           />
-        </FormField>
+        </FormFieldComponent>
 
         {submitStatus === 'success' && (
           <div

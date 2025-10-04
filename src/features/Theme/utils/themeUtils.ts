@@ -1,14 +1,4 @@
-import { Theme } from '@features/Theme/types'
-
-// ================================
-// Color Conversion Types
-// ================================
-
-interface RgbColor {
-  r: number
-  g: number
-  b: number
-}
+import { Theme, RgbColor } from '../types'
 
 // ================================
 // Theme Utilities
@@ -16,12 +6,18 @@ interface RgbColor {
 
 export const themeUtils = {
   /**
-   * Generates CSS classes with theme suffix
+   * Gera classes CSS com sufixo de tema
+   * @param {string} baseClass - Classe CSS base
+   * @param {Theme} theme - Tema atual
+   * @returns {string} Classe CSS com tema aplicado
    */
   getThemeClass: (baseClass: string, theme: Theme) => `${baseClass} ${theme}`,
 
   /**
-   * Adds opacity to a color using hex alpha notation
+   * Adiciona opacidade a uma cor usando notação hex com alpha
+   * @param {string} color - Cor em formato hex
+   * @param {number} opacity - Opacidade entre 0 e 1
+   * @returns {string} Cor com opacidade aplicada
    */
   withOpacity: (color: string, opacity: number) =>
     `${color}${Math.round(opacity * 255)
@@ -29,18 +25,23 @@ export const themeUtils = {
       .padStart(2, '0')}`,
 
   /**
-   * Converts theme to boolean for dark mode checks
+   * Converte tema para boolean para verificações de modo escuro
+   * @param {Theme} theme - Tema a verificar
+   * @returns {boolean} True se for tema escuro
    */
   isDark: (theme: Theme) => theme === 'dark',
 
   /**
-   * Toggles between light and dark themes
+   * Alterna entre temas claro e escuro
+   * @param {Theme} currentTheme - Tema atual
+   * @returns {Theme} Tema alternado
    */
   toggle: (currentTheme: Theme): Theme =>
     currentTheme === 'light' ? 'dark' : 'light',
 
   /**
-   * Detects system color scheme preference
+   * Detecta preferência de esquema de cores do sistema
+   * @returns {Theme} Preferência do sistema
    */
   getSystemPreference: (): Theme =>
     window.matchMedia?.('(prefers-color-scheme: dark)').matches
@@ -52,7 +53,9 @@ export const themeUtils = {
   // ================================
 
   /**
-   * Converts hex color to RGB object
+   * Converte cor hex para objeto RGB
+   * @param {string} hex - Cor em formato hex (#RRGGBB ou RRGGBB)
+   * @returns {RgbColor | null} Objeto RGB ou null se formato inválido
    */
   hexToRgb: (hex: string): RgbColor | null => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
@@ -66,7 +69,10 @@ export const themeUtils = {
   },
 
   /**
-   * Creates a lighter variation of a color
+   * Cria uma variação mais clara de uma cor
+   * @param {string} color - Cor em formato hex
+   * @param {number} amount - Quantidade para clarear (0-255)
+   * @returns {string} Cor clareada em formato RGB
    */
   lighten: (color: string, amount: number) => {
     const rgb = themeUtils.hexToRgb(color)
@@ -81,7 +87,10 @@ export const themeUtils = {
   },
 
   /**
-   * Creates a darker variation of a color
+   * Cria uma variação mais escura de uma cor
+   * @param {string} color - Cor em formato hex
+   * @param {number} amount - Quantidade para escurecer (0-255)
+   * @returns {string} Cor escurecida em formato RGB
    */
   darken: (color: string, amount: number) => {
     const rgb = themeUtils.hexToRgb(color)

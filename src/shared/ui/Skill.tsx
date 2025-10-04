@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { P } from '@shared/ui'
+import { P } from '@shared'
 import {
   Skill,
   SkillBarProps,
   SkillGridProps,
   buildSkillBarClasses,
   buildSkillGridClasses
-} from '@shared/types'
+} from '@types'
 import '@styles/ui/skill.scss'
 
 // ================================

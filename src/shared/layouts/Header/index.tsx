@@ -1,44 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { analytics } from '@features/Analytics/utils'
-import { useTheme } from '@features/Theme/contexts'
-import { AnimatedContainer } from '@shared/ui'
-
-// ================================
-// INTERFACES
-// ================================
-
-interface HeaderSection {
-  id: string
-  label: string
-}
-
-interface HeaderProps {
-  // Estrutura
-  containerSize?: 'sm' | 'md' | 'lg' | 'xl'
-  sections?: HeaderSection[]
-
-  // Conteúdo
-  pageTitle?: string
-  logoText?: string
-
-  // Aparência
-  variant?: 'default' | 'minimal' | 'transparent'
-  showThemeToggle?: boolean
-  fixed?: boolean
-  transparent?: boolean
-
-  // Estados
-  disabled?: boolean
-
-  // Callbacks
-  onLogoClick?: () => void
-  onSectionClick?: (sectionId: string) => void
-  onThemeToggle?: () => void
-
-  // HTML attributes
-  className?: string
-  id?: string
-}
+import { analytics } from '@features/Analytics'
+import { useTheme } from '@features/Theme'
+import { AnimatedContainer } from '@shared'
+import { HeaderComponentProps } from '@types'
 
 // ================================
 // ICON COMPONENTS
@@ -100,7 +64,7 @@ const CloseIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
  * Header component with navigation, theme toggle and responsive menu
  * Manages page navigation, theme switching and mobile menu interactions
  */
-export const Header: React.FC<HeaderProps> = ({
+export const Header: React.FC<HeaderComponentProps> = ({
   containerSize = 'lg',
   sections = [],
   pageTitle,

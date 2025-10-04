@@ -1,3 +1,5 @@
+import { EmailJSConfig } from './types'
+
 // ================================
 // HELPER FUNCTIONS
 // ================================
@@ -8,7 +10,7 @@
  * @returns Environment variable value or empty string
  */
 const getEnvVar = (key: string): string => {
-  return (import.meta as any).env?.[key] || ''
+  return (import.meta as { env?: Record<string, string> }).env?.[key] || ''
 }
 
 // ================================
@@ -19,7 +21,7 @@ const getEnvVar = (key: string): string => {
  * EmailJS service configuration
  * Contains all necessary credentials for EmailJS integration
  */
-export const emailjsConfig = {
+export const emailjsConfig: EmailJSConfig = {
   SERVICE_ID: getEnvVar('VITE_EMAILJS_SERVICE_ID') || 'YOUR_SERVICE_ID',
   TEMPLATE_ID: getEnvVar('VITE_EMAILJS_TEMPLATE_ID') || 'YOUR_TEMPLATE_ID',
   PUBLIC_KEY: getEnvVar('VITE_EMAILJS_PUBLIC_KEY') || 'YOUR_PUBLIC_KEY'

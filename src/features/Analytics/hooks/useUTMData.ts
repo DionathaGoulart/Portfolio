@@ -1,38 +1,5 @@
 import { analytics } from '../utils'
-
-// ================================
-// TYPES & INTERFACES
-// ================================
-
-/**
- * UTM parameters and tracking identifiers structure
- */
-interface UTMData {
-  /** UTM source parameter */
-  utm_source?: string
-  /** UTM medium parameter */
-  utm_medium?: string
-  /** UTM campaign parameter */
-  utm_campaign?: string
-  /** UTM term parameter (keywords) */
-  utm_term?: string
-  /** UTM content parameter (ad content) */
-  utm_content?: string
-  /** Google Click Identifier */
-  gclid?: string
-  /** Facebook Click Identifier */
-  fbclid?: string
-  /** Microsoft Click Identifier */
-  msclkid?: string
-  /** DoubleClick Identifier */
-  dclid?: string
-  /** Google Click Source */
-  gclsrc?: string
-  /** Google Ads Broad Match Identifier */
-  gbraid?: string
-  /** Google Ads Exact Match Identifier */
-  wbraid?: string
-}
+import { UTMData } from '../types'
 
 // ================================
 // CONSTANTS
@@ -52,7 +19,7 @@ const PAID_AD_MEDIUMS = ['cpc', 'ppc', 'paid'] as const
  * ```tsx
  * const utmData = useUTMData()
  * if (utmData?.utm_source) {
- *   console.log('Traffic source:', utmData.utm_source)
+ *   analytics.processUTMData(utmData)
  * }
  * ```
  */
@@ -109,7 +76,7 @@ export const useIsFromPaidAds = (): boolean => {
     utmData.fbclid || // Facebook Ads
     utmData.msclkid || // Microsoft Ads
     (utmData.utm_medium &&
-      PAID_AD_MEDIUMS.includes(utmData.utm_medium.toLowerCase() as any))
+      PAID_AD_MEDIUMS.includes(utmData.utm_medium.toLowerCase() as typeof PAID_AD_MEDIUMS[number]))
   )
 }
 

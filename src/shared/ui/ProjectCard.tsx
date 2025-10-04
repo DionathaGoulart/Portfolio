@@ -1,7 +1,7 @@
 import React, { JSX } from 'react'
 import { Github, ExternalLink, Clock } from 'lucide-react'
-import { Button, P, Title, Tag } from '@shared/ui'
-import { ProjectCardProps, ProjectGridProps, Project } from '@shared/types'
+import { Button, P, Title, Tag } from '@shared'
+import { ProjectCardProps, ProjectGridProps, Project } from '@types'
 import '@styles/ui/projectcard.scss'
 
 // ================================
@@ -81,7 +81,9 @@ const getPrimaryCategory = (project: Project): string => {
   const categoryPriority = ['progress', 'fullstack', 'backend', 'frontend']
 
   for (const priority of categoryPriority) {
-    if (project.categories.includes(priority as any)) {
+    if (
+      project.categories.includes(priority as Project['categories'][number])
+    ) {
       return priority
     }
   }

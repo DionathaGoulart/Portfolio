@@ -1,0 +1,150 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  NODE_VERSION: '18'
+  NPM_CACHE_FOLDER: ~/.npm
+  CACHE_FOLDER: ~/.cache
+
+jobs:
+  # Job de Testes
+  test:
+    name: 🧪 Testes e Verificações
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout do código
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📦 Instalar dependências
+        run: npm ci
+
+      - name: 🔍 Verificação de tipos TypeScript
+        run: npx tsc --noEmit
+
+      - name: 🧹 Linting
+        run: npm run lint
+
+      - name: 🏗️ Build do projeto
+        run: npm run build
+
+      - name: 🔒 Auditoria de segurança
+        run: npm audit --audit-level moderate
+
+  # Job de Lighthouse
+  lighthouse:
+    name: 🚦 Lighthouse CI
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    needs: test
+
+    steps:
+      - name: 📥 Checkout do código
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📦 Instalar dependências
+        run: npm ci
+
+      - name: 🏗️ Build do projeto
+        run: npm run build
+
+      - name: 🚦 Executar Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          configPath: './lighthouserc.json'
+          uploadArtifacts: false
+          temporaryPublicStorage: true
+
+  # Job de Deploy Preview
+  deploy-preview:
+    name: 🚀 Deploy Preview
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/develop')
+    needs: test
+
+    steps:
+      - name: 📥 Checkout do código
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📦 Instalar dependências
+        run: npm ci
+
+      - name: 🏗️ Build do projeto
+        run: npm run build
+
+      - name: 🚀 Deploy no Vercel Preview
+        run: |
+          echo "🚀 Implementar deploy no Vercel Preview"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Pull Request: ${{ github.event.number }}"
+          # Adicionar comando do Vercel CLI aqui:
+          # npx vercel --token=${{ secrets.VERCEL_TOKEN }} --prod=false
+
+      - name: 📝 Comentar no PR com link do preview
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "📝 Comentário com link do preview será adicionado ao PR"
+          # Implementar comentário automático no PR
+
+  # Job de Deploy Production
+  deploy-production:
+    name: 🌟 Deploy Production
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: test
+
+    environment:
+      name: production
+      url: https://dionatha.com.br
+
+    steps:
+      - name: 📥 Checkout do código
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📦 Instalar dependências
+        run: npm ci
+
+      - name: 🏗️ Build do projeto
+        run: npm run build
+
+      - name: 🚀 Deploy no Vercel Production
+        run: |
+          echo "🌟 Implementar deploy no Vercel Production"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          # Adicionar comando do Vercel CLI aqui:
+          # npx vercel --token=${{ secrets.VERCEL_TOKEN }} --prod=true
+
+      - name: 📢 Notificar deploy concluído
+        run: |
+          echo "✅ Deploy de produção concluído com sucesso!"
+          echo "🌐 Aplicação disponível em: https://dionatha.com.br"

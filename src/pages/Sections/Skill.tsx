@@ -1,36 +1,15 @@
 import React, { useState } from 'react'
-import { analytics } from '@features/Analytics/utils'
-import { AnimatedContainer, Title, P, NavFilter, SkillGrid } from '@shared/ui'
-import { Skill } from '@shared/types'
+import { analytics } from '@features/Analytics'
+import { AnimatedContainer, Title, P, NavFilter, SkillGrid } from '@shared'
 
-// ================================
-// Types & Interfaces
-// ================================
-
-/**
- * Props for the SkillsSection component
- */
-interface SkillsSectionProps {
-  /** Unique section ID for anchors and navigation */
-  id?: string
-}
-
-/**
- * Skill category configuration
- */
-interface SkillCategory {
-  key: string
-  skills: Skill[]
-  delay: number
-}
-
-/**
- * Filter option for navigation
- */
-interface FilterOption {
-  value: string
-  label: string
-}
+import {
+  Skill,
+  SkillsSectionProps,
+  FilterOption,
+  SkillCategory,
+  SkillsFilterProps,
+  SkillsGridSectionProps
+} from '@types'
 
 // ================================
 // Constants
@@ -185,8 +164,8 @@ const SkillsHeader: React.FC = () => (
         className="leading-relaxed md:max-w-md lg:max-w-2xl"
         anchor="right"
       >
-        Domínio em tecnologias modernas para desenvolvimento de aplicações
-        robustas e escaláveis em todo o stack.
+        Tecnologias que domino através de estudos intensivos e aplicação prática
+        em projetos freelance e pessoais.
       </P>
     </AnimatedContainer>
   </header>
@@ -195,10 +174,10 @@ const SkillsHeader: React.FC = () => (
 /**
  * Skills filter navigation
  */
-const SkillsFilter: React.FC<{
-  activeFilter: string
-  onFilterChange: (filter: string) => void
-}> = ({ activeFilter, onFilterChange }) => (
+const SkillsFilter: React.FC<SkillsFilterProps> = ({
+  activeFilter,
+  onFilterChange
+}) => (
   <AnimatedContainer animationType="fade-up">
     <NavFilter
       className="mt-12"
@@ -216,10 +195,10 @@ const SkillsFilter: React.FC<{
 /**
  * Filtered skills grid with animations
  */
-const SkillsGridSection: React.FC<{
-  categories: SkillCategory[]
-  showCategories: boolean
-}> = ({ categories, showCategories }) => (
+const SkillsGridSection: React.FC<SkillsGridSectionProps> = ({
+  categories,
+  showCategories
+}) => (
   <div className="space-y-12">
     {categories.map(({ key, skills, delay }) => (
       <AnimatedContainer key={key}>

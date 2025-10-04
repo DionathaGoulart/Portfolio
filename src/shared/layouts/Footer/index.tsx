@@ -1,42 +1,5 @@
 import React from 'react'
-
-// ================================
-// INTERFACES
-// ================================
-
-interface FooterLink {
-  href: string
-  label: string
-  external?: boolean
-}
-
-interface SocialLink {
-  href: string
-  label: string
-}
-
-interface FooterProps {
-  // Estrutura
-  containerSize?: 'sm' | 'md' | 'lg' | 'xl'
-
-  // Conteúdo
-  companyName?: string
-  year?: number
-  links?: FooterLink[]
-  socialLinks?: SocialLink[]
-
-  // Aparência
-  variant?: 'default' | 'extended'
-  showCopyright?: boolean
-  showSocial?: boolean
-
-  // Layout
-  compact?: boolean
-
-  // HTML attributes
-  className?: string
-  id?: string
-}
+import { FooterComponentProps } from '@types'
 
 // ================================
 // MAIN COMPONENT
@@ -46,7 +9,7 @@ interface FooterProps {
  * Footer component with links, copyright and social media
  * Manages navigation links, company information and social connections
  */
-export const Footer: React.FC<FooterProps> = ({
+export const Footer: React.FC<FooterComponentProps> = ({
   containerSize = 'lg',
   companyName = 'GD',
   year,

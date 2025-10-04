@@ -1,5 +1,6 @@
-import { useEffect } from 'react'
-import { useSectionTracking } from '@/features/Analytics/hooks/useAnalytics'
+import React, { useEffect } from 'react'
+
+import { useSectionTracking } from '@features/Analytics'
 import {
   HomeSection,
   SobreSection,
@@ -8,24 +9,16 @@ import {
   ExpSection,
   ContactSection
 } from '@pages/Sections'
-import { SectionConfig } from '@shared/types'
+import { HomePageProps, SectionConfig } from '@types'
 
 // ================================
-// Types & Interfaces
+// CONSTANTS
 // ================================
 
 /**
- * Props for the HomePage component
+ * Configuração das seções da página inicial
+ * Define IDs e labels para navegação e tracking
  */
-interface HomePageProps {
-  setSections: (sections: SectionConfig[]) => void
-  setPageTitle: (title: string) => void
-}
-
-// ================================
-// Constants
-// ================================
-
 const HOME_PAGE_SECTIONS: SectionConfig[] = [
   { id: 'inicio', label: 'Início' },
   { id: 'sobre-mim', label: 'Sobre Mim' },
@@ -36,17 +29,21 @@ const HOME_PAGE_SECTIONS: SectionConfig[] = [
 ]
 
 // ================================
-// Main Component
+// MAIN COMPONENT
 // ================================
 
 /**
- * HomePage component - Main landing page with all sections
- * Handles section tracking and page title management
+ * Componente da página inicial com todas as seções do portfólio
+ * Gerencia o tracking de seções e título da página dinamicamente
+ *
+ * @param {HomePageProps} props - Propriedades do componente
+ * @returns {JSX.Element} Página inicial renderizada
  */
 export function HomePage({ setSections, setPageTitle }: HomePageProps) {
-  // Enable automatic section tracking
+  // Habilita tracking automático de seções
   useSectionTracking(HOME_PAGE_SECTIONS)
 
+  // Configura seções e título da página
   useEffect(() => {
     setSections(HOME_PAGE_SECTIONS)
     setPageTitle('Dionatha')

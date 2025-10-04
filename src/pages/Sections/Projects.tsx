@@ -1,23 +1,19 @@
-import { useState, useEffect } from 'react'
-import { getImage } from '@core/utils/getImage'
-import { analytics } from '@features/Analytics/utils'
-import { AnimatedContainer, Title, P, NavFilter, ProjectGrid } from '@shared/ui'
-import { FilterOption, Project } from '@shared/types'
+import React, { useState, useEffect } from 'react'
+import { analytics } from '@features/Analytics'
+import { AnimatedContainer, Title, P, NavFilter, ProjectGrid } from '@shared'
+import {
+  Project,
+  FilterOption,
+  ProjectsSectionProps,
+  ProjectsFilterProps,
+  ProjectsGridProps
+} from '@types'
 import defaultRaw from '@assets/images/projects/default.png'
-import shortRaw from '@assets/images/projects/short.png'
-import signatureRaw from '@assets/images/projects/signature.png'
-
-// ================================
-// Types & Interfaces
-// ================================
-
-/**
- * Props for the ProjectsSection component
- */
-interface ProjectsSectionProps {
-  /** Unique section ID for navigation/anchors */
-  id?: string
-}
+import shortRaw from '@assets/images/projects/short.jpeg'
+import signatureRaw from '@assets/images/projects/signature.jpeg'
+import darkLinksRaw from '@assets/images/projects/dark-links.jpeg'
+import darkPortfolioRaw from '@assets/images/projects/dark-portfolio.jpeg'
+import containnerPortfolioRaw from '@assets/images/projects/containner-portfolio.jpeg'
 
 // ================================
 // Constants
@@ -27,9 +23,12 @@ interface ProjectsSectionProps {
  * Optimized project images with WebP conversion
  */
 const PROJECT_IMAGES = {
-  default: getImage(`${defaultRaw}?as=webp&width=300`),
-  short: getImage(`${shortRaw}?as=webp&width=300`),
-  signature: getImage(`${signatureRaw}?as=webp&width=300`)
+  default: `${defaultRaw}?as=webp&width=300`,
+  short: `${shortRaw}?as=webp&width=300`,
+  signature: `${signatureRaw}?as=webp&width=300`,
+  darkLinks: `${darkLinksRaw}?as=webp&width=300`,
+  darkPortfolio: `${darkPortfolioRaw}?as=webp&width=300`,
+  containnerPortfolio: `${containnerPortfolioRaw}?as=webp&width=300`
 } as const
 
 /**
@@ -52,7 +51,7 @@ const PROJECTS_DATA: Project[] = [
     id: '1',
     title: 'Encurtador de Links',
     description:
-      'Aplicativo fullstack para encurtar URLs longas com estatísticas de cliques, dashboard e interface responsiva moderna.',
+      'Aplicativo fullstack para encurtar URLs com dashboard avançado e estatísticas detalhadas de cliques.',
     image: PROJECT_IMAGES.short,
     tags: ['Angular', 'Node.js', 'MongoDB', 'Bootstrap'],
     categories: ['frontend', 'backend', 'fullstack'],
@@ -61,9 +60,9 @@ const PROJECTS_DATA: Project[] = [
   },
   {
     id: '2',
-    title: 'Sistema de Assinatura de Contratos',
+    title: 'Contratos Digital',
     description:
-      'Plataforma web segura para gestão e assinatura digital de documentos contratuais com painel administrativo e envio automático por email.',
+      'Plataforma web segura para gestão e assinatura digital de documentos contratuais.',
     image: PROJECT_IMAGES.signature,
     tags: ['React', 'Node.js', 'Express', 'Nodemailer'],
     categories: ['frontend', 'backend', 'fullstack'],
@@ -71,48 +70,48 @@ const PROJECTS_DATA: Project[] = [
     demoUrl: 'https://termos.dionatha.com.br/'
   },
   {
-    id: '3',
-    title: 'PetMatch - Adoção de Animais',
-    description:
-      'Plataforma completa para adoção responsável de animais com sistema de login, cadastro de pets, perfis de usuários e matching inteligente.',
-    image: PROJECT_IMAGES.default,
-    tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
-    categories: ['progress', 'frontend', 'backend', 'fullstack'],
-    githubUrl: 'https://github.com/username/petmatch',
-    demoUrl: 'https://petmatch-demo.com'
-  },
-  {
     id: '4',
-    title: 'Manual de Marca',
+    title: 'Linktree Profissional',
     description:
-      'Plataforma completa para adoção responsável de animais com sistema de login, cadastro de pets, perfis de usuários e matching inteligente.',
-    image: PROJECT_IMAGES.default,
-    tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
-    categories: ['progress', 'frontend'],
-    githubUrl: 'https://github.com/DionathaGoulart/Manual',
-    demoUrl: 'https://petmatch-demo.com'
+      'Linktree profissional com tema escuro, analytics integrado e suporte multilíngue.',
+    image: PROJECT_IMAGES.darkLinks,
+    tags: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
+    categories: ['frontend'],
+    githubUrl: 'https://github.com/DionathaGoulart/Dark-Links',
+    demoUrl: 'https://dark-links.vercel.app/'
   },
   {
     id: '5',
-    title: 'Portifolio Minimalista',
+    title: 'Portfolio Artístico',
     description:
-      'Plataforma completa para adoção responsável de animais com sistema de login, cadastro de pets, perfis de usuários e matching inteligente.',
-    image: PROJECT_IMAGES.default,
-    tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
-    categories: ['progress', 'frontend'],
-    githubUrl: 'https://github.com/DionathaGoulart/Darkning',
-    demoUrl: 'https://petmatch-demo.com'
+      'Portfolio profissional com design minimalista, galeria de imagens e analytics completo.',
+    image: PROJECT_IMAGES.darkPortfolio,
+    tags: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
+    categories: ['frontend'],
+    githubUrl: 'https://github.com/DionathaGoulart/Dark-Portifolio',
+    demoUrl: 'https://dark-portifolio.vercel.app/'
   },
   {
     id: '6',
-    title: 'Lp - Curriculo',
+    title: 'Branding Portfolio',
     description:
-      'Plataforma completa para adoção responsável de animais com sistema de login, cadastro de pets, perfis de usuários e matching inteligente.',
+      'Portfolio especializado em branding com projetos Vextro® e Korri®, gerador de padrões.',
+    image: PROJECT_IMAGES.containnerPortfolio,
+    tags: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
+    categories: ['frontend'],
+    githubUrl: 'https://github.com/containner-archived/Containner',
+    demoUrl: 'https://containner.netlify.app/vextro'
+  },
+  {
+    id: '7',
+    title: 'Adoção de Pets',
+    description:
+      'Plataforma para adoção responsável de animais com sistema de matching inteligente.',
     image: PROJECT_IMAGES.default,
     tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
-    categories: ['progress', 'frontend'],
-    githubUrl: 'https://github.com/DionathaGoulart/Portfolio',
-    demoUrl: 'https://petmatch-demo.com'
+    categories: ['progress', 'frontend', 'backend', 'fullstack'],
+    githubUrl: '',
+    demoUrl: ''
   }
 ]
 
@@ -164,7 +163,9 @@ const useFilteredProjects = (activeFilter: string): Project[] => {
   return activeFilter === 'todos'
     ? PROJECTS_DATA
     : PROJECTS_DATA.filter((project) =>
-        project.categories.includes(activeFilter as any)
+        project.categories.includes(
+          activeFilter as Project['categories'][number]
+        )
       )
 }
 
@@ -216,8 +217,9 @@ const ProjectsHeader: React.FC = () => (
 
     <AnimatedContainer animationType="zoom-in-left">
       <P size="grande" className="leading-relaxed md:max-w-md lg:max-w-2xl">
-        Aqui estão alguns dos projetos que desenvolvi, demonstrando minhas
-        habilidades em diferentes tecnologias e áreas de desenvolvimento.
+        Projetos desenvolvidos durante minha jornada de aprendizado e trabalhos
+        freelance, mostrando domínio prático em diferentes tecnologias e
+        cenários.
       </P>
     </AnimatedContainer>
   </header>
@@ -226,10 +228,10 @@ const ProjectsHeader: React.FC = () => (
 /**
  * Project filter navigation
  */
-const ProjectsFilter: React.FC<{
-  activeFilter: string
-  onFilterChange: (filter: string) => void
-}> = ({ activeFilter, onFilterChange }) => (
+const ProjectsFilter: React.FC<ProjectsFilterProps> = ({
+  activeFilter,
+  onFilterChange
+}) => (
   <nav aria-label="Filtros de projetos por categoria" role="navigation">
     <AnimatedContainer>
       <NavFilter
@@ -246,14 +248,7 @@ const ProjectsFilter: React.FC<{
 /**
  * Projects grid display
  */
-const ProjectsGrid: React.FC<{
-  projects: Project[]
-  animationKey: number
-  isInitialLoad: boolean
-  onGithubClick: (projectId: string) => void
-  onDemoClick: (projectId: string) => void
-  activeFilter: string
-}> = ({
+const ProjectsGrid: React.FC<ProjectsGridProps> = ({
   projects,
   animationKey,
   isInitialLoad,

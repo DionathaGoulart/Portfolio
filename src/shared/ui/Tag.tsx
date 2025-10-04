@@ -6,7 +6,7 @@ import {
   buildTagClasses,
   buildTagGroupClasses,
   buildStatusTagClasses
-} from '@shared/types'
+} from '@types'
 import '@styles/ui/tag.scss'
 
 // ================================

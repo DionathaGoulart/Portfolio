@@ -20,9 +20,10 @@ export default defineConfig({
       '@features': path.resolve(__dirname, './src/features'),
       '@pages': path.resolve(__dirname, './src/pages'),
       '@shared': path.resolve(__dirname, './src/shared'),
-      '@styles': path.resolve(__dirname, './src/styles')
+      '@styles': path.resolve(__dirname, './src/styles'),
+      '@types': path.resolve(__dirname, './src/types')
     }
   },
-  // Configurações de build para otimização adicional
-  build: {}
+  build: {},
+  server: {}
 })

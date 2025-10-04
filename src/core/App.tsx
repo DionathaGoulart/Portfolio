@@ -1,8 +1,7 @@
-import { JSX } from 'react'
+import React, { JSX } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
-import { AppRouter } from './router'
-import { appRoutes } from '@/core/router/routes'
+import { AppRouter, appRoutes } from '@core'
 
 // ================================
 // Main Application Component

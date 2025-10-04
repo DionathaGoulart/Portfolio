@@ -1,7 +1,7 @@
 import React from 'react'
-import { P, Tag, TagGroup, Title } from '@shared/ui'
+import { P, Tag, TagGroup, Title } from '@shared'
 import { AnimatedContainer } from './Animated'
-import { ExpCardProps, ExpListProps } from '../types/ui'
+import { ExpCardProps, ExpListProps } from '@types'
 import '@styles/ui/expcard.scss'
 
 // ============================================================================
@@ -174,12 +174,11 @@ export const ExpList: React.FC<ExpListProps> = ({
       {/* Experience cards */}
       <div className="experience-list__items">
         {experiences.map((experience, index) => (
-          <AnimatedContainer animationType="slide-left">
-            <Exp
-              key={experience.id || index}
-              {...experience}
-              showTimeline={showTimeline}
-            />
+          <AnimatedContainer
+            key={experience.id || index}
+            animationType="slide-left"
+          >
+            <Exp {...experience} showTimeline={showTimeline} />
           </AnimatedContainer>
         ))}
       </div>

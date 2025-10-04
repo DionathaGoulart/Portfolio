@@ -1,12 +1,15 @@
 // ================================
-// Theme Types & Interfaces
+// THEME TYPES & INTERFACES
 // ================================
 
+/**
+ * Tipos de tema disponíveis
+ */
 export type Theme = 'light' | 'dark'
 
 /**
- * Theme color configuration interface
- * Colors are stored as RGB values without the 'rgb()' wrapper
+ * Interface de configuração de cores do tema
+ * Cores são armazenadas como valores RGB sem o wrapper 'rgb()'
  */
 export interface ThemeColors {
   primary: string
@@ -23,7 +26,7 @@ export interface ThemeColors {
 }
 
 /**
- * Complete theme configuration including name and colors
+ * Configuração completa do tema incluindo nome e cores
  */
 export interface ThemeConfig {
   name: Theme
@@ -31,7 +34,7 @@ export interface ThemeConfig {
 }
 
 /**
- * Theme context interface providing all theme-related functionality
+ * Interface do contexto de tema fornecendo toda funcionalidade relacionada ao tema
  */
 export interface ThemeContextType {
   theme: Theme
@@ -41,4 +44,13 @@ export interface ThemeContextType {
   enableSystemTheme: () => void
   isSystemTheme: boolean
   isDarkMode: boolean
+}
+
+/**
+ * Interface para cores RGB
+ */
+export interface RgbColor {
+  r: number
+  g: number
+  b: number
 }

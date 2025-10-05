@@ -364,7 +364,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             ) : (
               <>
                 <ExternalLink size={16} />
-                Demo
+                Site
               </>
             )}
           </Button>

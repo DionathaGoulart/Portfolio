@@ -14,6 +14,9 @@ import signatureRaw from '@assets/images/projects/signature.jpeg'
 import darkLinksRaw from '@assets/images/projects/dark-links.jpeg'
 import darkPortfolioRaw from '@assets/images/projects/dark-portfolio.jpeg'
 import containnerPortfolioRaw from '@assets/images/projects/containner-portfolio.jpeg'
+import CatalogoRaw from '@assets/images/projects/catalogo.jpeg'
+import ManualRaw from '@assets/images/projects/manual.jpeg'
+import AmpareRaw from '@assets/images/projects/ampare.jpeg'
 
 // ================================
 // Constants
@@ -28,7 +31,10 @@ const PROJECT_IMAGES = {
   signature: `${signatureRaw}?as=webp&width=300`,
   darkLinks: `${darkLinksRaw}?as=webp&width=300`,
   darkPortfolio: `${darkPortfolioRaw}?as=webp&width=300`,
-  containnerPortfolio: `${containnerPortfolioRaw}?as=webp&width=300`
+  containnerPortfolio: `${containnerPortfolioRaw}?as=webp&width=300`,
+  Catalogo: `${CatalogoRaw}?as=webp&width=300`,
+  Manual: `${ManualRaw}?as=webp&width=300`,
+  Ampare: `${AmpareRaw}?as=webp&width=300`
 } as const
 
 /**
@@ -49,61 +55,101 @@ const FILTER_OPTIONS: FilterOption[] = [
 const PROJECTS_DATA: Project[] = [
   {
     id: '1',
-    title: 'LinkSpace - Encurtador de URLs',
+    title: 'Portfolio Branding',
     description:
-      'Plataforma moderna de encurtamento de URLs com interface intuitiva, analytics em tempo real e dashboard avançado.',
-    image: PROJECT_IMAGES.short,
-    tags: ['Angular', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'Bootstrap 5'],
-    categories: ['frontend', 'backend', 'fullstack'],
-    githubUrl: 'https://github.com/DionathaGoulart/link-shortener--Angular',
-    demoUrl: 'https://link-shortener-angular.vercel.app'
+      'Portfolio especializado em branding com projetos criativos e comparação visual.',
+    image: PROJECT_IMAGES.containnerPortfolio,
+    tags: ['React', 'TypeScript', 'Tailwind', 'Google Analytics'],
+    categories: ['frontend'],
+    githubUrl: 'https://github.com/containner-archived/Containner',
+    demoUrl: 'https://containner.netlify.app'
   },
   {
     id: '2',
-    title: 'Sistema de Assinatura Digital',
+    title: 'Portfolio Artístico',
     description:
-      'Plataforma segura para gestão e assinatura digital de documentos contratuais com geração de PDF e envio automático por email.',
-    image: PROJECT_IMAGES.signature,
-    tags: ['React', 'TypeScript', 'Tailwind', 'Node.js', 'Express'],
-    categories: ['frontend', 'backend', 'fullstack'],
-    githubUrl: 'https://github.com/DionathaGoulart/signature-React',
-    demoUrl: 'https://signature-react.vercel.app'
-  },
-  {
-    id: '3',
-    title: 'Dark Links - Linktree Profissional',
-    description:
-      'Linktree profissional com tema escuro, analytics integrado, suporte multilíngue e design minimalista.',
-    image: PROJECT_IMAGES.darkLinks,
-    tags: ['React', 'TypeScript', 'Tailwind',  'Google Analytics'],
-    categories: ['frontend'],
-    githubUrl: 'https://github.com/DionathaGoulart/Dark-Links',
-    demoUrl: 'https://dark-links.vercel.app'
-  },
-  {
-    id: '4',
-    title: 'Dark Portfolio - Portfolio Artístico',
-    description:
-      'Portfolio profissional com design minimalista, galeria de imagens, tema claro/escuro e performance otimizada.',
+      'Portfolio  com design minimalista, galeria de imagens, tema claro/escuro e performance otimizada.',
     image: PROJECT_IMAGES.darkPortfolio,
     tags: ['React', 'TypeScript', 'Tailwind', 'Google Analytics', 'EmailJS'],
     categories: ['frontend'],
     githubUrl: 'https://github.com/DionathaGoulart/Dark-Portifolio',
-    demoUrl: 'https://dionatha.com.br'
+    demoUrl: 'https://dark.art.br'
+  },
+  {
+    id: '3',
+    title: 'Encurtador de Links',
+    description:
+      'Plataforma moderna de encurtamento de URLs com interface intuitiva.',
+    image: PROJECT_IMAGES.short,
+    tags: [
+      'Angular',
+      'TypeScript',
+      'Node.js',
+      'Express',
+      'MongoDB',
+      'Bootstrap 5'
+    ],
+    categories: ['frontend', 'backend', 'fullstack'],
+    githubUrl: 'https://github.com/DionathaGoulart/link-shortener--Angular',
+    demoUrl: 'https://linkspace.dionatha.com.br'
+  },
+  {
+    id: '4',
+    title: 'Assinatura Digital',
+    description:
+      'Plataforma de assinatura de contratos com geração de PDF e envio automático por email.',
+    image: PROJECT_IMAGES.signature,
+    tags: ['React', 'TypeScript', 'Tailwind', 'Node.js', 'Express'],
+    categories: ['frontend', 'backend', 'fullstack'],
+    githubUrl: 'https://github.com/DionathaGoulart/signature-React',
+    demoUrl: 'https://termos.dionatha.com.br'
   },
   {
     id: '5',
-    title: 'Containner Portfolio - Branding',
+    title: 'Linktree Profissional',
     description:
-      'Portfolio especializado em branding com projetos criativos, gerador de padrões interativo e comparação visual.',
-    image: PROJECT_IMAGES.containnerPortfolio,
+      'Linktree profissional com temas, analytics integrado, suporte multilíngue e design minimalista.',
+    image: PROJECT_IMAGES.darkLinks,
     tags: ['React', 'TypeScript', 'Tailwind', 'Google Analytics'],
     categories: ['frontend'],
-    githubUrl: 'https://github.com/DionathaGoulart/containner-portfolio',
-    demoUrl: 'https://containner.netlify.app'
+    githubUrl: 'https://github.com/DionathaGoulart/Dark-Links',
+    demoUrl: 'https://links.dark.art.br'
   },
   {
     id: '6',
+    title: 'Catálogo de Produtos',
+    description:
+      'Catálogo moderno de produtos com sincronização automática entre api do Tiny ER e integração WhatsApp.',
+    image: PROJECT_IMAGES.Catalogo,
+    tags: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'Express'],
+    categories: ['frontend', 'backend', 'fullstack'],
+    githubUrl: 'https://github.com/GoodFreelas/Catalog',
+    demoUrl: 'https://detcheler.com.br'
+  },
+  {
+    id: '7',
+    title: 'Manual de Marca',
+    description:
+      'Manual de identidade visual da marca interativo com navegação fluida e para facil entendimento sobre a marca.',
+    image: PROJECT_IMAGES.Manual,
+    tags: ['React', 'TypeScript', 'Vite', 'TailwindCSS'],
+    categories: ['frontend'],
+    githubUrl: 'https://github.com/DionathaGoulart/Manual',
+    demoUrl: 'https://manual-vextro.vercel.app'
+  },
+  {
+    id: '8',
+    title: 'Sistema de Adesão',
+    description:
+      'Sistema completo para geração e envio de contratos de adesão a benefícios com formulário multi-step e assinatura digital.',
+    image: PROJECT_IMAGES.Ampare,
+    tags: ['React', 'TypeScript', 'Node.js', 'Express', 'PDF-lib'],
+    categories: ['frontend', 'backend', 'fullstack'],
+    githubUrl: 'https://github.com/GoodFreelas/PDF-From',
+    demoUrl: 'https://ampare.org.br/termos'
+  },
+  {
+    id: '9',
     title: 'Adoção de Pets',
     description:
       'Plataforma para adoção responsável de animais com sistema de matching inteligente.',

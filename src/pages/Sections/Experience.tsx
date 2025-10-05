@@ -14,25 +14,21 @@ import { ExpCardProps, ExperienceSectionProps } from '@types'
 const experiencesData: ExpCardProps[] = [
   {
     id: '1',
-    title: 'Desenvolvedor Fullstack',
-    company: 'Parcer',
-    period: 'Jan 2025 - Out 2025',
+    title: 'Auxiliar de Escritório em Geral',
+    company: 'Condomínio da Estação Rodoviária de Porto Alegre',
+    period: 'Set 2021 - Ago 2022',
     description:
-      'Atuei como desenvolvedor fullstack em projetos freelancer, especializado em tecnologias modernas como React, TypeScript e Node.js. Desenvolvi interfaces responsivas, criei APIs RESTful robustas e implementei soluções completas do frontend ao backend. Colaborei diretamente com clientes para levantamento de requisitos e entrega de soluções personalizadas.',
+      'Atuei como Auxiliar de Escritório em ambiente corporativo de alto fluxo, desenvolvendo competências organizacionais e de atendimento essenciais. Gerenciei comunicações telefônicas, organizei arquivos físicos e digitais, executei tarefas administrativas e coordenei compromissos da equipe em ambiente de alta demanda.',
     technologies: [
-      'React',
-      'TypeScript',
-      'Node.js',
-      'Express.js',
-      'MongoDB',
-      'PostgreSQL',
-      'Django',
-      'Docker',
-      'Tailwind CSS',
-      'Git'
+      'Atendimento ao Cliente',
+      'Gestão de Dados',
+      'Processos Administrativos',
+      'Organização',
+      'Multitarefa',
+      'Comunicação Eficaz'
     ],
     interactive: true,
-    onClick: () => analytics.trackButtonClick('experience_parcer')
+    onClick: () => analytics.trackButtonClick('experience_estacao_rodoviaria')
   },
   {
     id: '2',
@@ -52,23 +48,28 @@ const experiencesData: ExpCardProps[] = [
     interactive: true,
     onClick: () => analytics.trackButtonClick('experience_cybernetrs')
   },
+
   {
     id: '3',
-    title: 'Auxiliar de Escritório em Geral',
-    company: 'Condomínio da Estação Rodoviária de Porto Alegre',
-    period: 'Set 2021 - Ago 2022',
+    title: 'Desenvolvedor Fullstack',
+    company: 'Parcer',
+    period: 'Jan 2025 - Out 2025',
     description:
-      'Atuei como Auxiliar de Escritório em ambiente corporativo de alto fluxo, desenvolvendo competências organizacionais e de atendimento essenciais. Gerenciei comunicações telefônicas, organizei arquivos físicos e digitais, executei tarefas administrativas e coordenei compromissos da equipe em ambiente de alta demanda.',
+      'Atuei como desenvolvedor fullstack em projetos freelancer, especializado em tecnologias modernas como React, TypeScript e Node.js. Desenvolvi interfaces responsivas, criei APIs RESTful robustas e implementei soluções completas do frontend ao backend. Colaborei diretamente com clientes para levantamento de requisitos e entrega de soluções personalizadas.',
     technologies: [
-      'Atendimento ao Cliente',
-      'Gestão de Dados',
-      'Processos Administrativos',
-      'Organização',
-      'Multitarefa',
-      'Comunicação Eficaz'
+      'React',
+      'TypeScript',
+      'Node.js',
+      'Express.js',
+      'MongoDB',
+      'PostgreSQL',
+      'Django',
+      'Docker',
+      'Tailwind CSS',
+      'Git'
     ],
     interactive: true,
-    onClick: () => analytics.trackButtonClick('experience_estacao_rodoviaria')
+    onClick: () => analytics.trackButtonClick('experience_parcer')
   }
 ]
 

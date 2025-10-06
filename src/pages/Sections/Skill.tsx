@@ -20,37 +20,29 @@ import {
  * Based on technologies used in real projects and proficiency levels
  */
 const SKILLS_DATA: Skill[] = [
-  // Frontend - Manjo muito (90-95%)
   { id: '1', name: 'JavaScript', percentage: 95, category: 'frontend' },
-  { id: '2', name: 'CSS', percentage: 93, category: 'frontend' },
-  { id: '3', name: 'TypeScript', percentage: 93, category: 'frontend' },
-  { id: '4', name: 'Tailwind CSS', percentage: 92, category: 'frontend' },
-  { id: '5', name: 'Sass', percentage: 91, category: 'frontend' },
-  { id: '6', name: 'React', percentage: 90, category: 'frontend' },
-  { id: '7', name: 'Bootstrap', percentage: 90, category: 'frontend' },
-  { id: '8', name: 'Styled Components', percentage: 90, category: 'frontend' },
-  { id: '9', name: 'Git', percentage: 95, category: 'tools' },
-  { id: '10', name: 'Vite', percentage: 90, category: 'tools' },
-  { id: '11', name: 'Figma', percentage: 90, category: 'tools' },
-
-  // Frontend/Backend - Entendo ok (70-85%)
-  { id: '12', name: 'Python', percentage: 85, category: 'backend' },
-  { id: '13', name: 'Django', percentage: 82, category: 'backend' },
-  { id: '14', name: 'Node.js', percentage: 80, category: 'backend' },
-  { id: '15', name: 'Express.js', percentage: 78, category: 'backend' },
+  { id: '10', name: 'Git', percentage: 95, category: 'tools' },
+  { id: '2', name: 'Jquery', percentage: 94, category: 'frontend' },
+  { id: '3', name: 'CSS', percentage: 93, category: 'frontend' },
+  { id: '4', name: 'TypeScript', percentage: 93, category: 'frontend' },
+  { id: '5', name: 'Tailwind CSS', percentage: 92, category: 'frontend' },
+  { id: '6', name: 'Sass', percentage: 91, category: 'frontend' },
+  { id: '7', name: 'React', percentage: 90, category: 'frontend' },
+  { id: '8', name: 'Bootstrap', percentage: 90, category: 'frontend' },
+  { id: '9', name: 'Styled Components', percentage: 90, category: 'frontend' },
+  { id: '11', name: 'Vite', percentage: 90, category: 'tools' },
+  { id: '12', name: 'Github Actions', percentage: 86, category: 'tools' },
+  { id: '13', name: 'Python', percentage: 85, category: 'backend' },
+  { id: '14', name: 'Django', percentage: 82, category: 'backend' },
+  { id: '15', name: 'Node.js', percentage: 80, category: 'backend' },
   { id: '16', name: 'REST APIs', percentage: 80, category: 'backend' },
-  { id: '17', name: 'PostgreSQL', percentage: 75, category: 'database' },
-  { id: '18', name: 'MongoDB', percentage: 78, category: 'database' },
-  { id: '19', name: 'Docker', percentage: 72, category: 'tools' },
-
-  // Frontend/Backend/Tools - Sei o básico (30-65%)
-  { id: '20', name: 'MySQL', percentage: 65, category: 'database' },
-  { id: '21', name: 'Angular', percentage: 40, category: 'frontend' },
-  { id: '22', name: 'AWS', percentage: 30, category: 'tools' },
-  { id: '23', name: 'React Native', percentage: 30, category: 'frontend' },
-  { id: '24', name: 'Prisma', percentage: 30, category: 'tools' },
-  { id: '25', name: 'Next.js', percentage: 30, category: 'frontend' },
-
+  { id: '27', name: 'MongoDB', percentage: 78, category: 'database' },
+  { id: '18', name: 'Express.js', percentage: 78, category: 'backend' },
+  { id: '19', name: 'PostgreSQL', percentage: 75, category: 'database' },
+  { id: '20', name: 'Docker', percentage: 72, category: 'tools' },
+  { id: '21', name: 'MySQL', percentage: 65, category: 'database' },
+  { id: '22', name: 'Angular', percentage: 40, category: 'frontend' },
+  { id: '23', name: 'Vue.js', percentage: 30, category: 'frontend' }
 ]
 
 /**

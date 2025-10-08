@@ -223,18 +223,9 @@ const ProfileSection: React.FC = () => (
           className="flex-1"
           aria-label="Biografia profissional"
         >
-          Desenvolvedor fullstack com mais de 2 anos de experiência prática
-          através de freelances e projetos pessoais. Apesar de ainda não ter
-          experiência formal no mercado, compenso com dedicação intensa aos
-          estudos, velocidade de aprendizado e capacidade de adaptação a
-          qualquer desafio. Meu diferencial está na capacidade de improvisar
-          soluções criativas e absorver novas tecnologias rapidamente. Contribuo
-          com projetos open source, estudo constantemente as melhores práticas
-          do mercado e aplico esse conhecimento em cada projeto que desenvolvo.
-          Procuro minha primeira oportunidade profissional onde possa demonstrar
-          meu potencial, crescer como desenvolvedor e agregar valor real à
-          equipe. Acredito que código bem escrito é resultado de curiosidade,
-          prática constante e vontade genuína de resolver problemas.
+          Busco minha primeira oportunidade profissional para evoluir tecnicamente, trabalhar com profissionais experientes e contribuir com código de qualidade. Encaro desafios complexos como minha principal motivação para crescer e aprimorar minhas habilidades.
+
+Me defino pela curiosidade técnica insaciável, rapidez no aprendizado e comprometimento em transformar problemas em soluções funcionais. Apesar de não ter experiência formal, tenho mais de 2 anos de prática em freelances e projetos pessoais, além de contribuir com projetos open source e aplicar sempre as melhores práticas do mercado.
         </Text>
       </div>
     </div>

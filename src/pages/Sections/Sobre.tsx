@@ -39,74 +39,52 @@ const PROFILE_IMAGE = `${MeRaw}?as=webp&width=400`
 /**
  * React icon component
  */
-const ReactIcon: React.FC = () => (
-  <Code2 className="w-6 h-6" />
-)
+const ReactIcon: React.FC = () => <Code2 className="w-6 h-6" />
 
 /**
  * Node.js icon component
  */
-const NodeIcon: React.FC = () => (
-  <Server className="w-6 h-6" />
-)
+const NodeIcon: React.FC = () => <Server className="w-6 h-6" />
 
 /**
  * TypeScript icon component
  */
-const TypeScriptIcon: React.FC = () => (
-  <Type className="w-6 h-6" />
-)
+const TypeScriptIcon: React.FC = () => <Type className="w-6 h-6" />
 
 /**
  * MongoDB icon component
  */
-const MongoDBIcon: React.FC = () => (
-  <Database className="w-6 h-6" />
-)
+const MongoDBIcon: React.FC = () => <Database className="w-6 h-6" />
 
 /**
  * PostgreSQL icon component
  */
-const PostgreSQLIcon: React.FC = () => (
-  <Database className="w-6 h-6" />
-)
+const PostgreSQLIcon: React.FC = () => <Database className="w-6 h-6" />
 
 /**
  * Docker icon component
  */
-const DockerIcon: React.FC = () => (
-  <Container className="w-6 h-6" />
-)
+const DockerIcon: React.FC = () => <Container className="w-6 h-6" />
 
 /**
  * Git icon component
  */
-const GitIcon: React.FC = () => (
-  <GitBranch className="w-6 h-6" />
-)
+const GitIcon: React.FC = () => <GitBranch className="w-6 h-6" />
 
 /**
  * Python icon component
  */
-const PythonIcon: React.FC = () => (
-  <FileCode className="w-6 h-6" />
-)
+const PythonIcon: React.FC = () => <FileCode className="w-6 h-6" />
 
 /**
  * Tailwind CSS icon component
  */
-const TailwindIcon: React.FC = () => (
-  <Palette className="w-6 h-6" />
-)
+const TailwindIcon: React.FC = () => <Palette className="w-6 h-6" />
 
 /**
  * Django icon component
  */
-const DjangoIcon: React.FC = () => (
-  <Layers className="w-6 h-6" />
-)
-
-
+const DjangoIcon: React.FC = () => <Layers className="w-6 h-6" />
 
 /**
  * Main technologies array with information
@@ -219,13 +197,18 @@ const ProfileSection: React.FC = () => (
       <div className="flex-1" role="main">
         <Text
           size="grande"
-          columns={3}
-          className="flex-1"
+          className="flex-1 md:columns-3 md:gap-4"
           aria-label="Biografia profissional"
         >
-          Busco minha primeira oportunidade profissional para evoluir tecnicamente, trabalhar com profissionais experientes e contribuir com código de qualidade. Encaro desafios complexos como minha principal motivação para crescer e aprimorar minhas habilidades.
-
-Me defino pela curiosidade técnica insaciável, rapidez no aprendizado e comprometimento em transformar problemas em soluções funcionais. Apesar de não ter experiência formal, tenho mais de 2 anos de prática em freelances e projetos pessoais, além de contribuir com projetos open source e aplicar sempre as melhores práticas do mercado.
+          Busco minha primeira oportunidade profissional para evoluir
+          tecnicamente ao lado de profissionais experientes e contribuir com
+          soluções de qualidade. Me motivo por desafios complexos que expandem
+          meus limites e aprimoram minhas capacidades como desenvolvedor. Com
+          mais de 2 anos de experiência prática em freelances e projetos
+          pessoais, desenvolvi uma base sólida em desenvolvimento fullstack.
+          Minha curiosidade técnica, capacidade de aprendizado rápido e
+          comprometimento com código limpo me permitem transformar problemas
+          complexos em soluções funcionais e eficientes.
         </Text>
       </div>
     </div>

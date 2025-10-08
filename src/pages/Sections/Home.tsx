@@ -131,9 +131,7 @@ const HeroPresentationArea: React.FC = () => (
 
     <AnimatedContainer animationType="zoom-out-up">
       <P size="grande" className="leading-relaxed md:max-w-md lg:max-w-none">
-        Desenvolvedor apaixonado em busca da primeira oportunidade, com mais de
-        2 anos de estudo intenso e experiência em freelances. Aprendo rápido,
-        não fujo de desafios e estou pronto para provar meu valor.
+        Desenvolvedor fullstack em início de carreira com experiência prática em projetos reais e forte capacidade de aprendizado.
       </P>
     </AnimatedContainer>
   </div>

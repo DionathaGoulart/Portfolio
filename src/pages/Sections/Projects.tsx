@@ -156,7 +156,7 @@ const PROJECTS_DATA: Project[] = [
     image: PROJECT_IMAGES.default,
     tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
     categories: ['progress', 'frontend', 'backend', 'fullstack'],
-    githubUrl: '',
+    githubUrl: 'https://github.com/DionathaGoulart/Pets',
     demoUrl: ''
   }
 ]

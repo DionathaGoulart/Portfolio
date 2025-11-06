@@ -315,9 +315,9 @@ const ContactHeader: React.FC = () => (
         align="center"
         className="leading-relaxed  md:max-w-none lg:max-w-none"
       >
-        Procurando um desenvolvedor motivado, que aprende rápido e encara
-        qualquer desafio? Vamos conversar sobre como posso contribuir com seu
-        time.
+        Procurando um desenvolvedor fullstack experiente, com mais de 2 anos
+        entregando soluções em produção? Vamos conversar sobre como posso
+        contribuir com seu time e transformar suas ideias em resultados.
       </P>
     </AnimatedContainer>
   </header>

@@ -131,10 +131,11 @@ const HeroPresentationArea: React.FC = () => (
 
     <AnimatedContainer animationType="zoom-out-up">
       <P size="grande" className="leading-relaxed md:max-w-md lg:max-w-none">
-        Desenvolvedor fullstack com experiência prática em projetos reais,
-        combinando conhecimentos em front-end e back-end. Apaixonado por
-        tecnologia e sempre em busca de novos desafios que impulsionem meu
-        crescimento profissional e técnico.
+        Desenvolvedor fullstack experiente especializado em criar soluções
+        completas e escaláveis. Com mais de 2 anos desenvolvendo projetos reais
+        em produção, domino todo o ciclo de desenvolvimento desde o front-end
+        até APIs robustas e bancos de dados. Transformo ideias complexas em
+        aplicações funcionais e eficientes.
       </P>
     </AnimatedContainer>
   </div>

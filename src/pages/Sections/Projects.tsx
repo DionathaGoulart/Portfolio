@@ -17,6 +17,7 @@ import containnerPortfolioRaw from '@assets/images/projects/containner-portfolio
 import CatalogoRaw from '@assets/images/projects/catalogo.jpeg'
 import ManualRaw from '@assets/images/projects/manual.jpeg'
 import AmpareRaw from '@assets/images/projects/ampare.jpeg'
+import HelldiversRaw from '@assets/images/projects/helldivers.jpeg'
 
 // ================================
 // Constants
@@ -34,7 +35,8 @@ const PROJECT_IMAGES = {
   containnerPortfolio: `${containnerPortfolioRaw}?as=webp&width=300`,
   Catalogo: `${CatalogoRaw}?as=webp&width=300`,
   Manual: `${ManualRaw}?as=webp&width=300`,
-  Ampare: `${AmpareRaw}?as=webp&width=300`
+  Ampare: `${AmpareRaw}?as=webp&width=300`,
+  Helldivers: `${HelldiversRaw}?as=webp&width=300`
 } as const
 
 /**
@@ -53,6 +55,24 @@ const FILTER_OPTIONS: FilterOption[] = [
  * Structured for easy filtering and display
  */
 const PROJECTS_DATA: Project[] = [
+  {
+    id: '0',
+    title: 'Helldivers 2',
+    description:
+      'Sistema de gerenciamento de armaduras e sets do Helldivers 2. Next.js com API Django.',
+    image: PROJECT_IMAGES.Helldivers,
+    tags: [
+      'Next.js',
+      'Django',
+      'Python',
+      'TypeScript',
+      'Tailwind CSS',
+      'PostgreSQL'
+    ],
+    categories: ['frontend', 'backend', 'fullstack'],
+    githubUrl: 'https://github.com/DionathaGoulart/Helldivers',
+    demoUrl: 'https://gooddivers.dionatha.com.br'
+  },
   {
     id: '1',
     title: 'Portfolio Branding',
@@ -157,6 +177,17 @@ const PROJECTS_DATA: Project[] = [
     tags: ['React', 'Node.js', 'MongoDB', 'JWT'],
     categories: ['progress', 'frontend', 'backend', 'fullstack'],
     githubUrl: 'https://github.com/DionathaGoulart/Pets',
+    demoUrl: ''
+  },
+  {
+    id: '10',
+    title: 'Chat de Texto',
+    description:
+      'Aplicação de chat em tempo real com mensagens encriptadas. Next.js com Supabase para segurança e performance.',
+    image: PROJECT_IMAGES.default,
+    tags: ['Next.js', 'Supabase', 'TypeScript', 'Tailwind CSS'],
+    categories: ['progress', 'frontend', 'backend', 'fullstack'],
+    githubUrl: '',
     demoUrl: ''
   }
 ]

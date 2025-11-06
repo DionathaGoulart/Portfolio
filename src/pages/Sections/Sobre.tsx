@@ -19,7 +19,8 @@ import {
   GitBranch,
   FileCode,
   Palette,
-  Layers
+  Layers,
+  Sparkles
 } from 'lucide-react'
 
 // ================================
@@ -40,6 +41,11 @@ const PROFILE_IMAGE = `${MeRaw}?as=webp&width=400`
  * React icon component
  */
 const ReactIcon: React.FC = () => <Code2 className="w-6 h-6" />
+
+/**
+ * Next.js icon component
+ */
+const NextIcon: React.FC = () => <Sparkles className="w-6 h-6" />
 
 /**
  * Node.js icon component
@@ -95,6 +101,11 @@ const TECHNOLOGIES: Technology[] = [
     title: 'React',
     subtitle: 'Library',
     icon: <ReactIcon />
+  },
+  {
+    title: 'Next.js',
+    subtitle: 'Framework',
+    icon: <NextIcon />
   },
   {
     title: 'Node.js',
@@ -200,15 +211,17 @@ const ProfileSection: React.FC = () => (
           className="flex-1 md:columns-3 md:gap-4"
           aria-label="Biografia profissional"
         >
-          Busco minha primeira oportunidade profissional para evoluir
-          tecnicamente ao lado de profissionais experientes e contribuir com
-          soluções de qualidade. Me motivo por desafios complexos que expandem
-          meus limites e aprimoram minhas capacidades como desenvolvedor. Com
-          mais de 2 anos de experiência prática em freelances e projetos
-          pessoais, desenvolvi uma base sólida em desenvolvimento fullstack.
-          Minha curiosidade técnica, capacidade de aprendizado rápido e
-          comprometimento com código limpo me permitem transformar problemas
-          complexos em soluções funcionais e eficientes.
+          Desenvolvedor fullstack experiente com mais de 2 anos entregando
+          soluções em produção para diversos clientes. Especialista em
+          arquitetar e desenvolver aplicações web completas e escaláveis, desde
+          interfaces modernas e responsivas até APIs REST robustas e bancos de
+          dados otimizados. Domino tecnologias modernas como React, Next.js,
+          Node.js, Django, TypeScript e PostgreSQL, sempre seguindo as melhores
+          práticas da indústria. Minha experiência inclui desenvolvimento de
+          sistemas complexos, integração de APIs, otimização de performance e
+          implementação de arquiteturas escaláveis. Combino código limpo,
+          arquitetura sólida e atenção aos detalhes para entregar soluções de
+          alta qualidade que geram valor real para os negócios.
         </Text>
       </div>
     </div>

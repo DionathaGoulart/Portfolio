@@ -81,8 +81,7 @@ $filter-sizes: (
 }
 
 @mixin filter-button-disabled {
-  @apply opacity-50 cursor-not-allowed;
-  transform: none !important;
+  @apply opacity-50 cursor-not-allowed transform-none;
 }
 
 @mixin filter-size($size-key) {

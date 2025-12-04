@@ -1,5 +1,5 @@
 import React, { JSX } from 'react'
-import { Github, ExternalLink, Clock } from 'lucide-react'
+import { Github, ExternalLink, Clock, Lock } from 'lucide-react'
 import { Button, P, Title, Tag } from '@shared'
 import { ProjectCardProps, ProjectGridProps, Project } from '@types'
 import '@styles/ui/projectcard.scss'
@@ -174,6 +174,7 @@ const buildGridClasses = (
 const createSkeletonProject = (index: number): Project => ({
   id: `skeleton-${index}`,
   title: 'Loading Project Title...',
+  subtitle: 'Loading...',
   description:
     'Loading project description that will be replaced with actual content when data loads...',
   image: '/placeholder.jpg',
@@ -199,6 +200,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
   onGithubClick,
   onDemoClick,
+  onCardClick,
   className = '',
   size = 'medium',
   variant = 'default',
@@ -238,7 +240,25 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   // EVENT HANDLERS
   // ================================
 
+  const handleCardClick = (e: React.MouseEvent<HTMLDivElement>): void => {
+    // Não abrir modal se clicar nos botões
+    if (
+      (e.target as HTMLElement).closest('.project-card__buttons') ||
+      (e.target as HTMLElement).closest('button')
+    ) {
+      return
+    }
+
+    if (shouldAllowInteraction() && onCardClick) {
+      onCardClick(project.id)
+    }
+  }
+
   const handleGithubClick = (): void => {
+    // Não permitir clique se for privado
+    if (project.private) {
+      return
+    }
     if (shouldAllowInteraction() && onGithubClick) {
       onGithubClick(project.id)
     }
@@ -253,8 +273,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   const handleKeyDown = (event: React.KeyboardEvent): void => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault()
-      if (!isInProgress) {
-        handleDemoClick()
+      if (shouldAllowInteraction() && onCardClick) {
+        onCardClick(project.id)
       }
     }
   }
@@ -271,6 +291,25 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     return shouldAllowInteraction() ? 0 : -1
   }
 
+  const truncateDescription = (text: string, maxLength: number = 75): string => {
+    if (text.length <= maxLength) {
+      return text
+    }
+    
+    // Corta no limite
+    const truncated = text.slice(0, maxLength)
+    
+    // Encontra o último espaço antes do limite para não cortar palavras
+    const lastSpaceIndex = truncated.lastIndexOf(' ')
+    
+    // Se encontrou um espaço, corta até lá; senão, usa o limite mesmo
+    const finalText = lastSpaceIndex > 0 
+      ? truncated.slice(0, lastSpaceIndex).trim()
+      : truncated.trim()
+    
+    return finalText + '...'
+  }
+
   // ================================
   // RENDER
   // ================================
@@ -278,6 +317,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   return (
     <div
       className={cardClasses}
+      onClick={handleCardClick}
       onKeyDown={handleKeyDown}
       tabIndex={getTabIndex()}
       role="button"
@@ -322,7 +362,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           {project.title}
         </Title>
 
-        <P className="project-card__description">{project.description}</P>
+        <P size="pequeno" className="project-card__subtitle">
+          {project.subtitle}
+        </P>
+
+        <P className="project-card__description">
+          {truncateDescription(project.description)}
+        </P>
 
         {/* Tags with fixed height */}
         <div className="project-card__tags">
@@ -339,22 +385,31 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
 
         {/* Action Buttons with fixed height */}
-        <div className="project-card__buttons">
-          <Button
-            variant="outline"
-            size="pequeno"
-            onClick={handleGithubClick}
-            disabled={!shouldAllowInteraction()}
-          >
-            <Github size={16} />
-            GitHub
-          </Button>
+        <div
+          className={`project-card__buttons ${
+            isInProgress ? 'project-card__buttons--single' : ''
+          }`}
+        >
+          {!isInProgress && (
+            <Button
+              variant="outline"
+              size="pequeno"
+              onClick={handleGithubClick}
+              disabled={!shouldAllowInteraction() || project.private}
+              className={project.private ? 'project-card__button--private' : ''}
+            >
+              {project.private ? <Lock size={16} /> : <Github size={16} />}
+              {project.private ? 'Privado' : 'GitHub'}
+            </Button>
+          )}
 
           <Button
             size="pequeno"
             onClick={handleDemoClick}
             disabled={!shouldAllowInteraction() || isInProgress}
             variant={isInProgress ? 'outline' : 'solid'}
+            color={isInProgress ? 'warning' : 'primary'}
+            className={isInProgress ? 'project-card__button--full-width project-card__button--progress' : ''}
           >
             {isInProgress ? (
               <>
@@ -390,6 +445,7 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({
   projects,
   onGithubClick,
   onDemoClick,
+  onCardClick,
   emptyMessage = DEFAULT_EMPTY_MESSAGE,
   className = '',
   columns = 'responsive',
@@ -416,6 +472,7 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({
       project={project}
       onGithubClick={onGithubClick}
       onDemoClick={onDemoClick}
+      onCardClick={onCardClick}
       loading={loading}
     />
   )

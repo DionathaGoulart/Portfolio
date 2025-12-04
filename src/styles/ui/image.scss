@@ -393,7 +393,7 @@ $neon-blur-mobile: 4px;
 // Alternative breathing effect
 .image--neon-breathe {
   &::after {
-    animation: neon-breathe 4s ease-in-out infinite !important;
+    animation: neon-breathe 4s ease-in-out infinite;
   }
 }
 

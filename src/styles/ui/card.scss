@@ -233,22 +233,22 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   // OVERRIDE DE BORDAS (quando borderColor é especificado)
   // ============================================================================
   &--border-primary {
-    border-color: rgb(var(--color-primary)) !important;
+    border-color: rgb(var(--color-primary));
   }
   &--border-secondary {
-    border-color: rgb(var(--color-secondary)) !important;
+    border-color: rgb(var(--color-secondary));
   }
   &--border-accent {
-    border-color: rgb(var(--color-accent)) !important;
+    border-color: rgb(var(--color-accent));
   }
   &--border-success {
-    border-color: rgb(var(--color-success)) !important;
+    border-color: rgb(var(--color-success));
   }
   &--border-warning {
-    border-color: rgb(var(--color-warning)) !important;
+    border-color: rgb(var(--color-warning));
   }
   &--border-error {
-    border-color: rgb(var(--color-error)) !important;
+    border-color: rgb(var(--color-error));
   }
 
   // ============================================================================

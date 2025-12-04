@@ -64,6 +64,7 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
   &:hover:not(.project-card--disabled) {
     @apply transform scale-105 -translate-y-2;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
 
     .project-card__image {
       @apply transform scale-110;
@@ -87,7 +88,9 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
   display: -webkit-box;
   -webkit-line-clamp: $lines;
   -webkit-box-orient: vertical;
-  @apply overflow-hidden;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
 }
 
 // ============================================================================
@@ -99,11 +102,12 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
   @include card-focus-ring;
   @include card-hover-effect;
 
-  @apply relative overflow-hidden cursor-default;
+  @apply relative overflow-hidden cursor-default flex flex-col;
   background-color: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: $card-border-radius;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  height: 100%; // Garante que todos os cards tenham a mesma altura
 
   // Progress Badge
   &__progress-badge {
@@ -162,41 +166,119 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
 
   // Content area
   &__content {
-    @apply relative flex flex-col;
-    padding: $card-content-padding;
-    min-height: 200px; // Altura mínima para alinhar os botões
+    @apply relative flex flex-col flex-1 min-h-0;
+    @apply pr-8 pb-8 pl-8 pt-3; // 32px nas laterais e bottom, 12px no top
   }
 
   &__title {
     @include card-transition;
-    @apply mb-3 font-semibold text-xl leading-tight;
+    @apply mb-2 font-semibold text-xl leading-tight;
     color: var(--card-text);
+    min-height: 3rem; // Altura mínima para títulos (2 linhas)
+    max-height: 5rem; // Altura máxima para títulos (permite mais espaço)
+    display: -webkit-box;
+    -webkit-line-clamp: 3; // Permite até 3 linhas
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex-shrink: 0; // Não encolhe
+    line-height: 1.5; // Aumenta o line-height para melhor espaçamento
+    margin: 0; // Remove todas as margens (incluindo margin padrão do h3)
+  }
+
+  &__subtitle {
+    @apply mb-3 text-xs font-semibold uppercase tracking-wider;
+    color: rgb(var(--color-primary) / 0.8);
+    text-align: center;
+    flex-shrink: 0; // Não encolhe
+    min-height: 1.25rem; // Altura mínima
+    letter-spacing: 0.05em;
+    opacity: 0.9;
   }
 
   &__description {
-    @include text-clamp(3);
-    @apply mb-6 text-base leading-relaxed flex-grow;
+    @apply mb-6 text-base leading-relaxed;
     color: var(--card-text-muted);
+    flex-shrink: 0; // Não encolhe
+    line-height: 1.5; // Altura da linha para cálculo correto
+    word-wrap: break-word; // Quebra palavras longas
+    overflow-wrap: break-word; // Quebra palavras longas
   }
 
   &__tags {
     @apply flex flex-wrap gap-2 mb-6;
+    flex-shrink: 0; // Não encolhe
+    min-height: fit-content;
   }
 
   &__buttons {
-    @apply flex gap-3 mt-auto; // mt-auto empurra os botões para o final
+    @apply flex gap-3;
+    margin-top: auto; // Empurra os botões para o final
+    flex-shrink: 0; // Não encolhe
 
     .btn {
       @include card-transition;
       @apply flex-1 flex items-center justify-center gap-2;
 
-      &:hover {
+      &:hover:not(:disabled) {
         @apply cursor-pointer;
       }
 
       &:disabled,
       &.btn--disabled {
-        @apply cursor-not-allowed;
+        @apply cursor-not-allowed opacity-50;
+        pointer-events: none;
+      }
+    }
+
+    // Override para botão em progresso
+    .project-card__button--full-width {
+      @apply w-full min-w-full max-w-full;
+      flex: none;
+    }
+
+    // Botão privado - estilo especial para indicar que não é clicável
+    .project-card__button--private {
+      @apply opacity-50 cursor-not-allowed;
+      pointer-events: none;
+      
+      &:hover {
+        @apply opacity-50 cursor-not-allowed;
+        @apply transform-none;
+        @apply shadow-none;
+      }
+    }
+
+    // Botão em progresso - estilo com paleta amarela
+    .project-card__button--progress {
+      border-color: $progress-color-medium;
+      color: $progress-color;
+      
+      &:hover:not(:disabled) {
+        background-color: $progress-color-medium;
+        color: rgb(var(--color-text));
+        border-color: $progress-color;
+      }
+
+      &:disabled {
+        border-color: $progress-color-medium;
+        color: $progress-color;
+        opacity: 0.7;
+      }
+    }
+
+    // Container quando há apenas um botão (em progresso)
+    &--single {
+      @apply gap-0 w-full flex justify-stretch items-stretch;
+
+      // Container do botão também precisa ocupar 100%
+      .btn-container {
+        @apply w-full min-w-full max-w-full;
+        flex: 1 1 100%;
+      }
+
+      .btn {
+        @apply w-full min-w-full max-w-full;
+        flex: 1 1 100%;
       }
     }
   }
@@ -251,6 +333,15 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
       }
     }
 
+    // Tags com paleta amarela
+    .project-card__tags {
+      .tag {
+        border-color: $progress-color-medium;
+        color: $progress-color;
+        background-color: $progress-color-light;
+      }
+    }
+
     &:hover {
       .project-card__title {
         color: var(--card-progress);
@@ -293,7 +384,6 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
   &--compact {
     .project-card__content {
       padding: $card-content-padding-compact;
-      min-height: 160px; // Altura menor para compact
     }
 
     .project-card__image-container {
@@ -302,10 +392,14 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
 
     .project-card__title {
       @apply text-lg mb-2;
+      min-height: 2.5rem;
+      max-height: 2.5rem;
     }
 
     .project-card__description {
       @apply mb-4 text-sm;
+      min-height: 3.5rem;
+      max-height: 3.5rem;
     }
 
     .project-card__buttons {
@@ -329,7 +423,6 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
   &--large {
     .project-card__content {
       padding: $card-content-padding-large;
-      min-height: 240px; // Altura maior para large
     }
 
     .project-card__image-container {
@@ -338,10 +431,14 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
 
     .project-card__title {
       @apply text-2xl mb-4;
+      min-height: 3.5rem;
+      max-height: 3.5rem;
     }
 
     .project-card__description {
       @apply mb-8 text-lg;
+      min-height: 5.5rem;
+      max-height: 5.5rem;
     }
 
     .project-card__progress-badge {
@@ -362,6 +459,7 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
 .project-grid {
   @apply grid w-full;
   gap: 1.5rem; // Default medium gap
+  align-items: stretch; // Garante que todos os cards tenham a mesma altura
 
   // Column system - responsive optimized
   &--1 {
@@ -383,6 +481,13 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
   // Custom responsive system
   &--responsive {
     @apply grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+  }
+
+  // Garante que os cards dentro do grid tenham altura uniforme
+  .project-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   // Gap variations
@@ -509,7 +614,7 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
 // ============================================================================
 
 .project-grid .project-card {
-  @apply cursor-default;
+  @apply cursor-pointer;
 
   * {
     cursor: inherit;
@@ -533,13 +638,18 @@ $progress-color-strong: rgba(255, 165, 0, 0.9);
     }
   }
 
-  // Non-clickable elements
+  // Non-clickable elements inside clickable card
   .project-card__title,
   .project-card__description,
   .project-card__image,
   .project-card__tags,
   .project-card__content {
-    @apply cursor-default;
+    @apply cursor-pointer;
+  }
+
+  // Disabled state
+  &--disabled {
+    @apply cursor-not-allowed;
   }
 }
 

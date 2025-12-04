@@ -32,27 +32,49 @@ export type GridGap = 'small' | 'medium' | 'large'
 // ================================
 
 /**
+ * Detalhes adicionais do projeto para exibição no modal
+ */
+export interface ProjectDetails {
+  /** Propósito do projeto - para que foi criado */
+  purpose?: string
+  /** Motivo da criação - por que foi criado */
+  why?: string
+  /** Desafios enfrentados durante o desenvolvimento */
+  challenges?: string
+  /** Tecnologias principais utilizadas */
+  keyTechnologies?: string[]
+  /** Resultados alcançados */
+  results?: string
+}
+
+/**
  * Interface de estrutura de dados do projeto
  *
  * @interface Project
  * @property {string} id - Identificador único do projeto
  * @property {string} title - Título do projeto
+ * @property {string} subtitle - Subtítulo explicando o tipo de projeto (ex: "Landing Page", "E-commerce")
  * @property {string} description - Descrição do projeto
  * @property {string} image - URL da imagem do projeto ou componente
  * @property {string[]} tags - Array de tags de tecnologia
  * @property {ProjectCategory[]} categories - Array de categorias do projeto
  * @property {string} githubUrl - URL do repositório GitHub
  * @property {string} demoUrl - URL da demo ao vivo
+ * @property {boolean} private - Se o repositório é privado
+ * @property {ProjectDetails} details - Detalhes adicionais do projeto
  */
 export interface Project {
   id: string
   title: string
+  subtitle: string
   description: string
   image: string
   tags: string[]
   categories: ProjectCategory[]
   githubUrl: string
   demoUrl: string
+  private?: boolean
+  details?: ProjectDetails
 }
 
 /**
@@ -62,6 +84,7 @@ export interface Project {
  * @property {Project} project - Dados do projeto para exibir
  * @property {(projectId: string) => void} onGithubClick - Manipulador de clique do botão GitHub
  * @property {(projectId: string) => void} onDemoClick - Manipulador de clique do botão Demo
+ * @property {(projectId: string) => void} onCardClick - Manipulador de clique no card inteiro
  * @property {string} className - Classes CSS adicionais
  * @property {CardSize} size - Variante de tamanho do card
  * @property {CardVariant} variant - Variante visual do card
@@ -76,6 +99,7 @@ export interface ProjectCardProps {
   // Funcionalidade
   onGithubClick?: (projectId: string) => void
   onDemoClick?: (projectId: string) => void
+  onCardClick?: (projectId: string) => void
 
   // Aparência
   size?: CardSize
@@ -95,6 +119,7 @@ export interface ProjectCardProps {
  * @property {Project[]} projects - Array de projetos para exibir
  * @property {(projectId: string) => void} onGithubClick - Manipulador de clique do botão GitHub
  * @property {(projectId: string) => void} onDemoClick - Manipulador de clique do botão Demo
+ * @property {(projectId: string) => void} onCardClick - Manipulador de clique no card inteiro
  * @property {string} emptyMessage - Mensagem exibida quando não há projetos
  * @property {string} className - Classes CSS adicionais
  * @property {GridColumns} columns - Número de colunas do grid
@@ -109,6 +134,7 @@ export interface ProjectGridProps {
   // Funcionalidade
   onGithubClick?: (projectId: string) => void
   onDemoClick?: (projectId: string) => void
+  onCardClick?: (projectId: string) => void
 
   // Layout
   columns?: GridColumns

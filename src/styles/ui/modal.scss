@@ -1,0 +1,195 @@
+// ============================================================================
+// MODAL STYLES
+// ============================================================================
+
+.modal-overlay {
+  @apply fixed inset-0 z-50 flex items-center justify-center;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease-out;
+  padding: 1rem;
+
+  @media (max-width: 640px) {
+    padding: 0.5rem;
+  }
+}
+
+.modal-content {
+  @apply relative rounded-2xl shadow-2xl;
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-border));
+  max-width: 800px;
+  max-height: 90vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease-out;
+  color: rgb(var(--color-text));
+
+  @media (max-width: 640px) {
+    max-height: 95vh;
+    border-radius: 1rem;
+  }
+}
+
+.modal-header {
+  @apply flex items-center justify-between p-6;
+  border-bottom: 1px solid rgb(var(--color-border));
+  flex-shrink: 0;
+
+  @media (max-width: 640px) {
+    @apply p-4;
+  }
+}
+
+.modal-title-container {
+  @apply flex-1 pr-4 flex flex-col gap-1;
+}
+
+.modal-title {
+  margin: 0;
+}
+
+.modal-subtitle {
+  @apply text-xs font-semibold uppercase tracking-wider;
+  color: rgb(var(--color-primary) / 0.8);
+  margin: 0;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
+
+.modal-close {
+  @apply flex items-center justify-center w-10 h-10 rounded-lg;
+  @apply transition-colors duration-200;
+  background: rgb(var(--color-surface));
+  border: 1px solid rgb(var(--color-border));
+  color: rgb(var(--color-text));
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &:hover {
+    background: rgb(var(--color-background));
+    border-color: rgb(var(--color-primary));
+  }
+
+  &:focus-visible {
+    @apply outline-none;
+    box-shadow: 0 0 0 2px rgb(var(--color-background)),
+      0 0 0 4px rgb(var(--color-primary) / 0.5);
+  }
+}
+
+.modal-image-container {
+  @apply relative w-full overflow-hidden;
+  height: 300px;
+  flex-shrink: 0;
+  background: rgb(var(--color-background));
+
+  @media (max-width: 640px) {
+    height: 200px;
+  }
+}
+
+.modal-image {
+  @apply w-full h-full object-cover;
+}
+
+.modal-body {
+  @apply flex flex-col gap-6 p-6 overflow-y-auto;
+  flex: 1;
+
+  @media (max-width: 640px) {
+    @apply gap-4 p-4;
+  }
+}
+
+.modal-section {
+  @apply flex flex-col gap-3;
+}
+
+.modal-section-title {
+  @apply text-lg font-semibold;
+  margin: 0;
+  color: rgb(var(--color-text));
+}
+
+.modal-description {
+  @apply leading-relaxed;
+  color: rgb(var(--color-text) / 0.9);
+}
+
+.modal-details {
+  @apply flex flex-col gap-4;
+}
+
+.modal-detail-item {
+  @apply flex flex-col gap-2;
+}
+
+.modal-detail-title {
+  @apply text-base font-semibold;
+  margin: 0;
+  color: rgb(var(--color-primary));
+}
+
+.modal-detail-text {
+  @apply leading-relaxed;
+  color: rgb(var(--color-text) / 0.8);
+}
+
+.modal-tags {
+  @apply flex flex-wrap gap-2;
+}
+
+.modal-actions {
+  @apply flex gap-3 mt-4;
+  flex-shrink: 0;
+
+  @media (max-width: 640px) {
+    @apply flex-col;
+  }
+
+  .btn {
+    @apply flex-1;
+  }
+}
+
+// ============================================================================
+// ANIMATIONS
+// ============================================================================
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// ============================================================================
+// DARK THEME ADJUSTMENTS
+// ============================================================================
+
+.dark {
+  .modal-overlay {
+    background: rgba(0, 0, 0, 0.85);
+  }
+
+  .modal-content {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+}
+

@@ -148,6 +148,11 @@ const HeroPresentationArea: React.FC = () => (
 const HeroActionButtons: React.FC = () => {
   const { handleVerTrabalhos, handleContato } = useHomeNavigation()
 
+  const handleDownloadCV = () => {
+    analytics.trackButtonClick('download_cv')
+    window.open('/cv.pdf', '_blank')
+  }
+
   return (
     <div className="flex flex-col sm:flex-row gap-4 pt-4 sm:justify-center md:justify-start">
       <AnimatedContainer animationType="fade-up-right">
@@ -159,6 +164,18 @@ const HeroActionButtons: React.FC = () => {
           aria-label="Ver meus trabalhos e projetos"
         >
           {ACTION_BUTTONS.trabalhos.text}
+        </Button>
+      </AnimatedContainer>
+
+      <AnimatedContainer animationType="fade-up">
+        <Button
+          variant="outline"
+          size="grande"
+          onClick={handleDownloadCV}
+          className="w-full sm:w-auto"
+          aria-label="Baixar Curriculo PDF"
+        >
+          Baixar CV
         </Button>
       </AnimatedContainer>
 

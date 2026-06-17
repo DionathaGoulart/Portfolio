@@ -1,16 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import CVViewer from '@/components/shared/CVViewer';
-import Link from 'next/link';
 import { Metadata } from 'next';
+import { generatePersonSchema } from '@/lib/schema';
+import { Header } from "@/components/shared/Header";
 
 export const metadata: Metadata = {
   title: "CV | IT Operations Specialist - Dionatha Goulart",
   description: "Currículo de Dionatha Goulart focado em Infraestrutura, Redes e Automação de TI.",
 };
-
-import { generatePersonSchema } from '@/lib/schema';
-import { PrintButton } from '@/components/shared/PrintButton';
 
 export default function TiCVPage() {
   const filePath = path.join(process.cwd(), 'src/data/cv-ti.md');
@@ -18,18 +16,19 @@ export default function TiCVPage() {
   const schema = generatePersonSchema('TI');
 
   return (
-    <div className="min-h-screen bg-black text-white p-4 md:p-8">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
-      <nav className="max-w-4xl mx-auto mb-8 flex justify-between items-center">
-        <Link href="/ti" className="text-green-400 hover:text-green-300 transition-colors flex items-center gap-2">
-          ← Voltar ao Portfólio
-        </Link>
-        <PrintButton persona="TI" />
-      </nav>
-      <CVViewer content={content} persona="TI" />
-    </div>
+    <main className="selection:bg-accent selection:text-white font-mono p-4 md:p-6 overflow-x-hidden">
+      <Header cvContent={content} />
+
+      <div className="max-w-4xl mx-auto mt-28 md:mt-32">
+        <CVViewer content={content} persona="TI" />
+      </div>
+
+      {/* Footer / System Status */}
+      <footer className="max-w-4xl mx-auto pt-12 md:pt-16 border-t border-border-custom/10 text-[8px] md:text-[10px] opacity-30 flex flex-wrap justify-between gap-4 uppercase tracking-[0.2em] mt-20">
+        <span>© 2026 DG_OS_V1.0</span>
+        <span className="hidden sm:inline">ENC: AES-256-GCM</span>
+        <span>LAT: -29.9961 / LONG: -51.0858</span>
+      </footer>
+    </main>
   );
 }

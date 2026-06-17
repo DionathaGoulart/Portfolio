@@ -21,20 +21,24 @@ export function Header() {
 
   const scrollToTop = (e: React.MouseEvent) => {
     if (pathname === '/dev' || pathname === '/ti') {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const isCV = pathname.includes('/cv');
+      if (!isCV) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
   };
 
   const navLinks = [
-    { href: "#about", label: "Sobre" },
-    { href: "#projects", label: "Projetos" },
-    { href: "#experience", label: "Experiência" },
-    { href: "#contact", label: "Contato" },
+    { href: "/dev#about", label: "Sobre", scroll: true },
+    { href: "/dev#projects", label: "Projetos", scroll: true },
+    { href: "/dev#experience", label: "Experiência", scroll: true },
+    { href: "/dev#contact", label: "Contato", scroll: true },
+    { href: "/dev/cv", label: "Currículo", scroll: false },
   ];
 
   return (
-    <header className="fixed top-0 left-0 w-full z-[100] py-4 md:py-6 pointer-events-none">
+    <header className="fixed top-0 left-0 w-full z-[100] py-3 md:py-6 pointer-events-none">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 flex justify-between items-center pointer-events-auto">
         <Link 
           href={isDev ? "/dev" : (isTi ? "/ti" : "/")} 
@@ -49,13 +53,13 @@ export function Header() {
           {isDev && (
             <div className="hidden lg:flex retro-border bg-card p-1 retro-shadow-sm">
               {navLinks.map((link) => (
-                <a 
+                <Link 
                   key={link.href}
                   href={link.href} 
                   className="px-4 py-2 hover:bg-accent hover:text-white transition-all font-bold text-sm uppercase tracking-tighter"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
             </div>
           )}
@@ -87,14 +91,14 @@ export function Header() {
           >
             <div className="retro-border bg-card p-4 retro-shadow-sm flex flex-col gap-2">
               {navLinks.map((link) => (
-                <a 
+                <Link 
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="retro-border bg-background p-4 font-black text-base uppercase tracking-widest hover:bg-accent hover:text-white transition-all"
+                  className="retro-border bg-background p-4 font-black text-base uppercase tracking-widest hover:bg-accent hover:text-white transition-all text-center"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
             </div>
           </motion.div>

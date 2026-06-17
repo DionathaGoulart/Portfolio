@@ -25,7 +25,7 @@ export default function DevPage() {
   return (
     <div ref={containerRef} className="selection:bg-accent selection:text-white">
       <Header />
-      <main className="max-w-7xl mx-auto px-6 md:px-10 pb-20 pt-20 md:pt-0">
+      <main className="max-w-7xl mx-auto px-6 md:px-10 pb-20 pt-28 md:pt-32">
         <Hero />
         <About />
         <Projects />

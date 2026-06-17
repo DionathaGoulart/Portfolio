@@ -1,39 +1,28 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { tiContent } from "@/data/ti-config";
+import { useTheme } from "next-themes";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+import { Header } from "@/components/shared/Header";
 
 export default function TiPage() {
   const terminalRef = useRef(null);
 
   return (
     <main className="selection:bg-accent selection:text-white font-mono p-4 md:p-6 overflow-x-hidden">
-      {/* Terminal Style Header */}
-      <nav className="flex justify-between items-center mb-12 md:mb-16 border-b border-border-custom/30 pb-4">
-        <div className="flex gap-2 md:gap-4 items-center overflow-hidden">
-          <Link href="/" className="hover:bg-accent hover:text-white px-1 md:px-2 transition-colors text-[10px] sm:text-xs md:text-base whitespace-nowrap">
-            ~/home
-          </Link>
-          <span className="text-border-custom/30 text-[10px] md:text-base">|</span>
-          <span className="text-[9px] md:text-xs animate-pulse text-accent whitespace-nowrap flex items-center gap-1">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-            <span className="hidden sm:inline">SYSTEM_ONLINE</span>
-            <span className="sm:hidden">ONLINE</span>
-          </span>
-        </div>
-        <div className="flex gap-3 md:gap-6 items-center">
-          <Link href="/ti/cv" className="hover:bg-accent hover:text-white px-1 md:px-2 transition-colors text-[10px] sm:text-xs md:text-base border border-accent/20 rounded px-2">
-            ./cv
-          </Link>
-          <ThemeToggle />
-        </div>
-      </nav>
-
+      <Header />
       {/* Hero / Terminal Intro */}
-      <section className="max-w-4xl mx-auto space-y-6 md:space-y-8 mb-16 md:mb-24">
+      <section className="max-w-4xl mx-auto space-y-6 md:space-y-8 mb-16 md:mb-24 mt-28 md:mt-32">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}

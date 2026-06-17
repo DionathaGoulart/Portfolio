@@ -13,13 +13,21 @@ export default function TiPage() {
     <main className="selection:bg-accent selection:text-white font-mono p-4 md:p-6 overflow-x-hidden">
       {/* Terminal Style Header */}
       <nav className="flex justify-between items-center mb-12 md:mb-16 border-b border-border-custom/30 pb-4">
-        <div className="flex gap-2 md:gap-4 items-center">
-          <Link href="/" className="hover:bg-accent hover:text-white px-2 transition-colors text-xs md:text-base">root@dionatha: ~</Link>
-          <span className="text-border-custom/30 text-xs md:text-base">|</span>
-          <span className="text-[10px] md:text-xs animate-pulse text-accent whitespace-nowrap">● SYSTEM_ONLINE</span>
+        <div className="flex gap-2 md:gap-4 items-center overflow-hidden">
+          <Link href="/" className="hover:bg-accent hover:text-white px-1 md:px-2 transition-colors text-[10px] sm:text-xs md:text-base whitespace-nowrap">
+            ~/home
+          </Link>
+          <span className="text-border-custom/30 text-[10px] md:text-base">|</span>
+          <span className="text-[9px] md:text-xs animate-pulse text-accent whitespace-nowrap flex items-center gap-1">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+            <span className="hidden sm:inline">SYSTEM_ONLINE</span>
+            <span className="sm:hidden">ONLINE</span>
+          </span>
         </div>
-        <div className="flex gap-4 md:gap-6 items-center">
-          <Link href="/ti/cv" className="hover:bg-accent hover:text-white px-2 transition-colors text-xs md:text-base">/view-cv</Link>
+        <div className="flex gap-3 md:gap-6 items-center">
+          <Link href="/ti/cv" className="hover:bg-accent hover:text-white px-1 md:px-2 transition-colors text-[10px] sm:text-xs md:text-base border border-accent/20 rounded px-2">
+            ./cv
+          </Link>
           <ThemeToggle />
         </div>
       </nav>

@@ -1,5 +1,5 @@
 # Dionatha Goulart
-**IT Operations Specialist | Infrastructure & Automation Engineer**
+**Especialista em Operações de TI | Engenheiro de Infraestrutura e Automação**
 
 Alvorada, RS  |  (51) 98648-5232  |  [dionatha.work@gmail.com](mailto:dionatha.work@gmail.com)
 
@@ -7,59 +7,59 @@ Alvorada, RS  |  (51) 98648-5232  |  [dionatha.work@gmail.com](mailto:dionatha.w
 
 ---
 
-## 🛠️ Professional Summary
-Infrastructure and IT Operations specialist with extensive experience in **Level 2 Technical Support**, network diagnostics, and process automation. Expert in managing critical environments, ensuring high availability, and optimizing workflows through **Python/Bash scripting** and **Docker**. Proven ability to resolve complex incidents in TCP/IP environments and manage ERP infrastructure (Tiny).
+## 🛠️ Resumo Profissional
+Especialista em Infraestrutura e Operações de TI com ampla experiência em **Suporte Técnico Nível 2**, diagnóstico de redes e automação de processos. Especialista em gestão de ambientes críticos, garantindo alta disponibilidade e otimizando fluxos de trabalho através de **scripts Python/Bash** e **Docker**. Capacidade comprovada de resolver incidentes complexos em ambientes TCP/IP e gerenciar infraestrutura de ERP (Tiny).
 
 ---
 
-## ⚙️ Core Competencies
-- **Infrastructure:** Linux Administration, Docker, Networking (TCP/IP), VPN, DNS, DHCP.
-- **Automation:** Python, Bash Scripting, GitHub Actions, CI/CD.
-- **Monitoring & Support:** Zabbix, GLPI, Troubleshooting, Incident Management (ITIL).
-- **Databases:** PostgreSQL, MySQL, Supabase.
-- **Tools:** Postman, Git, Windows Server, Active Directory.
+## ⚙️ Competências Principais
+- **Infraestrutura:** Administração Linux, Docker, Redes (TCP/IP), VPN, DNS, DHCP.
+- **Automação:** Python, Bash Scripting, GitHub Actions, CI/CD.
+- **Monitoramento e Suporte:** Zabbix, GLPI, Troubleshooting, Gestão de Incidentes (ITIL).
+- **Bancos de Dados:** PostgreSQL, MySQL, Supabase.
+- **Ferramentas:** Postman, Git, Windows Server, Active Directory.
 
 ---
 
-## 💼 Professional Experience
+## 💼 Experiência Profissional
 
-### **Cybernetrs LTDA** | Level 2 Technical Support Specialist
-*March 2023 – October 2024*
+### **Cybernetrs LTDA** | Especialista em Suporte Técnico Nível 2
+*Março de 2023 – Outubro de 2024*
 
-- **Incident Response:** Diagnosed and resolved complex network and infrastructure incidents in high-pressure environments.
-- **Process Automation:** Developed Python scripts and internal tools to automate repetitive tasks, significantly reducing MTTR (Mean Time to Repair).
-- **Network Management:** Managed TCP/IP environments, ensuring connectivity and performance for corporate clients.
-- **Documentation:** Created and maintained comprehensive technical documentation for infrastructure procedures.
+- **Resposta a Incidentes:** Diagnosticou e resolveu incidentes complexos de rede e infraestrutura em ambientes de alta pressão.
+- **Automação de Processos:** Desenvolveu scripts Python e ferramentas internas para automatizar tarefas repetitivas, reduzindo significativamente o MTTR (Tempo Médio de Reparo).
+- **Gestão de Redes:** Gerenciou ambientes TCP/IP, garantindo conectividade e performance para clientes corporativos.
+- **Documentação:** Criou e manteve documentação técnica abrangente para procedimentos de infraestrutura.
 
-### **Infrastructure & Software Development (Freelance)** | Automation Focus
-*June 2023 – Present*
+### **Infraestrutura e Desenvolvimento de Software (Freelance)** | Foco em Automação
+*Junho de 2023 – Presente*
 
-- **ERP Integration (Detcheler):** Architected a real-time synchronization system between **Tiny ERP** and external APIs, automating stock and catalog management.
-- **Desktop Automation:** Developed **Macro Helldivers 2**, a desktop tool using **Electron** and hardware emulation for task automation.
-- **Deployment & DevOps:** Managed deployments for 10+ web applications using **Docker** and **Vercel**, optimizing CI/CD pipelines for production environments.
+- **Integração de ERP (Detcheler):** Arquitetou um sistema de sincronização em tempo real entre o **Tiny ERP** e APIs externas, automatizando a gestão de estoque e catálogo.
+- **Automação Desktop:** Desenvolveu o **Macro Helldivers 2**, uma ferramenta desktop usando **Electron** e emulação de hardware para automação de tarefas.
+- **Implantação e DevOps:** Gerenciou implantações para mais de 10 aplicações web usando **Docker** e **Vercel**, otimizando pipelines de CI/CD para ambientes de produção.
 
-### **Rodoviária de Porto Alegre** | Office Assistant & Operational Support
-*September 2021 – August 2022*
+### **Rodoviária de Porto Alegre** | Assistente Administrativo e Suporte Operacional
+*Setembro de 2021 – Agosto de 2022*
 
-- **Digital Process Management:** Organized and optimized digital workflows in a high-traffic administrative environment.
-- **Operational Support:** Provided technical assistance and process coordination.
-
----
-
-## 🚀 Featured Tech Projects
-- **Macro Helldivers 2**: Hardware-level automation tool with native OS integration.
-- **Detcheler ERP Sync**: Real-time business automation and data synchronization.
-- **LinkSpace Analytics**: URL infrastructure with real-time geolocation tracking.
+- **Gestão de Processos Digitais:** Organizou e otimizou fluxos de trabalho digitais em um ambiente administrativo de alto tráfego.
+- **Suporte Operacional:** Forneceu assistência técnica e coordenação de processos.
 
 ---
 
-## 🎓 Education & Certifications
-- **Analysis and Systems Development** | Estácio (2025 – 2027)
-- **Full Stack Python Developer** | EBAC (2023 – 2025)
-- **Networking TCP/IP** | Fiberschool
+## 🚀 Projetos de Tecnologia em Destaque
+- **Macro Helldivers 2**: Ferramenta de automação a nível de hardware com integração nativa com o SO.
+- **Sincronização ERP Detcheler**: Automação de negócios e sincronização de dados em tempo real.
+- **LinkSpace Analytics**: Infraestrutura de URLs com rastreamento de geolocalização em tempo real.
 
 ---
 
-## 🌍 Languages
-- **Portuguese**: Native
-- **English**: Intermediate (B1/B2)
+## 🎓 Educação e Certificações
+- **Análise e Desenvolvimento de Sistemas** | Estácio (2025 – 2027)
+- **Desenvolvedor Full Stack Python** | EBAC (2023 – 2025)
+- **Redes TCP/IP** | Fiberschool
+
+---
+
+## 🌍 Idiomas
+- **Português**: Nativo
+- **Inglês**: Intermediário (B1/B2)

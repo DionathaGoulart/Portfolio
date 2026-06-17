@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Personal Portfolio Hub
 
-## Getting Started
+[![Next.js](https://img.shields.io/badge/Next.js-15.x-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.x-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-MIT%20w%2F%20Attribution-green?style=for-the-badge)](LICENSE)
 
-First, run the development server:
+A high-performance, dual-track portfolio designed to showcase expertise in both **Software Engineering** and **IT Operations**. Built with a focus on immersive UX, fluid animations, and a modern "retro-tech" aesthetic.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📖 Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This project is a unique "Hub" that splits the professional persona into two distinct paths:
+- **Dev Portfolio:** Focused on Fullstack development, SaaS, and premium UX.
+- **Ops Portfolio:** Focused on Infrastructure, Networking, and Automation.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+It features a custom-built theme system that switches styles dynamically based on the active route, providing a tailored experience for different professional audiences.
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Framework:** [Next.js 15+](https://nextjs.org/) (App Router)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **Animations:** [GSAP](https://greensock.com/gsap/) & [Framer Motion](https://www.framer.com/motion/)
+- **Content:** [React Markdown](https://github.com/remarkjs/react-markdown) for CV rendering.
+- **Fonts:** [Geist](https://vercel.com/font) (Inter & Mono).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ✨ Key Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- 🌓 **Dynamic Theming:** Route-based theme switching (Hub, Dev, TI).
+- 📱 **Fully Responsive:** Optimized for all screen sizes with a mobile-first approach.
+- 🎭 **Immersive Animations:** GSAP ScrollTrigger and Framer Motion for high-end interactions.
+- 📄 **Markdown CVs:** Easily maintainable CVs rendered directly from Markdown files.
+- 🔍 **SEO Optimized:** Metadata and Schema.org JSON-LD structured data included.
 
-## Deploy on Vercel
+## 🚀 Getting Started
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Prerequisites
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Node.js 20+
+- npm / yarn / pnpm
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/DionathaGoulart/portfolio.git
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Build for production:
+   ```bash
+   npm run build
+   ```
+
+## 🚀 Deployment
+
+The easiest way to deploy this portfolio is using the **Vercel Platform**.
+
+1. **Push your code** to GitHub, GitLab, or Bitbucket.
+2. **Import project** in [Vercel](https://vercel.com/new).
+3. Vercel will auto-detect Next.js and apply the settings from `vercel.json`.
+4. Your site is live! Every push to `main` will trigger a new deployment.
+
+---
+
+## 📜 License & Attribution
+
+This project is licensed under the **MIT License with a Mandatory Attribution Clause**.
+
+**Condition of Use:**
+You are free to use, copy, and modify this software for personal or commercial use, provided that you **keep a visible credit link** in the footer of your website.
+
+**Required Attribution:**
+> "Feito por [Dionatha Goulart](https://github.com/DionathaGoulart)" (or equivalent visual credit).
+
+See the [LICENSE](LICENSE) file for the full legal text.
+
+---
+
+## 👤 Contact
+
+**Dionatha Goulart**
+- 📧 [dionatha.work@gmail.com](mailto:dionatha.work@gmail.com)
+- 🔗 [LinkedIn](https://linkedin.com/in/dionathagoulart)
+- 🐙 [GitHub](https://github.com/DionathaGoulart)
+
+---
+<p align="center">
+  Built with ❤️ by <a href="https://github.com/DionathaGoulart">Dionatha Goulart</a>
+</p>

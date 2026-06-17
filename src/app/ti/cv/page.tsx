@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 };
 
 import { generatePersonSchema } from '@/lib/schema';
+import { PrintButton } from '@/components/shared/PrintButton';
 
 export default function TiCVPage() {
   const filePath = path.join(process.cwd(), 'src/data/cv-ti.md');
@@ -26,12 +27,7 @@ export default function TiCVPage() {
         <Link href="/ti" className="text-green-400 hover:text-green-300 transition-colors flex items-center gap-2">
           ← Voltar ao Portfólio
         </Link>
-        <button 
-          onClick={() => window.print()} 
-          className="bg-green-600 hover:bg-green-500 text-white px-6 py-2 rounded-full font-bold transition-all shadow-lg shadow-green-900/20"
-        >
-          Baixar PDF
-        </button>
+        <PrintButton persona="TI" />
       </nav>
       <CVViewer content={content} persona="TI" />
     </div>

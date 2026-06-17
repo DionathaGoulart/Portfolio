@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 };
 
 import { generatePersonSchema } from '@/lib/schema';
+import { PrintButton } from '@/components/shared/PrintButton';
 
 export default function DevCVPage() {
   const filePath = path.join(process.cwd(), 'src/data/cv-dev.md');
@@ -26,12 +27,7 @@ export default function DevCVPage() {
         <Link href="/dev" className="text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-2">
           ← Voltar ao Portfólio
         </Link>
-        <button 
-          onClick={() => window.print()} 
-          className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-full font-bold transition-all shadow-lg shadow-blue-900/20"
-        >
-          Baixar PDF
-        </button>
+        <PrintButton persona="DEV" />
       </nav>
       <CVViewer content={content} persona="DEV" />
     </div>

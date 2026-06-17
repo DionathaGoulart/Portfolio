@@ -55,7 +55,6 @@ export const metadata: Metadata = {
 
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import { RouteThemeProvider } from "@/components/shared/RouteThemeProvider";
-import Script from 'next/script';
 
 export default function RootLayout({
   children,
@@ -68,8 +67,7 @@ export default function RootLayout({
         <meta name="view-transition" content="same-origin" />
       </head>
       <body className={`${inter.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
-        <Script id="theme-checker" src="/theme-check.js" strategy="beforeInteractive" />
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem storageKey="theme">
           <RouteThemeProvider>
             {children}
           </RouteThemeProvider>

@@ -6,14 +6,13 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from 'next-themes';
 
-import Image from 'next/image';
+import { Logo } from './Logo';
 import { PrintButton } from './PrintButton';
 
 export function Header({ cvContent }: { cvContent?: string }) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { resolvedTheme } = useTheme();
   
   // Set mounted state
   useEffect(() => {
@@ -48,9 +47,6 @@ export function Header({ cvContent }: { cvContent?: string }) {
     { href: "/dev/cv", label: "Currículo", scroll: false },
   ];
 
-  const isDark = mounted && resolvedTheme === 'dark';
-  const logoSrc = isDark ? "/logo.svg" : "/logo-black.svg";
-
   return (
     <header className="fixed top-0 left-0 w-full z-[100] py-3 md:py-6 pointer-events-none">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 flex justify-between items-center pointer-events-auto">
@@ -58,15 +54,10 @@ export function Header({ cvContent }: { cvContent?: string }) {
           <Link 
             href={isDev ? "/dev" : (isTi ? "/ti" : "/")} 
             onClick={scrollToTop}
-            className="retro-border bg-card p-1 retro-shadow-sm group flex items-center justify-center min-w-[42px] min-h-[42px]"
+            className="retro-border bg-card p-1 retro-shadow-sm group flex items-center justify-center min-w-[42px] min-h-[42px] hover:bg-accent transition-all duration-200"
           >
-            <Image 
-              key={logoSrc}
-              src={logoSrc} 
-              alt="Logo" 
-              width={32} 
-              height={32} 
-              className="w-7 h-7 md:w-9 md:h-9 group-hover:scale-110 transition-transform"
+            <Logo 
+              className="w-7 h-7 md:w-9 md:h-9 text-foreground group-hover:text-white transition-all duration-200"
             />
           </Link>
           

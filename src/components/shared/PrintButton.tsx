@@ -24,11 +24,11 @@ export function PrintButton({ persona, content }: { persona: "DEV" | "TI", conte
       const html2pdf = (await import('html2pdf.js')).default;
       
       const opt = {
-        margin: [15, 15],
+        margin: [15, 15] as [number, number],
         filename: isDev ? "cv-dionatha-goulart.pdf" : "cv-d-goulart.pdf",
-        image: { type: 'jpeg', quality: 0.98 },
+        image: { type: 'jpeg', quality: 0.98 } as const,
         html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } as const
       };
 
       await html2pdf().set(opt).from(hiddenRef.current).save();

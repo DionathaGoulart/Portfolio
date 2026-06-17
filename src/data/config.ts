@@ -67,3 +67,14 @@ export const devContent = {
     ],
   },
 };
+
+export const themeConfig = {
+  routes: {
+    "/": "theme-default",
+    "/dev": "theme-dev",
+    "/ti": "theme-ti",
+    "/dev/cv": "theme-dev",
+    "/ti/cv": "theme-ti",
+  },
+  default: "theme-default",
+};

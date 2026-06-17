@@ -12,21 +12,109 @@
 }
 
 :root {
-  --background: #F2EFE7;
-  --foreground: #1A0A0A;
-  --accent: #DC143C;
-  --card-bg: #FFFFFF;
-  --border: #1A0A0A;
-  --shadow: #1A0A0A;
+  /* --- CATALOGO DE PALETAS --- */
+
+  /* P1: Crimson Chalk (Original) */
+  --p1-bg: #f2efe7;
+  --p1-fg: #1a0a0a;
+  --p1-acc: #dc143c;
+  --p1-card: #ffffff;
+  --p1-border: #1a0a0a;
+  --p1-shadow: #1a0a0a;
+
+  /* P2: Abyss Frost (Azul) */
+  --p2-bg: #e4f0f6;
+  --p2-fg: #0f172a;
+  --p2-acc: #0a0f1e;
+  --p2-card: #e4f0f6;
+  --p2-border: #0f172a;
+  --p2-shadow: #0a0f1e;
+
+  /* D1: Noir Rose (Original Dark) */
+  --d1-bg: #121212;
+  --d1-fg: #f2efe7;
+  --d1-acc: #e8729a;
+  --d1-card: #1a1a1a;
+  --d1-border: #f2efe7;
+  --d1-shadow: #e8729a;
+
+  /* D2: Vault Gold (Dourado) */
+  --d2-bg: #111111;
+  --d2-fg: #e0e0e0;
+  --d2-acc: #c8a96e;
+  --d2-card: #111111;
+  --d2-border: #c8a96e;
+  --d2-shadow: #c8a96e;
+
+  /* D3: Midnight Ember (Laranja/Verde) */
+  --d3-bg: #0d1117;
+  --d3-fg: #e0ffe0;
+  --d3-acc: #ff6b45;
+  --d3-card: #121a12;
+  --d3-border: #ff6b45;
+  --d3-shadow: #ff6b45;
 }
 
-.dark {
-  --background: #121212;
-  --foreground: #F2EFE7;
-  --accent: #E8729A;
-  --card-bg: #1A1A1A;
-  --border: #F2EFE7;
-  --shadow: #E8729A;
+/* --- TEMA DEFAULT (HOME) --- */
+.theme-default {
+  --background: var(--p1-bg);
+  --foreground: var(--p1-fg);
+  --accent: var(--p1-acc);
+  --card-bg: var(--p1-card);
+  --border: var(--p1-border);
+  --shadow: var(--p1-shadow);
+
+  /* CORES DE HOVER QUE SEGUEM OS OUTROS TEMAS */
+  /* Se você mudar o --accent do .theme-dev lá embaixo, mude aqui também para sincronizar */
+  --hub-dev-hover: var(--p2-acc);
+  --hub-ti-hover: var(--p1-acc);
+}
+.dark .theme-default {
+  --background: var(--d1-bg);
+  --foreground: var(--d1-fg);
+  --accent: var(--d1-acc);
+  --card-bg: var(--d1-card);
+  --border: var(--d1-border);
+  --shadow: var(--d1-shadow);
+
+  --hub-dev-hover: var(--d2-acc);
+  --hub-ti-hover: var(--d3-acc);
+}
+
+/* --- TEMA DEV --- */
+.theme-dev {
+  --background: var(--p2-bg);
+  --foreground: var(--p2-fg);
+  --accent: var(--p2-acc);
+  --card-bg: var(--p2-card);
+  --border: var(--p2-border);
+  --shadow: var(--p2-shadow);
+}
+.dark .theme-dev {
+  --background: var(--d2-bg);
+  --foreground: var(--d2-fg);
+  --accent: var(--d2-acc);
+  --card-bg: var(--d2-card);
+  --border: var(--d2-border);
+  --shadow: var(--d2-shadow);
+}
+
+/* --- TEMA TI --- */
+.theme-ti {
+  --background: var(--p1-bg);
+  --foreground: var(--p1-fg);
+  --accent: var(--p1-acc);
+  --card-bg: var(--p1-card);
+  --border: var(--p1-border);
+  --shadow: var(--p1-shadow);
+}
+.dark .theme-ti {
+  --background: var(--d3-bg);
+  --foreground: var(--d3-fg);
+  --accent: var(--d3-acc);
+  --card-bg: var(--d3-card);
+  --border: var(--d3-border);
+  --shadow: var(--d3-shadow);
 }
 
 @theme inline {
@@ -44,7 +132,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 /* Retro Shadow Utility */

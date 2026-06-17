@@ -15,7 +15,6 @@ export default function DevPage() {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    // GSAP Smooth Reveal for the whole page
     gsap.fromTo(
       containerRef.current,
       { opacity: 0 },
@@ -24,25 +23,19 @@ export default function DevPage() {
   }, []);
 
   return (
-    <div ref={containerRef} className="bg-background text-foreground selection:bg-accent selection:text-white pt-10">
+    <div ref={containerRef} className="selection:bg-accent selection:text-white">
       <Header />
-      <Hero />
-      <div id="about">
+      <main className="max-w-7xl mx-auto px-6 md:px-10 pb-20">
+        <Hero />
         <About />
-      </div>
-      <div id="projects">
         <Projects />
-      </div>
-      <div id="experience">
         <Experience />
-      </div>
-      <div id="contact">
         <Contact />
-      </div>
 
-      <footer className="py-12 text-center text-foreground/40 text-sm border-t-2 border-border-custom font-black uppercase tracking-widest">
-        Dionatha Goulart // 2026
-      </footer>
+        <footer className="py-12 border-t-2 border-border-custom font-black uppercase tracking-widest opacity-40 text-sm">
+          Dionatha Goulart // 2026
+        </footer>
+      </main>
     </div>
   );
 }

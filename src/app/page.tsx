@@ -1,14 +1,16 @@
 "use client";
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Header } from '@/components/shared/Header';
+import { ThemeToggle } from '@/components/shared/ThemeToggle';
 
 export default function HubPage() {
   return (
-    <main className="min-h-screen bg-background selection:bg-accent selection:text-white pt-24 pb-12 px-6">
-      <Header />
+    <main className="selection:bg-accent selection:text-white pt-24 pb-12 px-6">
+      <div className="fixed top-6 right-6 z-50">
+        <ThemeToggle />
+      </div>
       
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         {/* Left Side: Brand & Intro */}
         <motion.div 
           initial={{ opacity: 0, x: -50 }}
@@ -35,7 +37,7 @@ export default function HubPage() {
           className="lg:col-span-6 grid gap-8"
         >
           <Link href="/dev" className="group">
-            <div className="retro-border bg-card p-10 retro-shadow-sm group-hover:retro-shadow group-hover:bg-accent group-hover:text-white transition-all transform group-hover:-rotate-2">
+            <div className="retro-border bg-card p-10 retro-shadow-sm group-hover:retro-shadow transition-all transform group-hover:-rotate-2 group-hover:bg-[var(--hub-dev-hover)] group-hover:text-white">
               <div className="flex justify-between items-center mb-6">
                 <span className="text-5xl">🚀</span>
                 <span className="font-mono text-sm font-black opacity-40 group-hover:opacity-100">01_SOFTWARE_ENG</span>
@@ -46,7 +48,7 @@ export default function HubPage() {
           </Link>
 
           <Link href="/ti" className="group">
-            <div className="retro-border bg-card p-10 retro-shadow-sm group-hover:retro-shadow group-hover:bg-[#10b981] group-hover:text-white transition-all transform group-hover:rotate-2">
+            <div className="retro-border bg-card p-10 retro-shadow-sm group-hover:retro-shadow transition-all transform group-hover:rotate-2 group-hover:bg-[var(--hub-ti-hover)] group-hover:text-white">
               <div className="flex justify-between items-center mb-6">
                 <span className="text-5xl">⚙️</span>
                 <span className="font-mono text-sm font-black opacity-40 group-hover:opacity-100">02_IT_OPERATIONS</span>

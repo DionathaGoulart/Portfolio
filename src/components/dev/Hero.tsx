@@ -4,8 +4,8 @@ import { devContent } from "@/data/config";
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 pt-32 relative">
-      <div className="max-w-5xl w-full">
+    <section className="min-h-screen flex flex-col justify-center py-20 relative">
+      <div className="w-full">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -27,13 +27,13 @@ export default function Hero() {
             {devContent.hero.description}
           </p>
           
-          <div className="flex flex-wrap gap-6">
-            <button className="retro-border bg-accent text-white px-10 py-5 font-black text-xl retro-shadow-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
-              PROJETOS
-            </button>
-            <button className="retro-border bg-background px-10 py-5 font-black text-xl retro-shadow-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
-              CONTATO
-            </button>
+          <div className="flex flex-wrap gap-6 text-left">
+            <a href="#projects" className="retro-border bg-accent text-white px-10 py-5 font-black text-xl retro-shadow-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all uppercase">
+              Projetos
+            </a>
+            <a href="#contact" className="retro-border bg-background px-10 py-5 font-black text-xl retro-shadow-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all uppercase">
+              Contato
+            </a>
           </div>
         </motion.div>
       </div>

@@ -12,10 +12,45 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+import { seoConfig } from "@/data/seo-config";
+
 export const metadata: Metadata = {
-  title: "Dionatha Goulart | Hub Profissional",
-  description: "Hub profissional de Dionatha Goulart - Software Engineer & IT Operations Specialist.",
-  keywords: ["Dionatha Goulart", "Software Engineer", "Fullstack Developer", "IT Operations", "Suporte N2", "SaaS"],
+  metadataBase: new URL(seoConfig.url),
+  title: {
+    default: seoConfig.defaultTitle,
+    template: seoConfig.titleTemplate,
+  },
+  description: seoConfig.description,
+  keywords: seoConfig.keywords,
+  authors: [{ name: seoConfig.author }],
+  creator: seoConfig.author,
+  openGraph: {
+    type: "website",
+    locale: seoConfig.og.locale,
+    url: seoConfig.url,
+    siteName: seoConfig.siteName,
+    title: seoConfig.defaultTitle,
+    description: seoConfig.description,
+    images: [
+      {
+        url: seoConfig.og.image,
+        width: 1200,
+        height: 630,
+        alt: seoConfig.og.imageAlt,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: seoConfig.defaultTitle,
+    description: seoConfig.description,
+    creator: seoConfig.twitter.handle,
+    images: [seoConfig.og.image],
+  },
+  robots: {
+    index: seoConfig.robots.index,
+    follow: seoConfig.robots.follow,
+  },
 };
 
 import { ThemeProvider } from "@/components/shared/ThemeProvider";

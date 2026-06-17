@@ -10,47 +10,47 @@ export default function TiPage() {
   const terminalRef = useRef(null);
 
   return (
-    <main className="selection:bg-accent selection:text-white font-mono p-6">
+    <main className="selection:bg-accent selection:text-white font-mono p-4 md:p-6 overflow-x-hidden">
       {/* Terminal Style Header */}
-      <nav className="flex justify-between items-center mb-16 border-b border-border-custom/30 pb-4">
-        <div className="flex gap-4 items-center">
-          <Link href="/" className="hover:bg-accent hover:text-white px-2 transition-colors">root@dionatha: ~</Link>
-          <span className="text-border-custom/30">|</span>
-          <span className="text-xs animate-pulse text-accent">● SYSTEM_ONLINE</span>
+      <nav className="flex justify-between items-center mb-12 md:mb-16 border-b border-border-custom/30 pb-4">
+        <div className="flex gap-2 md:gap-4 items-center">
+          <Link href="/" className="hover:bg-accent hover:text-white px-2 transition-colors text-xs md:text-base">root@dionatha: ~</Link>
+          <span className="text-border-custom/30 text-xs md:text-base">|</span>
+          <span className="text-[10px] md:text-xs animate-pulse text-accent whitespace-nowrap">● SYSTEM_ONLINE</span>
         </div>
-        <div className="flex gap-6 items-center">
-          <Link href="/ti/cv" className="hover:bg-accent hover:text-white px-2 transition-colors">/view-cv</Link>
+        <div className="flex gap-4 md:gap-6 items-center">
+          <Link href="/ti/cv" className="hover:bg-accent hover:text-white px-2 transition-colors text-xs md:text-base">/view-cv</Link>
           <ThemeToggle />
         </div>
       </nav>
 
       {/* Hero / Terminal Intro */}
-      <section className="max-w-4xl mx-auto space-y-8 mb-24">
+      <section className="max-w-4xl mx-auto space-y-6 md:space-y-8 mb-16 md:mb-24">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="space-y-2"
         >
-          <p className="opacity-40 tracking-tighter">$ whoami</p>
-          <h1 className="text-4xl md:text-6xl font-bold text-accent">{tiContent.role}</h1>
+          <p className="opacity-40 tracking-tighter text-xs md:text-sm">$ whoami</p>
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-accent leading-tight">{tiContent.role}</h1>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="p-8 bg-accent/5 border border-accent/20 rounded-lg"
+          className="p-6 md:p-8 bg-accent/5 border border-accent/20 rounded-lg"
         >
-          <p className="leading-relaxed text-lg">
+          <p className="leading-relaxed text-base md:text-lg">
             {tiContent.hero.description}
           </p>
         </motion.div>
       </section>
 
       {/* Expertise Matrix */}
-      <section className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 mb-24">
+      <section className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 md:mb-24">
         <div>
-          <h2 className="text-2xl font-bold mb-8 border-b border-accent/30 pb-2 inline-block">01. core_expertise</h2>
+          <h2 className="text-xl md:text-2xl font-bold mb-6 md:mb-8 border-b border-accent/30 pb-2 inline-block">01. core_expertise</h2>
           <div className="space-y-6">
             {tiContent.skills.map((skill, i) => (
               <motion.div 
@@ -61,7 +61,7 @@ export default function TiPage() {
                 transition={{ delay: i * 0.1 }}
                 className="group"
               >
-                <div className="flex justify-between mb-1 text-sm">
+                <div className="flex justify-between mb-1 text-xs md:text-sm">
                   <span>{skill.name}</span>
                   <span className="text-accent">{skill.level}%</span>
                 </div>
@@ -78,7 +78,7 @@ export default function TiPage() {
         </div>
 
         <div>
-          <h2 className="text-2xl font-bold mb-8 border-b border-accent/30 pb-2 inline-block">02. operational_history</h2>
+          <h2 className="text-xl md:text-2xl font-bold mb-6 md:mb-8 border-b border-accent/30 pb-2 inline-block">02. operational_history</h2>
           <div className="space-y-8">
             {tiContent.experience.map((exp, i) => (
               <motion.div 
@@ -86,13 +86,13 @@ export default function TiPage() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                className="border-l border-accent/30 pl-6 relative"
+                className="border-l border-accent/30 pl-4 md:pl-6 relative"
               >
                 <div className="absolute -left-[4.5px] top-2 w-2 h-2 bg-accent rounded-full shadow-[0_0_8px_var(--accent)]" />
-                <span className="text-xs opacity-40 mb-1 block">[{exp.period}]</span>
-                <h3 className="text-lg font-bold text-accent">{exp.role}</h3>
-                <p className="text-sm opacity-70 mb-2">{exp.company}</p>
-                <p className="text-sm opacity-60 leading-relaxed">{exp.description}</p>
+                <span className="text-[10px] md:text-xs opacity-40 mb-1 block">[{exp.period}]</span>
+                <h3 className="text-base md:text-lg font-bold text-accent">{exp.role}</h3>
+                <p className="text-xs md:text-sm opacity-70 mb-2">{exp.company}</p>
+                <p className="text-xs md:text-sm opacity-60 leading-relaxed">{exp.description}</p>
               </motion.div>
             ))}
           </div>
@@ -100,9 +100,9 @@ export default function TiPage() {
       </section>
 
       {/* Footer / System Status */}
-      <footer className="max-w-4xl mx-auto pt-16 border-t border-border-custom/10 text-[10px] opacity-30 flex justify-between uppercase tracking-[0.2em]">
+      <footer className="max-w-4xl mx-auto pt-12 md:pt-16 border-t border-border-custom/10 text-[8px] md:text-[10px] opacity-30 flex flex-wrap justify-between gap-4 uppercase tracking-[0.2em]">
         <span>© 2026 DG_OS_V1.0</span>
-        <span>ENC: AES-256-GCM</span>
+        <span className="hidden sm:inline">ENC: AES-256-GCM</span>
         <span>LAT: -29.9961 / LONG: -51.0858</span>
       </footer>
     </main>

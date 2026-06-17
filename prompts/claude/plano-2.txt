@@ -1,0 +1,90 @@
+Aqui está o Master Plan completo para Dionatha Goulart conquistar o mercado tech brasileiro em 2026.
+
+A) Otimização de Perfil para IAs (ATS & LinkedIn 2026)
+Resumo "Sobre" para LinkedIn
+
+Fullstack Engineer com diferencial raro: 2 anos de operações críticas em infraestrutura de redes antes de migrar para desenvolvimento. Essa trajetória me deu o que a maioria dos devs não tem — entendo sistemas por dentro, da camada TCP/IP ao componente React. Hoje construo SaaS e plataformas web com React, Next.js, TypeScript e Node.js, com ênfase em experiência imersiva e integrações de negócio reais (ERP, WhatsApp, APIs de terceiros). Tenho 10+ projetos em produção incluindo plataformas de benefícios de saúde, assinatura digital biométrica e automação desktop com Electron. Foco em 2026: posições Fullstack Sênior ou Engenheiro de Software em produtos SaaS — remoto ou Porto Alegre/RS.
+
+Palavras-chave densas (para ATS/Gupy): React.js · Next.js · TypeScript · Node.js · Python · Django · PostgreSQL · MongoDB · Docker · REST API · SaaS · Monorepo · Turborepo · Tailwind CSS · Electron · Linux · ERP Integration · Infraestrutura · Suporte N2 · Automação
+
+Reescrita das Experiências (formato ATS-friendly)
+Fullstack Developer — Freelancer (Abril 2025 – Presente)
+
+Desenvolveu 6+ produtos SaaS em produção utilizando arquitetura monorepo com Turborepo, reduzindo tempo de build e compartilhamento de pacotes entre projetos
+Integrou sistema de catálogo com TinyERP e WhatsApp API, automatizando sincronização de estoque em tempo real para e-commerce
+Implementou plataforma de assinatura digital com captura biométrica em canvas, eliminando necessidade de processos físicos para clientes B2B
+Construiu automação desktop (Electron) com emulação de hardware para macros de jogos, demonstrando domínio de IPC e APIs nativas do sistema operacional
+Stack: React.js, Next.js, TypeScript, Node.js, Python/Django, PostgreSQL, MongoDB, Tailwind CSS, Framer Motion
+
+Técnico de Suporte N2 — Cybernetrs (2023 – 2024)
+
+Diagnosticou e resolveu incidentes de rede complexos em ambientes TCP/IP, reduzindo tempo médio de resolução (MTTR) para clientes corporativos
+Administrou infraestrutura Linux e servidores, implementando monitoramento proativo de sistemas e automação de tarefas repetitivas
+Suportou infraestrutura de ERP (Tiny) para clientes de e-commerce, gerenciando integrações e fluxos de dados críticos de negócio
+
+
+B) Estratégia de Portfólio Dual — dionatha.com.br
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.25s;
+    animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+VvisualizeVvisualize show_widgetPrincípio do toggle: A landing page apresenta Dionatha com uma frase ambígua positiva — "Engenheiro que entende sistemas de ponta a ponta" — e dois botões: Ver projetos Dev e Ver soluções de Infra. Cada botão leva a uma seção totalmente diferente em tom, projeto e CTA, mas compartilham o mesmo design system e rodapé unificado.
+Projetos em destaque por aba:
+
+Dev: Mil Ideias, XR Card, Assinatura Digital, Detcheler
+Infra: Macro Helldivers 2 (automação), Detcheler ERP sync, cases de suporte N2
+
+
+C) Ecossistema de Automação de Candidaturas
+Arquitetura do Bot Pessoal
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.25s;
+    animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+VvisualizeVvisualize show_widgetGuia de implementação — etapas críticas:
+Etapa 4–5 (coração do sistema): O resume.json é o mestre. Para cada vaga filtrada, um prompt extrai as 10 palavras-chave da job description e pede ao Claude para reordenar bullets de experiência por relevância, sem inventar nada. Output é um JSON variante que alimenta o gerador de PDF.
+python# Exemplo de prompt para adaptação
+prompt = f"""
+Job description keywords: {keywords}
+Base resume bullets: {resume['experience']}
+Reorder and rephrase bullets to match keywords. 
+Keep only facts. Output JSON only.
+"""
+Etapa 7 (Playwright na Gupy): Gupy tem estrutura de formulário razoavelmente estável. Use page.fill() para campos e page.set_input_files() para upload do PDF gerado. Adicione delay humano (asyncio.sleep(random.uniform(1.5, 3.2))) para evitar detecção.
+Etapa 9 (Follow-up): Sete dias sem mudança de status no log → dispara email template personalizado com nome do recrutador (extraído do LinkedIn via scraping do anúncio).
+
+D) Plano de Autoridade e Conteúdo
+Cinco artigos estratégicos para posicionar Dionatha como referência em "AI-Driven Development":
+1. "Como integrei ERP + WhatsApp em 72h com Node.js e sem SDK oficial"
+
+Case real do Detcheler. Demonstra resolução de problema de negócio real, engenharia reversa de APIs não documentadas e automação comercial. Alta chance de viralizar em grupos de desenvolvedores BR.
+2. "Monorepo com Turborepo em 2026: o que mudou e o que todo Fullstack precisa saber"
+
+Artigo técnico denso sobre cache distribuído, pipeline de builds e compartilhamento de packages. Captura buscas de devs migrando de setups legados.
+3. "Electron não morreu: como construí uma ferramenta de automação desktop que emula hardware"
+
+Case do Macro Helldivers 2. Aborda IPC, APIs nativas do sistema operacional, emulação de inputs. Nicho específico, mas demonstra profundidade técnica incomum.
+4. "A stack de um Fullstack solo que entrega produtos de qualidade de time: decisões de arquitetura reais"
+
+Análise de decisões técnicas em projetos próprios: por que PostgreSQL em vez de MongoDB para XR Card, quando usar Framer Motion vs CSS puro, como estruturar autenticação em SaaS pequeno. Tom pragmático, não teórico.
+5. "Como construir um agente de candidaturas com Python, Claude API e Playwright — lições de quem fez"
+
+Documentação do próprio bot de automação. Conteúdo que resolve um problema que todo dev em busca de emprego tem. Posiciona Dionatha como alguém que resolve seus próprios problemas com código.
+
+E) Cold Mail / Outreach para CTOs e Tech LeadsADireto ao valorBFoco em produto SaaSCOutreach via problema específicoAssunto:Olá [Nome],
+
+Vi que vocês usam [Tiny ERP / sistema X] no fluxo de [vendas/estoque/atendimento]. Trabalhei recentemente num projeto onde sincronizei catálogo de produtos entre TinyERP, banco de dados e WhatsApp em tempo real — eliminando trabalho manual de atualização de 3h/dia para a equipe.
+
+Sou Fullstack Developer com background em infraestrutura (2 anos em suporte N2 de redes e ERP), o que me dá uma perspectiva diferente: entendo tanto o lado técnico quanto os gargalos operacionais que esse tipo de integração resolve.
+
+Stack atual: React, Next.js, TypeScript, Node.js, Python/Django, Docker.
+
+Se fizer sentido, posso compartilhar o case técnico ou conversar 20 minutos sobre como isso se aplicaria ao contexto de vocês.
+
+Abraço,
+Dionatha Goulart
+dionatha.com.br | linkedin.com/in/dionatha

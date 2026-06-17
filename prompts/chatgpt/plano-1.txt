@@ -1,0 +1,534 @@
+Guia Estratégico de Recolocação Tech 2026
+Objetivo: Criar uma máquina de aquisição de oportunidades
+
+Você está em uma posição interessante para 2026 porque possui duas carreiras que se complementam:
+
+Plano A (Principal): Desenvolvedor Fullstack
+Plano B (Secundário): Suporte N2 / Infraestrutura / TI
+
+O erro da maioria das pessoas é tentar misturar tudo em um único perfil. Em 2026, ATSs e IA de recrutamento penalizam perfis generalistas porque procuram padrões.
+
+A estratégia ideal é criar duas personas profissionais independentes.
+
+1. Estratégia de Bifurcação dos Perfis
+Persona A — Desenvolvedor Fullstack
+Posicionamento
+
+Desenvolvedor Fullstack com mais de 3 anos desenvolvendo aplicações modernas e SaaS em produção.
+
+Keywords ATS prioritárias
+React
+Next.js
+TypeScript
+Node.js
+Express
+PostgreSQL
+MongoDB
+Docker
+CI/CD
+Monorepo
+Turborepo
+GitHub Actions
+APIs REST
+Supabase
+Electron
+SaaS
+JWT
+OAuth
+Tailwind
+SEO
+Experiência Cybernetrs
+
+No currículo DEV:
+
+Não colocar:
+
+Suporte Técnico Nível 2
+
+Colocar:
+
+Experiência anterior em operações de TI e monitoramento de ambientes críticos.
+
+Máximo de 2 linhas.
+
+Porque ATS de vagas Fullstack frequentemente reduzem score quando detectam predominância em suporte.
+
+Projetos destacados
+
+Prioridade:
+
+Ampare
+XR Card
+Assinatura SaaS
+Dark Ecosystem
+Containner
+LinkSpace
+Persona B — Técnico de TI / Infraestrutura
+
+Posicionamento:
+
+Profissional de TI com experiência em suporte N2, redes, documentação, monitoramento e automação.
+
+Keywords ATS
+Suporte Nível 2
+Active Directory
+TCP/IP
+DNS
+DHCP
+VPN
+Monitoramento
+Windows Server
+Linux
+Troubleshooting
+Documentação
+ITIL
+Service Desk
+Zabbix
+GLPI
+Redes
+Infraestrutura
+PowerShell
+Python
+Experiências
+Cybernetrs
+
+Transformar em protagonista do currículo.
+
+4 ou 5 bullets.
+
+Freelance Dev
+
+Não esconder.
+
+Mas descrever como:
+
+Desenvolvimento de scripts de automação e ferramentas internas para otimização de processos.
+
+Evitar:
+
+React
+SaaS
+Next.js
+2. Portfólio
+
+Seu domínio principal:
+
+dionatha.com.br
+
+Deixe exclusivamente DEV.
+
+Criar subdomínio
+infra.dionatha.com.br
+
+ou
+
+ti.dionatha.com.br
+
+Com:
+
+Sobre
+
+Experiência em:
+
+suporte
+redes
+automação
+troubleshooting
+Projetos
+Scripts Python
+
+Monitoramento
+
+Backup
+
+Inventário
+
+Logs
+
+Ferramentas internas
+
+Dashboard de rede
+
+3. LinkedIn
+
+Não recomendo dois LinkedIns.
+
+Ter dois LinkedIns parece suspeito.
+
+Faça um híbrido inteligente.
+
+Título:
+
+Desenvolvedor Fullstack | Automação | Infraestrutura e Operações de TI
+
+ou
+
+Fullstack Developer • React • Node.js • Python • Automação e Infraestrutura
+4. GitHub
+
+GitHub deve ser DEV.
+
+Jamais transformar GitHub em suporte.
+
+Criar repositórios:
+
+automacao-ti
+
+Scripts Python
+
+monitoramento
+inventario-rede
+backup-manager
+glpi-tools
+
+Isso conecta os dois mundos.
+
+5. Sites para o Plano A (DEV)
+
+Prioridade máxima:
+
+LinkedIn
+
+70%
+
+Gupy
+
+Obrigatório.
+
+Revelo
+
+Muito forte para pleno.
+
+GeekHunter
+
+Excelente.
+
+Programathor
+
+Ainda relevante.
+
+Trampos
+
+Bom para React.
+
+Indeed
+Coodesh
+
+Excelente para desafios.
+
+Rocketseat Talent Pool
+RemoteOK
+Wellfound
+
+Para startups.
+
+6. Sites para Plano B
+LinkedIn
+Gupy
+Catho
+Indeed
+InfoJobs
+Empregos.com
+Vagas.com
+Solides
+Kenoby
+Service IT
+Stefanini
+TIVIT
+Cast Group
+NAVA
+SONDA
+7. Como os ATS de 2026 pontuam
+
+Os sistemas analisam:
+
+Hard Skills
+
+40%
+
+Experiência semelhante
+
+30%
+
+Palavras-chave
+
+15%
+
+Frequência das tecnologias
+
+10%
+
+Formação
+
+5%
+
+Por isso o currículo deve ser adaptado para cada vaga.
+
+Não existe mais currículo universal.
+
+8. Automações (Seu Grande Diferencial)
+
+Você é Fullstack.
+
+Aproveite isso.
+
+Bot rastreador
+
+Python:
+
+Playwright
+BeautifulSoup
+
+Monitorar:
+
+LinkedIn
+Gupy
+GeekHunter
+Revelo
+
+Salvar em PostgreSQL.
+
+Enviar:
+
+Telegram
+
+Discord
+
+WhatsApp.
+
+Score ATS
+
+Criar sistema que faça:
+
+Currículo + vaga
+↓
+GPT
+↓
+Score de aderência
+↓
+Versão otimizada do currículo
+↓
+PDF
+Pipeline pessoal
+
+Banco:
+
+PostgreSQL.
+
+Tabela:
+
+companies
+recruiters
+applications
+contacts
+followups
+interviews
+
+Visualização:
+
+Kanban em Next.js.
+
+Extensão Chrome
+
+AutoFill inteligente.
+
+Mas com delays humanos:
+
+2–5 segundos.
+
+Evite:
+
+30 candidaturas por minuto.
+
+Porque isso pode gerar shadowban.
+
+Meta ideal:
+
+20–40 candidaturas por dia.
+9. Estratégia de Networking
+
+A maioria das vagas em 2026 será preenchida antes de chegar à Gupy.
+
+Plano DEV
+
+Buscar:
+
+Tech Leads
+Engineering Managers
+CTOs
+
+Empresas entre:
+
+20 e 500 funcionários.
+
+Mensagem:
+
+Olá, [Nome].
+
+Vi que você atua na área de engenharia da [Empresa].
+
+Sou Desenvolvedor Fullstack com mais de 3 anos de experiência, trabalhando principalmente com React, Next.js, Node.js e TypeScript, desenvolvendo aplicações SaaS e sistemas em produção.
+
+Gostei bastante do trabalho da empresa e gostaria de me conectar. Caso exista alguma oportunidade atual ou futura, ficarei feliz em conversar.
+
+Obrigado pela atenção.
+
+Plano Suporte
+
+Buscar:
+
+Gerentes de TI
+Coordenadores
+Analistas Sênior
+
+Olá, [Nome].
+
+Vi seu perfil e o trabalho desenvolvido na área de TI da [Empresa].
+
+Tenho experiência com suporte Nível 2, monitoramento, resolução de incidentes, redes e automação de processos, além de experiência em desenvolvimento de ferramentas internas em Python.
+
+Gostaria de me conectar e me colocar à disposição para futuras oportunidades.
+
+Obrigado pelo contato.
+
+10. Cold Email
+Para CTOs
+
+Olá, [Nome].
+
+Meu nome é Dionatha Goulart e atuo como Desenvolvedor Fullstack, com experiência em React, Next.js, Node.js, TypeScript, PostgreSQL e arquitetura de aplicações SaaS.
+
+Nos últimos anos participei do desenvolvimento de diversas aplicações completas, incluindo sistemas administrativos, plataformas SaaS e aplicações desktop com Electron.
+
+Conheci a [Empresa] e me identifiquei bastante com a proposta do time. Gostaria de me apresentar e me colocar à disposição para oportunidades atuais ou futuras.
+
+Portfólio:
+dionatha.com.br
+
+LinkedIn:
+[seu LinkedIn]
+
+GitHub:
+[seu GitHub]
+
+Obrigado pelo tempo e fico à disposição para conversarmos.
+
+Atenciosamente,
+
+Dionatha Goulart
+
+Para Gerentes de TI
+
+Olá, [Nome].
+
+Meu nome é Dionatha Goulart.
+
+Possuo experiência em suporte técnico Nível 2, resolução de incidentes, monitoramento e automação de processos, além de formação em Redes TCP/IP e desenvolvimento de ferramentas em Python.
+
+Gostaria de me apresentar e me colocar à disposição para oportunidades na área de infraestrutura, suporte ou operações de TI.
+
+Fico à disposição para uma conversa.
+
+Atenciosamente,
+
+Dionatha Goulart
+
+11. Estratégia "80/20"
+Segunda
+
+10 candidaturas DEV
+
+5 TI
+
+5 contatos LinkedIn
+
+Terça
+
+10 candidaturas DEV
+
+5 TI
+
+2 cold emails
+
+Quarta
+
+Atualização do GitHub
+
+Publicação no LinkedIn
+
+Quinta
+
+10 candidaturas DEV
+
+5 TI
+
+Networking
+
+Sexta
+
+Follow-up
+
+Responder recrutadores
+
+Sábado
+
+Novo projeto ou estudo
+
+Domingo
+
+Revisão do pipeline
+
+12. Máquina de Arrumar Emprego (Arquitetura)
+LinkedIn
+Gupy
+Revelo
+GeekHunter
+Indeed
+      ↓
+
+Crawler Python
+
+      ↓
+
+Banco PostgreSQL
+
+      ↓
+
+IA de Matching
+
+      ↓
+
+Score ATS
+
+      ↓
+
+Currículo específico
+
+      ↓
+
+Aplicação
+
+      ↓
+
+CRM pessoal
+
+      ↓
+
+Follow-up automático
+
+      ↓
+
+Entrevistas
+O que eu faria na sua situação em 2026
+Dois currículos totalmente independentes.
+dionatha.com.br exclusivamente para DEV.
+Subdomínio infra.dionatha.com.br para TI.
+Um único LinkedIn híbrido.
+GitHub predominantemente DEV.
+Construir um CRM de vagas próprio em Next + PostgreSQL.
+Automatizar matching entre vagas e currículos.
+Meta de 500–1000 candidaturas qualificadas em 90 dias.
+Fazer networking ativo toda semana.
+Tratar a busca por emprego como um produto SaaS: com métricas, funil, automação e melhoria contínua.
+
+Com o conjunto de experiência que você possui, especialmente combinando desenvolvimento e suporte N2, é possível montar uma estratégia bastante forte para disputar vagas de pleno em desenvolvimento e, ao mesmo tempo, manter uma segunda linha de empregabilidade em infraestrutura e operações. 🚀

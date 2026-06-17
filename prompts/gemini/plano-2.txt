@@ -1,0 +1,116 @@
+O mercado de tecnologia no Brasil em 2026 exige uma postura de engenharia pragmática. Plataformas como Gupy e os algoritmos do LinkedIn filtram implacavelmente o jargão genérico. O que aprova hoje é a prova matemática de que você resolve problemas de ponta a ponta — do backend ao pixel da interface, passando pela infraestrutura.
+
+Aqui está o seu Master Plan para 2026, estruturando a sua dupla aptidão como um diferencial de mercado insuperável.
+A) Otimização de Perfil para IAs (ATS & LinkedIn)
+
+Para vencer os parsers (analisadores de texto) das IAs de recrutamento, precisamos abandonar descrições de tarefas e focar em impacto de negócios, densidade semântica e na sua transição de infraestrutura para engenharia.
+O Resumo (LinkedIn "Sobre")
+
+O objetivo aqui é transformar seu passado em Suporte em um "superpoder" de arquitetura, mostrando que você não apenas escreve código, mas entende onde ele roda.
+
+    "Engenheiro de Software Fullstack com base sólida em Infraestrutura e Redes (TCP/IP, Linux, Docker). Minha trajetória começou no diagnóstico de redes complexas (Suporte Nível 2), o que me deu uma visão privilegiada sobre performance, gargalos de requisição e resiliência de sistemas.
+
+    Hoje, atuo no desenvolvimento de soluções escaláveis em ecossistemas JavaScript/TypeScript (React, Next.js, Node.js) e Python (Django). Especialista na transição de regras de negócios complexas para interfaces de alta conversão, com experiência em arquiteturas Monorepo (Turborepo), integração de ERPs (Tiny) e automação de processos. Meu foco é entregar SaaS e plataformas que combinem código limpo no backend com experiências imersivas (Framer Motion/Tailwind) no frontend."
+
+Refatoração das Experiências (Formato ATS)
+
+Desenvolvedor Fullstack Freelancer (Abril 2025 – Presente)
+
+    Engenharia de Frontend: Arquitetura e desenvolvimento de interfaces de alto desempenho utilizando React.js, Next.js e TypeScript. Implementação de micro-interações e animações avançadas com Framer Motion (ex: projeto Containner).
+
+    Arquitetura Monorepo: Estruturação de projetos em Turborepo, otimizando o ciclo de CI/CD e o compartilhamento de pacotes entre aplicações SaaS.
+
+    Integração e Backend: Desenvolvimento de APIs RESTful e webhooks (Node.js/Django) para sincronização bidirecional de dados. Criação do Detcheler, integrando catálogos inteligentes com TinyERP e WhatsApp API.
+
+    Automação e Desktop: Engenharia reversa e emulação de hardware para automação de tarefas utilizando Electron e Node.js (Macro Helldivers 2).
+
+    Segurança e Autenticação: Implementação de fluxos de assinatura digital com captura biométrica e manipulação de Canvas API.
+
+Especialista em Suporte Técnico Nível 2 – Cybernetrs (2023 – 2024)
+
+    Diagnóstico de Infraestrutura: Resolução de incidentes críticos em redes TCP/IP, reduzindo o tempo de inatividade e mitigando gargalos de conectividade.
+
+    Operações de TI: Administração de ambientes Linux e suporte avançado, estabelecendo a base analítica para troubleshooting full-stack.
+
+B) Estratégia de Portfólio Dual (dionatha.com.br)
+
+Um único site, duas jornadas de usuário. O objetivo não é esconder uma habilidade, mas rotear o recrutador ou cliente para o contexto que ele busca nos primeiros 3 segundos.
+Arquitetura de Informação
+Seção/Rota	Foco (Plano A: Software)	Foco (Plano B: Infra & Ops)
+Hero (Página Inicial)	"Engenharia de Software Fullstack & Soluções Escaláveis."	"Automação de TI, Operações e Suporte Avançado."
+Split (Call to Action)	[ Ver Projetos SaaS & Web ]	[ Ver Soluções de Infra & Automação ]
+Projetos em Destaque	
+
+Mil Ideias (Next.js/PostgreSQL)
+
+XR Card (Plataforma Saúde)
+
+Containner (UI/UX Imersivo)
+	
+
+Detcheler (Sincronização ERP)
+
+Macro Helldivers 2 (Automação Electron)
+
+Scripts Python/Docker
+Stack Visual	Logos: React, TS, Tailwind, Django.	Logos: Linux, Docker, Bash, Node/Python.
+Estudo de Caso	"Como reduzi o tempo de carregamento de orçamentos complexos usando SSR no Next.js."	"Como automatizei a sincronização de estoque entre o TinyERP e canais de WhatsApp."
+C) Ecossistema de Automação de Candidaturas
+
+Plataformas ATS em 2026 utilizam IA para medir aderência. O seu bot deve fazer o mesmo: ler a vaga, reescrever seu JSON Resume para dar match nas palavras-chave, compilar um PDF e notificar você.
+
+1
+Configurar o Web Scraper
+Puppeteer/Playwright
+
+Crie um script em Node.js usando o Playwright para contornar proteções básicas de Cloudflare. Configure rotinas diárias (Cron) para buscar vagas no LinkedIn e na Gupy usando os termos "React.js OR Node.js OR Python" AND ("Pleno" OR "Sênior"). Extraia o title e a description das vagas.
+2
+Processamento de NLP via LLM API
+
+Envie a descrição da vaga capturada para a API da OpenAI (ou Gemini) junto com o seu currículo base estruturado em JSON Resume. O prompt da IA deve ser: "Analise esta vaga e reescreva a seção de 'skills' e os 'bullets de experiência' do meu JSON Resume para espelhar as palavras-chave da vaga, sem inventar experiências que não possuo."
+3
+Geração Dinâmica do Currículo
+
+Utilize uma biblioteca como o puppeteer ou conversores de HTML para PDF (ex: React-PDF) para renderizar o novo JSON modificado em um layout ATS-Friendly (texto puro, sem colunas ou gráficos).
+4
+Automação de Submissão e Alertas
+
+Para vagas do LinkedIn (Easy Apply), o Playwright pode preencher os campos e anexar o PDF gerado no Step 3 automaticamente. Para a Gupy (que possui sistemas anti-bot e testes comportamentais rigorosos), o bot deve disparar um webhook para o seu Telegram/Discord entregando o link da vaga e o PDF otimizado para você fazer a submissão manual de forma cirúrgica.
+D) Plano de Autoridade e Conteúdo
+
+Publique estes artigos no LinkedIn e no Taboola/Medium. Eles provam que você pensa na regra de negócios, não apenas no framework.
+
+    "Além do CRUD: Sincronizando Catálogos Inteligentes com TinyERP e WhatsApp em Tempo Real." (Case: Detcheler. Foco em Webhooks, filas de processamento e resiliência de banco de dados).
+
+    "A Vantagem do Suporte Nível 2 na Arquitetura de Software: Por que bons desenvolvedores precisam entender de TCP/IP e Linux." (Artigo de branding pessoal conectando suas duas trajetórias).
+
+    "Construindo SaaS Imersivos com Next.js, Tailwind e Framer Motion: Performance sem sacrificar a UI." (Case: Containner e Assinatura Digital).
+
+    "Arquitetura Monorepo com Turborepo para Projetos Fullstack: Quando e por que utilizar?" (Demonstrando maturidade sênior em CI/CD e estrutura de repositórios).
+
+    "Emulação de Hardware e Automação Desktop com Electron: Desafios e Casos de Uso." (Case: Macro Helldivers. Mostra capacidade de resolver problemas fora do ecossistema web tradicional).
+
+E) Guia de Cold Mail/Outreach
+
+O objetivo do "Cold Mail" para lideranças técnicas não é pedir emprego. É oferecer uma solução para um problema que eles provavelmente estão enfrentando (débito técnico, integração de sistemas, lentidão nas entregas).
+
+Template para CTOs/Tech Leads (Foco Plano A - SaaS/Integrações):
+
+    Assunto: Integração de ERP e Performance Frontend na [Nome da Empresa do Alvo]
+
+    Olá, [Nome do CTO/Tech Lead], tudo bem?
+
+    Tenho acompanhado o crescimento da [Nome da Empresa] e notei que a escala da operação de vocês provavelmente exige integrações complexas de catálogo e faturamento.
+
+    Sou Engenheiro de Software Fullstack e recentemente construí uma arquitetura de sincronização bidirecional entre o TinyERP e canais de WhatsApp, reduzindo o tempo de atualização de estoque a quase zero, além de plataformas SaaS com Next.js e PostgreSQL.
+
+    Como também venho de um background de Suporte Nível 2 e Infraestrutura, meu código já nasce pensando em resiliência de rede e monitoramento.
+
+    Vocês estão expandindo a equipe de engenharia para lidar com esses desafios de arquitetura neste trimestre?
+
+    Meu portfólio e cases reais estão em: dionatha.com.br
+
+    Um abraço,
+    Dionatha Goulart
+
+Por que este template funciona? Ele é curto, vai direto ao ponto de dor (integrações de sistemas complexos), prova valor técnico imediato citando tecnologias exatas e estabelece o seu passado em infraestrutura como um bônus de confiabilidade.

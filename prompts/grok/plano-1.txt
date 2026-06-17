@@ -1,0 +1,148 @@
+Plano de Carreira e Recolocação Estratégica para Dionatha Goulart – 2026 (Brasil TI)
+Como Especialista Sênior em Carreira Tech, Headhunter e Engenheiro de Prompt para ATS/IA, elaborei este guia definitivo com base nas tendências de 2026: forte adoção de ATS com IA (Gupy, Kenoby, etc.) que cruzam hard/soft skills, palavras-chave exatas, experiência quantificada e foco/narrativa coerente. O mercado valoriza Fullstack com React/Next.js + Node/Python + Cloud (alta demanda em SaaS, dashboards e integrações), mas Suporte N2/Infra tem estabilidade em empresas médias/grandes com ênfase em automação, Docker, monitoramento e resolução de incidentes.
+Você tem um perfil forte: >3 anos produção, portfólio sólido (dionatha.com.br), freelances relevantes e formação em andamento. O segredo é bifurcação limpa para evitar penalização por “falta de foco” nas IAs.
+1. Estratégia de Bifurcação de Perfis (Currículos, Portfólio e Narrativa)
+Objetivo principal: Cada perfil deve parecer 100% dedicado. ATS/IA penaliza perfis “generalistas excessivos” (match score cai se experiência em suporte aparecer em vaga dev).
+Currículo A – Desenvolvedor Fullstack (Principal):
+
+Formato: PDF simples (fonte Arial/Calibri 10-11, sem colunas/tabelas complexas, headings H1/H2). Use .docx para Gupy se exigido. Máximo 2 páginas.
+Título/Headline: “Desenvolvedor Fullstack | React, Next.js, Node.js, TypeScript | SaaS e Aplicações de Alto Desempenho”
+Resumo (3-4 linhas): Enfatize entrega de aplicações web/desktop escaláveis, monorepos (Turborepo), CI/CD, integrações (Tiny ERP, WhatsApp, pagamentos). Quantifique: “+10 apps completas entregues, incluindo SaaS de Assinatura Digital com canvas e auto-update via Electron.”
+Habilidades: Agrupe por categorias (Frontend, Backend, DB, DevOps). Priorize React/Next.js/TS/Tailwind, Node/Express/Python/Django, PostgreSQL/Supabase, Docker/GitHub Actions/Vercel/Electron. Inclua palavras-chave da vaga (ex: “arquitetura de monorepo”, “Framer Motion”, “RESTful APIs”).
+Experiência:
+Destaque Containner® e Freelancer (projetos imersivos, SaaS, dashboards, Electron).
+Omita ou minimize Cybernetrs (mencione apenas como “Automação de tarefas e monitoramento de sistemas” se relevante para DevOps).
+Rodoviária: omita ou transforme em “Organização de processos digitais”.
+
+Projetos: Liste 4-6 principais do portfólio com métricas (ex: “Mil Ideias – Catálogo premium com integração Tiny ERP”).
+Formação: Destaque cursos Full Stack e Análise de Sistemas.
+
+Currículo B – Técnico de TI / Suporte N2 / Infra:
+
+Título/Headline: “Técnico de TI Nível 2 | Suporte Avançado, Infraestrutura e Automação | Docker, Redes e Monitoramento”
+Resumo: Foco em diagnóstico/resolução de incidentes complexos, automação, alta disponibilidade, documentação.
+Habilidades: Docker, Git, monitoramento, automação Python/scripts, redes (TCP/IP), PostgreSQL/MySQL, suporte a sistemas críticos. Mencione Electron/Docker como ferramentas de infra/devops.
+Experiência:
+Destaque Cybernetrs (incidentes de rede/infra, automação, monitoramento).
+Freelancer: mencione apenas partes de deploy, Docker, integrações de serviços e suporte implícito.
+Containner® e projetos desktop: minimize ou omita foco visual/UX; enfatize “deploy e manutenção”.
+Rodoviária: reforça suporte operacional.
+
+Projetos: Foque em Helldivers 2 Macro (automação desktop), integrações ERP, scripts de automação.
+
+Dicas Técnicas ATS 2026:
+
+Palavras-chave exatas da vaga (faça parsing com LLM local ou ferramenta como JobAlign).
+Use bullet points com ação + ferramenta + resultado quantificado.
+Evite gráficos, ícones, PDF escaneado. Teste em ATS simulators.
+
+Ecossistema de Portfólio (dionatha.com.br):
+
+Mantenha domínio principal como hub.
+Crie subdomínios ou seções dedicadas:
+dev.dionatha.com.br ou fullstack.dionatha.com.br → Versão A: destaque React/Next/SaaS, monorepo, Framer Motion, projetos visuais (Containner, XR Card, Ampare).
+ti.dionatha.com.br ou suporte.dionatha.com.br → Versão B: foco em automações, Docker setups, scripts Python, Helldivers Macro, documentação de infra, integrações backend/ERP.
+
+Use GitHub com duas organizações ou pastas claras (ex: /fullstack-projects e /infra-automation). READMEs otimizados com badges, tech stack e demo links.
+Landing page principal com selector: “Escolha seu foco: Desenvolvimento Fullstack ou Infraestrutura TI”.
+
+Isso evita confusão na IA do recrutador.
+2. Organização das Contas e Algoritmos
+Plataformas por Perfil (2026):
+
+Comum (ambos): LinkedIn (principal), GitHub, Gupy (grande volume em grandes empresas).
+Plano A Fullstack:
+Gupy, GeekHunter (tech-focused), LinkedIn (vagas remotas), Indeed, Vagas.com, Trampos.co (startups).
+Foque React/Next/Node/Python vagas.
+
+Plano B Suporte/Infra:
+Gupy/Kenoby (empresas médias), Vagas.com, InfoJobs, Catho, Robert Half (suporte/operacional).
+Foque vagas de Analista Suporte N2, Técnico Infra, DevOps Júnior/Pleno.
+
+
+LinkedIn (crucial):
+
+Crie dois perfis se possível (um com e-mail secundário, mas gerencie com cuidado para evitar flags). Ou um perfil com headline alternável + seções “Experiência” customizadas via featured.
+Perfil A: Headline fullstack, About focado em entrega de produtos, featured projects dev.
+Perfil B: Headline suporte/infra, About em estabilidade e automação.
+Complete 100%: foto profissional, banner tech, recomendações (peça de ex-clientes/freelance), skills endossadas.
+Poste 2-3x/semana conteúdo relevante (código, case studies) por perfil (use agendamento).
+
+GitHub: Dois perfis ou organizações separadas. Contribuições consistentes (fix bugs, docs).
+3. Automação e Bots (Vencendo o Sistema sem Shadowban)
+Use suas skills para automações éticas e invisíveis (2026 LinkedIn/Gupy detectam padrões robóticos forte).
+
+Python + Playwright/Selenium (com proxies rotativos, delays humanos 5-30s, user-agents random): Script para scraping vagas (LinkedIn API não oficial + BeautifulSoup ou official se disponível). Filtre por keywords + match score via LLM (ex: Grok/Claude local).
+Rastreador: Script diário que busca em Gupy/Indeed via RSS ou API, filtra match >70%, gera currículo customizado (via python-docx ou Jinja templates) e aplica.
+Preenchimento de formulários: Use n8n/Make.com + browser automation para Gupy (menos detectável). Limite: 20-30 candidaturas/dia totais, variadas.
+Evitar ban:
+Proxies residenciais brasileiros (RS/SP).
+Randomização extrema (horários, mouse movements via Playwright).
+Não aplique em massa idêntico; personalize 1-2 frases.
+Monitore com logs; pause se detectado “Easy Apply” excessivo.
+
+Exemplo simples: Bot que usa GitHub Actions para rodar busca noturna e notificar via Telegram/Email só vagas qualificadas.
+
+Aviso: Respeite ToS. Foque em qualidade (> volume). Combine com aplicações manuais.
+4. Networking Ativo e Cold Email
+Estratégia: 10-15 contatos/semana. Personalize com pesquisa (LinkedIn Sales Nav ou manual: tech stack da empresa, posts recentes).
+Template LinkedIn (Tech Leads/CTOs – Plano A):
+textOlá [Nome], vi que você lidera o time de eng. na [Empresa] e recentemente postou sobre [tópico relevante, ex: desafios com monorepos/SaaS scaling].
+
+Como Fullstack com experiência em Next.js + Turborepo e +10 produtos entregues (incluindo SaaS com integrações ERP), ajudei clientes a reduzir tempo de deploy em ~40%. 
+
+Gostaria de compartilhar um case rápido ou ideia de arquitetura que pode ajudar no [desafio específico]? Sem pressão, só uma conversa de 10min.
+
+Abraços,
+Dionatha
+[Link dev.dionatha.com.br]
+Template LinkedIn/Gerentes de TI (Plano B):
+textOlá [Nome], acompanho o trabalho da [Empresa] em infraestrutura e notei a necessidade de [ex: alta disponibilidade/automação de suporte].
+
+Com +1 ano como Suporte N2 resolvendo incidentes complexos de rede, automações Python/Docker e monitoramento, entreguei redução significativa em downtimes. 
+
+Posso compartilhar procedimentos ou script que usei em ambiente similar? Disponível para uma call rápida.
+
+Atenciosamente,
+Dionatha
+[Link ti.dionatha.com.br]
+Cold Email (melhor deliverability):
+
+Assunto: “Ideia rápida para [desafio específico da empresa] – Fullstack React/Next”
+Corpo curto (<80 palavras), valor primeiro, CTA claro. Use Gmail/Outlook com DKIM/SPF. Ferramentas: Instantly ou Lemlist (com aquecimento).
+
+5. Roadmap / Checklist Sequencial (Próximas 4-8 Semanas)
+Semana 1: Fundação
+
+Crie subdomínios/portfólios bifurcados + atualize GitHub.
+Elabore os 2 CVs + 2 LinkedIn profiles.
+Configure automação básica (script busca vagas).
+
+Semana 2-3: Otimização e Cadastro
+
+Cadastre em todas plataformas (2 perfis onde possível).
+Otimize skills/endorsements, peça 3-5 recomendações.
+Teste CVs em ATS simulators + aplique 10 vagas manuais/dia por perfil.
+
+Semana 4-6: Execução Ativa
+
+Rode automação diária (15-25 candidaturas totais/dia).
+Envie 10 cold messages/emails por semana.
+Poste conteúdo consistente.
+Acompanhe métricas (respostas, views).
+
+Semana 7+: Manutenção e Entrevistas
+
+Prepare pitch (STAR method), mock interviews (LeetCode fácil/médio para Fullstack, cenários infra para B).
+Acompanhe candidaturas, follow-up após 7-10 dias.
+Track em Notion/Sheet: vagas, status, lições.
+
+Métricas de Sucesso: 50-100 candidaturas/semana iniciais → 5-10 entrevistas/mês → 2-3 ofertas.
+Dicas Finais:
+
+Estude inglês técnico (diferencial remoto).
+Certificações rápidas: AWS Cloud Practitioner ou similar para ambos perfis.
+Monitore mercado via LinkedIn alerts + GeekHunter.
+Revise semanalmente com IA (prompt: “Analise este CV contra vaga X para ATS score”).
+
+Este plano é sua “máquina”. Execute com disciplina — em 2026, consistência + personalização + automação inteligente vencem volume bruto. Se precisar de prompts para automações, templates editáveis ou revisão de CV, me envie os arquivos. Vamos colocar você na vaga certa! 🚀

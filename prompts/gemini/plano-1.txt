@@ -1,0 +1,121 @@
+Como Especialista Sênior em Carreira Tech e Engenheiro de Prompt focado no comportamento de ATS (Applicant Tracking Systems) no cenário brasileiro de 2026, afirmo que a sua estratégia de bifurcação é o movimento mais inteligente para contornar a rigidez das IAs de recrutamento atuais.
+
+Os sistemas ATS de 2026, como a IA da Gupy, Kenoby e soluções baseadas em LLMs corporativos (Workday, SAP SuccessFactors), não operam mais apenas por "palavras-chave exatas", mas por agrupamento semântico de foco. Um currículo que mistura desenvolvimento frontend avançado (Framer Motion) com manutenção de rede TCP/IP sofre penalização no matching score por ser interpretado como um "perfil generalista sem profundidade".
+
+Aqui está o seu plano arquitetado para contornar esses filtros, operar duas frentes de forma invisível e escalar suas candidaturas utilizando sua própria stack tecnológica.
+Pilar 1: Estratégia de Bifurcação de Perfis e Portfólio
+
+Para não confundir o algoritmo, você precisa de dois pacotes de apresentação herméticos. O segredo não é mentir, mas redirecionar a narrativa da sua experiência real.
+Plano A: Desenvolvedor Fullstack (Foco Principal)
+
+O objetivo aqui é mostrar que você não é um júnior. Você já arquiteta soluções, usa monorepos e entrega aplicações em produção.
+
+    O que destacar: Arquitetura (Turborepo), performance (Next.js, React), integrações complexas (WhatsApp API, Tiny ERP) e soluções de ponta a ponta (Electron + React). Projetos vitrine: Containner (pela UI avançada) e Ampare/SaaS de Assinatura (pela arquitetura corporativa e banco de dados).
+
+    Como tratar a Cybernetrs (Suporte): Não minta o cargo, mas reescreva as bullet points focando em automação de infraestrutura. Em vez de "diagnóstico de redes", use "Criação de scripts em Python para automação de tarefas críticas e monitoramento contínuo de sistemas, garantindo alta disponibilidade (SLA)".
+
+    Portfólio: Mantenha o dionatha.com.br exclusivamente como um showcase de Engenharia de Software.
+
+Plano B: Técnico de TI / Infraestrutura / Suporte Nível 2
+
+O ATS para infraestrutura busca estabilidade, resolução de incidentes, SLAs e gestão de redes.
+
+    O que destacar: A experiência pura na Cybernetrs, certificação/estudo na Fiberschool (Redes TCP/IP) e capacidade de automação.
+
+    Como tratar os Freelances (Dev): Transforme o foco. Em vez de "desenvolvi um SaaS com React", escreva "Implementação de ferramentas internas, automação de processos via Python/Bash, e deploy de soluções em containers Docker e CI/CD via GitHub Actions". Você vira um profissional de TI com forte viés de DevOps/Sysadmin, não um criador de interfaces.
+
+    Portfólio: Não envie o dionatha.com.br para essas vagas; o design imersivo afasta recrutadores corporativos tradicionais. Crie um subdomínio (infra.dionatha.com.br) com uma interface limpa, estilo terminal ou documentação técnica (usando Docusaurus ou VitePress), focada nos seus scripts Python, Dockerfiles e diagramas de rede.
+
+Pilar 2: Organização das Contas e Algoritmos
+
+O LinkedIn é um ecossistema de grafo único; você não pode ter dois perfis sem violar as regras e dividir sua rede. Como o Plano A (Dev) tem maior teto salarial e maior dependência de networking público, seu LinkedIn deve ser 100% otimizado para Desenvolvedor Fullstack.
+
+Como operar a divisão nas plataformas:
+
+    LinkedIn (Somente Plano A): Título: Software Developer | React & Node.js | Next.js. Destaque os projetos Freelance e Containner. Deixe as configurações no modo "Buscando oportunidades" apenas para cargos de Engenharia.
+
+    GitHub (Híbrido Inteligente): O GitHub suporta a dualidade. Fixe (pin) 4 repositórios Dev (ex: Dark Ecosystem, XR Card) e 2 repositórios de Infra/Automação (ex: Helldivers 2 Macro ou repositórios de scripts Python/Docker).
+
+    Plataformas ATS (Gupy, Kenoby, Sólides): É aqui que a mágica acontece. A Gupy de 2026 cruza os dados do currículo anexado com o cadastro da plataforma. Não use o botão "Importar do LinkedIn" para as vagas de Infra.
+
+        Para vagas Dev, aplique usando o Currículo A e puxe os dados do LinkedIn.
+
+        Para vagas de Suporte/Infra, preencha manualmente o perfil da plataforma com a narrativa do Currículo B e anexe o PDF B. A plataforma isola a candidatura por vaga.
+
+    Plataformas Específicas:
+
+        Dev: GeekHunter, Coodesh, Revelo, ProgramaThor, Wellfound.
+
+        Infra: Vagas.com, InfoJobs, Catho e portais corporativos diretos.
+
+Pilar 3: Automação e Bots (Vencendo o Sistema)
+
+Sistemas modernos de recrutamento possuem heurísticas contra robôs (identificam velocidade de preenchimento, mouse tracking e padrões de IP). Sendo um dev Python/Node, você criará uma automação assistida em vez de um bot de spam.
+
+    O Web Scraper Rastreador (Python + Beautiful Soup / Playwright):
+
+        Crie um script que roda duas vezes ao dia nas plataformas alvo, buscando vagas postadas nas últimas 12 horas.
+
+        Extraia a descrição da vaga e passe por uma API de LLM (OpenAI ou Anthropic) com um prompt que compara a vaga com os seus dois PDFs.
+
+        Se o Match Score for maior que 80%, o script envia o link da vaga e o "Plano" correspondente para o seu Telegram/Discord.
+
+    Extensão Preenchedora (React + TypeScript):
+
+        Não automatize o clique final ("Submit"). Desenvolva uma extensão de browser local que injeta seus dados nos formulários da Gupy/Kenoby usando intervalos randômicos (simulando digitação com 50-150ms de delay por caractere) para evitar o shadowban do Cloudflare ou reCAPTCHA v3.
+
+        Armazene respostas padronizadas na extensão para aquelas perguntas comportamentais clássicas ("Por que você quer trabalhar aqui?").
+
+Pilar 4: Networking Ativo e Cold Email
+
+Em 2026, a caixa de entrada de gestores é filtrada por IA. Suas mensagens precisam ser curtas, diretas ao ponto, demonstrar valor imediato e evitar superlativos vazios.
+Template A: Para Tech Leads / CTOs (Desenvolvedor Fullstack)
+
+Assunto (se e-mail): Automação e Performance de Frontend - Contato Dionatha
+Mensagem (LinkedIn / Email):
+
+    Olá [Nome], tudo bem?
+    Acompanho o crescimento da [Nome da Empresa] e notei que vocês estão escalando o ecossistema de produtos. Como desenvolvedor fullstack, recentemente arquitetei aplicações com Next.js em monorepos (Turborepo) e integrei sistemas complexos como Tiny ERP e APIs de pagamento — desafios que imagino serem rotina para o seu time.
+    Estou em transição para um novo desafio primário e adoraria contribuir com a velocidade de entrega do time de engenharia da [Empresa]. Teria 5 minutos nesta semana para um papo rápido ou posso enviar meu portfólio para o seu radar futuro?
+    Abraço, Dionatha.
+
+Template B: Para Gerentes de TI / Coordenadores (Suporte Nível 2)
+
+Assunto (se e-mail): SLA, Automação e Infraestrutura na [Nome da Empresa]
+Mensagem (LinkedIn / Email):
+
+    Olá [Nome],
+    Vi que o time de TI da [Empresa] está expandindo. Tenho forte background em resolução de incidentes complexos de redes e Suporte Nível 2 (com base sólida em redes TCP/IP pela Fiberschool).
+    Meu diferencial é usar Python e Docker para automatizar rotinas, monitoramento e reduzir a carga operacional do time de suporte, melhorando o SLA de atendimento.
+    Há espaço na sua equipe atualmente para um perfil que une suporte resolutivo e automação?
+    Obrigado, Dionatha.
+
+Pilar 5: Passo a Passo Prático (Roadmap de Execução)
+
+Execute esta esteira de produção para estruturar o ecossistema nas próximas 3 semanas.
+
+    Semana 1: Preparação dos Ativos
+
+        Escreva e exporte o Currículo A (Dev) e o Currículo B (Infra) em PDF. Use formatação limpa (ATS prefere layouts de coluna única, texto selecionável, sem gráficos ou barras de progresso nas habilidades).
+
+        Alinhe o seu LinkedIn integralmente para a persona Dev.
+
+        Suba o infra.dionatha.com.br com foco técnico (scripts, certificados, projetos de rede).
+
+    Semana 2: Engenharia de Automação
+
+        Desenvolva o script Python no seu ambiente local ou em um container leve para raspar vagas no LinkedIn e sites de emprego.
+
+        Integre a API de LLM para pontuar as vagas contra seus dois currículos.
+
+        Configure o envio de alertas das vagas >80% de match para o seu celular.
+
+    Semana 3: Prospecção e Ajuste de Precisão
+
+        Acesse as vagas recomendadas pelo seu bot diariamente.
+
+        Aplique utilizando o currículo correto para cada vaga.
+
+        Inicie o envio de 5 a 10 Cold Messages (LinkedIn/Email) semanais para gestores das empresas onde seu bot identificou vagas abertas, usando os templates do Pilar 4.
+
+    Manutenção: Refine o prompt de classificação do seu bot caso ele comece a recomendar vagas fora do seu escopo real (ex: vagas que pedem 10 anos de Java corporativo quando sua stack principal é JS/Python).

@@ -1,0 +1,496 @@
+Master Plan 2026 — Dionatha Goulart
+
+Especialização Dual para o Mercado Brasileiro de Tecnologia orientado por IA e ATS
+
+Visão Estratégica
+
+O mercado de 2026 favorece profissionais que unem:
+
+Engenharia de Software
+IA aplicada
+Conhecimento de negócio
+Automação
+Infraestrutura
+Capacidade de entregar produtos completos
+
+Seu histórico em Suporte N2 + Fullstack é uma vantagem competitiva.
+
+Você não é apenas um desenvolvedor React/Node.
+
+Você é alguém que:
+
+constrói sistemas;
+integra ERPs;
+automatiza processos;
+entende infraestrutura;
+resolve problemas operacionais reais.
+
+Isso é extremamente valioso para SaaS, software houses, healthtechs, fintechs e empresas de ERP.
+
+PLANO A
+Fullstack Engineer / Software Engineer
+Posicionamento
+
+Desenvolvedor Fullstack especializado em SaaS, integrações, UX e AI-Driven Development.
+
+Keywords ATS 2026
+
+Software Engineer
+
+Fullstack Engineer
+
+React.js
+
+Next.js
+
+TypeScript
+
+Node.js
+
+Python
+
+Django
+
+PostgreSQL
+
+MongoDB
+
+Tailwind CSS
+
+Framer Motion
+
+Electron
+
+Monorepo
+
+Turborepo
+
+REST APIs
+
+ERP Integration
+
+Tiny ERP
+
+Docker
+
+CI/CD
+
+Software Architecture
+
+AI-Assisted Development
+
+LLM Applications
+
+SaaS Development
+
+UX Engineering
+
+Performance Optimization
+
+PLANO B
+IT Operations Specialist / AI Support Specialist
+Posicionamento
+
+Profissional de infraestrutura e automação com experiência em suporte N2, redes e integração de sistemas.
+
+Keywords ATS
+
+IT Operations
+
+Technical Support Level 2
+
+Linux
+
+Docker
+
+TCP/IP
+
+Monitoring
+
+Automation
+
+ERP Infrastructure
+
+Incident Management
+
+System Administration
+
+Network Diagnostics
+
+Infrastructure Support
+
+AI Support Specialist
+
+Customer Success Technical
+
+DevOps Fundamentals
+
+Process Automation
+
+A) OTIMIZAÇÃO ATS E LINKEDIN
+Experiência: Fullstack Freelancer
+Fullstack Software Engineer
+
+Abr/2025 – Atual
+
+Desenvolvimento de aplicações web e desktop utilizando React, Next.js, TypeScript, Node.js, Python e Electron.
+Arquitetura baseada em Monorepo utilizando Turborepo.
+Integrações com Tiny ERP, WhatsApp e APIs externas.
+Construção de plataformas SaaS orientadas à experiência do usuário.
+Desenvolvimento de animações avançadas e interfaces imersivas utilizando Framer Motion.
+Modelagem e integração com PostgreSQL e MongoDB.
+Implementação de processos automatizados para sincronização de dados e redução de carga operacional.
+Projetos relevantes
+Mil Ideias
+
+Plataforma premium para catálogo de produtos e geração de orçamentos personalizados.
+
+Tecnologias:
+
+React
+
+Node.js
+
+PostgreSQL
+
+Tailwind
+
+XR Card
+
+Plataforma de benefícios de saúde e telemedicina.
+
+Principais funcionalidades:
+
+Gestão de usuários;
+Área administrativa;
+Fluxos de autenticação;
+Integrações com serviços externos.
+Detcheler
+
+Sistema inteligente sincronizado com Tiny ERP e WhatsApp.
+
+Resultados:
+
+Automação do catálogo;
+Centralização dos dados;
+Redução de dependência direta da API externa.
+Macro Helldivers 2
+
+Aplicação desktop em Electron com automações e emulação de hardware.
+
+Cybernetrs
+Analista de Suporte Técnico Nível 2
+
+2023 – 2024
+
+Responsável por:
+
+Diagnóstico avançado de redes TCP/IP;
+Suporte a infraestrutura corporativa;
+Resolução de incidentes;
+Administração Linux;
+Atendimento de segundo nível;
+Monitoramento e troubleshooting;
+Análise de conectividade e performance.
+Resumo "Sobre" do LinkedIn
+
+Parece contraditório, mas minha trajetória em Suporte N2 acabou sendo uma das maiores vantagens na área de desenvolvimento.
+
+Comecei trabalhando com infraestrutura, redes e resolução de incidentes, o que me deu uma visão profunda sobre confiabilidade, operação e impacto real da tecnologia nos negócios.
+
+Hoje atuo como Fullstack Software Engineer desenvolvendo aplicações web e desktop com React, Next.js, TypeScript, Node.js e Python, com foco em SaaS, integrações e experiência do usuário.
+
+Tenho experiência em arquiteturas modernas, bancos SQL e NoSQL, Electron, automação de processos e integração com ERPs como Tiny.
+
+Meu objetivo é construir produtos que não apenas funcionem, mas que sejam escaláveis, sustentáveis e capazes de gerar valor real para empresas e usuários.
+
+Interesses atuais:
+
+• Software Architecture
+• AI-Driven Development
+• SaaS Platforms
+• Automação de Processos
+• UX Engineering
+• Integrações e APIs
+• Infraestrutura e Observabilidade
+
+B) ARQUITETURA DO PORTFÓLIO
+
+dionatha.com.br
+
+A ideia é atender recrutadores de desenvolvimento e infraestrutura sem parecer dois profissionais diferentes.
+
+Home
+
+Hero:
+
+Software Engineer especializado em SaaS, integrações e automação.
+
+Botões:
+
+Projetos
+Experiência
+Infra & Operations
+Blog
+Contato
+Projetos
+SaaS & Web Apps
+Mil Ideias
+XR Card
+Assinatura Digital
+Detcheler
+Desktop Apps
+Macro Helldivers 2
+Arquitetura
+
+Mostrar:
+
+Monorepo
+PostgreSQL
+MongoDB
+Docker
+Fluxos
+Diagramas
+Infra & Operations
+
+Página específica contendo:
+
+Experiência em:
+
+Linux
+
+Docker
+
+TCP/IP
+
+Suporte N2
+
+ERP
+
+Automação
+
+Monitoramento
+
+Troubleshooting
+
+Incident Response
+
+Blog
+
+Dividido em:
+
+Software Engineering
+AI Development
+Architecture
+Infra & Operations
+Página /hire
+
+Versão ATS-friendly.
+
+Conteúdo em inglês.
+
+Currículo em PDF.
+
+Links:
+
+LinkedIn
+
+GitHub
+
+E-mail
+
+C) BOT DE CANDIDATURA 2026
+
+Arquitetura:
+
+Python
+│
+├── scheduler
+├── linkedin scraper
+├── gupy monitor
+├── llm engine
+├── json resume
+├── company analyzer
+├── cover letter generator
+├── score system
+└── auto apply
+Stack
+
+Python
+
+Playwright
+
+BeautifulSoup
+
+OpenAI API
+
+Gemini
+
+JSON Resume
+
+SQLite
+
+PostgreSQL
+
+Redis
+
+Docker
+
+n8n
+
+Pipeline
+1
+
+Monitorar:
+
+LinkedIn
+
+Gupy
+
+GeekHunter
+
+Programathor
+
+Remotar
+
+Trampos
+
+2
+
+Extrair:
+
+stack;
+senioridade;
+salário;
+requisitos.
+3
+
+Gerar score:
+
+match_score = 92%
+4
+
+Adaptar currículo automaticamente
+
+Usando:
+
+JSON Resume
+
+Exemplo:
+
+{
+ "target":"software engineer",
+ "keywords":[
+   "React",
+   "Node",
+   "TypeScript"
+ ]
+}
+5
+
+Gerar:
+
+Cover Letter;
+mensagem para LinkedIn;
+e-mail para Tech Lead.
+6
+
+Salvar tudo em PostgreSQL.
+
+7
+
+Dashboard pessoal
+
+Next.js
+
+Shadcn
+
+Recharts
+
+D) PLANO DE AUTORIDADE
+1
+Como construí um SaaS integrado ao Tiny ERP usando React, Node e sincronização inteligente
+2
+AI-Driven Development: como utilizo IA para acelerar projetos sem perder qualidade arquitetural
+3
+Monorepos modernos com Turborepo: organização e escalabilidade para aplicações Fullstack
+4
+Electron além do desktop: construindo aplicações com automação e integração de hardware
+5
+Da infraestrutura ao software: como minha experiência em suporte N2 influencia minhas decisões de arquitetura
+E) COLD MAIL PARA CTOs E TECH LEADS
+Template 1
+
+Assunto:
+
+Integrações e automação para reduzir trabalho operacional
+
+Olá, [Nome].
+
+Meu nome é Dionatha Goulart e atuo como Software Engineer com experiência em desenvolvimento Fullstack e integração de sistemas.
+
+Nos últimos projetos venho trabalhando com React, Node.js, Python, PostgreSQL e integrações com ERPs e APIs externas, desenvolvendo soluções voltadas para automação e redução de processos manuais.
+
+Além da experiência em desenvolvimento, possuo background em suporte N2 e infraestrutura, o que me permite enxergar não apenas a implementação do software, mas também sua operação, confiabilidade e impacto no negócio.
+
+Caso exista alguma demanda relacionada a SaaS, integrações, automação ou modernização de sistemas, ficarei feliz em conversar e entender como posso contribuir.
+
+Obrigado pelo tempo e fico à disposição.
+
+Dionatha Goulart
+
+Software Engineer
+
+LinkedIn
+
+GitHub
+
+dionatha.com.br
+
+Template 2
+
+Assunto:
+
+Experiência em integrações e arquitetura Fullstack
+
+Olá, [Nome].
+
+Estive pesquisando sobre a empresa e acredito que minha experiência com aplicações Fullstack, integração de APIs e automação de processos possa gerar valor para a equipe.
+
+Tenho trabalhado em projetos utilizando React, Next.js, TypeScript, Node.js, Python e bancos relacionais e NoSQL, além de experiência prévia em infraestrutura e suporte técnico.
+
+Um dos focos do meu trabalho é transformar processos operacionais em soluções escaláveis e de baixa manutenção, especialmente em ambientes que dependem de ERPs, APIs e sistemas legados.
+
+Caso faça sentido, gostaria de me apresentar e trocar ideias sobre os desafios atuais da equipe.
+
+Atenciosamente,
+
+Dionatha Goulart
+
+Software Engineer
+
+Objetivo para 2026
+Plano A
+
+Faixa salarial:
+
+CLT Brasil: R$7 mil – R$14 mil
+Remoto LATAM: US$2.000 – US$4.000
+Remoto internacional: US$3.000 – US$6.000
+Plano B
+
+Faixa salarial:
+
+CLT Brasil: R$5 mil – R$10 mil
+Especialista em Operations + Automação: R$8 mil – R$15 mil
+
+Sua combinação entre:
+
+Desenvolvimento Fullstack;
+Infraestrutura;
+Automação;
+Integrações ERP;
+Desktop com Electron;
+AI-Driven Development;
+
+forma um perfil raro e muito alinhado com a evolução do mercado em 2026. 🚀

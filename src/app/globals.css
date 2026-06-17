@@ -1,0 +1,61 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-card: var(--card-bg);
+  --color-border-custom: var(--border);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  --background: #F2EFE7;
+  --foreground: #1A0A0A;
+  --accent: #DC143C;
+  --card-bg: #FFFFFF;
+  --border: #1A0A0A;
+  --shadow: #1A0A0A;
+}
+
+.dark {
+  --background: #121212;
+  --foreground: #F2EFE7;
+  --accent: #E8729A;
+  --card-bg: #1A1A1A;
+  --border: #F2EFE7;
+  --shadow: #E8729A;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-card: var(--card-bg);
+  --color-border-custom: var(--border);
+  --color-shadow-custom: var(--shadow);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Retro Shadow Utility */
+.retro-shadow {
+  box-shadow: 6px 6px 0px 0px var(--shadow);
+}
+
+.retro-shadow-sm {
+  box-shadow: 3px 3px 0px 0px var(--shadow);
+}
+
+.retro-border {
+  border: 2px solid var(--border);
+}

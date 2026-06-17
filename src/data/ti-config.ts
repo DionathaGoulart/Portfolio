@@ -28,4 +28,13 @@ export const tiContent = {
       description: "Desenvolvimento de ferramentas de integração ERP e scripts de automação de infraestrutura.",
     },
   ],
+  contact: {
+    title: "Conexão de Rede?",
+    description: "Inicie um novo protocolo de comunicação para colaborações em infraestrutura e automação.",
+    socials: [
+      { name: "LinkedIn", url: "https://linkedin.com/in/dionathagoulart" },
+      { name: "GitHub", url: "https://github.com/DionathaGoulart" },
+      { name: "Email", url: "mailto:dionatha.work@gmail.com" },
+    ],
+  },
 };

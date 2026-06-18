@@ -77,7 +77,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
 
           {isCV && (
             <div className="hidden sm:block">
-              <PrintButton persona="DEV" content={cvContent} />
+              <PrintButton persona="TI" content={cvContent} />
             </div>
           )}
         </div>

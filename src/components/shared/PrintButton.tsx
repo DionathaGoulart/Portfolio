@@ -56,19 +56,23 @@ export function PrintButton({
           "uppercase transition-all duration-200 disabled:opacity-50 cursor-pointer flex items-center gap-2 group",
           isDev
             ? "border border-accent/30 bg-accent/5 px-3 py-1.5 md:px-4 md:py-2 text-accent hover:bg-accent hover:text-white text-[10px] md:text-xs font-mono"
-            : "border border-accent/40 bg-accent/10 text-accent px-4 py-2 rounded hover:bg-accent hover:text-white font-black tracking-widest text-sm",
+            : "retro-border bg-card px-4 py-2 retro-shadow-sm font-bold text-sm hover:bg-accent hover:text-white",
         )}
       >
         {isGenerating ? (
           <span className="animate-pulse">
-            {isDev ? "_EXECUTING..." : "GERANDO..."}
+            {isDev ? "_EXECUTING..." : "Gerando..."}
           </span>
         ) : (
           <>
-            {isDev && (
-              <span className="opacity-40 group-hover:opacity-100">{">"}</span>
+            {isDev ? (
+              <>
+                <span className="opacity-40 group-hover:opacity-100">{">"}</span>
+                <span>DOWNLOAD_CV.SH</span>
+              </>
+            ) : (
+              <span>Baixar Currículo</span>
             )}
-            <span>{isDev ? "DOWNLOAD_CV.SH" : "[BAIXAR_CV]"}</span>
           </>
         )}
       </button>

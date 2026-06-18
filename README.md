@@ -12,8 +12,8 @@ A high-performance, dual-track portfolio designed to showcase expertise in both 
 ## 📖 Overview
 
 This project is a unique "Hub" that splits the professional persona into two distinct paths:
-- **Dev Portfolio:** Focused on Fullstack development, SaaS, and premium UX.
-- **Ops Portfolio:** Focused on Infrastructure, Networking, and Automation.
+- **Dev Portfolio:** Focused on Fullstack development, SaaS, and premium UX. Features an integrated **Interactive Terminal Mode** simulating a real command-line environment.
+- **Ops/TI Portfolio:** Focused on Infrastructure, Networking, and Automation.
 
 It features a custom-built theme system that switches styles dynamically based on the active route, providing a tailored experience for different professional audiences.
 
@@ -23,15 +23,16 @@ It features a custom-built theme system that switches styles dynamically based o
 - **Language:** [TypeScript](https://www.typescriptlang.org/)
 - **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
 - **Animations:** [GSAP](https://greensock.com/gsap/) & [Framer Motion](https://www.framer.com/motion/)
-- **Content:** [React Markdown](https://github.com/remarkjs/react-markdown) for CV rendering.
-- **Fonts:** [Geist](https://vercel.com/font) (Inter & Mono).
+- **State Management:** React Context API for themes and terminal state.
 
 ## ✨ Key Features
 
+- 💻 **Interactive Terminal Mode:** A fully functional mock terminal interface for the Developer portfolio. Users can interact via commands like `ls`, `cat`, and `theme`. Includes autocomplete (`Tab`) and history (`↑`/`↓`).
+- 🎨 **Terminal Theme Customizer:** An interactive CLI wizard that allows users to change light and dark color palettes dynamically. Preferences are persisted in `localStorage`.
 - 🌓 **Dynamic Theming:** Route-based theme switching (Hub, Dev, TI).
-- 📱 **Fully Responsive:** Optimized for all screen sizes with a mobile-first approach.
+- 📱 **Fully Responsive:** Optimized for all screen sizes with a mobile-first approach. Custom UI handling for touch devices.
 - 🎭 **Immersive Animations:** GSAP ScrollTrigger and Framer Motion for high-end interactions.
-- 📄 **Markdown CVs:** Easily maintainable CVs rendered directly from Markdown files.
+- ⚙️ **Data-Driven Configuration:** Content is strictly separated from presentation through strongly typed configuration files (`dev-config.ts`, `ti-config.ts`), making content updates trivial.
 - 🔍 **SEO Optimized:** Metadata and Schema.org JSON-LD structured data included.
 
 ## 🚀 Getting Started

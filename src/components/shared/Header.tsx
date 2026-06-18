@@ -39,17 +39,23 @@ export function Header({ cvContent }: { cvContent?: string }) {
     }
   };
 
-  const navLinks = isDev ? [
-    { href: "/dev#about", label: "Sobre", scroll: true },
-    { href: "/dev#projects", label: "Projetos", scroll: true },
-    { href: "/dev#experience", label: "Experiência", scroll: true },
-    { href: "/dev#contact", label: "Contato", scroll: true },
-    { href: "/dev/cv", label: "Currículo", scroll: false },
-  ] : [
-    { href: "/ti#about", label: "./sobre", scroll: true },
-    { href: "/ti#experience", label: "./experiencia", scroll: true },
-    { href: "/ti/cv", label: "./curriculo", scroll: false },
-  ];
+  const devLinks = [
+    { id: 'about', href: "/dev#about", label: "Sobre", scroll: true, enabled: devContent.sections.about.enabled },
+    { id: 'projects', href: "/dev#projects", label: "Projetos", scroll: true, enabled: devContent.sections.projects.enabled },
+    { id: 'experience', href: "/dev#experience", label: "Experiência", scroll: true, enabled: devContent.sections.experience.enabled },
+    { id: 'contact', href: "/dev#contact", label: "Contato", scroll: true, enabled: devContent.sections.contact.enabled },
+    { id: 'cv', href: "/dev/cv", label: "Currículo", scroll: false, enabled: true },
+  ].filter(link => link.enabled);
+
+  const tiLinks = [
+    { id: 'about', href: "/ti#about", label: "./sobre", scroll: true, enabled: tiContent.sections.about.enabled },
+    { id: 'projects', href: "/ti#projects", label: "./projetos", scroll: true, enabled: tiContent.sections.projects.enabled },
+    { id: 'experience', href: "/ti#experience", label: "./experiencia", scroll: true, enabled: tiContent.sections.experience.enabled },
+    { id: 'contact', href: "/ti#contact", label: "./contato", scroll: true, enabled: tiContent.sections.contact.enabled },
+    { id: 'cv', href: "/ti/cv", label: "./curriculo", scroll: false, enabled: true },
+  ].filter(link => link.enabled);
+
+  const navLinks = isDev ? devLinks : tiLinks;
 
   return (
     <header className="fixed top-0 left-0 w-full z-[100] py-3 md:py-6 pointer-events-none">

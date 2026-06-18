@@ -2,6 +2,13 @@ export const devContent = {
   name: "Dionatha Goulart",
   role: "Software Engineer | Fullstack Developer",
   email: "dionatha.work@gmail.com",
+  sections: {
+    hero: { enabled: true },
+    about: { enabled: true },
+    projects: { enabled: true },
+    experience: { enabled: true },
+    contact: { enabled: true },
+  },
   hero: {
     title: "Construindo o futuro através de código sólido.",
     description: "Especialista em criar aplicações SaaS, Monorepos e experiências digitais imersivas. Focado em performance, escalabilidade e design premium.",

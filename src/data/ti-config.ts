@@ -2,6 +2,13 @@ export const tiContent = {
   name: "Dionatha Goulart",
   role: "IT Operations Specialist | Infrastructure",
   email: "dionatha.work@gmail.com",
+  sections: {
+    hero: { enabled: true },
+    about: { enabled: true },
+    projects: { enabled: true },
+    experience: { enabled: true },
+    contact: { enabled: true },
+  },
   hero: {
     title: "Infraestrutura resiliente e automação inteligente.",
     description: "Especialista em suporte N2, redes TCP/IP e otimização de fluxos operacionais. Transformando infraestrutura em vantagem competitiva.",
@@ -13,6 +20,20 @@ export const tiContent = {
     { name: "Python / Automation", level: 88 },
     { name: "Monitoring (Zabbix/GLPI)", level: 85 },
     { name: "Troubleshooting", level: 98 },
+  ],
+  projects: [
+    {
+      title: "Automação de Backup",
+      description: "Scripts em Python para backup automatizado e verificação de integridade.",
+      tags: ["Python", "Bash", "Linux"],
+      link: "#",
+    },
+    {
+      title: "Monitoramento Zabbix",
+      description: "Implementação de monitoramento full-stack com dashboards personalizados.",
+      tags: ["Zabbix", "SNMP", "Grafana"],
+      link: "#",
+    }
   ],
   experience: [
     {

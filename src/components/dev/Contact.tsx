@@ -1,51 +1,45 @@
 "use client";
 import { motion } from "framer-motion";
-import { devContent } from "@/data/config";
+import { devContent } from "@/data/dev-config";
 
 export default function Contact() {
   return (
-    <section className="py-20 md:py-32" id="contact">
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
+    <section className="mb-16 md:mb-24" id="contact">
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="retro-border bg-card p-1 md:p-2 retro-shadow"
+        className="border border-accent/30 bg-accent/5 p-1"
       >
-        {/* Section Header Bar */}
-        <div className="bg-accent text-white p-3 md:p-4 retro-border mb-1 flex justify-between items-center">      
-          <span className="font-black italic tracking-tighter text-lg md:text-xl uppercase italic">Contact_Terminal</span>
-          <div className="flex gap-2">
-            <div className="w-3 h-3 md:w-4 md:h-4 rounded-full border-2 border-white" />
-            <div className="w-3 h-3 md:w-4 md:h-4 rounded-full border-2 border-white bg-white" />
-          </div>
+        <div className="bg-accent text-white p-2 font-black uppercase text-xs tracking-widest mb-1">
+          {">"} ESTABLISH_COMMUNICATION_PROTOCOL
         </div>
 
-        <div className="p-6 sm:p-8 md:p-16 text-left space-y-8 md:space-y-12">
-          <div className="space-y-4 text-left">
-            <h2 className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter leading-none italic uppercase"> 
-              VAMOS <br /> <span className="text-accent">CONVERSAR?</span>
+        <div className="p-6 md:p-12 space-y-10">
+          <div className="space-y-4">
+            <h2 className="text-3xl md:text-6xl font-black text-accent uppercase terminal-glow">
+              {devContent.contact.title}
             </h2>
-            <p className="text-lg sm:text-xl md:text-2xl font-bold opacity-70 max-w-xl leading-tight uppercase">       
+            <p className="text-sm md:text-base opacity-60 max-w-2xl font-bold uppercase leading-tight">
               {devContent.contact.description}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {devContent.contact.socials.map((social) => (
-              <a 
+              <a
                 key={social.name}
                 href={social.url}
-                className="retro-border bg-background p-4 md:p-6 font-black text-lg md:text-xl hover:bg-accent hover:text-white transition-all hover:-translate-y-2 hover:retro-shadow-sm active:translate-y-0 text-center"
+                className="border border-accent/30 p-4 font-black text-sm md:text-base hover:bg-accent hover:text-white transition-all text-center uppercase tracking-widest"
               >
-                {social.name.toUpperCase()}
+                [{social.name}]
               </a>
             ))}
           </div>
 
-          <div className="pt-6 md:pt-8 flex flex-col items-start gap-4">
-            <div className="w-full h-px bg-border-custom opacity-20" />
-            <p className="font-mono text-[8px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.5em] opacity-40">
-              Connection established • Secure protocol active
+          <div className="pt-6 border-t border-accent/10">
+            <p className="text-[8px] md:text-[10px] opacity-30 uppercase tracking-[0.4em]">
+              Status: listening for incoming packets...
             </p>
           </div>
         </div>

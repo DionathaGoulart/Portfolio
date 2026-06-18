@@ -7,8 +7,8 @@ import About from "@/components/dev/About";
 import Projects from "@/components/dev/Projects";
 import Experience from "@/components/dev/Experience";
 import Contact from "@/components/dev/Contact";
-import { Header } from "@/components/shared/Header";
-import { devContent } from "@/data/config";
+import { Header } from "@/components/dev/Header";
+import { devContent } from "@/data/dev-config";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,14 +19,17 @@ export default function DevPageClient() {
     gsap.fromTo(
       containerRef.current,
       { opacity: 0 },
-      { opacity: 1, duration: 1.5, ease: "power2.out" }
+      { opacity: 1, duration: 1.5, ease: "power2.out" },
     );
   }, []);
 
   const sections = devContent.sections;
 
   return (
-    <div ref={containerRef} className="selection:bg-accent selection:text-white">
+    <div
+      ref={containerRef}
+      className="selection:bg-accent selection:text-white"
+    >
       <Header />
       <main className="max-w-7xl mx-auto px-6 md:px-10 pb-20 pt-28 md:pt-32">
         {sections.hero.enabled && <Hero />}

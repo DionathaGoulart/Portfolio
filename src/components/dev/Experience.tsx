@@ -1,35 +1,35 @@
 "use client";
 import { motion } from "framer-motion";
-import { devContent } from "@/data/config";
+import { devContent } from "@/data/dev-config";
 
 export default function Experience() {
   return (
-    <section className="py-20 md:py-32" id="experience">
-      <h2 className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter mb-12 md:mb-20 text-left italic underline decoration-accent decoration-4 md:decoration-8 underline-offset-4 md:underline-offset-8 uppercase">
-        EXPERIÊNCIA
+    <section className="mb-16 md:mb-24" id="experience">
+      <h2 className="text-xl md:text-2xl font-black mb-6 md:mb-8 text-accent uppercase tracking-wider flex items-center gap-2">
+        <span className="text-xs opacity-40">02.</span> operational_history
       </h2>
-
-      <div className="space-y-6">
+      <div className="space-y-8">
         {devContent.experience.map((exp, i) => (
           <motion.div
             key={exp.company}
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="retro-border bg-card p-6 md:p-12 retro-shadow-sm flex flex-col md:flex-row gap-6 md:gap-8 items-start hover:retro-shadow transition-all text-left"
+            className="border-l-2 border-accent/30 pl-4 md:pl-6 relative group"
           >
-            <div className="w-full md:w-1/4">
-              <span className="inline-block retro-border bg-accent text-white px-4 py-2 font-black text-xs md:text-sm uppercase whitespace-nowrap">
-                {exp.period}
-              </span>
-            </div>
-            <div className="w-full md:w-3/4 space-y-3 md:space-y-4">
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight uppercase leading-tight">{exp.role}</h3>      
-              <h4 className="text-lg md:text-xl font-bold text-accent italic">{exp.company}</h4>
-              <p className="text-base md:text-xl font-medium opacity-70 leading-relaxed">
-                {exp.description}
-              </p>
-            </div>
+            <div className="absolute -left-[6px] top-2 w-2.5 h-2.5 bg-accent shadow-[0_0_10px_var(--accent)]" />
+            <span className="text-[10px] md:text-xs opacity-40 mb-1 block font-bold tracking-widest uppercase">
+              [{exp.period}]
+            </span>
+            <h3 className="text-base md:text-lg font-black text-accent uppercase group-hover:terminal-glow transition-all">
+              {exp.role}
+            </h3>
+            <p className="text-xs md:text-sm opacity-70 mb-2 font-bold uppercase tracking-tighter">
+              {exp.company}
+            </p>
+            <p className="text-xs md:text-sm opacity-60 leading-relaxed border-t border-accent/10 pt-2">
+              {exp.description}
+            </p>
           </motion.div>
         ))}
       </div>

@@ -1,45 +1,54 @@
 "use client";
 import { motion } from "framer-motion";
-import { devContent } from "@/data/config";
+import { devContent } from "@/data/dev-config";
 
 export default function About() {
   return (
-    <section className="py-20 md:py-32" id="about">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="lg:col-span-7 space-y-6 md:space-y-8"
-        >
-          <div className="inline-block retro-border bg-accent px-4 py-2 text-white font-black text-lg md:text-xl retro-shadow-sm mb-2 md:mb-4 uppercase">
-            Sobre
-          </div>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter leading-[1.1] md:leading-none">
-            Transformando ideias em <span className="text-accent underline decoration-4 md:decoration-8">Sistemas Reais.</span>
-          </h2>
-          <p className="text-lg md:text-2xl font-bold opacity-70 leading-relaxed md:leading-snug">
+    <section
+      className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 md:mb-24"
+      id="about"
+    >
+      <div>
+        <h2 className="text-xl md:text-2xl font-black mb-6 md:mb-8 text-accent uppercase tracking-wider flex items-center gap-2">
+          <span className="text-xs opacity-40">01.</span> core_expertise
+        </h2>
+        <div className="space-y-6">
+          {devContent.about.stacks.map((skill, i) => (
+            <motion.div
+              key={skill.name}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="group"
+            >
+              <div className="flex justify-between mb-2 text-xs md:text-sm font-bold tracking-widest uppercase">
+                <span>{skill.name}</span>
+                <span className="text-accent">{skill.level}%</span>
+              </div>
+              <div className="h-2 border border-accent/20 w-full overflow-hidden p-0.5">
+                <motion.div
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${skill.level}%` }}
+                  className="h-full bg-accent shadow-[0_0_15px_var(--accent)]"
+                />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col justify-center">
+        <div className="p-6 border border-accent/10 bg-accent/[0.02] relative">
+          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-accent/40" />
+          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-accent/40" />
+          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-accent/40" />
+          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-accent/40" />
+
+          <p className="text-sm md:text-base leading-relaxed opacity-70 font-mono italic">
             {devContent.about.text}
           </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="lg:col-span-5 space-y-4"
-        >
-          <div className="retro-border bg-card p-6 md:p-8 retro-shadow-sm h-full">
-            <h3 className="font-black text-xl md:text-2xl mb-6 md:mb-8 border-b-2 border-border-custom pb-4 uppercase tracking-tighter italic">Stack_Principal</h3>
-            <div className="flex flex-wrap gap-2 md:gap-3">
-              {devContent.about.stacks.map((stack) => (
-                <div key={stack.name} className="retro-border bg-background px-3 py-1 md:px-4 md:py-2 font-bold text-xs md:text-sm">   
-                  {stack.name.toUpperCase()}
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

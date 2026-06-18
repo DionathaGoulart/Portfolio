@@ -1,6 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { themeConfig } from "@/data/config";
+import { themeConfig } from "@/data/dev-config";
 
 export function RouteThemeProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();

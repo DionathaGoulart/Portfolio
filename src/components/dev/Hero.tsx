@@ -1,42 +1,46 @@
 "use client";
 import { motion } from "framer-motion";
-import { devContent } from "@/data/config";
+import { devContent } from "@/data/dev-config";
+import { TypingText } from "@/components/shared/TypingText";
 
 export default function Hero() {
   return (
-    <section className="min-h-[90vh] flex flex-col justify-center py-12 md:py-20 relative overflow-x-hidden">
-      <div className="w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="retro-border bg-card p-6 sm:p-8 md:p-16 retro-shadow relative overflow-hidden"
-        >
-          {/* Decorative Corner */}
-          <div className="absolute top-0 right-0 w-16 h-16 bg-accent rotate-45 translate-x-8 -translate-y-8" />
-          
-          <span className="font-mono text-accent font-bold uppercase tracking-widest mb-4 md:mb-6 block text-xs sm:text-base">
-            {">"} {devContent.role}
-          </span>
-          
-          <h1 className="text-4xl sm:text-6xl md:text-8xl font-black mb-6 md:mb-8 leading-[1] md:leading-[0.9] tracking-tighter uppercase">
-            {devContent.hero.title}
+    <section className="space-y-6 md:space-y-8 mb-16 md:mb-24">
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="space-y-2"
+      >
+        <p className="opacity-40 tracking-tighter text-xs md:text-sm">
+          $ WHOAMI --ROLE
+        </p>
+        <div className="relative">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-black opacity-0 pointer-events-none select-none uppercase leading-tight">
+            {devContent.role}
           </h1>
-          
-          <p className="text-lg sm:text-xl md:text-2xl font-medium text-foreground/80 max-w-2xl mb-8 md:mb-12">
-            {devContent.hero.description}
-          </p>
-          
-          <div className="flex flex-col sm:flex-row flex-wrap gap-4 md:gap-6 text-left">
-            <a href="#projects" className="retro-border bg-accent text-white px-8 py-4 md:px-10 md:py-5 font-black text-lg md:text-xl retro-shadow-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all uppercase text-center sm:text-left">
-              Projetos
-            </a>
-            <a href="#contact" className="retro-border bg-background px-8 py-4 md:px-10 md:py-5 font-black text-lg md:text-xl retro-shadow-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all uppercase text-center sm:text-left">
-              Contato
-            </a>
-          </div>
-        </motion.div>
-      </div>
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-accent leading-tight uppercase terminal-glow absolute top-0 left-0">
+            <TypingText text={devContent.role} speed={70} />
+          </h1>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+        className="p-6 md:p-8 border border-accent/20 bg-accent/5 relative overflow-hidden group max-w-4xl"
+      >
+        <div className="absolute top-0 right-0 p-2 opacity-10 font-mono text-[8px] select-none uppercase">
+          STATUS: ACTIVE
+          <br />
+          SOURCE: DG_OS
+        </div>
+
+        <div className="leading-relaxed text-base md:text-lg relative z-10 flex gap-2">
+          <span className="text-accent font-bold">{">"}</span>
+          <p>{devContent.hero.description}</p>
+        </div>
+      </motion.div>
     </section>
   );
 }

@@ -13,14 +13,17 @@ export const tiContent = {
     title: "Infraestrutura resiliente e automação inteligente.",
     description: "Especialista em suporte N2, redes TCP/IP e otimização de fluxos operacionais. Transformando infraestrutura em vantagem competitiva.",
   },
-  skills: [
-    { name: "Redes TCP/IP", level: 95 },
-    { name: "Docker / Containers", level: 90 },
-    { name: "Linux Administration", level: 92 },
-    { name: "Python / Automation", level: 88 },
-    { name: "Monitoring (Zabbix/GLPI)", level: 85 },
-    { name: "Troubleshooting", level: 98 },
-  ],
+  about: {
+    text: "Especialista em Operações de TI com foco em infraestrutura resiliente, automação de processos e suporte avançado. Experiência sólida em ambientes críticos, garantindo alta disponibilidade e performance técnica de ponta a ponta.",
+    stacks: [
+      { name: "Redes TCP/IP", level: 95 },
+      { name: "Docker / Containers", level: 90 },
+      { name: "Linux Administration", level: 92 },
+      { name: "Python / Automation", level: 88 },
+      { name: "Monitoring (Zabbix/GLPI)", level: 85 },
+      { name: "Troubleshooting", level: 98 },
+    ],
+  },
   projects: [
     {
       title: "Automação de Backup",

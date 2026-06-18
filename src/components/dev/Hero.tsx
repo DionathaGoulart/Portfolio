@@ -37,7 +37,7 @@ export default function Hero() {
 
         <div className="grid grid-cols-1 md:grid-cols-12 flex-1">
           {/* Terminal Content Area - MAXIMIZED HEIGHT */}
-          <div className="order-2 md:order-1 md:col-span-8 p-8 md:p-12 font-mono relative overflow-hidden min-h-[500px] md:min-h-[650px] flex flex-col justify-start">
+          <div className="order-2 md:order-1 md:col-span-8 p-5 sm:p-8 md:p-12 font-mono relative overflow-hidden min-h-[400px] md:min-h-[650px] flex flex-col justify-start">
             {/* Background Logo Watermark */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 opacity-[0.03] pointer-events-none">
               <Logo className="w-full h-full text-accent" />
@@ -97,7 +97,7 @@ export default function Hero() {
           </div>
 
           {/* Side Info / Logo Branding - LARGER SCALE */}
-          <div className="order-1 md:order-2 md:col-span-4 border-b-2 md:border-b-0 md:border-l-2 border-accent bg-accent/5 p-8 flex flex-col items-center justify-center gap-16 relative overflow-hidden">
+          <div className="order-1 md:order-2 md:col-span-4 border-b-2 md:border-b-0 md:border-l-2 border-accent bg-accent/5 p-5 md:p-8 flex flex-col items-center justify-center gap-8 md:gap-16 relative overflow-hidden">
             {/* Decorative grid pattern */}
             <div
               className="absolute inset-0 opacity-[0.05] pointer-events-none"

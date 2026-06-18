@@ -455,11 +455,11 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.98 }}
       transition={{ duration: 0.25 }}
-      className="min-h-screen flex flex-col justify-center py-24 px-4 sm:px-6 md:px-10"
+      className="h-[100dvh] flex flex-col pt-20 pb-4 px-4 sm:px-6 md:px-10 md:py-24 md:min-h-screen md:h-auto md:justify-center"
     >
       <div
-        className="retro-border bg-card retro-shadow overflow-hidden w-full max-w-7xl mx-auto flex flex-col relative"
-        style={{ height: "80vh" }}
+        className="retro-border bg-card retro-shadow overflow-hidden w-full max-w-7xl mx-auto flex flex-col relative flex-1 md:flex-none"
+        style={{ height: "100%", maxHeight: "80vh" }}
         onClick={() => inputRef.current?.focus()}
       >
         {/* Logo watermark */}

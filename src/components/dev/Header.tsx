@@ -108,15 +108,15 @@ export function Header({ cvContent }: { cvContent?: string }) {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 w-full h-screen bg-background/95 backdrop-blur-md pointer-events-auto lg:hidden flex flex-col pt-24 px-6 z-40"
+            className="fixed inset-0 w-full h-[100dvh] bg-background/95 backdrop-blur-md pointer-events-auto lg:hidden flex flex-col pt-16 pb-6 px-6 z-40"
           >
-            <div className="flex flex-col gap-6 font-mono h-full overflow-y-auto pb-10">
+            <div className="flex flex-col gap-4 font-mono h-full overflow-y-auto">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-accent text-2xl uppercase flex items-center gap-3 group border-b border-accent/20 pb-4"
+                  className="text-accent text-xl uppercase flex items-center gap-3 group border-b border-accent/20 pb-3"
                 >
                   <span className="opacity-40 group-hover:opacity-100">
                     {">"}
@@ -125,11 +125,11 @@ export function Header({ cvContent }: { cvContent?: string }) {
                 </Link>
               ))}
 
-              <div className="mt-auto flex flex-col gap-4">
+              <div className="mt-auto flex flex-col gap-3 pt-4">
                 {!isCV && (
                   <button
                     onClick={() => { toggleMode(); setIsMenuOpen(false); }}
-                    className="flex items-center justify-center gap-3 border border-accent/30 px-4 py-4 text-sm font-black tracking-wider text-accent hover:bg-accent hover:text-white transition-all w-full"
+                    className="flex items-center justify-center gap-3 border border-accent/30 px-4 py-3 text-sm font-black tracking-wider text-accent hover:bg-accent hover:text-white transition-all w-full"
                   >
                     {mode === "graphic" ? (
                       <>
@@ -144,7 +144,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
                     )}
                   </button>
                 )}
-                <div className="flex justify-between items-center border border-accent/30 px-4 py-4 text-sm">
+                <div className="flex justify-between items-center border border-accent/30 px-4 py-3 text-sm">
                   <span className="text-accent uppercase tracking-widest font-black">THEME</span>
                   <ThemeToggle isTerminal={true} />
                 </div>

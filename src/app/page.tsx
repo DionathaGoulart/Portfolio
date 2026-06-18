@@ -31,29 +31,48 @@ export default function HubPage() {
           className="lg:col-span-7 space-y-8"
         >
           <div className="flex flex-col md:flex-row gap-6 md:items-end">
-            {/* Profile Photo Container with Logo Background */}
-            <div className="relative group shrink-0">
-              <div className="w-32 h-32 md:w-48 md:h-48 retro-border bg-card overflow-hidden retro-shadow-sm group-hover:retro-shadow transition-all relative flex items-center justify-center">
-                {/* Logo Background */}
-                <div className="absolute inset-0 flex items-center justify-center p-4 opacity-20 group-hover:opacity-40 group-hover:scale-110 transition-all duration-500">
-                  <Logo className="w-full h-full text-accent" />
-                </div>
+            <div className="flex flex-row gap-4 items-center md:items-end">
+              {/* Profile Photo Container with Logo Background */}
+              <div className="relative group shrink-0">
+                <div className="w-32 h-32 md:w-48 md:h-48 retro-border bg-card overflow-hidden retro-shadow md:retro-shadow-sm md:group-hover:retro-shadow transition-all relative flex items-center justify-center">
+                  {/* Logo Background */}
+                  <div className="absolute inset-0 flex items-center justify-center p-4 opacity-40 scale-110 md:opacity-20 md:scale-100 md:group-hover:opacity-40 md:group-hover:scale-110 transition-all duration-500">
+                    <Logo className="w-full h-full text-accent" />
+                  </div>
 
-                {/* Profile Image (Cut-out) */}
-                <Image 
-                  src={hubContent.profileImage} 
-                  alt={hubContent.name} 
-                  fill 
-                  className="object-cover z-10 grayscale group-hover:grayscale-0 transition-all duration-500" 
-                />
-                
-                {/* Terminal overlay on photo */}
-                <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none flex flex-col justify-end p-2 font-mono text-[8px] text-white z-20">
-                  <span className="bg-accent px-1 w-fit">SYNC_COMPLETE</span>
+                  {/* Profile Image (Cut-out) */}
+                  <Image 
+                    src={hubContent.profileImage} 
+                    alt={hubContent.name} 
+                    fill 
+                    className="object-cover z-10 grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-all duration-500" 
+                  />
+                  
+                  {/* Terminal overlay on photo */}
+                  <div className="absolute inset-0 bg-accent/5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity pointer-events-none flex flex-col justify-end p-2 font-mono text-[8px] text-white z-20">
+                    <span className="bg-accent px-1 w-fit">SYNC_COMPLETE</span>
+                  </div>
                 </div>
+                {/* Decorative corner */}
+                <div className="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-accent" />
               </div>
-              {/* Decorative corner */}
-              <div className="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-accent" />
+
+              {/* Mobile Socials */}
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 md:hidden">
+                {hubContent.socials.map((social) => {
+                  const Icon = iconMap[social.type as keyof typeof iconMap];
+                  return (
+                    <Link 
+                      key={social.name}
+                      href={social.url}
+                      className="retro-border bg-card p-4 sm:p-5 flex items-center justify-center hover:bg-accent hover:text-white transition-all relative group retro-shadow-sm hover:retro-shadow-sm hover:-translate-y-1 active:translate-y-0 text-foreground"
+                      title={social.name}
+                    >
+                      <Icon size={24} />
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="retro-border bg-accent p-6 md:p-8 retro-shadow inline-block flex-1">
@@ -129,7 +148,7 @@ export default function HubPage() {
 
       {/* Footer Decoration */}
       <div className="max-w-7xl mx-auto mt-16 md:mt-24 w-full flex flex-col md:flex-row justify-between items-center gap-8 border-t-2 border-border-custom/10 pt-12 relative z-10">
-        <div className="flex flex-wrap gap-4 sm:gap-6 justify-center">
+        <div className="hidden md:flex flex-wrap gap-4 sm:gap-6 justify-center">
           {hubContent.socials.map((social) => {
             const Icon = iconMap[social.type as keyof typeof iconMap];
             return (

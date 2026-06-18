@@ -31,7 +31,9 @@ export function PrintButton({
 
       const opt = {
         margin: [15, 15] as [number, number],
-        filename: isTi ? "cv-ti-dionatha-goulart.pdf" : "cv-dev-dionatha-goulart.pdf",
+        filename: isTi
+          ? "cv-ti-dionatha-goulart.pdf"
+          : "cv-dev-dionatha-goulart.pdf",
         image: { type: "jpeg", quality: 0.98 } as const,
         html2canvas: { scale: 2, useCORS: true, letterRendering: true },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" } as const,
@@ -51,17 +53,20 @@ export function PrintButton({
         onClick={handleDownload}
         disabled={isGenerating}
         className={cn(
-          "uppercase tracking-tighter transition-all duration-200 disabled:opacity-50 cursor-pointer",
-          !isTi
-            ? "retro-border bg-card px-4 py-2 retro-shadow-sm font-bold text-sm hover:bg-accent hover:text-white"
-            : "border border-accent/40 bg-accent/10 text-accent px-4 py-2 rounded hover:bg-accent hover:text-white font-black tracking-widest text-sm",
+          "uppercase font-mono transition-all duration-200 disabled:opacity-50 cursor-pointer",
+          "border border-accent/30 bg-accent/5 px-3 py-1.5 md:px-4 md:py-2 text-accent hover:bg-accent hover:text-white text-[10px] md:text-xs flex items-center gap-2 group",
         )}
       >
-        {isGenerating
-          ? "Gerando..."
-          : !isTi
-            ? "Baixar Currículo"
-            : "[Baixar_CV]"}
+        {isGenerating ? (
+          <span className="animate-pulse">_EXECUTING...</span>
+        ) : (
+          <>
+            <span className="opacity-40 group-hover:opacity-100">{">"}</span>
+            <span>
+              {persona === "DEV" ? "DOWNLOAD_CV.SH" : "[GET_CV.BIN]"}
+            </span>
+          </>
+        )}
       </button>
 
       {/* Hidden element for PDF generation - Styled Traditionally */}

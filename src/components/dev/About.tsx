@@ -1,6 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
 import { devContent } from "@/data/dev-config";
+import { SectionTitle } from "../shared/SectionTitle";
+import { SkillBar } from "../shared/SkillBar";
 
 export default function About() {
   return (
@@ -9,31 +11,16 @@ export default function About() {
       id="about"
     >
       <div>
-        <h2 className="text-xl md:text-2xl font-black mb-6 md:mb-8 text-accent uppercase tracking-wider flex items-center gap-2">
-          <span className="text-xs opacity-40">01.</span> core_expertise
-        </h2>
+        <SectionTitle number="01" title="core_expertise" variant="terminal" />
         <div className="space-y-6">
           {devContent.about.stacks.map((skill, i) => (
-            <motion.div
+            <SkillBar
               key={skill.name}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group"
-            >
-              <div className="flex justify-between mb-2 text-xs md:text-sm font-bold tracking-widest uppercase">
-                <span>{skill.name}</span>
-                <span className="text-accent">{skill.level}%</span>
-              </div>
-              <div className="h-2 border border-accent/20 w-full overflow-hidden p-0.5">
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
-                  className="h-full bg-accent shadow-[0_0_15px_var(--accent)]"
-                />
-              </div>
-            </motion.div>
+              name={skill.name}
+              level={skill.level}
+              variant="terminal"
+              delay={i * 0.1}
+            />
           ))}
         </div>
       </div>

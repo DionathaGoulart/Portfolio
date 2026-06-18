@@ -9,39 +9,35 @@ import Experience from "@/components/dev/Experience";
 import Contact from "@/components/dev/Contact";
 import { Header } from "@/components/dev/Header";
 import { devContent } from "@/data/dev-config";
+import { PersonaPage } from "../shared/PersonaPage";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function DevPageClient() {
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    gsap.fromTo(
-      containerRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 1.5, ease: "power2.out" },
-    );
+    if (containerRef.current) {
+      gsap.fromTo(
+        containerRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 1.5, ease: "power2.out" },
+      );
+    }
   }, []);
 
   const sections = devContent.sections;
 
   return (
-    <div
-      ref={containerRef}
-      className="selection:bg-accent selection:text-white"
-    >
+    <div ref={containerRef}>
       <Header />
-      <main className="max-w-7xl mx-auto px-6 md:px-10 pb-20 pt-28 md:pt-32">
+      <PersonaPage content={devContent}>
         {sections.hero.enabled && <Hero />}
         {sections.about.enabled && <About />}
         {sections.projects.enabled && <Projects />}
         {sections.experience.enabled && <Experience />}
         {sections.contact.enabled && <Contact />}
-
-        <footer className="py-12 border-t-2 border-border-custom font-black uppercase tracking-widest opacity-40 text-sm">
-          {devContent.name} // 2026
-        </footer>
-      </main>
+      </PersonaPage>
     </div>
   );
 }

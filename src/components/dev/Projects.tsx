@@ -1,13 +1,12 @@
 "use client";
 import { motion } from "framer-motion";
 import { devContent } from "@/data/dev-config";
+import { SectionTitle } from "../shared/SectionTitle";
 
 export default function Projects() {
   return (
     <section className="mb-16 md:mb-24" id="projects">
-      <h2 className="text-xl md:text-2xl font-black mb-6 md:mb-8 text-accent uppercase tracking-wider flex items-center gap-2">
-        <span className="text-xs opacity-40">03.</span> projects_repo
-      </h2>
+      <SectionTitle number="03" title="projects_repo" variant="terminal" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {devContent.projects.map((project, i) => (
           <motion.div

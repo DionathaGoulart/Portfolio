@@ -1,13 +1,12 @@
 "use client";
 import { motion } from "framer-motion";
 import { devContent } from "@/data/dev-config";
+import { SectionTitle } from "../shared/SectionTitle";
 
 export default function Experience() {
   return (
     <section className="mb-16 md:mb-24" id="experience">
-      <h2 className="text-xl md:text-2xl font-black mb-6 md:mb-8 text-accent uppercase tracking-wider flex items-center gap-2">
-        <span className="text-xs opacity-40">02.</span> operational_history
-      </h2>
+      <SectionTitle number="02" title="operational_history" variant="terminal" />
       <div className="space-y-8">
         {devContent.experience.map((exp, i) => (
           <motion.div

@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { devContent } from "@/data/dev-config";
+import { SocialLinks } from "../shared/SocialLinks";
 
 export default function Contact() {
   return (
@@ -25,17 +26,7 @@ export default function Contact() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {devContent.contact.socials.map((social) => (
-              <a
-                key={social.name}
-                href={social.url}
-                className="border border-accent/30 p-4 font-black text-sm md:text-base hover:bg-accent hover:text-white transition-all text-center uppercase tracking-widest"
-              >
-                [{social.name}]
-              </a>
-            ))}
-          </div>
+          <SocialLinks socials={devContent.contact.socials} variant="terminal" className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full" />
 
           <div className="pt-6 border-t border-accent/10">
             <p className="text-[8px] md:text-[10px] opacity-30 uppercase tracking-[0.4em]">

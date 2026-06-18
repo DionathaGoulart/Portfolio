@@ -1,67 +1,14 @@
 "use client";
 import Link from "next/link";
 import { ThemeToggle } from "../shared/ThemeToggle";
-import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "../shared/Logo";
 import { PrintButton } from "../shared/PrintButton";
 import { devContent } from "@/data/dev-config";
+import { useNavigation } from "@/hooks/useNavigation";
 
 export function Header({ cvContent }: { cvContent?: string }) {
-  const pathname = usePathname();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [pathname]);
-
-  const isCV = pathname.includes("/cv");
-
-  const scrollToTop = (e: React.MouseEvent) => {
-    if (!isCV) {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
-  const navLinks = [
-    {
-      id: "about",
-      href: "/dev#about",
-      label: "./sobre",
-      scroll: true,
-      enabled: devContent.sections.about.enabled,
-    },
-    {
-      id: "projects",
-      href: "/dev#projects",
-      label: "./projetos",
-      scroll: true,
-      enabled: devContent.sections.projects.enabled,
-    },
-    {
-      id: "experience",
-      href: "/dev#experience",
-      label: "./exp",
-      scroll: true,
-      enabled: devContent.sections.experience.enabled,
-    },
-    {
-      id: "contact",
-      href: "/dev#contact",
-      label: "./contato",
-      scroll: true,
-      enabled: devContent.sections.contact.enabled,
-    },
-    {
-      id: "cv",
-      href: "/dev/cv",
-      label: "./cv",
-      scroll: false,
-      enabled: true,
-    },
-  ].filter((link) => link.enabled);
+  const { isMenuOpen, setIsMenuOpen, isCV, scrollToTop, navLinks } = useNavigation(devContent, "dev");
 
   return (
     <header className="fixed top-0 left-0 w-full z-[100] py-3 md:py-6 pointer-events-none">

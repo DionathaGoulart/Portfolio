@@ -9,52 +9,58 @@ export default function Hero() {
     { cmd: "whoami", value: "dionatha_goulart", color: "text-accent" },
     { cmd: "fetch --role", value: devContent.role, isTyping: true },
     { cmd: "git branch", value: "production/stable" },
-    { cmd: "uptime", value: "3 years, 128 days, 4 hours" },
+    { cmd: "uptime", value: "3 years, 128 days, 4 hours" }
   ];
 
   return (
-    <section className="relative mb-16 md:mb-24 pt-4">
-      <motion.div 
+    <section className="relative mb-6 md:mb-10 pt-0 min-h-[calc(100vh-theme(spacing.20))] flex flex-col justify-center">
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="retro-border bg-card retro-shadow overflow-hidden max-w-5xl mx-auto"
+        className="retro-border bg-card retro-shadow overflow-hidden w-full flex flex-col"
       >
         {/* Terminal Header */}
-        <div className="bg-accent/10 border-b-2 border-accent flex justify-between items-center px-4 py-2">
-          <div className="flex gap-2">
-            <div className="w-3 h-3 rounded-full bg-accent" />
-            <div className="w-3 h-3 rounded-full bg-accent/40" />
-            <div className="w-3 h-3 rounded-full bg-accent/20" />
+        <div className="bg-accent/10 border-b-2 border-accent flex justify-between items-center px-6 py-3 shrink-0">
+          <div className="flex gap-2.5">
+            <div className="w-3.5 h-3.5 rounded-full bg-accent" />
+            <div className="w-3.5 h-3.5 rounded-full bg-accent/40" />
+            <div className="w-3.5 h-3.5 rounded-full bg-accent/20" />
           </div>
-          <div className="font-mono text-[10px] font-black uppercase tracking-[0.3em] text-accent/60">
+          <div className="font-mono text-xs font-black uppercase tracking-[0.4em] text-accent/60">
             root@dg-os: ~/workspace/portfolio
           </div>
-          <div className="flex gap-1">
-             <div className="w-4 h-1 bg-accent/40" />
-             <div className="w-4 h-1 bg-accent/20" />
+          <div className="flex gap-1.5">
+            <div className="w-6 h-1 bg-accent/40" />
+            <div className="w-6 h-1 bg-accent/20" />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12">
-          {/* Terminal Content Area - FIXED HEIGHT */}
-          <div className="md:col-span-8 p-6 md:p-10 font-mono relative overflow-hidden h-[450px] md:h-[400px] flex flex-col justify-start">
+        <div className="grid grid-cols-1 md:grid-cols-12 flex-1">
+          {/* Terminal Content Area - MAXIMIZED HEIGHT */}
+          <div className="md:col-span-8 p-8 md:p-12 font-mono relative overflow-hidden min-h-[500px] md:min-h-[650px] flex flex-col justify-start">
             {/* Background Logo Watermark */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 opacity-[0.03] pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 opacity-[0.03] pointer-events-none">
               <Logo className="w-full h-full text-accent" />
             </div>
 
-            <div className="relative z-10 space-y-3">
+            <div className="relative z-10 space-y-5">
               {terminalLines.map((line, i) => (
-                <div key={i} className="space-y-0.5">
-                  <div className="flex items-center gap-2">
-                    <span className="text-accent font-bold text-xs md:text-sm">dionatha@linux:~$</span>
-                    <span className="text-foreground/80 text-xs md:text-sm">{line.cmd}</span>
+                <div key={i} className="space-y-1">
+                  <div className="flex items-center gap-3">
+                    <span className="text-accent font-bold text-sm md:text-base">
+                      dionatha@linux:~$
+                    </span>
+                    <span className="text-foreground/80 text-sm md:text-base">
+                      {line.cmd}
+                    </span>
                   </div>
-                  <div className="pl-6 border-l-2 border-accent/10 min-h-[1.2rem]">
-                    <span className={`${line.color || 'text-foreground'} text-xs md:text-sm`}>
+                  <div className="pl-8 border-l-2 border-accent/10 min-h-[1.5rem]">
+                    <span
+                      className={`${line.color || "text-foreground"} text-sm md:text-base`}
+                    >
                       {line.isTyping ? (
                         <span className="text-accent terminal-glow font-bold">
-                           <TypingText text={line.value} speed={40} />
+                          <TypingText text={line.value} speed={40} />
                         </span>
                       ) : (
                         line.value
@@ -63,84 +69,103 @@ export default function Hero() {
                   </div>
                 </div>
               ))}
-              
-              <div className="pt-4 space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-accent font-bold text-xs md:text-sm">dionatha@linux:~$</span>
-                  <span className="text-foreground/80 text-xs md:text-sm">cat manifest.md</span>
+
+              <div className="pt-6 space-y-2">
+                <div className="flex items-center gap-3">
+                  <span className="text-accent font-bold text-sm md:text-base">
+                    dionatha@linux:~$
+                  </span>
+                  <span className="text-foreground/80 text-sm md:text-base">
+                    cat manifest.md
+                  </span>
                 </div>
-                <div className="pl-6 border-l-2 border-accent/20">
-                   <p className="text-foreground/80 leading-snug max-w-lg uppercase font-bold tracking-tight text-sm md:text-base italic">
-                      {devContent.hero.description}
-                   </p>
+                <div className="pl-8 border-l-2 border-accent/20">
+                  <p className="text-foreground/80 leading-snug max-w-2xl uppercase font-bold tracking-tight text-base md:text-xl italic">
+                    {devContent.hero.description}
+                  </p>
                 </div>
               </div>
 
               {/* Blinking Cursor */}
-              <div className="flex items-center gap-2 pt-2">
-                <span className="text-accent font-bold text-xs md:text-sm">dionatha@linux:~$</span>
-                <span className="w-2 h-4 bg-accent animate-pulse" />
+              <div className="flex items-center gap-3 pt-4">
+                <span className="text-accent font-bold text-sm md:text-base">
+                  dionatha@linux:~$
+                </span>
+                <span className="w-3 h-6 bg-accent animate-pulse" />
               </div>
             </div>
           </div>
 
-          {/* Side Info / Logo Branding */}
-          <div className="md:col-span-4 border-t-2 md:border-t-0 md:border-l-2 border-accent bg-accent/5 p-6 flex flex-col items-center justify-center gap-6 relative overflow-hidden">
-             {/* Decorative grid pattern */}
-             <div className="absolute inset-0 opacity-[0.05] pointer-events-none" 
-                  style={{ backgroundImage: 'radial-gradient(var(--color-accent) 1px, transparent 1px)', backgroundSize: '15px 15px' }} 
-             />
+          {/* Side Info / Logo Branding - LARGER SCALE */}
+          <div className="md:col-span-4 border-t-2 md:border-t-0 md:border-l-2 border-accent bg-accent/5 p-8 flex flex-col items-center justify-center gap-16 relative overflow-hidden">
+            {/* Decorative grid pattern */}
+            <div
+              className="absolute inset-0 opacity-[0.05] pointer-events-none"
+              style={{
+                backgroundImage:
+                  "radial-gradient(var(--color-accent) 1px, transparent 1px)",
+                backgroundSize: "20px 20px",
+              }}
+            />
 
-             <div className="relative group scale-90 md:scale-100">
-                <div className="absolute -inset-4 border-2 border-accent/10 group-hover:border-accent/30 transition-colors animate-[spin_15s_linear_infinite] rounded-full" />
-                <div className="absolute -inset-8 border border-accent/5 animate-[spin_20s_linear_infinite_reverse] rounded-full" />
-                <Logo className="w-24 h-24 md:w-28 md:h-28 text-accent drop-shadow-[0_0_15px_rgba(var(--color-accent),0.3)] relative z-10" />
-             </div>
+            <div className="relative group scale-110 md:scale-125">
+              <div className="absolute -inset-6 border-2 border-accent/10 group-hover:border-accent/30 transition-colors animate-[spin_15s_linear_infinite] rounded-full" />
+              <div className="absolute -inset-12 border border-accent/5 animate-[spin_20s_linear_infinite_reverse] rounded-full" />
+              <Logo className="w-32 h-32 md:w-40 md:h-40 text-accent drop-shadow-[0_0_20px_rgba(var(--color-accent),0.4)] relative z-10" />
+            </div>
 
-             <div className="text-center space-y-3 relative z-10 w-full max-w-[200px]">
-                <div className="flex justify-between items-center">
-                   <div className="h-px flex-1 bg-accent/20" />
-                   <div className="mx-3 font-mono text-[7px] uppercase tracking-[0.4em] opacity-40 whitespace-nowrap">USER_MANIFEST</div>
-                   <div className="h-px flex-1 bg-accent/20" />
+            <div className="text-center space-y-5 relative z-10 w-full max-w-[280px]">
+              <div className="flex justify-between items-center">
+                <div className="h-px flex-1 bg-accent/20" />
+                <div className="mx-4 font-mono text-[8px] md:text-[10px] uppercase tracking-[0.5em] opacity-40 whitespace-nowrap">
+                  USER_MANIFEST
                 </div>
-                
-                <div className="grid grid-cols-1 gap-1.5 font-mono">
-                   <div className="flex justify-between items-center text-[9px] border-b border-accent/10 pb-1">
-                      <span className="opacity-40 uppercase">User</span>
-                      <span className="text-accent font-bold">dionatha.goulart</span>
-                   </div>
-                   <div className="flex justify-between items-center text-[9px] border-b border-accent/10 pb-1">
-                      <span className="opacity-40 uppercase">Status</span>
-                      <span className="text-accent font-bold">Available_to_Code</span>
-                   </div>
-                   <div className="flex justify-between items-center text-[9px] border-b border-accent/10 pb-1">
-                      <span className="opacity-40 uppercase">Expertise</span>
-                      <span className="text-accent font-bold">Fullstack_Dev</span>
-                   </div>
-                   <div className="flex justify-between items-center text-[9px] border-b border-accent/10 pb-1">
-                      <span className="opacity-40 uppercase">Location</span>
-                      <span className="text-accent font-bold">Rio_Grande_do_Sul</span>
-                   </div>
-                   <div className="flex justify-between items-center text-[9px]">
-                      <span className="opacity-40 uppercase">Experience</span>
-                      <span className="text-accent font-bold">3+ Years</span>
-                   </div>
-                </div>
+                <div className="h-px flex-1 bg-accent/20" />
+              </div>
 
-                <div className="pt-2 text-left">
-                   <div className="font-mono text-[6px] uppercase tracking-widest opacity-30 mb-1 flex justify-between">
-                      <span>Sync_Level</span>
-                      <span>100%</span>
-                   </div>
-                   <div className="h-1 w-full bg-accent/10 rounded-full overflow-hidden flex gap-0.5">
-                      <div className="h-full bg-accent w-[20%]" />
-                      <div className="h-full bg-accent w-[20%]" />
-                      <div className="h-full bg-accent w-[20%]" />
-                      <div className="h-full bg-accent w-[20%]" />
-                      <div className="h-full bg-accent w-[20%] animate-pulse" />
-                   </div>
+              <div className="grid grid-cols-1 gap-3 font-mono">
+                <div className="flex justify-between items-center text-xs border-b border-accent/10 pb-1.5">
+                  <span className="opacity-40 uppercase">User</span>
+                  <span className="text-accent font-black">
+                    dionatha.goulart
+                  </span>
                 </div>
-             </div>
+                <div className="flex justify-between items-center text-xs border-b border-accent/10 pb-1.5">
+                  <span className="opacity-40 uppercase">Status</span>
+                  <span className="text-accent font-black text-[10px] md:text-xs">
+                    Available_to_Code
+                  </span>
+                </div>
+                <div className="flex justify-between items-center text-xs border-b border-accent/10 pb-1.5">
+                  <span className="opacity-40 uppercase">Expertise</span>
+                  <span className="text-accent font-black">Fullstack_Dev</span>
+                </div>
+                <div className="flex justify-between items-center text-xs border-b border-accent/10 pb-1.5">
+                  <span className="opacity-40 uppercase">Location</span>
+                  <span className="text-accent font-black text-[10px] md:text-xs">
+                    Rio_Grande_do_Sul
+                  </span>
+                </div>
+                <div className="flex justify-between items-center text-xs">
+                  <span className="opacity-40 uppercase">Experience</span>
+                  <span className="text-accent font-black">3+ Years</span>
+                </div>
+              </div>
+
+              <div className="pt-4 text-left">
+                <div className="font-mono text-[8px] md:text-[10px] uppercase tracking-widest opacity-30 mb-2 flex justify-between">
+                  <span>Sync_Level</span>
+                  <span>100%</span>
+                </div>
+                <div className="h-1.5 w-full bg-accent/10 rounded-full overflow-hidden flex gap-1">
+                  <div className="h-full bg-accent w-[20%]" />
+                  <div className="h-full bg-accent w-[20%]" />
+                  <div className="h-full bg-accent w-[20%]" />
+                  <div className="h-full bg-accent w-[20%]" />
+                  <div className="h-full bg-accent w-[20%] animate-pulse" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -148,14 +173,16 @@ export default function Hero() {
         <div className="bg-accent text-white px-4 py-1.5 flex justify-between items-center font-mono text-[9px] uppercase tracking-[0.3em]">
           <div className="flex gap-6">
             <span className="flex items-center gap-1.5">
-               <span className="w-1.5 h-1.5 bg-white rounded-full" />
-               Connected: SSH/LOCAL
+              <span className="w-1.5 h-1.5 bg-white rounded-full" />
+              Connected: SSH/LOCAL
             </span>
             <span className="hidden sm:inline opacity-60">● 127.0.0.1</span>
           </div>
           <div className="flex gap-4 items-center">
-             <span className="opacity-60 hidden md:inline">CPU: 2%</span>
-             <span className="bg-white text-accent px-2 font-black py-0.5">DG_ROOT_ACCESS</span>
+            <span className="opacity-60 hidden md:inline">CPU: 2%</span>
+            <span className="bg-white text-accent px-2 font-black py-0.5">
+              DG_ROOT_ACCESS
+            </span>
           </div>
         </div>
       </motion.div>

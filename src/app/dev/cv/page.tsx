@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import CVViewer from "@/components/shared/CVViewer";
+import DevCVViewer from "@/components/dev/DevCVViewer";
 import { Metadata } from "next";
 import { Header } from "@/components/dev/Header";
 import { generatePersonSchema } from "@/lib/schema";
@@ -21,7 +21,7 @@ export default function DevCVPage() {
     <div className="selection:bg-accent selection:text-white">
       <Header cvContent={content} />
       <PageTransition className="max-w-7xl mx-auto px-6 md:px-10 pb-20 pt-28 md:pt-32">
-        <CVViewer content={content} persona="DEV" />
+        <DevCVViewer content={content} />
 
         <footer className="py-12 border-t-2 border-border-custom font-black uppercase tracking-widest opacity-40 text-sm mt-20">
           Dionatha Goulart // 2026
@@ -30,3 +30,4 @@ export default function DevCVPage() {
     </div>
   );
 }
+

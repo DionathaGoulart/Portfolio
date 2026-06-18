@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { devContent } from "@/data/dev-config";
 import { TypingText } from "@/components/shared/TypingText";
 import { Logo } from "@/components/shared/Logo";
+import Image from "next/image";
 
 export default function Hero() {
   const terminalLines = [
@@ -96,7 +97,7 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Side Info / Logo Branding - LARGER SCALE */}
+          {/* Side Info / Photo Panel */}
           <div className="order-1 md:order-2 md:col-span-4 border-b-2 md:border-b-0 md:border-l-2 border-accent bg-accent/5 p-5 md:p-8 flex flex-col items-center justify-center gap-8 md:gap-16 relative overflow-hidden">
             {/* Decorative grid pattern */}
             <div
@@ -108,10 +109,23 @@ export default function Hero() {
               }}
             />
 
+            {/* Photo with spinning rings */}
             <div className="relative group scale-110 md:scale-125">
               <div className="absolute -inset-6 border-2 border-accent/10 group-hover:border-accent/30 transition-colors animate-[spin_15s_linear_infinite] rounded-full" />
               <div className="absolute -inset-12 border border-accent/5 animate-[spin_20s_linear_infinite_reverse] rounded-full" />
-              <Logo className="w-32 h-32 md:w-40 md:h-40 text-accent drop-shadow-[0_0_20px_rgba(var(--color-accent),0.4)] relative z-10" />
+              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-accent/20 group-hover:border-accent/60 transition-colors duration-500 z-10 bg-card">
+                {/* Logo background inside circle */}
+                <div className="absolute inset-0 flex items-center justify-center p-4 opacity-30 group-hover:opacity-50 group-hover:scale-110 transition-all duration-700">
+                  <Logo className="w-full h-full text-accent" />
+                </div>
+                {/* Photo */}
+                <Image
+                  src="/me.png"
+                  alt={devContent.name}
+                  fill
+                  className="object-cover z-10 grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+                />
+              </div>
             </div>
 
             <div className="text-center space-y-5 relative z-10 w-full max-w-[280px]">

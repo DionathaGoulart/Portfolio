@@ -53,12 +53,14 @@ export const tiContent: PortfolioContent = {
       description: "Scripts em Python para backup automatizado e verificação de integridade.",
       tags: ["Python", "Bash", "Linux"],
       link: "#",
+      github: "private",
     },
     {
       title: "Monitoramento Zabbix",
       description: "Implementação de monitoramento full-stack com dashboards personalizados.",
       tags: ["Zabbix", "SNMP", "Grafana"],
       link: "#",
+      github: "private",
     }
   ],
   experience: [
@@ -81,7 +83,8 @@ export const tiContent: PortfolioContent = {
     socials: [
       { name: "LinkedIn", url: "https://linkedin.com/in/dionathagoulart" },
       { name: "GitHub", url: "https://github.com/DionathaGoulart" },
-      { name: "Email", url: "mailto:dionatha.work@gmail.com" },
+      { name: "Gmail", url: "mailto:dionatha.work@gmail.com" },
+      { name: "WhatsApp", url: "https://wa.me/5551998544525" },
     ],
   },
 };

@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import CVViewer from "@/components/shared/CVViewer";
+import TiCVViewer from "@/components/ti/TiCVViewer";
 import { Metadata } from "next";
 import { generatePersonSchema } from "@/lib/schema";
 import { Header } from "@/components/ti/Header";
@@ -22,7 +22,7 @@ export default function TiCVPage() {
 
       <div className="max-w-7xl mx-auto px-6 md:px-10 pb-20 pt-28 md:pt-32">
         <div className="max-w-4xl mx-auto">
-          <CVViewer content={content} persona="TI" />
+          <TiCVViewer content={content} />
         </div>
 
         {/* Footer / System Status */}
@@ -35,3 +35,4 @@ export default function TiCVPage() {
     </main>
   );
 }
+

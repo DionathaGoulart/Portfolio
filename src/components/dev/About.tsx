@@ -152,10 +152,10 @@ export default function About() {
               
               {/* Table Header */}
               <div className="flex border-b border-accent/30 pb-2 mb-3 text-[10px] md:text-xs text-accent font-black tracking-widest uppercase">
-                <div className="w-[30%]">MODULE_ID</div>
-                <div className="w-[15%]">CAPACITY</div>
-                <div className="w-[15%]">STATUS</div>
-                <div className="w-[40%]">ALLOCATION_BAR</div>
+                <div className="w-[60%] md:w-[30%]">MODULE_ID</div>
+                <div className="hidden md:block w-[15%]">CAPACITY</div>
+                <div className="w-[40%] md:w-[15%]">STATUS</div>
+                <div className="hidden md:block w-[40%]">ALLOCATION_BAR</div>
               </div>
 
               {/* Table Rows */}
@@ -173,15 +173,15 @@ export default function About() {
                       transition={{ duration: 0.3, delay: 0.4 + (i * 0.1) }}
                       className="flex items-center text-[10px] md:text-xs hover:bg-accent/10 py-1 transition-colors group"
                     >
-                      <div className="w-[30%] font-bold text-foreground group-hover:text-accent flex items-center gap-2">
+                      <div className="w-[60%] md:w-[30%] font-bold text-foreground group-hover:text-accent flex items-center gap-2">
                         <span className="text-accent/50">{">"}</span>
                         {skill.name.toLowerCase().replace(/[\s/]+/g, '_')}.sys
                       </div>
-                      <div className="w-[15%] text-accent font-black">{skill.level}%</div>
-                      <div className="w-[15%] text-green-500/90 animate-pulse font-black drop-shadow-[0_0_2px_rgba(34,197,94,0.5)]">
+                      <div className="hidden md:block w-[15%] text-accent font-black">{skill.level}%</div>
+                      <div className="w-[40%] md:w-[15%] text-green-500/90 animate-pulse font-black drop-shadow-[0_0_2px_rgba(34,197,94,0.5)]">
                         [ OK ]
                       </div>
-                      <div className="w-[40%] text-accent/90 tracking-widest text-[9px] md:text-[10px]">{barStr}</div>
+                      <div className="hidden md:block w-[40%] text-accent/90 tracking-widest text-[9px] md:text-[10px]">{barStr}</div>
                     </motion.div>
                   );
                 })}

@@ -35,6 +35,36 @@ It features a custom-built theme system that switches styles dynamically based o
 - ⚙️ **Data-Driven Configuration:** Content is strictly separated from presentation through strongly typed configuration files (`dev-config.ts`, `ti-config.ts`), making content updates trivial.
 - 🔍 **SEO Optimized:** Metadata and Schema.org JSON-LD structured data included.
 
+## 🧩 Developer Guide
+
+### How to Add New Color Palettes
+The interactive terminal features a built-in theme wizard. To add a new palette (e.g., a new Dark Theme), follow these steps:
+
+1. Open `src/context/ThemeCustomContext.tsx`.
+2. Add your new palette to the `DARK_PALETTES` (or `LIGHT_PALETTES`) array:
+   ```typescript
+   export const DARK_PALETTES = [
+     // ... existing palettes
+     { id: "d6", name: "Neon Matrix", bg: "#000000", acc: "#00ff00", fg: "#ffffff" },
+   ];
+   ```
+3. Update the `PALETTE_VARS` dictionary with your specific CSS variable mappings:
+   ```typescript
+   const PALETTE_VARS = {
+     // ... existing variables
+     d6: { bg: "#000000", fg: "#ffffff", acc: "#00ff00", card: "#111111", border: "#00ff00", shadow: "#00ff00" },
+   };
+   ```
+4. Add your new `id` (`"d6"`) to the `PaletteId` type definition at the top of the file so TypeScript allows it.
+
+### How to Modify Content
+All textual content, projects, and experiences are strictly separated from UI components.
+- **Developer Persona:** Edit `src/data/dev-config.ts`.
+- **Ops/TI Persona:** Edit `src/data/ti-config.ts`.
+- **Global Hub/SEO:** Edit `src/data/seo-config.ts`.
+
+Both configuration files satisfy the `PortfolioContent` type (`src/types/content.ts`). If you want to add new fields (like a new social link or metadata), add the type to `PortfolioContent` first, then update both configs.
+
 ## 🚀 Getting Started
 
 ### Prerequisites

@@ -11,8 +11,7 @@ import { Header } from "@/components/dev/Header";
 import TerminalMode from "@/components/dev/TerminalMode";
 import { devContent } from "@/data/dev-config";
 import { PersonaPage } from "../shared/PersonaPage";
-import { DevModeProvider, useDevMode } from "@/context/DevModeContext";
-import { ThemeCustomProvider } from "@/context/ThemeCustomContext";
+import { useDevMode } from "@/context/DevModeContext";
 import { AnimatePresence, motion } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -85,11 +84,5 @@ function DevContent() {
 }
 
 export default function DevPageClient() {
-  return (
-    <ThemeCustomProvider>
-      <DevModeProvider>
-        <DevContent />
-      </DevModeProvider>
-    </ThemeCustomProvider>
-  );
+  return <DevContent />;
 }

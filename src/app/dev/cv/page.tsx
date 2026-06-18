@@ -1,19 +1,20 @@
-import fs from 'fs';
-import path from 'path';
-import CVViewer from '@/components/shared/CVViewer';
-import { Metadata } from 'next';
-import { Header } from "@/components/shared/Header";
-import { generatePersonSchema } from '@/lib/schema';
+import fs from "fs";
+import path from "path";
+import CVViewer from "@/components/shared/CVViewer";
+import { Metadata } from "next";
+import { Header } from "@/components/dev/Header";
+import { generatePersonSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "CV | Software Engineer - Dionatha Goulart",
-  description: "Currículo de Dionatha Goulart focado em Engenharia de Software e Desenvolvimento Fullstack.",
+  description:
+    "Currículo de Dionatha Goulart focado em Engenharia de Software e Desenvolvimento Fullstack.",
 };
 
 export default function DevCVPage() {
-  const filePath = path.join(process.cwd(), 'src/data/cv-dev.md');
-  const content = fs.readFileSync(filePath, 'utf8');
-  const schema = generatePersonSchema('DEV');
+  const filePath = path.join(process.cwd(), "src/data/cv-dev.md");
+  const content = fs.readFileSync(filePath, "utf8");
+  const schema = generatePersonSchema("DEV");
 
   return (
     <div className="selection:bg-accent selection:text-white">

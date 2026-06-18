@@ -7,8 +7,9 @@
   --color-accent: var(--accent);
   --color-card: var(--card-bg);
   --color-border-custom: var(--border);
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-geist-mono);
+  --color-shadow-custom: var(--shadow);
+  --font-sans: var(--font-jetbrains-mono);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
 :root {
@@ -115,17 +116,6 @@
   --card-bg: var(--d3-card);
   --border: var(--d3-border);
   --shadow: var(--d3-shadow);
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-accent: var(--accent);
-  --color-card: var(--card-bg);
-  --color-border-custom: var(--border);
-  --color-shadow-custom: var(--shadow);
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-geist-mono);
 }
 
 body {

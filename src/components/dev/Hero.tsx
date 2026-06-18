@@ -6,10 +6,10 @@ import { Logo } from "@/components/shared/Logo";
 
 export default function Hero() {
   const terminalLines = [
-    { cmd: "whoami", value: "dionatha_goulart", color: "text-accent" },
+    { cmd: "whoami",     value: devContent.meta.username, color: "text-accent" },
     { cmd: "fetch --role", value: devContent.role, isTyping: true },
-    { cmd: "git branch", value: "production/stable" },
-    { cmd: "uptime", value: "3 years, 128 days, 4 hours" }
+    { cmd: "git branch",   value: devContent.hero.gitBranch },
+    { cmd: "uptime",       value: devContent.hero.uptime },
   ];
 
   return (
@@ -20,16 +20,16 @@ export default function Hero() {
         className="retro-border bg-card retro-shadow overflow-hidden w-full flex flex-col"
       >
         {/* Terminal Header */}
-        <div className="bg-accent/10 border-b-2 border-accent flex justify-between items-center px-6 py-3 shrink-0">
-          <div className="flex gap-2.5">
+        <div className="bg-accent/10 border-b-2 border-accent flex justify-center sm:justify-between items-center px-6 py-3 shrink-0 min-w-0">
+          <div className="hidden sm:flex gap-2.5 shrink-0">
             <div className="w-3.5 h-3.5 rounded-full bg-accent" />
             <div className="w-3.5 h-3.5 rounded-full bg-accent/40" />
             <div className="w-3.5 h-3.5 rounded-full bg-accent/20" />
           </div>
-          <div className="font-mono text-xs font-black uppercase tracking-[0.4em] text-accent/60">
+          <div className="font-mono text-[10px] sm:text-xs font-black uppercase sm:tracking-[0.4em] text-accent/60 truncate">
             root@dg-os: ~/workspace/portfolio
           </div>
-          <div className="flex gap-1.5">
+          <div className="hidden sm:flex gap-1.5 shrink-0">
             <div className="w-6 h-1 bg-accent/40" />
             <div className="w-6 h-1 bg-accent/20" />
           </div>
@@ -37,7 +37,7 @@ export default function Hero() {
 
         <div className="grid grid-cols-1 md:grid-cols-12 flex-1">
           {/* Terminal Content Area - MAXIMIZED HEIGHT */}
-          <div className="md:col-span-8 p-8 md:p-12 font-mono relative overflow-hidden min-h-[500px] md:min-h-[650px] flex flex-col justify-start">
+          <div className="order-2 md:order-1 md:col-span-8 p-8 md:p-12 font-mono relative overflow-hidden min-h-[500px] md:min-h-[650px] flex flex-col justify-start">
             {/* Background Logo Watermark */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 opacity-[0.03] pointer-events-none">
               <Logo className="w-full h-full text-accent" />
@@ -48,7 +48,7 @@ export default function Hero() {
                 <div key={i} className="space-y-1">
                   <div className="flex items-center gap-3">
                     <span className="text-accent font-bold text-sm md:text-base">
-                      dionatha@linux:~$
+                      {devContent.meta.prompt}
                     </span>
                     <span className="text-foreground/80 text-sm md:text-base">
                       {line.cmd}
@@ -97,7 +97,7 @@ export default function Hero() {
           </div>
 
           {/* Side Info / Logo Branding - LARGER SCALE */}
-          <div className="md:col-span-4 border-t-2 md:border-t-0 md:border-l-2 border-accent bg-accent/5 p-8 flex flex-col items-center justify-center gap-16 relative overflow-hidden">
+          <div className="order-1 md:order-2 md:col-span-4 border-b-2 md:border-b-0 md:border-l-2 border-accent bg-accent/5 p-8 flex flex-col items-center justify-center gap-16 relative overflow-hidden">
             {/* Decorative grid pattern */}
             <div
               className="absolute inset-0 opacity-[0.05] pointer-events-none"
@@ -127,28 +127,28 @@ export default function Hero() {
                 <div className="flex justify-between items-center text-xs border-b border-accent/10 pb-1.5">
                   <span className="opacity-40 uppercase">User</span>
                   <span className="text-accent font-black">
-                    dionatha.goulart
+                    {devContent.meta.username.replace(/_/g, ".")}
                   </span>
                 </div>
                 <div className="flex justify-between items-center text-xs border-b border-accent/10 pb-1.5">
                   <span className="opacity-40 uppercase">Status</span>
                   <span className="text-accent font-black text-[10px] md:text-xs">
-                    Available_to_Code
+                    {devContent.hero.status}
                   </span>
                 </div>
                 <div className="flex justify-between items-center text-xs border-b border-accent/10 pb-1.5">
                   <span className="opacity-40 uppercase">Expertise</span>
-                  <span className="text-accent font-black">Fullstack_Dev</span>
+                  <span className="text-accent font-black">{devContent.hero.expertise}</span>
                 </div>
                 <div className="flex justify-between items-center text-xs border-b border-accent/10 pb-1.5">
                   <span className="opacity-40 uppercase">Location</span>
                   <span className="text-accent font-black text-[10px] md:text-xs">
-                    Rio_Grande_do_Sul
+                    {devContent.hero.location}
                   </span>
                 </div>
                 <div className="flex justify-between items-center text-xs">
                   <span className="opacity-40 uppercase">Experience</span>
-                  <span className="text-accent font-black">3+ Years</span>
+                  <span className="text-accent font-black">{devContent.hero.yearsOfExperience}</span>
                 </div>
               </div>
 

@@ -67,6 +67,18 @@ function setPaletteVars(id: string) {
   themeEl.style.setProperty("--shadow", p.shadow);
 }
 
+function clearPaletteVars() {
+  const themeEl =
+    document.querySelector<HTMLElement>("[class*='theme-']") ??
+    document.documentElement;
+  themeEl.style.removeProperty("--background");
+  themeEl.style.removeProperty("--foreground");
+  themeEl.style.removeProperty("--accent");
+  themeEl.style.removeProperty("--card-bg");
+  themeEl.style.removeProperty("--border");
+  themeEl.style.removeProperty("--shadow");
+}
+
 const LS_KEY = "dg-theme-custom";
 
 export function ThemeCustomProvider({ children }: { children: ReactNode }) {
@@ -97,7 +109,10 @@ export function ThemeCustomProvider({ children }: { children: ReactNode }) {
     // Apply immediately on mount
     const isDark = document.documentElement.classList.contains("dark");
     setPaletteVars(isDark ? darkPalette : lightPalette);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      clearPaletteVars();
+    };
   }, [lightPalette, darkPalette]);
 
   const setLightPalette = (id: string) => {

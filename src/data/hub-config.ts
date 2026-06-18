@@ -1,4 +1,6 @@
-export const hubContent = {
+import { HubContent } from "@/types/content";
+
+export const hubContent: HubContent = {
   name: "Dionatha Goulart",
   title: "Dionatha Goulart",
   typingText: "Sistemas de Ponta a Ponta.",

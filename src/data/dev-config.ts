@@ -1,4 +1,6 @@
-export const devContent = {
+import { PortfolioContent } from "@/types/content";
+
+export const devContent: PortfolioContent = {
   name: "Dionatha Goulart",
   role: "Software Engineer | Fullstack Developer",
   email: "dionatha.work@gmail.com",

@@ -1,4 +1,6 @@
-export const tiContent = {
+import { PortfolioContent } from "@/types/content";
+
+export const tiContent: PortfolioContent = {
   name: "Dionatha Goulart",
   role: "IT Operations Specialist | Infrastructure",
   email: "dionatha.work@gmail.com",

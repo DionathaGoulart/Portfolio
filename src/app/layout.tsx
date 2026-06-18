@@ -12,44 +12,61 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-import { seoConfig } from "@/data/seo-config";
+import { seoGlobal, seoHub } from "@/data/seo-config";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(seoConfig.url),
+  metadataBase: new URL(seoGlobal.url),
   title: {
-    default: seoConfig.defaultTitle,
-    template: seoConfig.titleTemplate,
+    default: seoHub.title,
+    template: `%s | ${seoGlobal.author}`,
   },
-  description: seoConfig.description,
-  keywords: seoConfig.keywords,
-  authors: [{ name: seoConfig.author }],
-  creator: seoConfig.author,
+  description: seoHub.description,
+  keywords: seoHub.keywords,
+  authors: [{ name: seoGlobal.author }],
+  creator: seoGlobal.author,
   openGraph: {
     type: "website",
-    locale: seoConfig.og.locale,
-    url: seoConfig.url,
-    siteName: seoConfig.siteName,
-    title: seoConfig.defaultTitle,
-    description: seoConfig.description,
+    locale: "pt_BR",
+    url: seoGlobal.url,
+    siteName: seoGlobal.siteName,
+    title: seoHub.title,
+    description: seoHub.description,
     images: [
       {
-        url: seoConfig.og.image,
+        url: seoHub.ogImage,
         width: 1200,
         height: 630,
-        alt: seoConfig.og.imageAlt,
+        alt: seoGlobal.siteName,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: seoConfig.defaultTitle,
-    description: seoConfig.description,
-    creator: seoConfig.twitter.handle,
-    images: [seoConfig.og.image],
+    title: seoHub.title,
+    description: seoHub.description,
+    creator: seoGlobal.twitterHandle,
+    images: [seoHub.ogImage],
   },
   robots: {
-    index: seoConfig.robots.index,
-    follow: seoConfig.robots.follow,
+    index: seoGlobal.robots.index,
+    follow: seoGlobal.robots.follow,
+  },
+  icons: {
+    icon: [
+      {
+        url: "/icon-light.ico",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/icon-dark.ico",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+    apple: [
+      {
+        url: "/icon-dark.ico",
+      },
+    ],
   },
 };
 

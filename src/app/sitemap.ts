@@ -1,8 +1,8 @@
 import { MetadataRoute } from 'next';
-import { seoConfig } from '@/data/seo-config';
+import { seoGlobal } from '@/data/seo-config';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = seoConfig.url;
+  const baseUrl = seoGlobal.url;
   const lastModified = new Date();
 
   const routes = [

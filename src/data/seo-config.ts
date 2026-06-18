@@ -1,53 +1,34 @@
-/**
- * Centralized SEO Configuration
- * Update this file to manage all metadata, social media sharing, and search engine settings.
- */
-
-export const seoConfig = {
+export const seoGlobal = {
   siteName: "Dionatha Goulart | Hub Profissional",
-  defaultTitle: "Dionatha Goulart | Software Engineer & IT Operations",
-  titleTemplate: "%s | Dionatha Goulart",
-  description: "Hub profissional de Dionatha Goulart - Especialista em Engenharia de Software e Operações de TI. Explore meu portfólio de desenvolvimento e infraestrutura.",
   author: "Dionatha Goulart",
-  url: "https://dionatha.com", // Substitua pelo seu domínio final
+  url: "https://dionatha.com",
   github: "https://github.com/DionathaGoulart",
   linkedin: "https://linkedin.com/in/dionathagoulart",
   email: "dionatha.work@gmail.com",
-  keywords: [
-    "Dionatha Goulart",
-    "Software Engineer",
-    "Fullstack Developer",
-    "IT Operations",
-    "Suporte N2",
-    "SaaS",
-    "Next.js Portfolio",
-    "Infrastructure Automation"
-  ],
-  og: {
-    type: "website",
-    locale: "pt_BR",
-    image: "/og-image.png", // Certifique-se de que esta imagem exista em /public
-    imageAlt: "Dionatha Goulart - Hub Profissional",
-  },
-  twitter: {
-    handle: "@dionathagoulart",
-    site: "@dionathagoulart",
-    cardType: "summary_large_image",
-  },
+  twitterHandle: "@dionathagoulart",
   robots: {
     index: true,
     follow: true,
-  },
-  // Structured Data (JSON-LD) configuration
-  schemas: {
-    person: {
-      name: "Dionatha Goulart",
-      jobTitle: "Software Engineer",
-      gender: "male",
-      sameAs: [
-        "https://github.com/DionathaGoulart",
-        "https://linkedin.com/in/dionathagoulart"
-      ]
-    }
   }
+};
+
+export const seoHub = {
+  title: "Dionatha Goulart | Software Engineer & IT Operations",
+  description: "Hub profissional de Dionatha Goulart - Especialista em Engenharia de Software e Operações de TI. Explore meu portfólio de desenvolvimento e infraestrutura.",
+  keywords: ["Dionatha Goulart", "Software Engineer", "Fullstack Developer", "IT Operations", "Portfolio"],
+  ogImage: "/og-image.png",
+};
+
+export const seoDev = {
+  title: "Desenvolvedor Fullstack | Dionatha Goulart",
+  description: "Portfólio de Engenharia de Software focado em aplicações SaaS, Next.js e experiências digitais de alta performance.",
+  keywords: ["Fullstack Developer", "React", "Next.js", "SaaS", "TypeScript"],
+  ogImage: "/og-dev.png",
+};
+
+export const seoTi = {
+  title: "Operações de TI & Infraestrutura | Dionatha Goulart",
+  description: "Especialista em infraestrutura, redes e automação de sistemas. Focado em resiliência e performance operacional.",
+  keywords: ["IT Operations", "Infrastructure", "Networks", "Automation", "Linux"],
+  ogImage: "/og-ti.png",
 };

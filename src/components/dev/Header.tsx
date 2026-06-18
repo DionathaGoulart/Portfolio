@@ -43,7 +43,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
     {
       id: "experience",
       href: "/dev#experience",
-      label: "./experiencia",
+      label: "./exp",
       scroll: true,
       enabled: devContent.sections.experience.enabled,
     },
@@ -57,7 +57,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
     {
       id: "cv",
       href: "/dev/cv",
-      label: "./curriculo",
+      label: "./cv",
       scroll: false,
       enabled: true,
     },
@@ -86,7 +86,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
 
           {isCV && (
             <div className="hidden sm:block">
-              <PrintButton persona="TI" content={cvContent} />
+              <PrintButton persona="DEV" content={cvContent} />
             </div>
           )}
 

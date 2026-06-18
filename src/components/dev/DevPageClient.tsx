@@ -29,7 +29,8 @@ export default function DevPageClient() {
   const sections = devContent.sections;
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className="relative overflow-x-hidden">
+      <div className="terminal-scanline opacity-10 pointer-events-none" />
       <Header />
       <PersonaPage content={devContent}>
         {sections.hero.enabled && <Hero />}

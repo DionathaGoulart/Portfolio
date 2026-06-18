@@ -1,67 +1,14 @@
 "use client";
 import Link from "next/link";
 import { ThemeToggle } from "../shared/ThemeToggle";
-import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "../shared/Logo";
 import { PrintButton } from "../shared/PrintButton";
 import { tiContent } from "@/data/ti-config";
+import { useNavigation } from "@/hooks/useNavigation";
 
 export function Header({ cvContent }: { cvContent?: string }) {
-  const pathname = usePathname();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [pathname]);
-
-  const isCV = pathname.includes("/cv");
-
-  const scrollToTop = (e: React.MouseEvent) => {
-    if (!isCV) {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
-  const navLinks = [
-    {
-      id: "about",
-      href: "/ti#about",
-      label: "Sobre",
-      scroll: true,
-      enabled: tiContent.sections.about.enabled,
-    },
-    {
-      id: "projects",
-      href: "/ti#projects",
-      label: "Projetos",
-      scroll: true,
-      enabled: tiContent.sections.projects.enabled,
-    },
-    {
-      id: "experience",
-      href: "/ti#experience",
-      label: "Experiência",
-      scroll: true,
-      enabled: tiContent.sections.experience.enabled,
-    },
-    {
-      id: "contact",
-      href: "/ti#contact",
-      label: "Contato",
-      scroll: true,
-      enabled: tiContent.sections.contact.enabled,
-    },
-    {
-      id: "cv",
-      href: "/ti/cv",
-      label: "Currículo",
-      scroll: false,
-      enabled: true,
-    },
-  ].filter((link) => link.enabled);
+  const { isMenuOpen, setIsMenuOpen, isCV, scrollToTop, navLinks } = useNavigation(tiContent, "ti");
 
   return (
     <header className="fixed top-0 left-0 w-full z-[100] py-3 md:py-6 pointer-events-none">

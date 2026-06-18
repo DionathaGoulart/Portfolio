@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { tiContent } from "@/data/ti-config";
+import { SectionTitle } from "../shared/SectionTitle";
 
 export default function Projects() {
   return (
@@ -9,10 +10,8 @@ export default function Projects() {
       id="projects"
     >
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 gap-8">
-        <div className="max-w-2xl">
-          <h2 className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter mb-4 md:mb-8 leading-none italic uppercase">
-            PROJETOS <br /> <span className="text-accent">SELECIONADOS</span>
-          </h2>
+        <div className="max-w-2xl text-left">
+          <SectionTitle title="PROJETOS SELECIONADOS" variant="retro" className="mb-4 md:mb-8" />
           <p className="text-lg md:text-xl font-bold opacity-60">
             Uma vitrine de soluções reais desenvolvidas com precisão.
           </p>

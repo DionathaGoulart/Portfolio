@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { tiContent } from "@/data/ti-config";
+import { SocialLinks } from "../shared/SocialLinks";
 
 export default function Contact() {
   return (
@@ -13,7 +14,7 @@ export default function Contact() {
       >
         {/* Section Header Bar */}
         <div className="bg-accent text-white p-3 md:p-4 retro-border mb-1 flex justify-between items-center">
-          <span className="font-black italic tracking-tighter text-lg md:text-xl uppercase italic">
+          <span className="font-black italic tracking-tighter text-lg md:text-xl uppercase">
             Contact_Terminal
           </span>
           <div className="flex gap-2">
@@ -25,24 +26,14 @@ export default function Contact() {
         <div className="p-6 sm:p-8 md:p-16 text-left space-y-8 md:space-y-12">
           <div className="space-y-4 text-left">
             <h2 className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter leading-none italic uppercase">
-              VAMOS <br /> <span className="text-accent">CONVERSAR?</span>
+              {tiContent.contact.title.split('?')[0]} <br /> <span className="text-accent">{tiContent.contact.title.includes('?') ? tiContent.contact.title.split('?')[1] || '?' : ''}</span>
             </h2>
             <p className="text-lg sm:text-xl md:text-2xl font-bold opacity-70 max-w-xl leading-tight uppercase">
               {tiContent.contact.description}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
-            {tiContent.contact.socials.map((social) => (
-              <a
-                key={social.name}
-                href={social.url}
-                className="retro-border bg-background p-4 md:p-6 font-black text-lg md:text-xl hover:bg-accent hover:text-white transition-all hover:-translate-y-2 hover:retro-shadow-sm active:translate-y-0 text-center"
-              >
-                {social.name.toUpperCase()}
-              </a>
-            ))}
-          </div>
+          <SocialLinks socials={tiContent.contact.socials} variant="retro" className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6" />
 
           <div className="pt-6 md:pt-8 flex flex-col items-start gap-4">
             <div className="w-full h-px bg-border-custom opacity-20" />

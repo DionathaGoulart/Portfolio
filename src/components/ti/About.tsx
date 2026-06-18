@@ -1,11 +1,13 @@
 "use client";
 import { motion } from "framer-motion";
 import { tiContent } from "@/data/ti-config";
+import { SectionTitle } from "../shared/SectionTitle";
+import { SkillBar } from "../shared/SkillBar";
 
 export default function About() {
   return (
     <section className="py-20 md:py-32" id="about">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 text-left">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -38,12 +40,12 @@ export default function About() {
             </h3>
             <div className="flex flex-wrap gap-2 md:gap-3">
               {tiContent.about.stacks.map((stack) => (
-                <div
+                <SkillBar
                   key={stack.name}
-                  className="retro-border bg-background px-3 py-1 md:px-4 md:py-2 font-bold text-xs md:text-sm"
-                >
-                  {stack.name.toUpperCase()}
-                </div>
+                  name={stack.name}
+                  level={stack.level}
+                  variant="retro"
+                />
               ))}
             </div>
           </div>

@@ -1,16 +1,15 @@
 "use client";
 import { motion } from "framer-motion";
-import { devContent } from "@/data/dev-config";
+import { tiContent } from "@/data/ti-config";
+import { SectionTitle } from "../shared/SectionTitle";
 
 export default function Experience() {
   return (
     <section className="py-20 md:py-32" id="experience">
-      <h2 className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter mb-12 md:mb-20 text-left italic underline decoration-accent decoration-4 md:decoration-8 underline-offset-4 md:underline-offset-8 uppercase">
-        EXPERIÊNCIA
-      </h2>
+      <SectionTitle title="EXPERIÊNCIA" variant="retro" />
 
       <div className="space-y-6">
-        {devContent.experience.map((exp, i) => (
+        {tiContent.experience.map((exp, i) => (
           <motion.div
             key={exp.company}
             initial={{ opacity: 0, x: -50 }}

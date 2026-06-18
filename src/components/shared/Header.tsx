@@ -8,6 +8,8 @@ import { useTheme } from 'next-themes';
 
 import { Logo } from './Logo';
 import { PrintButton } from './PrintButton';
+import { devContent } from '@/data/config';
+import { tiContent } from '@/data/ti-config';
 
 export function Header({ cvContent }: { cvContent?: string }) {
   const pathname = usePathname();

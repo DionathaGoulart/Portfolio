@@ -17,7 +17,7 @@ export function PrintButton({
   persona: "DEV" | "TI";
   content?: string;
 }) {
-  const isTi = persona === "TI";
+  const isDev = persona === "DEV";
   const hiddenRef = useRef<HTMLDivElement>(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -31,9 +31,9 @@ export function PrintButton({
 
       const opt = {
         margin: [15, 15] as [number, number],
-        filename: isTi
-          ? "cv-ti-dionatha-goulart.pdf"
-          : "cv-dev-dionatha-goulart.pdf",
+        filename: isDev
+          ? "cv-dev-dionatha-goulart.pdf"
+          : "cv-ti-dionatha-goulart.pdf",
         image: { type: "jpeg", quality: 0.98 } as const,
         html2canvas: { scale: 2, useCORS: true, letterRendering: true },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" } as const,
@@ -53,18 +53,22 @@ export function PrintButton({
         onClick={handleDownload}
         disabled={isGenerating}
         className={cn(
-          "uppercase font-mono transition-all duration-200 disabled:opacity-50 cursor-pointer",
-          "border border-accent/30 bg-accent/5 px-3 py-1.5 md:px-4 md:py-2 text-accent hover:bg-accent hover:text-white text-[10px] md:text-xs flex items-center gap-2 group",
+          "uppercase transition-all duration-200 disabled:opacity-50 cursor-pointer flex items-center gap-2 group",
+          isDev
+            ? "border border-accent/30 bg-accent/5 px-3 py-1.5 md:px-4 md:py-2 text-accent hover:bg-accent hover:text-white text-[10px] md:text-xs font-mono"
+            : "border border-accent/40 bg-accent/10 text-accent px-4 py-2 rounded hover:bg-accent hover:text-white font-black tracking-widest text-sm",
         )}
       >
         {isGenerating ? (
-          <span className="animate-pulse">_EXECUTING...</span>
+          <span className="animate-pulse">
+            {isDev ? "_EXECUTING..." : "GERANDO..."}
+          </span>
         ) : (
           <>
-            <span className="opacity-40 group-hover:opacity-100">{">"}</span>
-            <span>
-              {persona === "DEV" ? "DOWNLOAD_CV.SH" : "[GET_CV.BIN]"}
-            </span>
+            {isDev && (
+              <span className="opacity-40 group-hover:opacity-100">{">"}</span>
+            )}
+            <span>{isDev ? "DOWNLOAD_CV.SH" : "[BAIXAR_CV]"}</span>
           </>
         )}
       </button>

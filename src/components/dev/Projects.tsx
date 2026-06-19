@@ -77,7 +77,7 @@ export default function Projects() {
   };
 
   return (
-    <section ref={sectionRef} className="min-h-screen flex flex-col justify-center py-16 relative" id="projects">
+    <section ref={sectionRef} className="relative w-full" id="projects">
       <SectionTitle number="03" title="projects_repo" variant="terminal" />
 
       {/* Main Terminal Window */}

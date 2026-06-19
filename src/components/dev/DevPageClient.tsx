@@ -62,11 +62,13 @@ function DevContent() {
                   </footer>
                 }
               >
-                {sections.hero.enabled && <Hero />}
-                {sections.about.enabled && <About />}
-                {sections.projects.enabled && <Projects />}
-                {sections.experience.enabled && <Experience />}
-                {sections.contact.enabled && <Contact />}
+                <div className="flex flex-col gap-16 md:gap-28">
+                  {sections.hero.enabled && <Hero />}
+                  {sections.about.enabled && <About />}
+                  {sections.projects.enabled && <Projects />}
+                  {sections.experience.enabled && <Experience />}
+                  {sections.contact.enabled && <Contact />}
+                </div>
               </PersonaPage>
             </motion.div>
           ) : (

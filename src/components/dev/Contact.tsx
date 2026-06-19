@@ -5,7 +5,7 @@ import { SocialLinks } from "../shared/SocialLinks";
 
 export default function Contact() {
   return (
-    <section className="mb-16 md:mb-24" id="contact">
+    <section className="relative w-full" id="contact">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}

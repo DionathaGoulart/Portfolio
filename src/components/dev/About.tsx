@@ -29,7 +29,7 @@ export default function About() {
   const envVars = devContent.about.envVars;
 
   return (
-    <section ref={sectionRef} className="min-h-[90vh] flex flex-col justify-center py-16 relative" id="about">
+    <section ref={sectionRef} className="relative w-full" id="about">
       {/* Title */}
       <div className="mb-6 md:mb-8 flex items-center justify-between border-b-2 border-accent/20 pb-4">
         <div>

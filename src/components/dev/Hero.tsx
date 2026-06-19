@@ -14,7 +14,7 @@ export default function Hero() {
   ];
 
   return (
-    <section className="relative mb-6 md:mb-10 pt-0 min-h-[calc(100vh-theme(spacing.20))] flex flex-col justify-center">
+    <section className="relative pt-0 min-h-[calc(100vh-theme(spacing.20))] flex flex-col justify-center">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

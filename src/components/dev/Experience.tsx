@@ -9,7 +9,7 @@ export default function Experience() {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section ref={sectionRef} className="min-h-screen flex flex-col justify-center py-16 relative" id="experience">
+    <section ref={sectionRef} className="relative w-full" id="experience">
       <SectionTitle number="02" title="operational_history" variant="terminal" />
 
       {/* Main Terminal Window (Like Projects.tsx) */}

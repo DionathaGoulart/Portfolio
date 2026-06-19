@@ -188,10 +188,6 @@ export default function Projects() {
                 <div className="flex-1 overflow-y-auto p-6 md:p-8 pb-4">
                   {/* Simulated Viewer Command */}
                   <div className="space-y-6 font-mono">
-                  <div className="flex items-center gap-2 text-accent/40 text-xs border-b border-accent/10 pb-3 font-normal">
-                    <span>dionatha@linux:~/projects$</span>
-                    <span className="text-foreground/50">cat {getProjectFilename(activeProject.title)}</span>
-                  </div>
 
                   {/* README Body */}
                   <div className="space-y-5">

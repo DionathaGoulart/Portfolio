@@ -145,11 +145,6 @@ export default function About() {
 
           <div className="p-4 md:p-6 bg-transparent font-mono text-xs md:text-sm text-foreground/80 relative z-10">
             <div className="w-full">
-              <div className="text-accent/40 mb-4 font-bold flex items-center gap-2">
-                <span>root@dg-os:~#</span>
-                <span className="text-foreground/50">core_modules --status --all</span>
-              </div>
-              
               {/* Table Header */}
               <div className="flex border-b border-accent/10 pb-2 mb-3 text-[10px] md:text-xs text-accent/50 font-black tracking-widest uppercase">
                 <div className="w-[60%] md:w-[30%]">MODULE_ID</div>
@@ -187,10 +182,7 @@ export default function About() {
                 })}
               </div>
               
-              <div className="mt-6 pt-3 border-t border-accent/20 text-accent/70 flex items-center gap-2 font-bold">
-                <span>root@dg-os:~#</span>
-                <span className="w-2 h-4 bg-accent/80 animate-pulse inline-block" />
-              </div>
+
             </div>
           </div>
         </motion.div>

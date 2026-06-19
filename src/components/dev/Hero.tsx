@@ -47,15 +47,15 @@ export default function Hero() {
             <div className="relative z-10 space-y-5">
               {terminalLines.map((line, i) => (
                 <div key={i} className="space-y-1">
-                  <div className="flex items-center gap-3">
-                    <span className="text-accent/40 font-bold text-xs md:text-sm">
-                      {devContent.meta.prompt}
+                  <div className="flex items-center gap-2">
+                    <span className="text-accent/30 font-bold text-xs md:text-sm">
+                      {">"}
                     </span>
-                    <span className="text-foreground/40 text-xs md:text-sm">
+                    <span className="text-foreground/30 text-xs md:text-sm font-medium">
                       {line.cmd}
                     </span>
                   </div>
-                  <div className="pl-8 border-l-2 border-accent/10 min-h-[1.5rem]">
+                  <div className="pl-4 md:pl-6 border-l-2 border-accent/10 min-h-[1.5rem] mt-1">
                     <span
                       className={`${line.color || "text-foreground"} text-sm md:text-base`}
                     >
@@ -72,15 +72,7 @@ export default function Hero() {
               ))}
 
               <div className="pt-6 space-y-2">
-                <div className="flex items-center gap-3">
-                  <span className="text-accent/40 font-bold text-xs md:text-sm">
-                    {devContent.meta.prompt}
-                  </span>
-                  <span className="text-foreground/40 text-xs md:text-sm">
-                    cat manifest.md
-                  </span>
-                </div>
-                <div className="pl-8 border-l-2 border-accent/20">
+                <div className="pl-4 md:pl-6 border-l-2 border-accent/20">
                   <p className="text-foreground/80 leading-snug max-w-2xl uppercase font-bold tracking-tight text-base md:text-xl italic">
                     {devContent.hero.description}
                   </p>
@@ -88,9 +80,9 @@ export default function Hero() {
               </div>
 
 
-              <div className="flex items-center gap-3 pt-4">
-                <span className="text-accent/40 font-bold text-xs md:text-sm">
-                  {devContent.meta.prompt}
+              <div className="flex items-center gap-2 pt-4">
+                <span className="text-accent/30 font-bold text-xs md:text-sm">
+                  {">"}
                 </span>
                 <span className="w-2.5 h-4 bg-accent/40 animate-pulse" />
               </div>

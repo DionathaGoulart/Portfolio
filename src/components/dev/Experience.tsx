@@ -34,11 +34,6 @@ export default function Experience() {
         {/* Terminal Body (The Git Log from before) */}
         <div className="p-4 md:p-8 font-mono relative z-10 bg-transparent overflow-hidden text-ellipsis">
           <div className="w-full break-words">
-            {/* Input Line */}
-            <div className="text-accent/40 font-normal mb-8 flex items-center gap-2 text-xs md:text-sm">
-              <span>root@dg-os:~/workspace/experience-logs$</span>
-              <span className="text-foreground/50">git log --stat --color</span>
-            </div>
 
             <div className="space-y-10">
               {devContent.experience.map((exp, i) => {
@@ -58,13 +53,6 @@ export default function Experience() {
                     transition={{ duration: 0.4, delay: i * 0.2 }}
                     className="group"
                   >
-                    {/* Commit Hash Line */}
-                    <div className="text-yellow-500/90 font-bold text-[11px] md:text-xs mb-3">
-                      commit {hash}db39c81a7b4f2e9d
-                      <span className="text-cyan-400/80 font-normal ml-2">
-                        ({isLatest ? "HEAD -> main, origin/main" : `tag: v${devContent.experience.length - i}.0`})
-                      </span>
-                    </div>
 
                     {/* Author & Date */}
                     <div className="grid grid-cols-[60px_1fr] md:grid-cols-[80px_1fr] gap-x-2 gap-y-1 mb-5 text-[11px] md:text-xs">
@@ -88,21 +76,14 @@ export default function Experience() {
                         {exp.description}
                       </div>
                       
-                      {/* Fake git stats */}
-                      <div className="text-foreground/40 text-[9px] md:text-[10px] pt-3 mt-3 border-t border-accent/10 w-fit">
-                        1 file changed, {insertions} insertions(+), {deletions} deletions(-)
-                      </div>
+
                     </div>
                   </motion.div>
                 );
               })}
             </div>
 
-            {/* Terminal Prompt waiting */}
-            <div className="text-accent/40 font-normal mt-10 pt-4 border-t border-accent/10 flex items-center gap-2 text-xs md:text-sm">
-              <span>root@dg-os:~/workspace/experience-logs$</span>
-              <span className="w-2.5 h-4 md:h-5 bg-accent/80 animate-pulse inline-block" />
-            </div>
+
           </div>
         </div>
       </div>

@@ -39,6 +39,11 @@ export default function Hero() {
         <div className="grid grid-cols-1 md:grid-cols-12 flex-1">
           {/* Terminal Content Area - MAXIMIZED HEIGHT */}
           <div className="order-2 md:order-1 md:col-span-8 p-5 sm:p-8 md:p-12 font-mono relative overflow-hidden min-h-[400px] md:min-h-[650px] flex flex-col justify-start">
+            {/* Background Logo Watermark */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 opacity-[0.03] pointer-events-none">
+              <Logo className="w-full h-full text-accent" />
+            </div>
+
             <div className="relative z-10 space-y-5">
               {terminalLines.map((line, i) => (
                 <div key={i} className="space-y-1">
@@ -82,20 +87,7 @@ export default function Hero() {
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 pt-4 md:pt-6">
-                <a
-                  href="#projects"
-                  className="bg-accent text-white px-6 md:px-8 py-3 md:py-4 font-bold text-sm md:text-base hover:bg-accent/90 transition-colors uppercase text-center tracking-wider retro-border retro-shadow-sm flex items-center justify-center gap-2"
-                >
-                  <span className="font-mono">{">"}</span> {devContent.ui?.heroProjectsButton || "Ver Projetos"}
-                </a>
-                <a
-                  href="#contact"
-                  className="border border-foreground/20 bg-transparent text-foreground hover:bg-foreground/5 hover:border-foreground/40 px-6 md:px-8 py-3 md:py-4 font-bold text-sm md:text-base transition-colors uppercase text-center tracking-wider flex items-center justify-center"
-                >
-                  {devContent.ui?.heroContactButton || "Iniciar Conexão"}
-                </a>
-              </div>
+
               <div className="flex items-center gap-3 pt-4">
                 <span className="text-accent font-bold text-sm md:text-base">
                   {devContent.meta.prompt}

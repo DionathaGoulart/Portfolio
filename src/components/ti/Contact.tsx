@@ -21,7 +21,7 @@ export default function Contact() {
           {/* Header */}
           <div className="mb-12 md:mb-16">
             <span className="font-mono text-accent text-xs sm:text-sm uppercase tracking-widest font-bold mb-4 block">
-              {">"} Iniciar protocolo de contato
+              {">"} {tiContent.ui?.contactPrompt || "Iniciar protocolo de contato"}
             </span>
             <h2 className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] uppercase">
               {tiContent.contact.title.split("?")[0]}
@@ -66,11 +66,11 @@ export default function Contact() {
           {/* Footer line */}
           <div className="mt-12 md:mt-16 pt-8 border-t border-border-custom/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-foreground/30">
-              Connection encrypted • Protocol active
+              {tiContent.ui?.contactFooterText || "Connection encrypted • Protocol active"}
             </p>
             <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-foreground/30">
               <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-              Online
+              {tiContent.ui?.contactStatus || "Online"}
             </div>
           </div>
         </div>

@@ -66,6 +66,7 @@ export interface PortfolioContent {
     expertise: string;      // e.g. "Fullstack_Dev"
     location: string;       // e.g. "Rio_Grande_do_Sul"
     yearsOfExperience: string; // e.g. "3+ Years"
+    badges?: string[];      // e.g. ["LVL: 99", "OPS_READY"]
   };
   about: {
     text: string;
@@ -80,6 +81,7 @@ export interface PortfolioContent {
     description: string;
     socials: SocialLink[];
   };
+  ui?: Record<string, string>; // Store UI strings like button labels, section titles
 }
 
 export interface HubContent {

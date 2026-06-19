@@ -11,13 +11,13 @@ export default function Projects() {
     >
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 gap-8">
         <div className="max-w-2xl text-left">
-          <SectionTitle title="PROJETOS SELECIONADOS" variant="retro" className="mb-4 md:mb-8" />
+          <SectionTitle title={tiContent.ui?.projectsTitle || "PROJETOS SELECIONADOS"} variant="retro" className="mb-4 md:mb-8" />
           <p className="text-lg md:text-xl font-bold opacity-60">
-            Uma vitrine de soluções reais desenvolvidas com precisão.
+            {tiContent.ui?.projectsSubtitle || "Uma vitrine de soluções reais desenvolvidas com precisão."}
           </p>
         </div>
         <div className="hidden md:block retro-border bg-card p-6 retro-shadow-sm font-black text-2xl animate-bounce">
-          SCROLL ↓
+          {tiContent.ui?.projectsScrollHint || "SCROLL ↓"}
         </div>
       </div>
 
@@ -65,24 +65,24 @@ export default function Projects() {
                 </div>
 
                 <div className="pt-2 md:pt-4 flex flex-col sm:flex-row gap-3 md:gap-4">
-                  {project.link && project.link !== "#" ? (
+                  {project.link !== "#" ? (
                     <a
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 text-center retro-border bg-foreground text-background px-4 py-3 font-black text-xs md:text-sm hover:bg-accent hover:text-white transition-colors uppercase"
                     >
-                      Deploy Production
+                      {tiContent.ui?.projectsDeployButton || "Deploy Production"}
                     </a>
                   ) : (
                     <span className="flex-1 text-center retro-border border-foreground/20 text-foreground/40 px-4 py-3 font-black text-xs md:text-sm uppercase cursor-not-allowed">
-                      Offline
+                      {tiContent.ui?.projectsOfflineButton || "Offline"}
                     </span>
                   )}
                   
                   {project.github === "private" ? (
                     <span className="flex-1 text-center retro-border border-foreground/20 text-foreground/40 px-4 py-3 font-black text-xs md:text-sm uppercase cursor-not-allowed">
-                      GitHub Privado
+                      {tiContent.ui?.projectsPrivateButton || "GitHub Privado"}
                     </span>
                   ) : project.github ? (
                     <a
@@ -91,7 +91,7 @@ export default function Projects() {
                       rel="noopener noreferrer"
                       className="flex-1 text-center retro-border border-foreground text-foreground px-4 py-3 font-black text-xs md:text-sm hover:bg-foreground hover:text-background transition-colors uppercase"
                     >
-                      GitHub Repo
+                      {tiContent.ui?.projectsRepoButton || "GitHub Repo"}
                     </a>
                   ) : null}
                 </div>

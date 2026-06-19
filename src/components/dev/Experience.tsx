@@ -77,6 +77,7 @@ export default function Experience() {
                     
                     {/* Commit Message Body */}
                     <div className="pl-6 md:pl-10 space-y-3 relative before:content-[''] before:absolute before:left-2 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent/20 group-hover:before:bg-accent transition-colors">
+
                       <div className="text-accent font-black text-base md:text-lg uppercase tracking-tight">
                         {exp.company}
                       </div>

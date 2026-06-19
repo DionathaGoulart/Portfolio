@@ -87,10 +87,23 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Blinking Cursor */}
+              <div className="flex flex-col sm:flex-row gap-4 pt-4 md:pt-6">
+                <a
+                  href="#projects"
+                  className="bg-accent text-white px-6 md:px-8 py-3 md:py-4 font-bold text-sm md:text-base hover:bg-accent/90 transition-colors uppercase text-center tracking-wider retro-border retro-shadow-sm flex items-center justify-center gap-2"
+                >
+                  <span className="font-mono">{">"}</span> {devContent.ui?.heroProjectsButton || "Ver Projetos"}
+                </a>
+                <a
+                  href="#contact"
+                  className="border border-foreground/20 bg-transparent text-foreground hover:bg-foreground/5 hover:border-foreground/40 px-6 md:px-8 py-3 md:py-4 font-bold text-sm md:text-base transition-colors uppercase text-center tracking-wider flex items-center justify-center"
+                >
+                  {devContent.ui?.heroContactButton || "Iniciar Conexão"}
+                </a>
+              </div>
               <div className="flex items-center gap-3 pt-4">
                 <span className="text-accent font-bold text-sm md:text-base">
-                  dionatha@linux:~$
+                  {devContent.meta.prompt}
                 </span>
                 <span className="w-3 h-6 bg-accent animate-pulse" />
               </div>

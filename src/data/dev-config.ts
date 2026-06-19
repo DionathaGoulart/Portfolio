@@ -156,6 +156,21 @@ export const devContent: PortfolioContent = {
       { name: "Email", url: "mailto:dionatha.work@gmail.com" },
     ],
   },
+
+  // ─── UI / App Strings ────────────────────────────────────────────────────────
+  ui: {
+    heroProjectsButton: "Ver Projetos",
+    heroContactButton: "Iniciar Conexão",
+    aboutTitle: "// System_Overview",
+    aboutSubtitle: "Hardware & Cognitive Specs v4.0",
+    aboutModuleBio: "MODULE: PRIMARY_BIO",
+    aboutModuleEnv: "MODULE: ENV_CONFIG",
+    aboutModuleSys: "MODULE: SYSTEM_SERVICES",
+    aboutSysHtop: "HTOP / CORE_MODULES",
+    projectsTitle: "Projetos em Destaque",
+    projectsSubtitle: "Aplicações reais, arquitetura escalável e design premium.",
+    experienceTitle: "Histórico de Execução",
+  },
 };
 
 export const themeConfig = {

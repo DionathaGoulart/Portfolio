@@ -6,7 +6,7 @@ import { SectionTitle } from "../shared/SectionTitle";
 export default function Experience() {
   return (
     <section className="py-20 md:py-32" id="experience">
-      <SectionTitle title="EXPERIÊNCIA" variant="retro" />
+      <SectionTitle title={tiContent.ui?.experienceTitle || "EXPERIÊNCIA"} variant="retro" />
 
       <div className="space-y-6">
         {tiContent.experience.map((exp, i) => (

@@ -35,13 +35,13 @@ export default function Hero() {
                   href="#projects"
                   className="retro-border bg-accent text-white px-8 py-3.5 md:py-4 font-black text-sm md:text-base hover:bg-foreground transition-colors uppercase text-center"
                 >
-                  Inicializar Projetos
+                  {tiContent.ui?.heroProjectsButton || "Inicializar Projetos"}
                 </a>
                 <a
                   href="#contact"
                   className="retro-border border-2 border-accent bg-transparent text-foreground hover:bg-accent hover:text-white px-8 py-3.5 md:py-4 font-black text-sm md:text-base transition-colors uppercase text-center"
                 >
-                  Abrir Conexão
+                  {tiContent.ui?.heroContactButton || "Abrir Conexão"}
                 </a>
               </div>
             </div>
@@ -70,10 +70,10 @@ export default function Hero() {
 
               {/* Overlay Tags */}
               <div className="absolute top-4 right-4 z-20 retro-border bg-background px-2 py-1 text-[10px] font-mono text-accent shadow-sm translate-x-4">
-                LVL: 99
+                {tiContent.hero.badges?.[0] || "LVL: 99"}
               </div>
               <div className="absolute bottom-8 -left-4 z-20 retro-border bg-background px-2 py-1 text-[10px] font-mono text-accent shadow-sm -translate-x-2">
-                OPS_READY
+                {tiContent.hero.badges?.[1] || "OPS_READY"}
               </div>
 
             </div>

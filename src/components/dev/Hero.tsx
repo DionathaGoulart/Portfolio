@@ -103,11 +103,11 @@ export default function Hero() {
 
             {/* Photo with spinning rings */}
             <div className="relative group scale-110 md:scale-125">
-              <div className="absolute -inset-6 border-2 border-accent/10 group-hover:border-accent/30 transition-colors animate-[spin_15s_linear_infinite] rounded-full" />
+              <div className="absolute -inset-6 border-2 border-accent/30 md:border-accent/10 md:group-hover:border-accent/30 transition-colors animate-[spin_15s_linear_infinite] rounded-full" />
               <div className="absolute -inset-12 border border-accent/5 animate-[spin_20s_linear_infinite_reverse] rounded-full" />
-              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-accent/20 group-hover:border-accent/60 transition-colors duration-500 z-10 bg-card">
+              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-accent/60 md:border-accent/20 md:group-hover:border-accent/60 transition-colors duration-500 z-10 bg-card">
                 {/* Logo background inside circle */}
-                <div className="absolute inset-0 flex items-center justify-center p-4 opacity-30 group-hover:opacity-50 group-hover:scale-110 transition-all duration-700">
+                <div className="absolute inset-0 flex items-center justify-center p-4 opacity-50 scale-110 md:opacity-30 md:scale-100 md:group-hover:opacity-50 md:group-hover:scale-110 transition-all duration-700">
                   <Logo className="w-full h-full text-accent" />
                 </div>
                 {/* Photo */}
@@ -115,7 +115,7 @@ export default function Hero() {
                   src="/me.png"
                   alt={devContent.name}
                   fill
-                  className="object-cover z-10 grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+                  className="object-cover z-10 grayscale-0 scale-100 md:grayscale md:scale-105 md:group-hover:grayscale-0 md:group-hover:scale-100 transition-all duration-700"
                 />
               </div>
             </div>

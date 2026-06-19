@@ -54,9 +54,9 @@ export default function About() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
-          className="md:col-span-12 lg:col-span-7 retro-border bg-card retro-shadow-sm flex flex-col relative overflow-hidden"
+          className="md:col-span-12 lg:col-span-7 retro-border bg-card flex flex-col relative overflow-hidden"
         >
-          <div className="bg-accent/10 border-b border-accent/20 px-4 py-2 flex items-center justify-between text-[10px] font-mono tracking-wider text-accent font-bold z-20">
+          <div className="border-b border-accent/10 px-4 py-2 flex items-center justify-between text-[10px] font-mono tracking-wider text-accent/60 z-20">
             <span>[ {devContent.ui?.aboutModuleBio || "MODULE: PRIMARY_BIO"} ]</span>
             <span>PID: 001</span>
           </div>
@@ -78,10 +78,7 @@ export default function About() {
             </div>
           </div>
 
-          {/* Decorative Logo Background Watermark */}
-          <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.03] pointer-events-none overflow-hidden text-accent select-none">
-            <Logo className="w-[150%] h-[150%] md:w-[120%] md:h-[120%] object-cover -rotate-12" />
-          </div>
+
         </motion.div>
 
         {/* Environment / Contact Module */}
@@ -89,9 +86,9 @@ export default function About() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="md:col-span-12 lg:col-span-5 retro-border bg-card retro-shadow-sm flex flex-col relative z-10"
+          className="md:col-span-12 lg:col-span-5 retro-border bg-card flex flex-col relative z-10"
         >
-          <div className="bg-accent/10 border-b border-accent/20 px-4 py-2 flex items-center justify-between text-[10px] font-mono tracking-wider text-accent font-bold">
+          <div className="border-b border-accent/10 px-4 py-2 flex items-center justify-between text-[10px] font-mono tracking-wider text-accent/60">
             <span>[ {devContent.ui?.aboutModuleEnv || "MODULE: ENV_CONFIG"} ]</span>
             <span>PRINTENV</span>
           </div>
@@ -131,17 +128,14 @@ export default function About() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="md:col-span-12 retro-border bg-card retro-shadow-sm flex flex-col relative z-10"
+          className="md:col-span-12 retro-border bg-card flex flex-col relative z-10"
         >
-          <div className="bg-accent/10 border-b border-accent/20 px-4 py-2 flex items-center justify-between text-[10px] font-mono tracking-wider text-accent font-bold relative z-20">
+          <div className="border-b border-accent/10 px-4 py-2 flex items-center justify-between text-[10px] font-mono tracking-wider text-accent/60 relative z-20">
             <span>[ {devContent.ui?.aboutModuleSys || "MODULE: SYSTEM_SERVICES"} ]</span>
             <span>{devContent.ui?.aboutSysHtop || "HTOP / CORE_MODULES"}</span>
           </div>
 
-          {/* Decorative Logo Background Watermark */}
-          <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.03] pointer-events-none overflow-hidden text-accent select-none mt-8">
-            <Logo className="w-[150%] h-[150%] md:w-[120%] md:h-[120%] object-cover -rotate-12" />
-          </div>
+
 
           <div className="p-4 md:p-6 bg-transparent font-mono text-xs md:text-sm text-foreground/80 relative z-10">
             <div className="w-full">

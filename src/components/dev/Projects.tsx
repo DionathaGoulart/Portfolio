@@ -99,20 +99,14 @@ export default function Projects() {
           </span>
         </div>
 
-        {/* Decorative Logo Background Watermark */}
-        <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.03] pointer-events-none overflow-hidden text-accent select-none mt-8">
-          <Logo className="w-[150%] h-[150%] md:w-[120%] md:h-[120%] object-cover -rotate-12" />
-        </div>
-
         {/* Terminal Body Split Pane */}
         <div className="grid grid-cols-1 lg:grid-cols-12 flex-1 min-h-0 relative z-10">
 
           {/* Left Column: Interactive File Manager List */}
           <div className="lg:col-span-5 border-b lg:border-b-0 lg:border-r border-accent/20 bg-accent/[0.01] flex flex-col justify-between">
             <div className="p-4 space-y-1">
-              <div className="font-mono text-[9px] uppercase tracking-widest opacity-40 mb-3 px-2 flex justify-between">
-                <span>Directory listing (ls -la)</span>
-                <span className="hidden sm:inline">Size</span>
+              <div className="font-mono text-[9px] uppercase tracking-widest opacity-40 mb-3 px-2">
+                <span>Directory listing</span>
               </div>
 
               <div className="flex flex-col gap-1">
@@ -132,11 +126,6 @@ export default function Projects() {
                           {isActive ? "►" : " "}
                         </span>
 
-                        {/* Mock permissions - Hidden on narrow screens */}
-                        <span className="hidden sm:inline text-[10px] opacity-40 shrink-0 font-light tracking-tight select-none mr-1 font-mono">
-                          -rwxr-xr-x
-                        </span>
-
                         <span className={`truncate font-bold ${isActive ? "text-white" : "group-hover:text-accent"}`}>
                           {getProjectFilename(project.title)}
                         </span>
@@ -144,9 +133,6 @@ export default function Projects() {
 
                       {/* Info side element */}
                       <div className="flex items-center gap-2 select-none shrink-0 font-mono text-[9px]">
-                        <span className="hidden sm:inline opacity-30">
-                          {idx === 0 ? "4.2K" : idx === 1 ? "3.8K" : idx === 2 ? "5.1K" : "6.4K"}
-                        </span>
                         <span
                           className={`px-1.5 py-0.5 font-bold uppercase rounded-sm border ${isActive
                               ? "border-white/50 text-white bg-white/10"

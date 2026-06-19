@@ -26,11 +26,6 @@ export default function Experience() {
           <span className="hidden sm:inline opacity-50">(C) {devContent.meta.copyright}</span>
         </div>
 
-        {/* Decorative Logo Background Watermark */}
-        <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.03] pointer-events-none overflow-hidden text-accent select-none mt-8">
-          <Logo className="w-[150%] h-[150%] md:w-[120%] md:h-[120%] object-cover -rotate-12" />
-        </div>
-
         {/* Terminal Body (The Git Log from before) */}
         <div className="p-4 md:p-8 font-mono relative z-10 bg-transparent overflow-hidden text-ellipsis">
           <div className="w-full break-words">
@@ -59,20 +54,18 @@ export default function Experience() {
                     className="group"
                   >
                     {/* Commit Hash Line */}
-                    <div className="text-yellow-500/90 font-bold text-[11px] md:text-xs mb-3">
-                      commit {hash}db39c81a7b4f2e9d
-                      <span className="text-cyan-400/80 font-normal ml-2">
-                        ({isLatest ? "HEAD -> main, origin/main" : `tag: v${devContent.experience.length - i}.0`})
-                      </span>
+                    <div className="text-foreground/30 font-mono text-[9px] md:text-[10px] mb-2 flex items-center gap-2">
+                      <span>commit {hash}</span>
+                      {isLatest && (
+                        <span className="text-accent/50">
+                          (HEAD -{">"} main)
+                        </span>
+                      )}
                     </div>
 
-                    {/* Author & Date */}
-                    <div className="grid grid-cols-[60px_1fr] md:grid-cols-[80px_1fr] gap-x-2 gap-y-1 mb-5 text-[11px] md:text-xs">
-                      <div className="text-foreground/50">Author:</div>
-                      <div className="text-foreground/90">{devContent.name} {"<"}{devContent.email}{">"}</div>
-                      
-                      <div className="text-foreground/50">Date:</div>
-                      <div className="text-foreground/90">{exp.period}</div>
+                    {/* Date */}
+                    <div className="text-foreground/60 text-xs font-mono mb-4">
+                      {exp.period}
                     </div>
                     
                     {/* Commit Message Body */}
@@ -84,13 +77,8 @@ export default function Experience() {
                       <div className="text-foreground font-bold opacity-90 text-xs md:text-sm">
                         feat: {exp.role}
                       </div>
-                      <div className="text-foreground/70 leading-relaxed text-xs md:text-sm max-w-2xl mt-2">
+                      <div className="text-foreground/60 text-xs md:text-sm max-w-2xl mt-2 font-sans">
                         {exp.description}
-                      </div>
-                      
-                      {/* Fake git stats */}
-                      <div className="text-foreground/40 text-[9px] md:text-[10px] pt-3 mt-3 border-t border-accent/10 w-fit">
-                        1 file changed, {insertions} insertions(+), {deletions} deletions(-)
                       </div>
                     </div>
                   </motion.div>

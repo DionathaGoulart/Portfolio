@@ -87,14 +87,14 @@ export default function Projects() {
         className="retro-border bg-card retro-shadow overflow-hidden w-full flex flex-col relative h-auto"
       >
         {/* Terminal Header Bar */}
-        <div className="bg-accent/10 border-b-2 border-accent/20 px-4 py-2 flex justify-between items-center text-[10px] font-mono tracking-wider text-accent font-black min-w-0">
-          <div className="flex gap-1.5 shrink-0">
+        <div className="bg-accent/5 border-b border-accent/10 px-4 py-2 flex justify-between items-center text-[10px] font-mono tracking-wider text-accent/50 font-black min-w-0">
+          <div className="flex gap-1.5 shrink-0 opacity-50">
             <span className="w-2.5 h-2.5 rounded-full bg-accent" />
             <span className="w-2.5 h-2.5 rounded-full bg-accent/40" />
             <span className="w-2.5 h-2.5 rounded-full bg-accent/20" />
           </div>
-          <span className="truncate mx-2 flex-1 text-center">root@dg-os: ~/workspace/projects-repository</span>
-          <span className="hidden sm:inline animate-pulse text-[9px] bg-accent/20 px-1 py-0.5 rounded text-accent shrink-0">
+          <span className="truncate mx-2 flex-1 text-center font-normal">root@dg-os: ~/workspace/projects-repository</span>
+          <span className="hidden sm:inline text-[9px] bg-accent/10 px-1 py-0.5 rounded text-accent/50 shrink-0 font-normal">
             {isPaused ? "● PAUSED" : "● AUTO_PLAY"}
           </span>
         </div>
@@ -188,9 +188,9 @@ export default function Projects() {
                 <div className="flex-1 overflow-y-auto p-6 md:p-8 pb-4">
                   {/* Simulated Viewer Command */}
                   <div className="space-y-6 font-mono">
-                  <div className="flex items-center gap-2 text-accent/70 text-xs border-b border-accent/10 pb-3">
-                    <span className="font-bold">dionatha@linux:~/projects$</span>
-                    <span className="text-foreground">cat {getProjectFilename(activeProject.title)}</span>
+                  <div className="flex items-center gap-2 text-accent/40 text-xs border-b border-accent/10 pb-3 font-normal">
+                    <span>dionatha@linux:~/projects$</span>
+                    <span className="text-foreground/50">cat {getProjectFilename(activeProject.title)}</span>
                   </div>
 
                   {/* README Body */}

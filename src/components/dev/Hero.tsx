@@ -27,7 +27,7 @@ export default function Hero() {
             <div className="w-3.5 h-3.5 rounded-full bg-accent/40" />
             <div className="w-3.5 h-3.5 rounded-full bg-accent/20" />
           </div>
-          <div className="font-mono text-[10px] sm:text-xs font-black uppercase sm:tracking-[0.4em] text-accent/60 truncate">
+          <div className="font-mono text-[10px] sm:text-xs font-black uppercase sm:tracking-[0.4em] text-accent/30 truncate">
             root@dg-os: ~/workspace/portfolio
           </div>
           <div className="hidden sm:flex gap-1.5 shrink-0">
@@ -48,10 +48,10 @@ export default function Hero() {
               {terminalLines.map((line, i) => (
                 <div key={i} className="space-y-1">
                   <div className="flex items-center gap-3">
-                    <span className="text-accent font-bold text-sm md:text-base">
+                    <span className="text-accent/40 font-bold text-xs md:text-sm">
                       {devContent.meta.prompt}
                     </span>
-                    <span className="text-foreground/80 text-sm md:text-base">
+                    <span className="text-foreground/40 text-xs md:text-sm">
                       {line.cmd}
                     </span>
                   </div>
@@ -73,10 +73,10 @@ export default function Hero() {
 
               <div className="pt-6 space-y-2">
                 <div className="flex items-center gap-3">
-                  <span className="text-accent font-bold text-sm md:text-base">
-                    dionatha@linux:~$
+                  <span className="text-accent/40 font-bold text-xs md:text-sm">
+                    {devContent.meta.prompt}
                   </span>
-                  <span className="text-foreground/80 text-sm md:text-base">
+                  <span className="text-foreground/40 text-xs md:text-sm">
                     cat manifest.md
                   </span>
                 </div>
@@ -89,10 +89,10 @@ export default function Hero() {
 
 
               <div className="flex items-center gap-3 pt-4">
-                <span className="text-accent font-bold text-sm md:text-base">
+                <span className="text-accent/40 font-bold text-xs md:text-sm">
                   {devContent.meta.prompt}
                 </span>
-                <span className="w-3 h-6 bg-accent animate-pulse" />
+                <span className="w-2.5 h-4 bg-accent/40 animate-pulse" />
               </div>
             </div>
           </div>

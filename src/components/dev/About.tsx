@@ -145,13 +145,13 @@ export default function About() {
 
           <div className="p-4 md:p-6 bg-transparent font-mono text-xs md:text-sm text-foreground/80 relative z-10">
             <div className="w-full">
-              <div className="text-accent/70 mb-4 font-bold flex items-center gap-2">
+              <div className="text-accent/40 mb-4 font-bold flex items-center gap-2">
                 <span>root@dg-os:~#</span>
-                <span className="text-foreground">core_modules --status --all</span>
+                <span className="text-foreground/50">core_modules --status --all</span>
               </div>
               
               {/* Table Header */}
-              <div className="flex border-b border-accent/30 pb-2 mb-3 text-[10px] md:text-xs text-accent font-black tracking-widest uppercase">
+              <div className="flex border-b border-accent/10 pb-2 mb-3 text-[10px] md:text-xs text-accent/50 font-black tracking-widest uppercase">
                 <div className="w-[60%] md:w-[30%]">MODULE_ID</div>
                 <div className="hidden md:block w-[15%]">CAPACITY</div>
                 <div className="w-[40%] md:w-[15%]">STATUS</div>

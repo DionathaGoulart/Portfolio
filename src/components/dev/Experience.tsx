@@ -16,14 +16,14 @@ export default function Experience() {
       <div className="retro-border bg-card retro-shadow overflow-hidden w-full flex flex-col relative h-auto">
         
         {/* Terminal Header Bar (Like Projects.tsx) */}
-        <div className="bg-accent/10 border-b-2 border-accent/20 px-4 py-2 flex justify-between items-center text-[10px] font-mono tracking-wider text-accent font-black relative z-20">
-          <div className="flex gap-1.5 shrink-0">
+        <div className="bg-accent/5 border-b border-accent/10 px-4 py-2 flex justify-between items-center text-[10px] font-mono tracking-wider text-accent/50 font-normal relative z-20">
+          <div className="flex gap-1.5 shrink-0 opacity-50">
             <span className="w-2.5 h-2.5 rounded-full bg-accent" />
             <span className="w-2.5 h-2.5 rounded-full bg-accent/40" />
             <span className="w-2.5 h-2.5 rounded-full bg-accent/20" />
           </div>
           <span className="truncate mx-2">root@dg-os: ~/workspace/experience-logs</span>
-          <span className="hidden sm:inline opacity-50">(C) {devContent.meta.copyright}</span>
+          <span className="hidden sm:inline opacity-30">(C) {devContent.meta.copyright}</span>
         </div>
 
         {/* Decorative Logo Background Watermark */}
@@ -35,9 +35,9 @@ export default function Experience() {
         <div className="p-4 md:p-8 font-mono relative z-10 bg-transparent overflow-hidden text-ellipsis">
           <div className="w-full break-words">
             {/* Input Line */}
-            <div className="text-accent/80 font-bold mb-8 flex items-center gap-2 text-xs md:text-sm">
+            <div className="text-accent/40 font-normal mb-8 flex items-center gap-2 text-xs md:text-sm">
               <span>root@dg-os:~/workspace/experience-logs$</span>
-              <span className="text-foreground">git log --stat --color</span>
+              <span className="text-foreground/50">git log --stat --color</span>
             </div>
 
             <div className="space-y-10">
@@ -99,7 +99,7 @@ export default function Experience() {
             </div>
 
             {/* Terminal Prompt waiting */}
-            <div className="text-accent/80 font-bold mt-10 pt-4 border-t border-accent/10 flex items-center gap-2 text-xs md:text-sm">
+            <div className="text-accent/40 font-normal mt-10 pt-4 border-t border-accent/10 flex items-center gap-2 text-xs md:text-sm">
               <span>root@dg-os:~/workspace/experience-logs$</span>
               <span className="w-2.5 h-4 md:h-5 bg-accent/80 animate-pulse inline-block" />
             </div>

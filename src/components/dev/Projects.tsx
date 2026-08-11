@@ -117,12 +117,18 @@ export default function Projects() {
                 <span className="hidden sm:inline">Size</span>
               </div>
 
-              <div className="flex flex-col gap-1">
+              {/* The list picks which project the right pane shows — that is a tab set. */}
+              <div className="flex flex-col gap-1" role="tablist" aria-label="Projetos">
                 {projects.map((project, idx) => {
                   const isActive = activeIndex === idx;
                   return (
                     <button
                       key={project.title}
+                      role="tab"
+                      id={`project-tab-${idx}`}
+                      aria-selected={isActive}
+                      aria-controls="project-panel"
+                      tabIndex={isActive ? 0 : -1}
                       onClick={() => selectProject(idx)}
                       className={`w-full text-left font-mono text-xs py-3 px-3 flex items-center justify-between transition-colors border-b border-accent/5 last:border-b-0 cursor-pointer group ${
                         isActive
@@ -181,6 +187,9 @@ export default function Projects() {
           {/* Right Column: Interactive Project View Panel (README.md) */}
           <div
             ref={viewerRef}
+            id="project-panel"
+            role="tabpanel"
+            aria-labelledby={`project-tab-${activeIndex}`}
             className="lg:col-span-7 bg-transparent relative flex flex-col min-h-[420px] lg:h-[650px] overflow-hidden"
           >
             <AnimatePresence mode="wait">

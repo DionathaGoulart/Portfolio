@@ -5,11 +5,10 @@ import { devContent } from "@/data/dev-config";
 import { Logo } from "@/components/shared/Logo";
 import { useSkin } from "@/components/shared/SkinProvider";
 import { TERMINAL_LIGHT_THEMES, TERMINAL_DARK_THEMES } from "@/data/theme-config";
-import { asciiBar, skillFilename, fakeCommitHash } from "@/lib/terminal";
 import { slugify } from "@/lib/slug";
-
-import { ALL_COMMANDS, HELP_TEXT, MAX_OUTPUT_LINES, type OutputLine } from "./constants";
 import { WindowDots } from "@/components/ui/WindowDots";
+import { ALL_COMMANDS, MAX_OUTPUT_LINES, type OutputLine } from "./constants";
+import { COMMAND_OUTPUTS, PaletteList, ProjectDetailOutput } from "./output";
 
 export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -114,176 +113,9 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
       return;
     }
 
-    if (cmd === "help") {
-      result = [
-        {
-          id: uid(),
-          type: "output",
-          content: (
-            <pre className="whitespace-pre-wrap text-base-content/80 text-xs leading-relaxed">
-              {HELP_TEXT}
-            </pre>
-          ),
-        },
-      ];
-    } else if (cmd === "whoami") {
-      result = [
-        {
-          id: uid(),
-          type: "output",
-          content: (
-            <div className="space-y-1 text-xs font-mono">
-              <p>
-                <span className="text-accent font-black">USER:</span> {devContent.meta.username}
-              </p>
-              <p>
-                <span className="text-accent font-black">ROLE:</span> {devContent.role}
-              </p>
-              <p>
-                <span className="text-accent font-black">HOST:</span> {devContent.meta.host}
-              </p>
-              <p>
-                <span className="text-accent font-black">KERNEL:</span> {devContent.meta.kernel}
-              </p>
-              <p>
-                <span className="text-accent font-black">SHELL:</span> {devContent.meta.shell} →
-                DG-OS terminal
-              </p>
-              <p>
-                <span className="text-accent font-black">UPTIME:</span> {devContent.hero.uptime}
-              </p>
-              <p>
-                <span className="text-accent font-black">STATUS:</span>{" "}
-                <span className="text-green-400 animate-pulse">READY_FOR_DEPLOYMENT</span>
-              </p>
-            </div>
-          ),
-        },
-      ];
-    } else if (cmd === "ls") {
-      // Build directory list from enabled sections only
-      const dirs: string[] = [];
-      if (devContent.sections.about.enabled) dirs.push("about/");
-      if (devContent.sections.projects.enabled) dirs.push("projects/");
-      if (devContent.sections.experience.enabled) dirs.push("experience/");
-      dirs.push("skills/"); // always available via cat skills
-      dirs.push("cv"); // always available
-      result = [
-        {
-          id: uid(),
-          type: "output",
-          content: (
-            <div className="text-xs font-mono space-y-1">
-              <p className="text-accent/60 mb-2">~/workspace/dg-os</p>
-              {dirs.map((d) => (
-                <p key={d}>
-                  <span className="text-accent font-black">{d}</span>
-                </p>
-              ))}
-            </div>
-          ),
-        },
-      ];
-    } else if (cmd === "cat about") {
-      result = [
-        {
-          id: uid(),
-          type: "output",
-          content: (
-            <div className="text-xs font-mono space-y-2">
-              <p className="text-accent font-black uppercase tracking-widest mb-3"># PRIMARY_BIO</p>
-              <p className="text-base-content/90 leading-relaxed max-w-2xl">
-                {devContent.about.text}
-              </p>
-            </div>
-          ),
-        },
-      ];
-    } else if (cmd === "cat skills") {
-      result = [
-        {
-          id: uid(),
-          type: "output",
-          content: (
-            <div className="text-xs font-mono space-y-2">
-              <p className="text-accent font-black uppercase tracking-widest mb-3">
-                # SYSTEM_SERVICES --status --all
-              </p>
-              <div className="space-y-2">
-                {devContent.about.stacks.map((s) => {
-                  const bar = asciiBar(s.level);
-                  return (
-                    <div key={s.name} className="flex items-center gap-3">
-                      <span className="w-40 text-base-content">{skillFilename(s.name)}</span>
-                      <span className="text-accent font-black w-10">{s.level}%</span>
-                      <span className="text-green-400 w-10 animate-pulse">[ OK ]</span>
-                      <span className="text-accent/70 tracking-widest">{bar}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ),
-        },
-      ];
-    } else if (cmd === "cat projects") {
-      result = [
-        {
-          id: uid(),
-          type: "output",
-          content: (
-            <div className="text-xs font-mono space-y-3">
-              <p className="text-accent font-black uppercase tracking-widest mb-3">
-                # PROJECTS_REPOSITORY
-              </p>
-              {devContent.projects.map((p, i) => (
-                <div key={p.title} className="border-l-2 border-accent/30 pl-3 space-y-1">
-                  <p>
-                    <span className="text-accent font-black">
-                      [{String(i + 1).padStart(2, "0")}]
-                    </span>{" "}
-                    <span className="text-base-content font-bold uppercase">{p.title}</span>{" "}
-                    <span className="text-accent/50 ml-2 text-[10px] border border-accent/20 px-1">
-                      {p.status}
-                    </span>
-                  </p>
-                  <p className="text-base-content/70">{p.description}</p>
-                  <p className="text-base-content/40 text-[10px]">
-                    → cat {slugify(p.title)} para detalhes
-                  </p>
-                </div>
-              ))}
-            </div>
-          ),
-        },
-      ];
-    } else if (cmd === "cat experience") {
-      result = [
-        {
-          id: uid(),
-          type: "output",
-          content: (
-            <div className="text-xs font-mono space-y-4">
-              <p className="text-accent font-black uppercase tracking-widest mb-3">
-                # git log --stat --color
-              </p>
-              {devContent.experience.map((e) => (
-                <div key={e.company} className="border-l-2 border-accent/30 pl-3 space-y-1">
-                  <p className="text-yellow-400/90 font-bold">
-                    commit {fakeCommitHash(e.company + e.period)}
-                  </p>
-                  <p>
-                    <span className="text-base-content/50">Date:</span> {e.period}
-                  </p>
-                  <p className="text-accent font-black uppercase">{e.company}</p>
-                  <p className="text-base-content">feat: {e.role}</p>
-                  <p className="text-base-content/70">{e.description}</p>
-                </div>
-              ))}
-            </div>
-          ),
-        },
-      ];
+    const staticOutput = COMMAND_OUTPUTS[cmd];
+    if (staticOutput) {
+      result = [{ id: uid(), type: "output", content: staticOutput() }];
     } else if (cmd === "cat cv") {
       result = [{ id: uid(), type: "success", content: "→ Abrindo currículo em nova aba..." }];
       pushLines([inputLine, ...result, { id: uid(), type: "blank", content: "" }]);
@@ -298,36 +130,12 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
           id: uid(),
           type: "output",
           content: (
-            <div className="font-mono text-xs space-y-3">
-              <p className="text-accent font-black uppercase tracking-widest">
-                # SYSTEM_THEME_CONFIG
-              </p>
-              <div className="space-y-1">
-                <p className="text-base-content/50 text-[10px] uppercase tracking-widest">
-                  ── PALETA LIGHT ──────────────────────────
-                </p>
-                {TERMINAL_LIGHT_THEMES.map((p, i) => (
-                  <p key={p.palette}>
-                    <span className="text-accent font-black w-4 inline-block">[{i + 1}]</span>{" "}
-                    <span
-                      className="inline-block w-3 h-3 rounded-sm mr-1 align-middle"
-                      style={{
-                        background: p.bg,
-                        outline: `2px solid ${p.acc}`,
-                        outlineOffset: "1px",
-                      }}
-                    />
-                    <span className="text-base-content">{p.name}</span>
-                    {lightPalette === p.palette && (
-                      <span className="text-accent/50 ml-2 text-[10px]">[atual]</span>
-                    )}
-                  </p>
-                ))}
-              </div>
-              <p className="text-accent/70 animate-pulse">
-                Digite o número da paleta light [1–{TERMINAL_LIGHT_THEMES.length}]:
-              </p>
-            </div>
+            <PaletteList
+              title="# SYSTEM_THEME_CONFIG"
+              label="LIGHT"
+              themes={TERMINAL_LIGHT_THEMES}
+              current={lightPalette}
+            />
           ),
         },
       ];
@@ -346,62 +154,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
             {
               id: uid(),
               type: "output",
-              content: (
-                <div className="text-xs font-mono space-y-3">
-                  <div className="border-l-4 border-accent pl-3 space-y-1">
-                    <p className="text-accent/60 uppercase text-[10px] font-black tracking-widest">
-                      PROJECTS_REPOSITORY // {project.status}
-                    </p>
-                    <p className="text-accent font-black text-lg uppercase">{project.title}</p>
-                    <p className="text-base-content/60 italic">
-                      Função: {project.role || "Fullstack Developer"}
-                    </p>
-                  </div>
-                  <p className="text-base-content/90 leading-relaxed">{project.description}</p>
-                  {project.details && (
-                    <div>
-                      <p className="text-accent font-black mb-1"># RESUMO SISTÊMICO</p>
-                      <p className="text-base-content/80 leading-relaxed">{project.details}</p>
-                    </div>
-                  )}
-                  {project.features && project.features.length > 0 && (
-                    <div>
-                      <p className="text-accent font-black mb-1"># FEATURES</p>
-                      {project.features.map((f, fi) => (
-                        <p key={fi}>
-                          <span className="text-accent">[+]</span> {f}
-                        </p>
-                      ))}
-                    </div>
-                  )}
-                  <div>
-                    <p className="text-accent font-black mb-1"># STACKS</p>
-                    <p className="text-base-content/70">{project.tags.join(" · ")}</p>
-                  </div>
-                  <div className="flex gap-4 pt-2 border-t border-accent/10">
-                    {project.link && project.link !== "#" && (
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-accent hover:underline"
-                      >
-                        🌐 LIVE →
-                      </a>
-                    )}
-                    {project.github && project.github !== "private" && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-accent hover:underline"
-                      >
-                        📂 GITHUB →
-                      </a>
-                    )}
-                  </div>
-                </div>
-              ),
+              content: <ProjectDetailOutput project={project} />,
             },
           ];
         } else {
@@ -452,35 +205,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
         {
           id: uid(),
           type: "output",
-          content: (
-            <div className="font-mono text-xs space-y-3">
-              <div className="space-y-1">
-                <p className="text-base-content/50 text-[10px] uppercase tracking-widest">
-                  ── PALETA DARK ───────────────────────────
-                </p>
-                {TERMINAL_DARK_THEMES.map((p, i) => (
-                  <p key={p.palette}>
-                    <span className="text-accent font-black w-4 inline-block">[{i + 1}]</span>{" "}
-                    <span
-                      className="inline-block w-3 h-3 rounded-sm mr-1 align-middle"
-                      style={{
-                        background: p.bg,
-                        outline: `2px solid ${p.acc}`,
-                        outlineOffset: "1px",
-                      }}
-                    />
-                    <span className="text-base-content">{p.name}</span>
-                    {darkPalette === p.palette && (
-                      <span className="text-accent/50 ml-2 text-[10px]">[atual]</span>
-                    )}
-                  </p>
-                ))}
-              </div>
-              <p className="text-accent/70 animate-pulse">
-                Digite o número da paleta dark [1–{TERMINAL_DARK_THEMES.length}]:
-              </p>
-            </div>
-          ),
+          content: <PaletteList label="DARK" themes={TERMINAL_DARK_THEMES} current={darkPalette} />,
         },
       ]);
       setWizardStep("dark");

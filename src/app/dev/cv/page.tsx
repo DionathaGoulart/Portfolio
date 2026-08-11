@@ -1,4 +1,5 @@
 import fs from "fs";
+import { notFound } from "next/navigation";
 import path from "path";
 import DevCVViewer from "@/components/dev/DevCVViewer";
 import { Metadata } from "next";
@@ -12,11 +13,28 @@ export const metadata: Metadata = {
   title: "CV | Software Engineer - Dionatha Goulart",
   description:
     "Currículo de Dionatha Goulart focado em Engenharia de Software e Desenvolvimento Fullstack.",
+  alternates: { canonical: "/dev/cv" },
+  openGraph: {
+    title: "CV | Software Engineer - Dionatha Goulart",
+    description:
+      "Currículo de Dionatha Goulart focado em Engenharia de Software e Desenvolvimento Fullstack.",
+    url: "/dev/cv",
+  },
+  twitter: {
+    title: "CV | Software Engineer - Dionatha Goulart",
+    description:
+      "Currículo de Dionatha Goulart focado em Engenharia de Software e Desenvolvimento Fullstack.",
+  },
 };
 
 export default function DevCVPage() {
   const filePath = path.join(process.cwd(), "src/data/cv-dev.md");
-  const content = fs.readFileSync(filePath, "utf8");
+  let content: string;
+  try {
+    content = fs.readFileSync(filePath, "utf8");
+  } catch {
+    notFound();
+  }
   const schema = generatePersonSchema("DEV");
 
   return (

@@ -1,7 +1,7 @@
 export const seoGlobal = {
   siteName: "Dionatha Goulart | Hub Profissional",
   author: "Dionatha Goulart",
-  url: "https://dionatha.com",
+  url: "https://dionatha.com.br",
   github: "https://github.com/DionathaGoulart",
   linkedin: "https://linkedin.com/in/dionathagoulart",
   email: "dionatha.work@gmail.com",
@@ -23,7 +23,6 @@ export const seoHub = {
     "IT Operations",
     "Portfolio",
   ],
-  ogImage: "/og-image.png",
 };
 
 export const seoDev = {
@@ -31,7 +30,6 @@ export const seoDev = {
   description:
     "Portfólio de Engenharia de Software focado em aplicações SaaS, Next.js e experiências digitais de alta performance.",
   keywords: ["Fullstack Developer", "React", "Next.js", "SaaS", "TypeScript"],
-  ogImage: "/og-dev.png",
 };
 
 export const seoTi = {
@@ -39,5 +37,4 @@ export const seoTi = {
   description:
     "Especialista em infraestrutura, redes e automação de sistemas. Focado em resiliência e performance operacional.",
   keywords: ["IT Operations", "Infrastructure", "Networks", "Automation", "Linux"],
-  ogImage: "/og-ti.png",
 };

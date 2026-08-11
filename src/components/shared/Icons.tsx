@@ -5,7 +5,8 @@ export interface IconProps {
 
 export const LinkedInIcon = ({ size = 20, className = "" }: IconProps) => (
   <svg
-    role="img"
+    aria-hidden="true"
+    focusable="false"
     viewBox="0 0 24 24"
     width={size}
     height={size}
@@ -19,7 +20,8 @@ export const LinkedInIcon = ({ size = 20, className = "" }: IconProps) => (
 
 export const GitHubIcon = ({ size = 20, className = "" }: IconProps) => (
   <svg
-    role="img"
+    aria-hidden="true"
+    focusable="false"
     viewBox="0 0 24 24"
     width={size}
     height={size}
@@ -33,7 +35,8 @@ export const GitHubIcon = ({ size = 20, className = "" }: IconProps) => (
 
 export const WhatsAppIcon = ({ size = 20, className = "" }: IconProps) => (
   <svg
-    role="img"
+    aria-hidden="true"
+    focusable="false"
     viewBox="0 0 24 24"
     width={size}
     height={size}
@@ -47,7 +50,8 @@ export const WhatsAppIcon = ({ size = 20, className = "" }: IconProps) => (
 
 export const GmailIcon = ({ size = 20, className = "" }: IconProps) => (
   <svg
-    role="img"
+    aria-hidden="true"
+    focusable="false"
     viewBox="0 0 24 24"
     width={size}
     height={size}

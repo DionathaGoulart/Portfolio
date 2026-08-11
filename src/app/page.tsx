@@ -44,6 +44,8 @@ export default function HubPage() {
                     src={hubContent.profileImage}
                     alt={hubContent.name}
                     fill
+                    priority
+                    sizes="(max-width: 768px) 128px, 192px"
                     className="object-cover z-10 grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
                   />
 

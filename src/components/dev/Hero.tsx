@@ -55,9 +55,11 @@ export default function Hero() {
                   <div className="pl-4 md:pl-6 border-l-2 border-accent/10 min-h-[1.5rem] mt-1">
                     <span className={`${line.color || "text-base-content"} text-sm md:text-base`}>
                       {line.isTyping ? (
-                        <span className="text-accent terminal-glow font-bold">
+                        // The typed role is this page's main heading — /dev had no h1 at
+                        // all. `inline` keeps the block-level h1 rendering identically.
+                        <h1 className="text-accent terminal-glow font-bold inline">
                           <TypingText text={line.value} speed={40} />
-                        </span>
+                        </h1>
                       ) : (
                         line.value
                       )}
@@ -106,6 +108,8 @@ export default function Hero() {
                   src="/me.png"
                   alt={devContent.name}
                   fill
+                  priority
+                  sizes="(max-width: 768px) 128px, 160px"
                   className="object-cover z-10 grayscale-0 scale-100 md:grayscale md:scale-105 md:group-hover:grayscale-0 md:group-hover:scale-100 transition-all duration-700"
                 />
               </div>

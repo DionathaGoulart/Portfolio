@@ -61,8 +61,12 @@ export function PrintButton({ persona, content }: { persona: "DEV" | "TI"; conte
         )}
       </button>
 
-      {/* Hidden element for PDF generation - Styled Traditionally */}
-      <div style={{ position: "absolute", left: "-9999px", top: 0 }}>
+      {/*
+        Hidden element for PDF generation. Off-screen positioning alone still exposed a
+        second copy of the whole CV — headings included — to screen readers and the tab
+        order, which is why both CV routes reported two h1s.
+      */}
+      <div aria-hidden="true" inert style={{ position: "absolute", left: "-9999px", top: 0 }}>
         <div
           ref={hiddenRef}
           className="p-10 bg-white text-black font-sans leading-normal w-[210mm]"

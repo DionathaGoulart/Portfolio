@@ -534,6 +534,31 @@ body {
     color 0.3s ease;
 }
 
+/* Keyboard focus. Several interactive elements had no visible focus state at all. */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/*
+ * Visitors who ask for less motion get the layout without the ambient animation:
+ * the spinning rings, the CRT scanline, the blinking caret and the pulses.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .terminal-scanline {
+    display: none;
+  }
+}
+
 /* Hard offset shadow of the retro skin. Reads --shadow, an extra token every theme sets. */
 @utility retro-shadow {
   box-shadow: 6px 6px 0px 0px var(--shadow);

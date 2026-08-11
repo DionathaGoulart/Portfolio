@@ -46,6 +46,8 @@ export function Header({ cvContent }: { cvContent?: string }) {
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-expanded={isMenuOpen}
+            aria-controls="ti-mobile-menu"
             className="lg:hidden retro-border bg-base-200 p-2 md:p-3 retro-shadow-sm font-black text-sm uppercase tracking-tighter"
           >
             {isMenuOpen ? "Fechar" : "Menu"}
@@ -60,6 +62,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
+            id="ti-mobile-menu"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}

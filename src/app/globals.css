@@ -1,8 +1,19 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+/*
+ * `btn` is the only daisyUI component this app renders. Tailwind's scanner, though, harvests
+ * every bare word in the source — `project.status`, `type: "input"`, an `aria-label` reading
+ * "menu", the comment in Tooltip.tsx naming `tooltip` — and each hit pulled a whole component
+ * into the stylesheet. That was 31KB of the 138KB build serving markup that does not exist.
+ *
+ * Keep this list in step with the markup: rendering one of these components without first
+ * removing it here fails quietly, since the class simply never reaches the stylesheet.
+ */
 @plugin "daisyui" {
   themes: false;
   logs: false;
+  exclude: tooltip, menu, card, badge, progress, navbar, input, label, status, steps, swap,
+    toggle;
 }
 
 @theme inline {

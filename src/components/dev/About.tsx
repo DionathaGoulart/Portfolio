@@ -5,12 +5,13 @@ import { motion, useInView } from "framer-motion";
 import { devContent } from "@/data/dev-config";
 import { Logo } from "@/components/shared/Logo";
 
-export default function About() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-
-  // System Uptime Counter
+/**
+ * Ticks once per second. Kept apart from About so the whole section does not re-render
+ * every second just to advance a clock.
+ */
+function UptimeCounter() {
   const [uptime, setUptime] = useState(0);
+
   useEffect(() => {
     const start = Date.now();
     const interval = setInterval(() => {
@@ -19,12 +20,17 @@ export default function About() {
     return () => clearInterval(interval);
   }, []);
 
-  const formatUptime = (seconds: number) => {
-    const h = Math.floor(seconds / 3600);
-    const m = Math.floor((seconds % 3600) / 60);
-    const s = seconds % 60;
-    return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
-  };
+  const h = Math.floor(uptime / 3600);
+  const m = Math.floor((uptime % 3600) / 60);
+  const s = uptime % 60;
+  const pad = (n: number) => n.toString().padStart(2, "0");
+
+  return <>{`${pad(h)}:${pad(m)}:${pad(s)}`}</>;
+}
+
+export default function About() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   const envVars = devContent.about.envVars;
 
@@ -41,7 +47,9 @@ export default function About() {
           </p>
         </div>
         <div className="hidden md:block text-right font-mono text-xs text-accent/50">
-          <p>UPTIME: {formatUptime(uptime)}</p>
+          <p>
+            UPTIME: <UptimeCounter />
+          </p>
           <p className="animate-pulse">STATUS: ONLINE</p>
         </div>
       </div>

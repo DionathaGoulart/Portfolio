@@ -25,13 +25,22 @@ export default function Projects() {
     return () => clearInterval(interval);
   }, [isPaused, projects.length]);
 
-  // Keyboard navigation
+  // Mirrors activeIndex so the key handler can read it without re-subscribing every change.
+  const activeIndexRef = useRef(0);
+  useEffect(() => {
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
+
+  // Keyboard navigation.
+  // Gated on hover/focus rather than mere viewport visibility: the old check swallowed
+  // ArrowUp/ArrowDown for the whole page whenever this section was on screen, so the
+  // visitor could not scroll with the keyboard.
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const inView = rect.top < window.innerHeight && rect.bottom >= 0;
-      if (!inView) return;
+      const section = sectionRef.current;
+      if (!section) return;
+      const engaged = section.matches(":hover") || section.contains(document.activeElement);
+      if (!engaged) return;
 
       if (e.key === "ArrowDown") {
         e.preventDefault();
@@ -40,13 +49,13 @@ export default function Projects() {
         e.preventDefault();
         setActiveIndex((prev) => (prev - 1 + projects.length) % projects.length);
       } else if (e.key === "Enter") {
-        const link = projects[activeIndex]?.link;
+        const link = projects[activeIndexRef.current]?.link;
         if (link && link !== "#") {
           e.preventDefault();
           window.open(link, "_blank", "noopener,noreferrer");
         }
       } else if (e.key.toLowerCase() === "g") {
-        const github = projects[activeIndex]?.github;
+        const github = projects[activeIndexRef.current]?.github;
         if (github && github !== "private") {
           e.preventDefault();
           window.open(github, "_blank", "noopener,noreferrer");
@@ -56,12 +65,15 @@ export default function Projects() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeIndex, projects]);
+  }, [projects]);
 
   if (!activeProject) return null;
 
   const selectProject = (idx: number) => {
     setActiveIndex(idx);
+    // Stop the carousel: on touch there is no mouseleave, so an explicit pick used to be
+    // overwritten by the 8s auto-advance.
+    setIsPaused(true);
     // Smooth scroll to details viewer on smaller screens
     if (window.innerWidth < 1024 && viewerRef.current) {
       viewerRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });

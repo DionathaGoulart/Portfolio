@@ -5,6 +5,7 @@ import { TypingText } from "@/components/shared/TypingText";
 import { Logo } from "@/components/shared/Logo";
 import Image from "next/image";
 import { LogoWatermark } from "@/components/ui/LogoWatermark";
+import { WindowDots } from "@/components/ui/WindowDots";
 
 export default function Hero() {
   const terminalLines = [
@@ -23,11 +24,7 @@ export default function Hero() {
       >
         {/* Terminal Header */}
         <div className="bg-accent/10 border-b-2 border-accent flex justify-center sm:justify-between items-center px-6 py-3 shrink-0 min-w-0">
-          <div className="hidden sm:flex gap-2.5 shrink-0">
-            <div className="w-3.5 h-3.5 rounded-full bg-accent" />
-            <div className="w-3.5 h-3.5 rounded-full bg-accent/40" />
-            <div className="w-3.5 h-3.5 rounded-full bg-accent/20" />
-          </div>
+          <WindowDots size="lg" className="hidden sm:flex gap-2.5 shrink-0" />
           <div className="font-mono text-[10px] sm:text-xs font-black uppercase sm:tracking-[0.4em] text-accent/30 truncate">
             root@dg-os: ~/workspace/portfolio
           </div>

@@ -2,8 +2,8 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import { devContent } from "@/data/dev-config";
-import { Logo } from "@/components/shared/Logo";
 import { SectionTitle } from "../shared/SectionTitle";
+import { LogoWatermark } from "@/components/ui/LogoWatermark";
 
 export default function Experience() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -26,9 +26,7 @@ export default function Experience() {
         </div>
 
         {/* Decorative Logo Background Watermark */}
-        <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.03] pointer-events-none overflow-hidden text-accent select-none mt-8">
-          <Logo className="w-[150%] h-[150%] md:w-[120%] md:h-[120%] object-cover -rotate-12" />
-        </div>
+        <LogoWatermark className="mt-8" />
 
         {/* Terminal Body (The Git Log from before) */}
         <div className="p-4 md:p-8 font-mono relative z-10 bg-transparent overflow-hidden text-ellipsis">

@@ -3,7 +3,8 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { devContent } from "@/data/dev-config";
-import { Logo } from "@/components/shared/Logo";
+import { asciiBar, skillFilename } from "@/lib/terminal";
+import { LogoWatermark } from "@/components/ui/LogoWatermark";
 
 /**
  * Ticks once per second. Kept apart from About so the whole section does not re-render
@@ -96,9 +97,7 @@ export default function About() {
           </div>
 
           {/* Decorative Logo Background Watermark */}
-          <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.03] pointer-events-none overflow-hidden text-accent select-none">
-            <Logo className="w-[150%] h-[150%] md:w-[120%] md:h-[120%] object-cover -rotate-12" />
-          </div>
+          <LogoWatermark />
         </motion.div>
 
         {/* Environment / Contact Module */}
@@ -156,9 +155,7 @@ export default function About() {
           </div>
 
           {/* Decorative Logo Background Watermark */}
-          <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.03] pointer-events-none overflow-hidden text-accent select-none mt-8">
-            <Logo className="w-[150%] h-[150%] md:w-[120%] md:h-[120%] object-cover -rotate-12" />
-          </div>
+          <LogoWatermark className="mt-8" />
 
           <div className="p-4 md:p-6 bg-transparent font-mono text-xs md:text-sm text-base-content/80 relative z-10">
             <div className="w-full">
@@ -173,9 +170,7 @@ export default function About() {
               {/* Table Rows */}
               <div className="space-y-3">
                 {devContent.about.stacks.map((skill, i) => {
-                  const totalBlocks = 20;
-                  const activeBlocks = Math.floor((skill.level / 100) * totalBlocks);
-                  const barStr = "█".repeat(activeBlocks) + "▒".repeat(totalBlocks - activeBlocks);
+                  const barStr = asciiBar(skill.level);
 
                   return (
                     <motion.div
@@ -187,7 +182,7 @@ export default function About() {
                     >
                       <div className="w-[60%] md:w-[30%] font-bold text-base-content group-hover:text-accent flex items-center gap-2">
                         <span className="text-accent/50">{">"}</span>
-                        {skill.name.toLowerCase().replace(/[\s/]+/g, "_")}.sys
+                        {skillFilename(skill.name)}
                       </div>
                       <div className="hidden md:block w-[15%] text-accent font-black">
                         {skill.level}%

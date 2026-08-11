@@ -12,17 +12,14 @@ export default function Projects() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 gap-8">
         <div className="max-w-2xl text-left">
           <SectionTitle
-            title={tiContent.ui?.projectsTitle || "PROJETOS SELECIONADOS"}
+            title={tiContent.ui.projectsTitle}
             variant="retro"
             className="mb-4 md:mb-8"
           />
-          <p className="text-lg md:text-xl font-bold opacity-60">
-            {tiContent.ui?.projectsSubtitle ||
-              "Uma vitrine de soluções reais desenvolvidas com precisão."}
-          </p>
+          <p className="text-lg md:text-xl font-bold opacity-60">{tiContent.ui.projectsSubtitle}</p>
         </div>
         <div className="hidden md:block retro-border bg-base-200 p-6 retro-shadow-sm font-black text-2xl animate-bounce">
-          {tiContent.ui?.projectsScrollHint || "SCROLL ↓"}
+          {tiContent.ui.projectsScrollHint}
         </div>
       </div>
 
@@ -77,17 +74,17 @@ export default function Projects() {
                       rel="noopener noreferrer"
                       className="flex-1 text-center retro-border bg-base-content text-base-100 px-4 py-3 font-black text-xs md:text-sm hover:bg-accent hover:text-accent-content transition-colors uppercase"
                     >
-                      {tiContent.ui?.projectsDeployButton || "Deploy Production"}
+                      {tiContent.ui.projectsDeployButton}
                     </a>
                   ) : (
                     <span className="flex-1 text-center retro-border border-base-content/20 text-base-content/40 px-4 py-3 font-black text-xs md:text-sm uppercase cursor-not-allowed">
-                      {tiContent.ui?.projectsOfflineButton || "Offline"}
+                      {tiContent.ui.projectsOfflineButton}
                     </span>
                   )}
 
                   {project.github === "private" ? (
                     <span className="flex-1 text-center retro-border border-base-content/20 text-base-content/40 px-4 py-3 font-black text-xs md:text-sm uppercase cursor-not-allowed">
-                      {tiContent.ui?.projectsPrivateButton || "GitHub Privado"}
+                      {tiContent.ui.projectsPrivateButton}
                     </span>
                   ) : project.github ? (
                     <a
@@ -96,7 +93,7 @@ export default function Projects() {
                       rel="noopener noreferrer"
                       className="flex-1 text-center retro-border border-base-content text-base-content px-4 py-3 font-black text-xs md:text-sm hover:bg-base-content hover:text-base-100 transition-colors uppercase"
                     >
-                      {tiContent.ui?.projectsRepoButton || "GitHub Repo"}
+                      {tiContent.ui.projectsRepoButton}
                     </a>
                   ) : null}
                 </div>

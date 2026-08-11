@@ -36,13 +36,13 @@ export default function Hero() {
                 href="#projects"
                 className="retro-border bg-accent text-accent-content px-8 py-3.5 md:py-4 font-black text-sm md:text-base hover:bg-base-content transition-colors uppercase text-center"
               >
-                {tiContent.ui?.heroProjectsButton || "Inicializar Projetos"}
+                {tiContent.ui.heroProjectsButton}
               </a>
               <a
                 href="#contact"
                 className="retro-border border-2 border-accent bg-transparent text-base-content hover:bg-accent hover:text-accent-content px-8 py-3.5 md:py-4 font-black text-sm md:text-base transition-colors uppercase text-center"
               >
-                {tiContent.ui?.heroContactButton || "Abrir Conexão"}
+                {tiContent.ui.heroContactButton}
               </a>
             </div>
           </div>

@@ -1,6 +1,6 @@
-import { PortfolioContent } from "@/types/content";
+import { DevContent } from "@/types/content";
 
-export const devContent: PortfolioContent = {
+export const devContent: DevContent = {
   name: "Dionatha Goulart",
   role: "Software Engineer | Fullstack Developer",
   email: "dionatha.work@gmail.com",

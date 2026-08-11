@@ -40,10 +40,10 @@ export default function About() {
       <div className="mb-6 md:mb-8 flex items-center justify-between border-b-2 border-accent/20 pb-4">
         <div>
           <h2 className="font-mono text-2xl md:text-4xl font-black text-accent tracking-tighter uppercase">
-            {devContent.ui?.aboutTitle || "// System_Overview"}
+            {devContent.ui.aboutTitle}
           </h2>
           <p className="font-mono text-xs md:text-sm text-base-content/60 mt-2 tracking-widest uppercase">
-            {devContent.ui?.aboutSubtitle || "Hardware & Cognitive Specs v4.0"}
+            {devContent.ui.aboutSubtitle}
           </p>
         </div>
         <div className="hidden md:block text-right font-mono text-xs text-accent/50">
@@ -64,7 +64,7 @@ export default function About() {
           className="md:col-span-12 lg:col-span-7 retro-border bg-base-200 retro-shadow-sm flex flex-col relative overflow-hidden"
         >
           <div className="bg-accent/10 border-b border-accent/20 px-4 py-2 flex items-center justify-between text-[10px] font-mono tracking-wider text-accent font-bold z-20">
-            <span>[ {devContent.ui?.aboutModuleBio || "MODULE: PRIMARY_BIO"} ]</span>
+            <span>[ {devContent.ui.aboutModuleBio} ]</span>
             <span>PID: 001</span>
           </div>
 
@@ -109,7 +109,7 @@ export default function About() {
           className="md:col-span-12 lg:col-span-5 retro-border bg-base-200 retro-shadow-sm flex flex-col relative z-10"
         >
           <div className="bg-accent/10 border-b border-accent/20 px-4 py-2 flex items-center justify-between text-[10px] font-mono tracking-wider text-accent font-bold">
-            <span>[ {devContent.ui?.aboutModuleEnv || "MODULE: ENV_CONFIG"} ]</span>
+            <span>[ {devContent.ui.aboutModuleEnv} ]</span>
             <span>PRINTENV</span>
           </div>
           <div className="p-5 flex-1 flex flex-col justify-center">
@@ -151,8 +151,8 @@ export default function About() {
           className="md:col-span-12 retro-border bg-base-200 retro-shadow-sm flex flex-col relative z-10"
         >
           <div className="bg-accent/10 border-b border-accent/20 px-4 py-2 flex items-center justify-between text-[10px] font-mono tracking-wider text-accent font-bold relative z-20">
-            <span>[ {devContent.ui?.aboutModuleSys || "MODULE: SYSTEM_SERVICES"} ]</span>
-            <span>{devContent.ui?.aboutSysHtop || "HTOP / CORE_MODULES"}</span>
+            <span>[ {devContent.ui.aboutModuleSys} ]</span>
+            <span>{devContent.ui.aboutSysHtop}</span>
           </div>
 
           {/* Decorative Logo Background Watermark */}

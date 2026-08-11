@@ -1,9 +1,8 @@
-import { PortfolioContent } from "@/types/content";
+import { TiContent } from "@/types/content";
 
-export const tiContent: PortfolioContent = {
+export const tiContent: TiContent = {
   name: "Dionatha Goulart",
   role: "IT Operations Specialist | Infrastructure",
-  email: "dionatha.work@gmail.com",
   sections: {
     hero: { enabled: true },
     about: { enabled: true },
@@ -11,34 +10,14 @@ export const tiContent: PortfolioContent = {
     experience: { enabled: true },
     contact: { enabled: true },
   },
-  meta: {
-    username: "dionatha_infra",
-    host: "TI-CORE-NODE",
-    kernel: "Linux 6.1.0-STABLE",
-    shell: "/bin/bash",
-    copyright: "DIONATHA GOULART",
-  },
   hero: {
     title: "Infraestrutura resiliente e automação inteligente.",
     description:
       "Especialista em suporte N2, redes TCP/IP e otimização de fluxos operacionais. Transformando infraestrutura em vantagem competitiva.",
-    gitBranch: "ops/stable",
-    uptime: "2 years, 45 days, 12 hours",
-    status: "Monitoring_Systems",
-    expertise: "IT_Infrastructure",
-    location: "Rio_Grande_do_Sul",
-    yearsOfExperience: "2+ Years",
     badges: ["LVL: 99", "OPS_READY"],
   },
   about: {
     text: "Especialista em Operações de TI com foco em infraestrutura resiliente, automação de processos e suporte avançado. Experiência sólida em ambientes críticos, garantindo alta disponibilidade e performance técnica de ponta a ponta.",
-    subtitle: "Analista de Infraestrutura",
-    envVars: [
-      { key: "ROLE", value: "IT_Operations" },
-      { key: "SHELL", value: "/bin/bash" },
-      { key: "PAGER", value: "less" },
-      { key: "LANG", value: "pt_BR.UTF-8" },
-    ],
     stacks: [
       { name: "Redes TCP/IP", level: 95 },
       { name: "Docker / Containers", level: 90 },

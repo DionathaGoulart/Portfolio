@@ -1,37 +1,83 @@
 "use client";
 
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
+interface MarkdownRenderer {
+  ReactMarkdown: typeof import("react-markdown").default;
+  remarkGfm: typeof import("remark-gfm").default;
+}
+
+/**
+ * react-markdown and remark-gfm are only ever needed to build the PDF, but importing them
+ * at module scope put ~150KB of markdown machinery in both CV routes' initial bundle for
+ * every visitor, most of whom never download anything.
+ *
+ * They now load on the first click. The print DOM cannot be handed to html2pdf until React
+ * has actually committed it, so the click loads the renderer and bumps a request counter,
+ * and the effect below — which runs after that commit — produces the file. The markup fed
+ * to html2pdf is unchanged, so the PDF is identical to the statically imported version.
+ */
 export function PrintButton({ persona, content }: { persona: "DEV" | "TI"; content?: string }) {
   const isDev = persona === "DEV";
   const hiddenRef = useRef<HTMLDivElement>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [markdown, setMarkdown] = useState<MarkdownRenderer | null>(null);
+  const [saveRequest, setSaveRequest] = useState(0);
+  const lastSaved = useRef(0);
 
   const handleDownload = async () => {
-    if (!content || !hiddenRef.current) return;
+    if (!content || isGenerating) return;
 
     setIsGenerating(true);
     try {
-      const html2pdf = (await import("html2pdf.js")).default;
-
-      const opt = {
-        margin: [15, 15] as [number, number],
-        filename: isDev ? "cv-dev-dionatha-goulart.pdf" : "cv-ti-dionatha-goulart.pdf",
-        image: { type: "jpeg", quality: 0.98 } as const,
-        html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" } as const,
-      };
-
-      await html2pdf().set(opt).from(hiddenRef.current).save();
+      if (!markdown) {
+        const [reactMarkdown, gfm] = await Promise.all([
+          import("react-markdown"),
+          import("remark-gfm"),
+        ]);
+        setMarkdown({ ReactMarkdown: reactMarkdown.default, remarkGfm: gfm.default });
+      }
+      setSaveRequest((n) => n + 1);
     } catch (error) {
-      console.error("Erro ao gerar PDF:", error);
-    } finally {
+      console.error("Erro ao carregar o renderizador do PDF:", error);
       setIsGenerating(false);
     }
   };
+
+  useEffect(() => {
+    if (!saveRequest || saveRequest === lastSaved.current) return;
+    if (!markdown || !hiddenRef.current) return;
+
+    lastSaved.current = saveRequest;
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const html2pdf = (await import("html2pdf.js")).default;
+        if (cancelled || !hiddenRef.current) return;
+
+        await html2pdf()
+          .set({
+            margin: [15, 15] as [number, number],
+            filename: isDev ? "cv-dev-dionatha-goulart.pdf" : "cv-ti-dionatha-goulart.pdf",
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+          })
+          .from(hiddenRef.current)
+          .save();
+      } catch (error) {
+        console.error("Erro ao gerar PDF:", error);
+      } finally {
+        if (!cancelled) setIsGenerating(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [saveRequest, markdown, isDev]);
 
   return (
     <>
@@ -66,15 +112,16 @@ export function PrintButton({ persona, content }: { persona: "DEV" | "TI"; conte
         second copy of the whole CV — headings included — to screen readers and the tab
         order, which is why both CV routes reported two h1s.
       */}
-      <div aria-hidden="true" inert style={{ position: "absolute", left: "-9999px", top: 0 }}>
-        <div
-          ref={hiddenRef}
-          className="p-10 bg-white text-black font-sans leading-normal w-[210mm]"
-          style={{ minHeight: "297mm" }}
-        >
-          <style
-            dangerouslySetInnerHTML={{
-              __html: `
+      {markdown && (
+        <div aria-hidden="true" inert style={{ position: "absolute", left: "-9999px", top: 0 }}>
+          <div
+            ref={hiddenRef}
+            className="p-10 bg-white text-black font-sans leading-normal w-[210mm]"
+            style={{ minHeight: "297mm" }}
+          >
+            <style
+              dangerouslySetInnerHTML={{
+                __html: `
                 .pdf-content { font-family: Arial, sans-serif; color: #1a1a1a; }
                 .pdf-content h1 { font-size: 28pt; font-weight: 800; margin-bottom: 4pt; color: #000; letter-spacing: -0.02em; }
                 .pdf-content h2 { font-size: 16pt; font-weight: 700; margin-top: 20pt; margin-bottom: 10pt; color: #2563eb; border-bottom: 1px solid #e5e7eb; padding-bottom: 4pt; text-transform: uppercase; letter-spacing: 0.05em; }
@@ -85,13 +132,16 @@ export function PrintButton({ persona, content }: { persona: "DEV" | "TI"; conte
                 .pdf-content a { color: #2563eb; text-decoration: none; }
                 .pdf-content hr { border: 0; border-top: 1px solid #e5e7eb; margin: 15pt 0; }
             `,
-            }}
-          />
-          <div className="pdf-content">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{content || ""}</ReactMarkdown>
+              }}
+            />
+            <div className="pdf-content">
+              <markdown.ReactMarkdown remarkPlugins={[markdown.remarkGfm]}>
+                {content || ""}
+              </markdown.ReactMarkdown>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

@@ -1,6 +1,6 @@
 # 🚀 Personal Portfolio Hub
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.x-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16.x-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.x-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT%20w%2F%20Attribution-green?style=for-the-badge)](LICENSE)
@@ -20,7 +20,7 @@ It features a custom-built theme system that switches styles dynamically based o
 
 ## 🛠️ Tech Stack
 
-- **Framework:** [Next.js 15+](https://nextjs.org/) (App Router)
+- **Framework:** [Next.js 16+](https://nextjs.org/) (App Router)
 - **Language:** [TypeScript](https://www.typescriptlang.org/)
 - **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
 - **Animations:** [GSAP](https://greensock.com/gsap/) & [Framer Motion](https://www.framer.com/motion/)

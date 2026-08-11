@@ -1,7 +1,4 @@
 "use client";
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Hero from "@/components/dev/Hero";
 import About from "@/components/dev/About";
 import Projects from "@/components/dev/Projects";
@@ -15,26 +12,13 @@ import { useDevMode } from "@/context/DevModeContext";
 import { PageTransition } from "@/components/shared/PageTransition";
 import { AnimatePresence, motion } from "framer-motion";
 
-gsap.registerPlugin(ScrollTrigger);
-
-function DevContent() {
-  const containerRef = useRef<HTMLDivElement>(null);
+export default function DevPageClient() {
   const { mode, toggleMode } = useDevMode();
-
-  useEffect(() => {
-    if (containerRef.current && mode === "graphic") {
-      gsap.fromTo(
-        containerRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 1.5, ease: "power2.out" }
-      );
-    }
-  }, [mode]);
 
   const sections = devContent.sections;
 
   return (
-    <div ref={containerRef} className="relative overflow-x-hidden">
+    <div className="relative overflow-x-hidden">
       <div className="terminal-scanline opacity-10 pointer-events-none" />
       <Header />
       <PageTransition>
@@ -88,8 +72,4 @@ function DevContent() {
       </PageTransition>
     </div>
   );
-}
-
-export default function DevPageClient() {
-  return <DevContent />;
 }

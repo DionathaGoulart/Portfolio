@@ -2,7 +2,6 @@ import { HubContent } from "@/types/content";
 
 export const hubContent: HubContent = {
   name: "Dionatha Goulart",
-  title: "Dionatha Goulart",
   typingText: "Sistemas de Ponta a Ponta.",
   description:
     "Engenharia de Software e Operações de TI fundidas em uma única experiência técnica de alta performance.",
@@ -11,7 +10,7 @@ export const hubContent: HubContent = {
     { name: "LinkedIn", url: "https://linkedin.com/in/dionathagoulart", type: "linkedin" },
     { name: "GitHub", url: "https://github.com/DionathaGoulart", type: "github" },
     { name: "Email", url: "mailto:dionatha.work@gmail.com", type: "gmail" },
-    { name: "Celular", url: "https://wa.me/5551998544525", type: "whatsapp" },
+    { name: "Celular", url: "https://wa.me/5551986485232", type: "whatsapp" },
   ],
   sections: {
     dev: {

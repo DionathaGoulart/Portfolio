@@ -8,7 +8,6 @@ export const devContent: PortfolioContent = {
   // ─── System Meta ─────────────────────────────────────────────────────────────
   meta: {
     username: "dionatha_goulart",
-    prompt: "dionatha@linux:~$",
     host: "DG-WORKSTATION",
     kernel: "6.1.0-STABLE",
     shell: "/bin/zsh",
@@ -175,23 +174,18 @@ export const devContent: PortfolioContent = {
     socials: [
       { name: "LinkedIn", url: "https://linkedin.com/in/dionathagoulart" },
       { name: "GitHub", url: "https://github.com/DionathaGoulart" },
-      { name: "Email", url: "mailto:dionatha.work@gmail.com" },
+      { name: "Gmail", url: "mailto:dionatha.work@gmail.com" },
     ],
   },
 
   // ─── UI / App Strings ────────────────────────────────────────────────────────
   ui: {
-    heroProjectsButton: "Ver Projetos",
-    heroContactButton: "Iniciar Conexão",
     aboutTitle: "// System_Overview",
     aboutSubtitle: "Hardware & Cognitive Specs v4.0",
     aboutModuleBio: "MODULE: PRIMARY_BIO",
     aboutModuleEnv: "MODULE: ENV_CONFIG",
     aboutModuleSys: "MODULE: SYSTEM_SERVICES",
     aboutSysHtop: "HTOP / CORE_MODULES",
-    projectsTitle: "Projetos em Destaque",
-    projectsSubtitle: "Aplicações reais, arquitetura escalável e design premium.",
-    experienceTitle: "Histórico de Execução",
   },
 };
 

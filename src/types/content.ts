@@ -51,7 +51,6 @@ export interface PortfolioContent {
   };
   meta: {
     username: string; // e.g. "dionatha_goulart"
-    prompt: string; // e.g. "dionatha@linux:~$"
     host: string; // e.g. "DG-WORKSTATION"
     kernel: string; // e.g. "6.1.0-STABLE"
     shell: string; // e.g. "/bin/zsh"
@@ -86,7 +85,6 @@ export interface PortfolioContent {
 
 export interface HubContent {
   name: string;
-  title: string;
   typingText: string;
   description: string;
   profileImage: string;

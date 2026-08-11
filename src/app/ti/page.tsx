@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { seoTi } from "@/data/seo-config";
+import { seoGlobal, seoTi } from "@/data/seo-config";
 import TiPageClient from "@/components/ti/TiPageClient";
 
 export const metadata: Metadata = {
@@ -8,12 +8,12 @@ export const metadata: Metadata = {
   keywords: seoTi.keywords,
   alternates: { canonical: "/ti" },
   openGraph: {
-    title: seoTi.title,
+    title: `${seoTi.title} | ${seoGlobal.author}`,
     description: seoTi.description,
     url: "/ti",
   },
   twitter: {
-    title: seoTi.title,
+    title: `${seoTi.title} | ${seoGlobal.author}`,
     description: seoTi.description,
   },
 };

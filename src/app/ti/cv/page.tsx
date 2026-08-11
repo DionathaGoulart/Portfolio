@@ -8,16 +8,16 @@ import { Header } from "@/components/ti/Header";
 import { Footer } from "@/components/shared/Footer";
 
 export const metadata: Metadata = {
-  title: "CV | IT Operations Specialist - Dionatha Goulart",
+  title: "CV | IT Operations Specialist",
   description: "Currículo de Dionatha Goulart focado em Infraestrutura, Redes e Automação de TI.",
   alternates: { canonical: "/ti/cv" },
   openGraph: {
-    title: "CV | IT Operations Specialist - Dionatha Goulart",
+    title: "CV | IT Operations Specialist | Dionatha Goulart",
     description: "Currículo de Dionatha Goulart focado em Infraestrutura, Redes e Automação de TI.",
     url: "/ti/cv",
   },
   twitter: {
-    title: "CV | IT Operations Specialist - Dionatha Goulart",
+    title: "CV | IT Operations Specialist | Dionatha Goulart",
     description: "Currículo de Dionatha Goulart focado em Infraestrutura, Redes e Automação de TI.",
   },
 };

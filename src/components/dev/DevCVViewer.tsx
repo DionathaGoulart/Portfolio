@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { parseCV, toBlocks, splitBold } from "@/lib/cv-parser";
+import { parseCV, parseContactEntry, toBlocks, splitBold } from "@/lib/cv-parser";
 import { LogoWatermark } from "@/components/ui/LogoWatermark";
 import { WindowDots } from "@/components/ui/WindowDots";
 
@@ -115,14 +115,23 @@ export default function DevCVViewer({ content }: DevCVViewerProps) {
                   {subtitle}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {contact.split("|").map((c, i) => (
-                    <span
-                      key={i}
-                      className="border border-accent/20 bg-accent/5 px-2 py-0.5 text-[10px] text-base-content/50 uppercase tracking-widest"
-                    >
-                      {c.trim()}
-                    </span>
-                  ))}
+                  {contact.split("|").map((entry, i) => {
+                    const { label, href } = parseContactEntry(entry);
+                    return (
+                      <span
+                        key={i}
+                        className="border border-accent/20 bg-accent/5 px-2 py-0.5 text-[10px] text-base-content/50 uppercase tracking-widest"
+                      >
+                        {href ? (
+                          <a href={href} className="hover:text-accent transition-colors">
+                            {label}
+                          </a>
+                        ) : (
+                          label
+                        )}
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { seoDev } from "@/data/seo-config";
+import { seoGlobal, seoDev } from "@/data/seo-config";
 import DevPageClient from "@/components/dev/DevPageClient";
 
 export const metadata: Metadata = {
@@ -8,12 +8,12 @@ export const metadata: Metadata = {
   keywords: seoDev.keywords,
   alternates: { canonical: "/dev" },
   openGraph: {
-    title: seoDev.title,
+    title: `${seoDev.title} | ${seoGlobal.author}`,
     description: seoDev.description,
     url: "/dev",
   },
   twitter: {
-    title: seoDev.title,
+    title: `${seoDev.title} | ${seoGlobal.author}`,
     description: seoDev.description,
   },
 };

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { devContent } from "@/data/dev-config";
 import { SectionTitle } from "../shared/SectionTitle";
 import { Logo } from "@/components/shared/Logo";
+import { projectFilename } from "@/lib/slug";
 
 export default function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -14,17 +15,6 @@ export default function Projects() {
 
   const projects = devContent.projects;
   const activeProject = projects[activeIndex];
-
-  // Helper to format title to clean terminal filename
-  const getProjectFilename = (title: string) => {
-    return title
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "") // remove accents
-      .replace(/®/g, "")
-      .replace(/\s+/g, "-")
-      .concat(title === "Detcheler" ? ".ts" : ".tsx");
-  };
 
   // Auto-cycle through projects if not paused
   useEffect(() => {
@@ -146,7 +136,7 @@ export default function Projects() {
                         <span
                           className={`truncate font-bold ${isActive ? "text-accent-content" : "group-hover:text-accent"}`}
                         >
-                          {getProjectFilename(project.title)}
+                          {projectFilename(project)}
                         </span>
                       </div>
 

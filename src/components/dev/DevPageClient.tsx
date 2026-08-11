@@ -8,6 +8,7 @@ import { Header } from "@/components/dev/Header";
 import TerminalMode from "@/components/dev/TerminalMode";
 import { devContent } from "@/data/dev-config";
 import { PersonaPage } from "../shared/PersonaPage";
+import { Footer } from "../shared/Footer";
 import { useDevMode } from "@/context/DevModeContext";
 import { PageTransition } from "@/components/shared/PageTransition";
 import { AnimatePresence, motion } from "framer-motion";
@@ -33,20 +34,7 @@ export default function DevPageClient() {
             >
               <PersonaPage
                 content={devContent}
-                footerContent={
-                  <footer className="mt-20 py-8 border-t-2 border-accent/20 font-mono flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] md:text-xs text-accent/60 uppercase tracking-widest">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-accent/40 rounded-full animate-pulse" />
-                      SYS_BUILD // {new Date().getFullYear()}
-                    </div>
-                    <div className="text-center md:text-right">
-                      <span className="opacity-50">AUTHOR_ID: </span>
-                      <span className="font-black text-accent">
-                        {devContent.name.replace(/_/g, ".")}
-                      </span>
-                    </div>
-                  </footer>
-                }
+                footerContent={<Footer variant="terminal" name={devContent.name} />}
               >
                 <div className="flex flex-col gap-16 md:gap-28">
                   {sections.hero.enabled && <Hero />}

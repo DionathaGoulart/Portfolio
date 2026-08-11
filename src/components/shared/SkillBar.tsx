@@ -1,15 +1,18 @@
 "use client";
 import { motion } from "framer-motion";
 
-interface SkillBarProps {
-  name: string;
-  level: number;
-  variant: "terminal" | "retro";
-  delay?: number;
-}
+/**
+ * The retro skin renders a plain chip with no progress indicator, so it has no use for
+ * `level` or `delay`. Splitting the props by variant makes passing them a compile error
+ * instead of a value that silently disappears.
+ */
+type SkillBarProps =
+  | { variant: "terminal"; name: string; level: number; delay?: number }
+  | { variant: "retro"; name: string };
 
-export function SkillBar({ name, level, variant, delay = 0 }: SkillBarProps) {
-  if (variant === "terminal") {
+export function SkillBar(props: SkillBarProps) {
+  if (props.variant === "terminal") {
+    const { name, level, delay = 0 } = props;
     return (
       <motion.div
         initial={{ opacity: 0, y: 10 }}
@@ -26,7 +29,7 @@ export function SkillBar({ name, level, variant, delay = 0 }: SkillBarProps) {
           <motion.div
             initial={{ width: 0 }}
             whileInView={{ width: `${level}%` }}
-            className="h-full bg-accent shadow-[0_0_15px_var(--accent)]"
+            className="h-full bg-accent shadow-[0_0_15px_var(--color-accent)]"
           />
         </div>
       </motion.div>
@@ -35,7 +38,7 @@ export function SkillBar({ name, level, variant, delay = 0 }: SkillBarProps) {
 
   return (
     <div className="retro-border bg-base-100 px-3 py-1 md:px-4 md:py-2 font-bold text-xs md:text-sm">
-      {name.toUpperCase()}
+      {props.name.toUpperCase()}
     </div>
   );
 }

@@ -1,158 +1,70 @@
 "use client";
 import { motion } from "framer-motion";
+import { parseCV, toBlocks, splitBold } from "@/lib/cv-parser";
 
 interface TiCVViewerProps {
   content: string;
 }
 
-function parseCV(md: string) {
-  const lines = md.split("\n");
-  const sections: { heading: string; body: string[] }[] = [];
-  let name = "";
-  let subtitle = "";
-  let contact = "";
-  let currentSection: { heading: string; body: string[] } | null = null;
-  let headerDone = false;
-
-  for (const line of lines) {
-    const trimmed = line.trim();
-
-    if (!headerDone) {
-      if (trimmed.startsWith("# ")) {
-        name = trimmed.replace("# ", "");
-        continue;
-      }
-      if (trimmed.startsWith("**") && !subtitle) {
-        subtitle = trimmed.replace(/\*\*/g, "");
-        continue;
-      }
-      if (!subtitle && trimmed === "") continue;
-      if (
-        subtitle &&
-        !contact &&
-        trimmed &&
-        !trimmed.startsWith("##") &&
-        !trimmed.startsWith("[")
-      ) {
-        contact = trimmed;
-        continue;
-      }
-      if (trimmed.startsWith("[") || trimmed === "---") continue;
-      if (trimmed.startsWith("## ")) headerDone = true;
-    }
-
-    if (trimmed.startsWith("## ")) {
-      if (currentSection) sections.push(currentSection);
-      currentSection = {
-        heading: trimmed.replace(/^##\s+/, "").replace(/^[^\w\s]+\s*/, ""),
-        body: [],
-      };
-    } else if (trimmed.startsWith("### ")) {
-      currentSection?.body.push(`__H3__${trimmed.replace(/^###\s+/, "")}`);
-    } else if (currentSection) {
-      currentSection.body.push(trimmed);
-    }
-  }
-  if (currentSection) sections.push(currentSection);
-  return { name, subtitle, contact, sections };
+function inline(text: string) {
+  return splitBold(text).map((token, k) =>
+    token.bold ? (
+      <strong key={k} className="text-base-content font-black">
+        {token.text}
+      </strong>
+    ) : (
+      token.text
+    )
+  );
 }
 
 function renderBody(lines: string[]) {
-  const result: React.ReactNode[] = [];
-  let i = 0;
-  while (i < lines.length) {
-    const line = lines[i];
-    if (!line || line === "---") {
-      i++;
-      continue;
-    }
-
-    if (line.startsWith("__H3__")) {
-      const text = line.replace("__H3__", "");
-      const parts = text.split("|");
-      result.push(
-        <div key={i} className="mt-5 mb-1">
-          <div className="font-black text-sm md:text-base uppercase tracking-tighter text-base-content">
-            {parts[0]?.replace(/\*\*/g, "").trim()}
-            {parts[1] && (
-              <span className="text-accent ml-2 font-mono text-xs normal-case tracking-widest">
-                | {parts[1].replace(/\*\*/g, "").trim()}
-              </span>
-            )}
+  return toBlocks(lines).map((block, i) => {
+    switch (block.kind) {
+      case "heading":
+        return (
+          <div key={i} className="mt-5 mb-1">
+            <div className="font-black text-sm md:text-base uppercase tracking-tighter text-base-content">
+              {block.title}
+              {block.note && (
+                <span className="text-accent ml-2 font-mono text-xs normal-case tracking-widest">
+                  | {block.note}
+                </span>
+              )}
+            </div>
           </div>
-        </div>
-      );
-      i++;
-      continue;
-    }
-
-    if (line.startsWith("*") && line.endsWith("*") && !line.startsWith("**")) {
-      result.push(
-        <div
-          key={i}
-          className="font-mono text-[10px] text-base-content/40 uppercase tracking-widest mb-2"
-        >
-          {line.replace(/\*/g, "")}
-        </div>
-      );
-      i++;
-      continue;
-    }
-
-    if (line.startsWith("- ")) {
-      const bulletLines: string[] = [];
-      let bullet = lines[i];
-      while (bullet !== undefined && bullet.startsWith("- ")) {
-        bulletLines.push(bullet.replace(/^- /, ""));
-        i++;
-        bullet = lines[i];
-      }
-      result.push(
-        <ul key={`ul-${i}`} className="space-y-1.5 mb-3">
-          {bulletLines.map((b, j) => {
-            const parts = b.split(/(\*\*[^*]+\*\*)/g);
-            return (
+        );
+      case "note":
+        return (
+          <div
+            key={i}
+            className="font-mono text-[10px] text-base-content/40 uppercase tracking-widest mb-2"
+          >
+            {block.text}
+          </div>
+        );
+      case "bullets":
+        return (
+          <ul key={i} className="space-y-1.5 mb-3">
+            {block.items.map((item, j) => (
               <li
                 key={j}
                 className="flex items-start gap-2 text-sm text-base-content/70 leading-relaxed"
               >
                 <span className="text-accent font-black shrink-0 mt-0.5">›</span>
-                <span>
-                  {parts.map((p, k) =>
-                    p.startsWith("**") ? (
-                      <strong key={k} className="text-base-content font-black">
-                        {p.replace(/\*\*/g, "")}
-                      </strong>
-                    ) : (
-                      p
-                    )
-                  )}
-                </span>
+                <span>{inline(item)}</span>
               </li>
-            );
-          })}
-        </ul>
-      );
-      continue;
+            ))}
+          </ul>
+        );
+      case "paragraph":
+        return (
+          <p key={i} className="text-sm text-base-content/70 leading-relaxed mb-2">
+            {inline(block.text)}
+          </p>
+        );
     }
-
-    const parts = line.split(/(\*\*[^*]+\*\*)/g);
-    result.push(
-      <p key={i} className="text-sm text-base-content/70 leading-relaxed mb-2">
-        {parts.map((p, k) =>
-          p.startsWith("**") ? (
-            <strong key={k} className="text-base-content font-black">
-              {p.replace(/\*\*/g, "")}
-            </strong>
-          ) : (
-            p
-          )
-        )}
-      </p>
-    );
-    i++;
-  }
-  return result;
+  });
 }
 
 export default function TiCVViewer({ content }: TiCVViewerProps) {

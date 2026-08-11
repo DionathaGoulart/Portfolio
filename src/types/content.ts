@@ -18,6 +18,8 @@ export interface Project {
   role?: string;
   features?: string[];
   details?: string;
+  /** Extension shown in the terminal file listing. Defaults to `.tsx`. */
+  fileExtension?: string;
 }
 
 export interface Experience {

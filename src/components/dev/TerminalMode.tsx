@@ -5,6 +5,7 @@ import { devContent } from "@/data/dev-config";
 import { Logo } from "@/components/shared/Logo";
 import { useSkin } from "@/components/shared/SkinProvider";
 import { TERMINAL_LIGHT_THEMES, TERMINAL_DARK_THEMES } from "@/data/theme-config";
+import { slugify } from "@/lib/slug";
 
 type OutputLine = {
   id: number;
@@ -31,9 +32,7 @@ COMANDOS DISPONÍVEIS:
 Dica: Use [TAB] para auto-completar comandos.
 `;
 
-const PROJECT_NAMES = devContent.projects.map((p) =>
-  p.title.toLowerCase().replace(/[^a-z0-9]/g, "-")
-);
+const PROJECT_NAMES = devContent.projects.map((p) => slugify(p.title));
 
 const ALL_COMMANDS = [
   "help",
@@ -291,7 +290,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
                   </p>
                   <p className="text-base-content/70">{p.description}</p>
                   <p className="text-base-content/40 text-[10px]">
-                    → cat {p.title.toLowerCase().replace(/[^a-z0-9]/g, "-")} para detalhes
+                    → cat {slugify(p.title)} para detalhes
                   </p>
                 </div>
               ))}
@@ -387,9 +386,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
       const catMatch = cmd.match(/^cat\s+(.+)$/);
       if (catMatch) {
         const slug = catMatch[1];
-        const project = devContent.projects.find(
-          (p) => p.title.toLowerCase().replace(/[^a-z0-9]/g, "-") === slug
-        );
+        const project = devContent.projects.find((p) => slugify(p.title) === slug);
         if (project) {
           result = [
             {

@@ -5,6 +5,8 @@ import { Metadata } from "next";
 import { Header } from "@/components/dev/Header";
 import { generatePersonSchema } from "@/lib/schema";
 import { PageTransition } from "@/components/shared/PageTransition";
+import { Footer } from "@/components/shared/Footer";
+import { devContent } from "@/data/dev-config";
 
 export const metadata: Metadata = {
   title: "CV | Software Engineer - Dionatha Goulart",
@@ -27,9 +29,7 @@ export default function DevCVPage() {
       <PageTransition className="max-w-7xl mx-auto px-6 md:px-10 pb-20 pt-28 md:pt-32">
         <DevCVViewer content={content} />
 
-        <footer className="py-12 border-t-2 border-base-300 font-black uppercase tracking-widest opacity-40 text-sm mt-20">
-          Dionatha Goulart {"//"} {new Date().getFullYear()}
-        </footer>
+        <Footer variant="retro" name={devContent.name} className="mt-20" />
       </PageTransition>
     </div>
   );

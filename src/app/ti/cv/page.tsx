@@ -4,6 +4,7 @@ import TiCVViewer from "@/components/ti/TiCVViewer";
 import { Metadata } from "next";
 import { generatePersonSchema } from "@/lib/schema";
 import { Header } from "@/components/ti/Header";
+import { Footer } from "@/components/shared/Footer";
 
 export const metadata: Metadata = {
   title: "CV | IT Operations Specialist - Dionatha Goulart",
@@ -28,12 +29,7 @@ export default function TiCVPage() {
           <TiCVViewer content={content} />
         </div>
 
-        {/* Footer / System Status */}
-        <footer className="pt-12 md:pt-16 border-t border-base-300/10 text-[8px] md:text-[10px] opacity-30 flex flex-wrap justify-between gap-4 uppercase tracking-[0.2em] mt-20">
-          <span>© {new Date().getFullYear()} DG_OS_V1.0</span>
-          <span className="hidden sm:inline">ENC: AES-256-GCM</span>
-          <span>LAT: -29.9961 / LONG: -51.0858</span>
-        </footer>
+        <Footer variant="ti" className="mt-20" />
       </div>
     </main>
   );

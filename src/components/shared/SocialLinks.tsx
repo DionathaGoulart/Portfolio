@@ -1,20 +1,44 @@
 "use client";
 import Link from "next/link";
 import { iconMap } from "./Icons";
+import { Tooltip } from "@/components/ui/Tooltip";
 import { SocialLink } from "@/types/content";
+import { cn } from "@/lib/utils";
+
+type SocialEntry = SocialLink & { type?: string };
 
 interface SocialLinksProps {
-  socials: SocialLink[];
-  variant: "terminal" | "retro";
+  socials: SocialEntry[];
+  /** `hub` is the grid on the landing page; the other two follow their skins. */
+  variant: "terminal" | "retro" | "hub";
+  /** hub only: smaller padding and icon, used in the page footer row. */
+  compact?: boolean;
   className?: string;
 }
 
-export function SocialLinks({ socials, variant, className = "" }: SocialLinksProps) {
+/**
+ * Sole renderer for social links across the three surfaces.
+ *
+ * The icon is keyed off `type` when the config provides one and falls back to the display
+ * name, which is why the dev config's "Email" entry had to become "Gmail" — there is no
+ * `email` icon, and the lookup silently fell through to GitHub.
+ */
+export function SocialLinks({
+  socials,
+  variant,
+  compact = false,
+  className = "",
+}: SocialLinksProps) {
   return (
-    <div className={`flex flex-wrap gap-4 ${className}`}>
+    <div
+      className={cn(
+        variant === "hub" ? "grid grid-cols-2 gap-3 sm:gap-4" : "flex flex-wrap gap-4",
+        className
+      )}
+    >
       {socials.map((social) => {
-        const type = social.name.toLowerCase() as keyof typeof iconMap;
-        const Icon = iconMap[type] || iconMap.github; // Default to github if not found
+        const key = (social.type ?? social.name).toLowerCase() as keyof typeof iconMap;
+        const Icon = iconMap[key] ?? iconMap.github;
 
         if (variant === "terminal") {
           return (
@@ -29,17 +53,33 @@ export function SocialLinks({ socials, variant, className = "" }: SocialLinksPro
           );
         }
 
+        if (variant === "hub") {
+          return (
+            <Link
+              key={social.name}
+              href={social.url}
+              aria-label={social.name}
+              title={social.name}
+              className={cn(
+                "retro-border bg-base-200 flex items-center justify-center hover:bg-accent hover:text-accent-content transition-all relative group retro-shadow-sm hover:retro-shadow-sm hover:-translate-y-1 active:translate-y-0 text-base-content",
+                compact ? "p-3 sm:p-4" : "p-4 sm:p-5"
+              )}
+            >
+              <Icon size={compact ? 20 : 24} />
+              {compact && <Tooltip label={social.name} />}
+            </Link>
+          );
+        }
+
         return (
           <Link
             key={social.name}
             href={social.url}
+            aria-label={social.name}
             className="retro-border bg-base-200 p-4 hover:bg-accent hover:text-accent-content transition-all relative group retro-shadow-sm hover:retro-shadow-sm hover:-translate-y-1 active:translate-y-0 text-base-content"
-            title={social.name}
           >
             <Icon size={24} />
-            <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-accent text-accent-content text-[10px] font-black px-2 py-1 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap retro-border">
-              {social.name}
-            </span>
+            <Tooltip label={social.name} />
           </Link>
         );
       })}

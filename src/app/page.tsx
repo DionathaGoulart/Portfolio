@@ -4,10 +4,9 @@ import { motion } from "framer-motion";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { TypingText } from "@/components/shared/TypingText";
 import { Logo } from "@/components/shared/Logo";
+import { SocialLinks } from "@/components/shared/SocialLinks";
 import Image from "next/image";
 import { hubContent } from "@/data/hub-config";
-
-import { iconMap } from "@/components/shared/Icons";
 
 export default function HubPage() {
   return (
@@ -58,21 +57,7 @@ export default function HubPage() {
               </div>
 
               {/* Mobile Socials */}
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 md:hidden">
-                {hubContent.socials.map((social) => {
-                  const Icon = iconMap[social.type as keyof typeof iconMap];
-                  return (
-                    <Link
-                      key={social.name}
-                      href={social.url}
-                      className="retro-border bg-base-200 p-4 sm:p-5 flex items-center justify-center hover:bg-accent hover:text-accent-content transition-all relative group retro-shadow-sm hover:retro-shadow-sm hover:-translate-y-1 active:translate-y-0 text-base-content"
-                      title={social.name}
-                    >
-                      <Icon size={24} />
-                    </Link>
-                  );
-                })}
-              </div>
+              <SocialLinks socials={hubContent.socials} variant="hub" className="md:hidden" />
             </div>
 
             <div className="retro-border bg-accent p-6 md:p-8 retro-shadow inline-block flex-1">
@@ -152,26 +137,12 @@ export default function HubPage() {
 
       {/* Footer Decoration */}
       <div className="max-w-7xl mx-auto mt-16 md:mt-24 w-full flex flex-col md:flex-row justify-between items-center gap-8 border-t-2 border-base-300/10 pt-12 relative z-10">
-        <div className="hidden md:flex flex-wrap gap-4 sm:gap-6 justify-center">
-          {hubContent.socials.map((social) => {
-            const Icon = iconMap[social.type as keyof typeof iconMap];
-            return (
-              <Link
-                key={social.name}
-                href={social.url}
-                className="retro-border bg-base-200 p-3 sm:p-4 hover:bg-accent hover:text-accent-content transition-all relative group retro-shadow-sm hover:retro-shadow-sm hover:-translate-y-1 active:translate-y-0 text-base-content"
-                title={social.name}
-              >
-                <Icon size={20} />
-
-                {/* Tooltip style label */}
-                <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-accent text-accent-content text-[10px] font-black px-2 py-1 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap retro-border">
-                  {social.name}
-                </span>
-              </Link>
-            );
-          })}
-        </div>
+        <SocialLinks
+          socials={hubContent.socials}
+          variant="hub"
+          compact
+          className="hidden md:grid grid-cols-4 gap-4 sm:gap-6"
+        />
 
         <div className="font-mono text-[10px] opacity-30 uppercase tracking-[0.2em] text-center md:text-right text-base-content">
           {hubContent.footer.core} {"//"} {hubContent.footer.build}

@@ -58,7 +58,7 @@ export default function Hero() {
             </div>
 
             {/* Center Image Container */}
-            <div className="relative w-48 h-48 md:w-60 md:h-60 rounded-full border-4 border-accent/20 bg-base-200 overflow-hidden z-10 group-hover:border-accent/60 transition-colors duration-500 shadow-[0_0_30px_rgba(var(--color-accent),0.1)] group-hover:shadow-[0_0_50px_rgba(var(--color-accent),0.2)]">
+            <div className="relative w-48 h-48 md:w-60 md:h-60 rounded-full border-4 border-accent/20 bg-base-200 overflow-hidden z-10 group-hover:border-accent/60 transition-colors duration-500 shadow-[0_0_30px_color-mix(in_srgb,var(--color-accent)_10%,transparent)] group-hover:shadow-[0_0_50px_color-mix(in_srgb,var(--color-accent)_20%,transparent)]">
               <Image
                 src="/me.png"
                 alt={tiContent.name}

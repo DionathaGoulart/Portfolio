@@ -39,7 +39,7 @@ export default function About() {
             </h3>
             <div className="flex flex-wrap gap-2 md:gap-3">
               {tiContent.about.stacks.map((stack) => (
-                <SkillBar key={stack.name} name={stack.name} level={stack.level} variant="retro" />
+                <SkillBar key={stack.name} name={stack.name} variant="retro" />
               ))}
             </div>
           </div>

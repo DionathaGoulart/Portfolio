@@ -122,6 +122,7 @@ export const devContent: PortfolioContent = {
       github: "private",
       status: "ACTIVE",
       role: "Backend & Integration Specialist",
+      fileExtension: ".ts",
       features: [
         "Sincronização bidirecional de estoque e pedidos em tempo real",
         "Disparo automatizado de notificações de rastreamento via WhatsApp",

@@ -13,7 +13,6 @@ export const tiContent: PortfolioContent = {
   },
   meta: {
     username: "dionatha_infra",
-    prompt: "root@infra-ops:~#",
     host: "TI-CORE-NODE",
     kernel: "Linux 6.1.0-STABLE",
     shell: "/bin/bash",
@@ -89,7 +88,7 @@ export const tiContent: PortfolioContent = {
       { name: "LinkedIn", url: "https://linkedin.com/in/dionathagoulart" },
       { name: "GitHub", url: "https://github.com/DionathaGoulart" },
       { name: "Gmail", url: "mailto:dionatha.work@gmail.com" },
-      { name: "WhatsApp", url: "https://wa.me/5551998544525" },
+      { name: "WhatsApp", url: "https://wa.me/5551986485232" },
     ],
   },
   ui: {

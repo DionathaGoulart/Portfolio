@@ -28,7 +28,7 @@ export default function DevCVPage() {
         <DevCVViewer content={content} />
 
         <footer className="py-12 border-t-2 border-border-custom font-black uppercase tracking-widest opacity-40 text-sm mt-20">
-          Dionatha Goulart // 2026
+          Dionatha Goulart {"//"} {new Date().getFullYear()}
         </footer>
       </PageTransition>
     </div>

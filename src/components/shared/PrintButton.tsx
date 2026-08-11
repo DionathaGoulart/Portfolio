@@ -1,14 +1,9 @@
 "use client";
 
-import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useRef, useState } from "react";
-
-function cn(...inputs: any[]) {
-  return twMerge(clsx(inputs));
-}
+import { cn } from "@/lib/utils";
 
 export function PrintButton({ persona, content }: { persona: "DEV" | "TI"; content?: string }) {
   const isDev = persona === "DEV";
@@ -20,7 +15,6 @@ export function PrintButton({ persona, content }: { persona: "DEV" | "TI"; conte
 
     setIsGenerating(true);
     try {
-      // @ts-ignore - html2pdf doesn't have official types easily available
       const html2pdf = (await import("html2pdf.js")).default;
 
       const opt = {

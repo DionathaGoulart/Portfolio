@@ -9,7 +9,7 @@ export default function Experience() {
       <SectionTitle title={tiContent.ui?.experienceTitle || "EXPERIÊNCIA"} variant="retro" />
 
       <div className="space-y-6">
-        {tiContent.experience.map((exp, i) => (
+        {tiContent.experience.map((exp) => (
           <motion.div
             key={exp.company}
             initial={{ opacity: 0, x: -50 }}

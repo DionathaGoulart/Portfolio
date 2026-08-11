@@ -149,13 +149,17 @@ export function ThemeCustomProvider({ children }: { children: ReactNode }) {
   const [darkPalette, setDarkPaletteState] = useState("d2");
 
   // Load from localStorage
+  // TODO(phase-2): this whole provider is replaced by SkinProvider, which reads the
+  // stored palette during render instead of hydrating it through an effect.
   useEffect(() => {
     try {
       const saved = localStorage.getItem(LS_KEY);
       if (saved) {
         const { lp, dp } = JSON.parse(saved);
+        /* eslint-disable react-hooks/set-state-in-effect */
         if (lp) setLightPaletteState(lp);
         if (dp) setDarkPaletteState(dp);
+        /* eslint-enable react-hooks/set-state-in-effect */
       }
     } catch {}
   }, []);

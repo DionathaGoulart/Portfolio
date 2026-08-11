@@ -38,6 +38,9 @@ export const TypingText: React.FC<TypingTextProps> = ({
           setDisplayedText(text.slice(0, displayedText.length - 1));
         }, speed / 2);
       } else {
+        // TODO(phase-4): rewrite this effect so the loop restarts from a timeout
+        // instead of re-entering render with displayedText in the dep array.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsTyping(true);
       }
     }

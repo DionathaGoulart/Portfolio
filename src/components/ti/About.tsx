@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import { tiContent } from "@/data/ti-config";
-import { SectionTitle } from "../shared/SectionTitle";
 import { SkillBar } from "../shared/SkillBar";
 
 export default function About() {

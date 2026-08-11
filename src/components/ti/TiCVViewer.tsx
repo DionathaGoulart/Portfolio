@@ -101,9 +101,11 @@ function renderBody(lines: string[]) {
 
     if (line.startsWith("- ")) {
       const bulletLines: string[] = [];
-      while (i < lines.length && lines[i].startsWith("- ")) {
-        bulletLines.push(lines[i].replace(/^- /, ""));
+      let bullet = lines[i];
+      while (bullet !== undefined && bullet.startsWith("- ")) {
+        bulletLines.push(bullet.replace(/^- /, ""));
         i++;
+        bullet = lines[i];
       }
       result.push(
         <ul key={`ul-${i}`} className="space-y-1.5 mb-3">

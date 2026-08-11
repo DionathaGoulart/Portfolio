@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import { Logo } from "@/components/shared/Logo";
-import { devContent } from "@/data/dev-config";
 
 interface DevCVViewerProps {
   content: string;
@@ -77,7 +76,8 @@ function renderBody(lines: string[]) {
             {parts[0]?.replace(/\*\*/g, "").trim()}
             {parts[1] && (
               <span className="text-accent/60 ml-2 text-xs normal-case tracking-widest font-normal">
-                // {parts[1].replace(/\*\*/g, "").trim()}
+                {"// "}
+                {parts[1].replace(/\*\*/g, "").trim()}
               </span>
             )}
           </div>
@@ -102,9 +102,11 @@ function renderBody(lines: string[]) {
 
     if (line.startsWith("- ")) {
       const bulletLines: string[] = [];
-      while (i < lines.length && lines[i].startsWith("- ")) {
-        bulletLines.push(lines[i].replace(/^- /, ""));
+      let bullet = lines[i];
+      while (bullet !== undefined && bullet.startsWith("- ")) {
+        bulletLines.push(bullet.replace(/^- /, ""));
         i++;
+        bullet = lines[i];
       }
       result.push(
         <ul key={`ul-${i}`} className="space-y-1.5 mb-3 font-mono">
@@ -200,7 +202,8 @@ export default function DevCVViewer({ content }: DevCVViewerProps) {
                   {name}
                 </h1>
                 <p className="text-[10px] md:text-xs text-accent/70 uppercase tracking-widest font-bold mt-1 mb-3">
-                  // {subtitle}
+                  {"// "}
+                  {subtitle}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {contact.split("|").map((c, i) => (

@@ -1,5 +1,3 @@
-import React from "react";
-
 export interface IconProps {
   size?: number;
   className?: string;

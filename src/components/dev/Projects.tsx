@@ -68,6 +68,8 @@ export default function Projects() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeIndex, projects]);
 
+  if (!activeProject) return null;
+
   const selectProject = (idx: number) => {
     setActiveIndex(idx);
     // Smooth scroll to details viewer on smaller screens

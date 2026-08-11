@@ -1,15 +1,19 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { PortfolioContent } from "@/types/content";
 
 export function useNavigation(content: PortfolioContent, persona: "dev" | "ti") {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useEffect(() => {
+  // Close the mobile menu when the route changes — adjusted during render instead of
+  // in an effect, so the menu never paints open on the new page.
+  const [menuPathname, setMenuPathname] = useState(pathname);
+  if (menuPathname !== pathname) {
+    setMenuPathname(pathname);
     setIsMenuOpen(false);
-  }, [pathname]);
+  }
 
   const isCV = pathname.includes("/cv");
 

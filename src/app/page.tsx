@@ -85,7 +85,7 @@ export default function HubPage() {
           <div className="retro-border bg-card p-6 md:p-8 retro-shadow-sm space-y-4 relative overflow-hidden">
             {/* Terminal hint */}
             <div className="absolute top-0 right-0 p-2 font-mono text-[10px] opacity-10 select-none uppercase">
-              // system_manifest_v2.0
+              {"// system_manifest_v2.0"}
             </div>
 
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black italic text-accent flex items-center gap-2">
@@ -174,7 +174,7 @@ export default function HubPage() {
         </div>
 
         <div className="font-mono text-[10px] opacity-30 uppercase tracking-[0.2em] text-center md:text-right text-foreground">
-          {hubContent.footer.core} // {hubContent.footer.build}
+          {hubContent.footer.core} {"//"} {hubContent.footer.build}
           <br />
           {hubContent.footer.root}
         </div>

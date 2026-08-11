@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { tiContent } from "@/data/ti-config";
 import { SectionTitle } from "../shared/SectionTitle";
+import { WindowDots } from "@/components/ui/WindowDots";
 
 export default function Projects() {
   return (
@@ -35,11 +36,7 @@ export default function Projects() {
           >
             <div className="retro-border bg-base-200 overflow-hidden retro-shadow-sm group-hover:retro-shadow transition-all group-hover:-translate-x-1 group-hover:-translate-y-1 h-full flex flex-col">
               <div className="border-b-2 border-base-300 bg-base-100 p-3 md:p-4 flex justify-between items-center shrink-0">
-                <div className="flex gap-1.5 md:gap-2">
-                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-accent" />
-                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-base-300" />
-                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-base-300" />
-                </div>
+                <WindowDots tone="retro" size="responsive" className="md:gap-2" />
                 <span className="font-mono text-[10px] md:text-xs font-bold opacity-40 uppercase">
                   PROJECT_FILE_{i + 1}.EXE
                 </span>

@@ -6,6 +6,7 @@ import { devContent } from "@/data/dev-config";
 import { SectionTitle } from "../shared/SectionTitle";
 import { projectFilename } from "@/lib/slug";
 import { LogoWatermark } from "@/components/ui/LogoWatermark";
+import { WindowDots } from "@/components/ui/WindowDots";
 
 export default function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -92,11 +93,7 @@ export default function Projects() {
       >
         {/* Terminal Header Bar */}
         <div className="bg-accent/5 border-b border-accent/10 px-4 py-2 flex justify-between items-center text-[10px] font-mono tracking-wider text-accent/50 font-black min-w-0">
-          <div className="flex gap-1.5 shrink-0 opacity-50">
-            <span className="w-2.5 h-2.5 rounded-full bg-accent" />
-            <span className="w-2.5 h-2.5 rounded-full bg-accent/40" />
-            <span className="w-2.5 h-2.5 rounded-full bg-accent/20" />
-          </div>
+          <WindowDots className="shrink-0 opacity-50" />
           <span className="truncate mx-2 flex-1 text-center font-normal">
             root@dg-os: ~/workspace/projects-repository
           </span>

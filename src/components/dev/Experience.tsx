@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { devContent } from "@/data/dev-config";
 import { SectionTitle } from "../shared/SectionTitle";
 import { LogoWatermark } from "@/components/ui/LogoWatermark";
+import { WindowDots } from "@/components/ui/WindowDots";
 
 export default function Experience() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -16,11 +17,7 @@ export default function Experience() {
       <div className="retro-border bg-base-200 retro-shadow overflow-hidden w-full flex flex-col relative h-auto">
         {/* Terminal Header Bar (Like Projects.tsx) */}
         <div className="bg-accent/5 border-b border-accent/10 px-4 py-2 flex justify-between items-center text-[10px] font-mono tracking-wider text-accent/50 font-normal relative z-20">
-          <div className="flex gap-1.5 shrink-0 opacity-50">
-            <span className="w-2.5 h-2.5 rounded-full bg-accent" />
-            <span className="w-2.5 h-2.5 rounded-full bg-accent/40" />
-            <span className="w-2.5 h-2.5 rounded-full bg-accent/20" />
-          </div>
+          <WindowDots className="shrink-0 opacity-50" />
           <span className="truncate mx-2">root@dg-os: ~/workspace/experience-logs</span>
           <span className="hidden sm:inline opacity-30">(C) {devContent.meta.copyright}</span>
         </div>

@@ -8,10 +8,7 @@ interface DevModeContextType {
   toggleMode: () => void;
 }
 
-const DevModeContext = createContext<DevModeContextType>({
-  mode: "graphic",
-  toggleMode: () => {},
-});
+const DevModeContext = createContext<DevModeContextType | null>(null);
 
 export function DevModeProvider({ children }: { children: ReactNode }) {
   const [mode, setMode] = useState<DevMode>("graphic");
@@ -19,6 +16,8 @@ export function DevModeProvider({ children }: { children: ReactNode }) {
   return <DevModeContext.Provider value={{ mode, toggleMode }}>{children}</DevModeContext.Provider>;
 }
 
-export function useDevMode() {
-  return useContext(DevModeContext);
+export function useDevMode(): DevModeContextType {
+  const ctx = useContext(DevModeContext);
+  if (!ctx) throw new Error("useDevMode must be used inside <DevModeProvider>");
+  return ctx;
 }

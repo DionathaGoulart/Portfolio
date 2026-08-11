@@ -55,17 +55,16 @@ const ALL_COMMANDS = [
   ...PROJECT_NAMES.map((n) => `cd ${n}`),
 ];
 
-let lineIdCounter = 100;
-function uid() {
-  return lineIdCounter++;
-}
-
 export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  // Per-instance line ids. This used to be a module-scope counter, so it leaked across
+  // mounts and every StrictMode double-render advanced it.
+  const lineId = useRef(100);
+  const uid = () => lineId.current++;
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
-  const [, setHistIdx] = useState(-1);
+  const [histIdx, setHistIdx] = useState(-1);
   const { lightPalette, darkPalette, setLightPalette, setDarkPalette } = useSkin();
   // wizard state: null = normal mode | "light" | "dark"
   const [wizardStep, setWizardStep] = useState<null | "light" | "dark">(null);
@@ -85,7 +84,13 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
     { id: uid(), type: "blank", content: "" },
   ]);
 
+  // Skip the first pass so opening the terminal does not yank the page to the prompt.
+  const didAutoScroll = useRef(false);
   useEffect(() => {
+    if (!didAutoScroll.current) {
+      didAutoScroll.current = true;
+      return;
+    }
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [output]);
 
@@ -97,7 +102,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
     setOutput((prev) => [...prev, ...lines]);
   }
 
-  function runCommand(raw: string) {
+  function runCommand(raw: string, recordHistory = true) {
     const cmd = raw.trim().toLowerCase();
     const inputLine: OutputLine = { id: uid(), type: "input", content: raw.trim() };
 
@@ -106,8 +111,10 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
       return;
     }
 
-    setHistory((h) => [raw.trim(), ...h]);
-    setHistIdx(-1);
+    if (recordHistory) {
+      setHistory((h) => [raw.trim(), ...h]);
+      setHistIdx(-1);
+    }
 
     let result: OutputLine[] = [];
 
@@ -147,7 +154,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
       ]);
       setInput("");
       // re-run as cat
-      setTimeout(() => runCommand(`cat ${target}`), 50);
+      setTimeout(() => runCommand(`cat ${target}`, false), 50);
       return;
     }
 
@@ -594,18 +601,14 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
       }
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      setHistIdx((idx) => {
-        const next = Math.min(idx + 1, history.length - 1);
-        setInput(history[next] ?? "");
-        return next;
-      });
+      const next = Math.min(histIdx + 1, history.length - 1);
+      setHistIdx(next);
+      setInput(history[next] ?? "");
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
-      setHistIdx((idx) => {
-        const next = Math.max(idx - 1, -1);
-        setInput(next === -1 ? "" : (history[next] ?? ""));
-        return next;
-      });
+      const next = Math.max(histIdx - 1, -1);
+      setHistIdx(next);
+      setInput(next === -1 ? "" : (history[next] ?? ""));
     } else if (e.key === "Tab") {
       e.preventDefault();
       if (!input.trim()) return;

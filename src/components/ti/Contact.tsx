@@ -1,8 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { tiContent } from "@/data/ti-config";
-import { iconMap } from "../shared/Icons";
-import Link from "next/link";
+import { SocialLinks } from "@/components/shared/SocialLinks";
 
 export default function Contact() {
   return (
@@ -32,34 +31,7 @@ export default function Contact() {
             </p>
           </div>
 
-          {/* Social Links Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {tiContent.contact.socials.map((social, i) => {
-              const type = social.name.toLowerCase() as keyof typeof iconMap;
-              const Icon = iconMap[type] || iconMap.github;
-              return (
-                <motion.div
-                  key={social.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                >
-                  <Link
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group retro-border bg-base-100 flex flex-col items-center justify-center gap-3 p-6 md:p-8 hover:bg-accent hover:text-accent-content transition-all duration-300 retro-shadow-sm hover:retro-shadow hover:-translate-y-1 active:translate-y-0"
-                  >
-                    <Icon size={28} />
-                    <span className="font-black text-xs uppercase tracking-widest text-center">
-                      {social.name}
-                    </span>
-                  </Link>
-                </motion.div>
-              );
-            })}
-          </div>
+          <SocialLinks socials={tiContent.contact.socials} variant="grid" />
 
           {/* Footer line */}
           <div className="mt-12 md:mt-16 pt-8 border-t border-base-300/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">

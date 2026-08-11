@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { iconMap } from "./Icons";
 import { Tooltip } from "@/components/ui/Tooltip";
 import { SocialLink } from "@/types/content";
@@ -9,8 +10,8 @@ type SocialEntry = SocialLink & { type?: string };
 
 interface SocialLinksProps {
   socials: SocialEntry[];
-  /** `hub` is the grid on the landing page; the other two follow their skins. */
-  variant: "terminal" | "retro" | "hub";
+  /** `hub` is the landing grid, `grid` the ti contact block; the rest follow their skins. */
+  variant: "terminal" | "retro" | "hub" | "grid";
   /** hub only: smaller padding and icon, used in the page footer row. */
   compact?: boolean;
   className?: string;
@@ -32,13 +33,39 @@ export function SocialLinks({
   return (
     <div
       className={cn(
-        variant === "hub" ? "grid grid-cols-2 gap-3 sm:gap-4" : "flex flex-wrap gap-4",
+        variant === "hub" && "grid grid-cols-2 gap-3 sm:gap-4",
+        variant === "grid" && "grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6",
+        (variant === "terminal" || variant === "retro") && "flex flex-wrap gap-4",
         className
       )}
     >
-      {socials.map((social) => {
+      {socials.map((social, i) => {
         const key = (social.type ?? social.name).toLowerCase() as keyof typeof iconMap;
         const Icon = iconMap[key] ?? iconMap.github;
+
+        if (variant === "grid") {
+          return (
+            <motion.div
+              key={social.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+            >
+              <Link
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group retro-border bg-base-100 flex flex-col items-center justify-center gap-3 p-6 md:p-8 hover:bg-accent hover:text-accent-content transition-all duration-300 retro-shadow-sm hover:retro-shadow hover:-translate-y-1 active:translate-y-0"
+              >
+                <Icon size={28} />
+                <span className="font-black text-xs uppercase tracking-widest text-center">
+                  {social.name}
+                </span>
+              </Link>
+            </motion.div>
+          );
+        }
 
         if (variant === "terminal") {
           return (

@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { parseCV, toBlocks, splitBold } from "@/lib/cv-parser";
 import { LogoWatermark } from "@/components/ui/LogoWatermark";
+import { WindowDots } from "@/components/ui/WindowDots";
 
 interface DevCVViewerProps {
   content: string;
@@ -82,11 +83,7 @@ export default function DevCVViewer({ content }: DevCVViewerProps) {
     >
       {/* Terminal Header Bar */}
       <div className="bg-accent/10 border-b-2 border-accent flex justify-center sm:justify-between items-center px-6 py-3 shrink-0">
-        <div className="hidden sm:flex gap-2.5 shrink-0">
-          <div className="w-3.5 h-3.5 rounded-full bg-accent" />
-          <div className="w-3.5 h-3.5 rounded-full bg-accent/40" />
-          <div className="w-3.5 h-3.5 rounded-full bg-accent/20" />
-        </div>
+        <WindowDots size="lg" className="hidden sm:flex gap-2.5 shrink-0" />
         <div className="font-mono text-[10px] sm:text-xs font-black uppercase tracking-[0.3em] sm:tracking-[0.4em] text-accent/60">
           root@dg-os: ~/workspace/curriculum-vitae
         </div>

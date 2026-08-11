@@ -54,6 +54,7 @@ const jetbrainsMono = localFont({
 });
 
 import { seoGlobal, seoHub } from "@/data/seo-config";
+import { THEME_COLOR_DARK, THEME_COLOR_LIGHT } from "@/data/theme-config";
 
 export const metadata: Metadata = {
   metadataBase: new URL(seoGlobal.url),
@@ -103,8 +104,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f2efe7" },
-    { media: "(prefers-color-scheme: dark)", color: "#121212" },
+    { media: "(prefers-color-scheme: light)", color: THEME_COLOR_LIGHT },
+    { media: "(prefers-color-scheme: dark)", color: THEME_COLOR_DARK },
   ],
 };
 

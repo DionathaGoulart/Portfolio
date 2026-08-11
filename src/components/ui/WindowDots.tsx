@@ -10,6 +10,7 @@ const TONES = {
 const SIZES = {
   sm: "w-2.5 h-2.5",
   responsive: "w-2.5 h-2.5 md:w-3 md:h-3",
+  lg: "w-3.5 h-3.5",
 } as const;
 
 interface WindowDotsProps {

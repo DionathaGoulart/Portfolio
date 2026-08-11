@@ -112,6 +112,14 @@ export const PALETTE_STORAGE_KEY = "dg-theme-custom";
 /** localStorage key next-themes writes the light/dark/system choice to. */
 export const MODE_STORAGE_KEY = "theme";
 
+/**
+ * Browser chrome color. A meta tag cannot read a CSS variable, so these two literals are
+ * the one place a theme color is repeated — keep them equal to `--color-base-100` of
+ * retro-hub-light and retro-hub-dark in globals.css.
+ */
+export const THEME_COLOR_LIGHT = "#f2efe7";
+export const THEME_COLOR_DARK = "#121212";
+
 export function skinForPathname(pathname: string): Skin {
   return pathname === "/dev" || pathname.startsWith("/dev/") ? "terminal" : "retro";
 }

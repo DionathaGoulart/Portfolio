@@ -5,13 +5,19 @@ import Projects from "@/components/dev/Projects";
 import Experience from "@/components/dev/Experience";
 import Contact from "@/components/dev/Contact";
 import { Header } from "@/components/dev/Header";
-import TerminalMode from "@/components/dev/TerminalMode";
 import { devContent } from "@/data/dev-config";
 import { PersonaPage } from "../shared/PersonaPage";
 import { Footer } from "../shared/Footer";
 import { useDevMode } from "@/context/DevModeContext";
 import { PageTransition } from "@/components/shared/PageTransition";
 import { AnimatePresence, motion } from "framer-motion";
+import dynamic from "next/dynamic";
+
+// The graphic view is the default, so the terminal has no reason to sit in the initial
+// bundle for /dev. It loads when the visitor actually switches modes.
+const TerminalMode = dynamic(() => import("@/components/dev/terminal/TerminalMode"), {
+  loading: () => <div className="h-[100dvh]" />,
+});
 
 export default function DevPageClient() {
   const { mode, toggleMode } = useDevMode();

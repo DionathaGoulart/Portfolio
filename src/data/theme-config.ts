@@ -101,6 +101,14 @@ export const TERMINAL_DARK_THEMES: TerminalThemeOption[] = [
     acc: "#b47aff",
     fg: "#ede0ff",
   },
+  {
+    palette: "d6",
+    theme: "terminal-matrix",
+    name: "Neon Matrix",
+    bg: "#000000",
+    acc: "#00ff66",
+    fg: "#d7ffd7",
+  },
 ];
 
 /** Matches the pre-daisyUI defaults of `.theme-dev`, so /dev keeps the look it shipped with. */

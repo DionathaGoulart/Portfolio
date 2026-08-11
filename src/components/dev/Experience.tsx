@@ -35,13 +35,6 @@ export default function Experience() {
           <div className="w-full break-words">
             <div className="space-y-10">
               {devContent.experience.map((exp, i) => {
-                const isLatest = i === 0;
-                // Generate a pseudo-random looking hash based on company name
-                const hashBase = (exp.company + exp.period).toLowerCase().replace(/[^a-z0-9]/g, "");
-                const hash = (hashBase + "0f9a2b4c6d8e").substring(0, 8);
-                const insertions = (i + 1) * 142;
-                const deletions = (i + 1) * 23;
-
                 return (
                   <motion.div
                     key={exp.company}

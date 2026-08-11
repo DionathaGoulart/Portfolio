@@ -65,7 +65,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
   const bottomRef = useRef<HTMLDivElement>(null);
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
-  const [histIdx, setHistIdx] = useState(-1);
+  const [, setHistIdx] = useState(-1);
   const { lightPalette, darkPalette, setLightPalette, setDarkPalette } = useThemeCustom();
   // wizard state: null = normal mode | "light" | "dark"
   const [wizardStep, setWizardStep] = useState<null | "light" | "dark">(null);
@@ -140,7 +140,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
         return;
       }
       // redirect to run as "cat <section>"
-      const target = cdMatch[1].replace(/\/$/, ""); // strip trailing slash
+      const target = (cdMatch[1] ?? "").replace(/\/$/, ""); // strip trailing slash
       pushLines([
         inputLine,
         { id: uid(), type: "info", content: `→ cd redireciona para: cat ${target}` },
@@ -308,7 +308,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
               <p className="text-accent font-black uppercase tracking-widest mb-3">
                 # git log --stat --color
               </p>
-              {devContent.experience.map((e, i) => (
+              {devContent.experience.map((e) => (
                 <div key={e.company} className="border-l-2 border-accent/30 pl-3 space-y-1">
                   <p className="text-yellow-400/90 font-bold">
                     commit{" "}
@@ -611,7 +611,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
       if (matches.length === 0) return;
       if (matches.length === 1) {
         // Complete immediately
-        setInput(matches[0]);
+        setInput(matches[0] ?? "");
       } else {
         // Find longest common prefix to partially complete
         const common = matches.reduce((acc, cmd) => {

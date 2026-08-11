@@ -1,13 +1,19 @@
 "use client";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { Sun, Moon } from "lucide-react";
 
-export function ThemeToggle({ isTerminal }: { isTerminal?: boolean }) {
-  const [mounted, setMounted] = useState(false);
-  const { theme, setTheme, resolvedTheme } = useTheme();
+// `resolvedTheme` is only meaningful after hydration, so the toggle stays unrendered
+// on the server pass. useSyncExternalStore gives that flag without a setState-in-effect.
+const neverChanges = () => () => {};
 
-  useEffect(() => setMounted(true), []);
+export function ThemeToggle({ isTerminal }: { isTerminal?: boolean }) {
+  const mounted = useSyncExternalStore(
+    neverChanges,
+    () => true,
+    () => false
+  );
+  const { setTheme, resolvedTheme } = useTheme();
 
   if (!mounted) return null;
 

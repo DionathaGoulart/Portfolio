@@ -17,6 +17,10 @@ export default function TiCVPage() {
 
   return (
     <main className="selection:bg-accent selection:text-white font-mono overflow-x-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       <Header cvContent={content} />
 
       <div className="max-w-7xl mx-auto px-6 md:px-10 pb-20 pt-28 md:pt-32">

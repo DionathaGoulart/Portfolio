@@ -19,6 +19,10 @@ export default function DevCVPage() {
 
   return (
     <div className="selection:bg-accent selection:text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       <Header cvContent={content} />
       <PageTransition className="max-w-7xl mx-auto px-6 md:px-10 pb-20 pt-28 md:pt-32">
         <DevCVViewer content={content} />

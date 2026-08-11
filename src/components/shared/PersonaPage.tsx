@@ -22,7 +22,7 @@ export function PersonaPage({
 
         {footerContent || (
           <footer className="py-12 border-t-2 border-border-custom font-black uppercase tracking-widest opacity-40 text-sm">
-            {content.name} // {new Date().getFullYear()}
+            {content.name} {"//"} {new Date().getFullYear()}
           </footer>
         )}
       </main>

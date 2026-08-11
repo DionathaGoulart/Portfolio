@@ -23,7 +23,7 @@ export default function About() {
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
     const s = seconds % 60;
-    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
   };
 
   const envVars = devContent.about.envVars;
@@ -48,7 +48,6 @@ export default function About() {
 
       {/* Bento Grid HUD */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6">
-        
         {/* Profile Module */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -60,20 +59,30 @@ export default function About() {
             <span>[ {devContent.ui?.aboutModuleBio || "MODULE: PRIMARY_BIO"} ]</span>
             <span>PID: 001</span>
           </div>
-          
+
           <div className="p-5 md:p-6 flex-1 flex flex-col gap-4 items-start relative z-10">
             <div className="space-y-3 font-mono">
               <div>
-                <h3 className="text-xl md:text-3xl font-black text-foreground uppercase tracking-tight">{devContent.name.toLowerCase()}</h3>
-                <p className="text-accent text-xs tracking-widest uppercase mt-1">{devContent.about.subtitle}</p>
+                <h3 className="text-xl md:text-3xl font-black text-foreground uppercase tracking-tight">
+                  {devContent.name.toLowerCase()}
+                </h3>
+                <p className="text-accent text-xs tracking-widest uppercase mt-1">
+                  {devContent.about.subtitle}
+                </p>
               </div>
               <p className="text-sm text-foreground/80 leading-relaxed max-w-2xl font-sans">
                 {devContent.about.text}
               </p>
               <div className="flex flex-wrap gap-3 text-[10px] text-foreground/50 border-t border-accent/10 pt-3 mt-2">
-                <p><span className="text-accent font-bold">HOST:</span> {devContent.meta.host}</p>
-                <p><span className="text-accent font-bold">KERNEL:</span> {devContent.meta.kernel}</p>
-                <p><span className="text-accent font-bold">SHELL:</span> {devContent.meta.shell}</p>
+                <p>
+                  <span className="text-accent font-bold">HOST:</span> {devContent.meta.host}
+                </p>
+                <p>
+                  <span className="text-accent font-bold">KERNEL:</span> {devContent.meta.kernel}
+                </p>
+                <p>
+                  <span className="text-accent font-bold">SHELL:</span> {devContent.meta.shell}
+                </p>
               </div>
             </div>
           </div>
@@ -161,32 +170,33 @@ export default function About() {
                   const barStr = "█".repeat(activeBlocks) + "▒".repeat(totalBlocks - activeBlocks);
 
                   return (
-                    <motion.div 
+                    <motion.div
                       key={skill.name}
                       initial={{ opacity: 0, x: -10 }}
                       animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
-                      transition={{ duration: 0.3, delay: 0.4 + (i * 0.1) }}
+                      transition={{ duration: 0.3, delay: 0.4 + i * 0.1 }}
                       className="flex items-center text-[10px] md:text-xs hover:bg-accent/10 py-1 transition-colors group"
                     >
                       <div className="w-[60%] md:w-[30%] font-bold text-foreground group-hover:text-accent flex items-center gap-2">
                         <span className="text-accent/50">{">"}</span>
-                        {skill.name.toLowerCase().replace(/[\s/]+/g, '_')}.sys
+                        {skill.name.toLowerCase().replace(/[\s/]+/g, "_")}.sys
                       </div>
-                      <div className="hidden md:block w-[15%] text-accent font-black">{skill.level}%</div>
+                      <div className="hidden md:block w-[15%] text-accent font-black">
+                        {skill.level}%
+                      </div>
                       <div className="w-[40%] md:w-[15%] text-green-500/90 animate-pulse font-black drop-shadow-[0_0_2px_rgba(34,197,94,0.5)]">
                         [ OK ]
                       </div>
-                      <div className="hidden md:block w-[40%] text-accent/90 tracking-widest text-[9px] md:text-[10px]">{barStr}</div>
+                      <div className="hidden md:block w-[40%] text-accent/90 tracking-widest text-[9px] md:text-[10px]">
+                        {barStr}
+                      </div>
                     </motion.div>
                   );
                 })}
               </div>
-              
-
             </div>
           </div>
         </motion.div>
-
       </div>
     </section>
   );

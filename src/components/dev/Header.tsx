@@ -9,7 +9,10 @@ import { useNavigation } from "@/hooks/useNavigation";
 import { useDevMode } from "@/context/DevModeContext";
 
 export function Header({ cvContent }: { cvContent?: string }) {
-  const { isMenuOpen, setIsMenuOpen, isCV, scrollToTop, navLinks } = useNavigation(devContent, "dev");
+  const { isMenuOpen, setIsMenuOpen, isCV, scrollToTop, navLinks } = useNavigation(
+    devContent,
+    "dev"
+  );
   const { mode, toggleMode } = useDevMode();
 
   return (
@@ -26,9 +29,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
               <Logo className="w-4 h-4 text-accent group-hover:text-white" />
               <span className="hidden sm:inline">@SYSTEM:</span>
               <span className="sm:hidden">@SYS:</span>
-              <span className="text-foreground group-hover:text-white">
-                ~ $
-              </span>
+              <span className="text-foreground group-hover:text-white">~ $</span>
               <span className="terminal-cursor group-hover:bg-white" />
             </span>
           </Link>
@@ -78,9 +79,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
                   href={link.href}
                   className="text-foreground hover:text-accent transition-colors relative group"
                 >
-                  <span className="opacity-40 group-hover:opacity-100 mr-1">
-                    {">"}
-                  </span>
+                  <span className="opacity-40 group-hover:opacity-100 mr-1">{">"}</span>
                   {link.label}
                 </Link>
               ))}
@@ -118,9 +117,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
                   onClick={() => setIsMenuOpen(false)}
                   className="text-accent text-xl uppercase flex items-center gap-3 group border-b border-accent/20 pb-3"
                 >
-                  <span className="opacity-40 group-hover:opacity-100">
-                    {">"}
-                  </span>
+                  <span className="opacity-40 group-hover:opacity-100">{">"}</span>
                   {link.label}
                 </Link>
               ))}
@@ -128,7 +125,10 @@ export function Header({ cvContent }: { cvContent?: string }) {
               <div className="mt-auto flex flex-col gap-3 pt-4">
                 {!isCV && (
                   <button
-                    onClick={() => { toggleMode(); setIsMenuOpen(false); }}
+                    onClick={() => {
+                      toggleMode();
+                      setIsMenuOpen(false);
+                    }}
                     className="flex items-center justify-center gap-3 border border-accent/30 px-4 py-3 text-sm font-black tracking-wider text-accent hover:bg-accent hover:text-white transition-all w-full"
                   >
                     {mode === "graphic" ? (

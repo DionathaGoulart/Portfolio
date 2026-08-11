@@ -26,7 +26,11 @@ export default function Contact() {
             </p>
           </div>
 
-          <SocialLinks socials={devContent.contact.socials} variant="terminal" className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full" />
+          <SocialLinks
+            socials={devContent.contact.socials}
+            variant="terminal"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full"
+          />
 
           <div className="pt-6 border-t border-accent/10">
             <p className="text-[8px] md:text-[10px] opacity-30 uppercase tracking-[0.4em]">

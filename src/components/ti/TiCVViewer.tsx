@@ -18,17 +18,35 @@ function parseCV(md: string) {
     const trimmed = line.trim();
 
     if (!headerDone) {
-      if (trimmed.startsWith("# ")) { name = trimmed.replace("# ", ""); continue; }
-      if (trimmed.startsWith("**") && !subtitle) { subtitle = trimmed.replace(/\*\*/g, ""); continue; }
+      if (trimmed.startsWith("# ")) {
+        name = trimmed.replace("# ", "");
+        continue;
+      }
+      if (trimmed.startsWith("**") && !subtitle) {
+        subtitle = trimmed.replace(/\*\*/g, "");
+        continue;
+      }
       if (!subtitle && trimmed === "") continue;
-      if (subtitle && !contact && trimmed && !trimmed.startsWith("##") && !trimmed.startsWith("[")) { contact = trimmed; continue; }
+      if (
+        subtitle &&
+        !contact &&
+        trimmed &&
+        !trimmed.startsWith("##") &&
+        !trimmed.startsWith("[")
+      ) {
+        contact = trimmed;
+        continue;
+      }
       if (trimmed.startsWith("[") || trimmed === "---") continue;
       if (trimmed.startsWith("## ")) headerDone = true;
     }
 
     if (trimmed.startsWith("## ")) {
       if (currentSection) sections.push(currentSection);
-      currentSection = { heading: trimmed.replace(/^##\s+/, "").replace(/^[^\w\s]+\s*/, ""), body: [] };
+      currentSection = {
+        heading: trimmed.replace(/^##\s+/, "").replace(/^[^\w\s]+\s*/, ""),
+        body: [],
+      };
     } else if (trimmed.startsWith("### ")) {
       currentSection?.body.push(`__H3__${trimmed.replace(/^###\s+/, "")}`);
     } else if (currentSection) {
@@ -44,7 +62,10 @@ function renderBody(lines: string[]) {
   let i = 0;
   while (i < lines.length) {
     const line = lines[i];
-    if (!line || line === "---") { i++; continue; }
+    if (!line || line === "---") {
+      i++;
+      continue;
+    }
 
     if (line.startsWith("__H3__")) {
       const text = line.replace("__H3__", "");
@@ -61,16 +82,21 @@ function renderBody(lines: string[]) {
           </div>
         </div>
       );
-      i++; continue;
+      i++;
+      continue;
     }
 
     if (line.startsWith("*") && line.endsWith("*") && !line.startsWith("**")) {
       result.push(
-        <div key={i} className="font-mono text-[10px] text-foreground/40 uppercase tracking-widest mb-2">
+        <div
+          key={i}
+          className="font-mono text-[10px] text-foreground/40 uppercase tracking-widest mb-2"
+        >
           {line.replace(/\*/g, "")}
         </div>
       );
-      i++; continue;
+      i++;
+      continue;
     }
 
     if (line.startsWith("- ")) {
@@ -84,13 +110,20 @@ function renderBody(lines: string[]) {
           {bulletLines.map((b, j) => {
             const parts = b.split(/(\*\*[^*]+\*\*)/g);
             return (
-              <li key={j} className="flex items-start gap-2 text-sm text-foreground/70 leading-relaxed">
+              <li
+                key={j}
+                className="flex items-start gap-2 text-sm text-foreground/70 leading-relaxed"
+              >
                 <span className="text-accent font-black shrink-0 mt-0.5">›</span>
                 <span>
                   {parts.map((p, k) =>
                     p.startsWith("**") ? (
-                      <strong key={k} className="text-foreground font-black">{p.replace(/\*\*/g, "")}</strong>
-                    ) : p
+                      <strong key={k} className="text-foreground font-black">
+                        {p.replace(/\*\*/g, "")}
+                      </strong>
+                    ) : (
+                      p
+                    )
                   )}
                 </span>
               </li>
@@ -106,8 +139,12 @@ function renderBody(lines: string[]) {
       <p key={i} className="text-sm text-foreground/70 leading-relaxed mb-2">
         {parts.map((p, k) =>
           p.startsWith("**") ? (
-            <strong key={k} className="text-foreground font-black">{p.replace(/\*\*/g, "")}</strong>
-          ) : p
+            <strong key={k} className="text-foreground font-black">
+              {p.replace(/\*\*/g, "")}
+            </strong>
+          ) : (
+            p
+          )
         )}
       </p>
     );

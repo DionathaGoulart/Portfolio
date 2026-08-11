@@ -21,7 +21,8 @@ export const tiContent: PortfolioContent = {
   },
   hero: {
     title: "Infraestrutura resiliente e automação inteligente.",
-    description: "Especialista em suporte N2, redes TCP/IP e otimização de fluxos operacionais. Transformando infraestrutura em vantagem competitiva.",
+    description:
+      "Especialista em suporte N2, redes TCP/IP e otimização de fluxos operacionais. Transformando infraestrutura em vantagem competitiva.",
     gitBranch: "ops/stable",
     uptime: "2 years, 45 days, 12 hours",
     status: "Monitoring_Systems",
@@ -37,7 +38,7 @@ export const tiContent: PortfolioContent = {
       { key: "ROLE", value: "IT_Operations" },
       { key: "SHELL", value: "/bin/bash" },
       { key: "PAGER", value: "less" },
-      { key: "LANG", value: "pt_BR.UTF-8" }
+      { key: "LANG", value: "pt_BR.UTF-8" },
     ],
     stacks: [
       { name: "Redes TCP/IP", level: 95 },
@@ -62,25 +63,28 @@ export const tiContent: PortfolioContent = {
       tags: ["Zabbix", "SNMP", "Grafana"],
       link: "#",
       github: "private",
-    }
+    },
   ],
   experience: [
     {
       company: "Cybernetrs",
       role: "Técnico de Suporte Nível 2",
       period: "2023 - 2024",
-      description: "Diagnóstico avançado de redes, resolução de incidentes críticos e automação de rotinas de suporte.",
+      description:
+        "Diagnóstico avançado de redes, resolução de incidentes críticos e automação de rotinas de suporte.",
     },
     {
       company: "Freelance",
       role: "Especialista em Automação",
       period: "2023 - Presente",
-      description: "Desenvolvimento de ferramentas de integração ERP e scripts de automação de infraestrutura.",
+      description:
+        "Desenvolvimento de ferramentas de integração ERP e scripts de automação de infraestrutura.",
     },
   ],
   contact: {
     title: "Conexão de Rede?",
-    description: "Inicie um novo protocolo de comunicação para colaborações em infraestrutura e automação.",
+    description:
+      "Inicie um novo protocolo de comunicação para colaborações em infraestrutura e automação.",
     socials: [
       { name: "LinkedIn", url: "https://linkedin.com/in/dionathagoulart" },
       { name: "GitHub", url: "https://github.com/DionathaGoulart" },

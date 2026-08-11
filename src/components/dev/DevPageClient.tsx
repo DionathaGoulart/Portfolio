@@ -26,7 +26,7 @@ function DevContent() {
       gsap.fromTo(
         containerRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 1.5, ease: "power2.out" },
+        { opacity: 1, duration: 1.5, ease: "power2.out" }
       );
     }
   }, [mode]);
@@ -47,7 +47,7 @@ function DevContent() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <PersonaPage 
+              <PersonaPage
                 content={devContent}
                 footerContent={
                   <footer className="mt-20 py-8 border-t-2 border-accent/20 font-mono flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] md:text-xs text-accent/60 uppercase tracking-widest">
@@ -57,7 +57,9 @@ function DevContent() {
                     </div>
                     <div className="text-center md:text-right">
                       <span className="opacity-50">AUTHOR_ID: </span>
-                      <span className="font-black text-accent">{devContent.name.replace(/_/g, '.')}</span>
+                      <span className="font-black text-accent">
+                        {devContent.name.replace(/_/g, ".")}
+                      </span>
                     </div>
                   </footer>
                 }

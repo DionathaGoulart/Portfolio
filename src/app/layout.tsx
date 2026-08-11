@@ -121,9 +121,7 @@ export default function RootLayout({
       </head>
       <body className={`${jetbrainsMono.variable} antialiased`} suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem storageKey="theme">
-          <RouteThemeProvider>
-            {children}
-          </RouteThemeProvider>
+          <RouteThemeProvider>{children}</RouteThemeProvider>
         </ThemeProvider>
       </body>
     </html>

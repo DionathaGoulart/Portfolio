@@ -10,13 +10,7 @@ function cn(...inputs: any[]) {
   return twMerge(clsx(inputs));
 }
 
-export function PrintButton({
-  persona,
-  content,
-}: {
-  persona: "DEV" | "TI";
-  content?: string;
-}) {
+export function PrintButton({ persona, content }: { persona: "DEV" | "TI"; content?: string }) {
   const isDev = persona === "DEV";
   const hiddenRef = useRef<HTMLDivElement>(null);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -31,9 +25,7 @@ export function PrintButton({
 
       const opt = {
         margin: [15, 15] as [number, number],
-        filename: isDev
-          ? "cv-dev-dionatha-goulart.pdf"
-          : "cv-ti-dionatha-goulart.pdf",
+        filename: isDev ? "cv-dev-dionatha-goulart.pdf" : "cv-ti-dionatha-goulart.pdf",
         image: { type: "jpeg", quality: 0.98 } as const,
         html2canvas: { scale: 2, useCORS: true, letterRendering: true },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" } as const,
@@ -56,13 +48,11 @@ export function PrintButton({
           "uppercase transition-all duration-200 disabled:opacity-50 cursor-pointer flex items-center gap-2 group",
           isDev
             ? "border border-accent/30 bg-accent/5 px-3 py-1.5 md:px-4 md:py-2 text-accent hover:bg-accent hover:text-white text-[10px] md:text-xs font-mono"
-            : "retro-border bg-card px-4 py-2 retro-shadow-sm font-bold text-sm hover:bg-accent hover:text-white",
+            : "retro-border bg-card px-4 py-2 retro-shadow-sm font-bold text-sm hover:bg-accent hover:text-white"
         )}
       >
         {isGenerating ? (
-          <span className="animate-pulse">
-            {isDev ? "_EXECUTING..." : "Gerando..."}
-          </span>
+          <span className="animate-pulse">{isDev ? "_EXECUTING..." : "Gerando..."}</span>
         ) : (
           <>
             {isDev ? (
@@ -100,9 +90,7 @@ export function PrintButton({
             }}
           />
           <div className="pdf-content">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {content || ""}
-            </ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{content || ""}</ReactMarkdown>
           </div>
         </div>
       </div>

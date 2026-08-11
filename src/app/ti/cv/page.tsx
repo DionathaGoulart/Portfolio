@@ -7,8 +7,7 @@ import { Header } from "@/components/ti/Header";
 
 export const metadata: Metadata = {
   title: "CV | IT Operations Specialist - Dionatha Goulart",
-  description:
-    "Currículo de Dionatha Goulart focado em Infraestrutura, Redes e Automação de TI.",
+  description: "Currículo de Dionatha Goulart focado em Infraestrutura, Redes e Automação de TI.",
 };
 
 export default function TiCVPage() {
@@ -35,4 +34,3 @@ export default function TiCVPage() {
     </main>
   );
 }
-

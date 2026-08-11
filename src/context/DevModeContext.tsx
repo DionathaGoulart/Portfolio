@@ -16,11 +16,7 @@ const DevModeContext = createContext<DevModeContextType>({
 export function DevModeProvider({ children }: { children: ReactNode }) {
   const [mode, setMode] = useState<DevMode>("graphic");
   const toggleMode = () => setMode((m) => (m === "graphic" ? "terminal" : "graphic"));
-  return (
-    <DevModeContext.Provider value={{ mode, toggleMode }}>
-      {children}
-    </DevModeContext.Provider>
-  );
+  return <DevModeContext.Provider value={{ mode, toggleMode }}>{children}</DevModeContext.Provider>;
 }
 
 export function useDevMode() {

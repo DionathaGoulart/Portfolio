@@ -25,7 +25,15 @@ export function SkillBar(props: SkillBarProps) {
           <span>{name}</span>
           <span className="text-accent">{level}%</span>
         </div>
-        <div className="h-2 border border-accent/20 w-full overflow-hidden p-0.5">
+        {/* The percentage only exists as painted width, so the meter carries it for a reader. */}
+        <div
+          role="progressbar"
+          aria-label={name}
+          aria-valuenow={level}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          className="h-2 border border-accent/20 w-full overflow-hidden p-0.5"
+        >
           <motion.div
             initial={{ width: 0 }}
             whileInView={{ width: `${level}%` }}

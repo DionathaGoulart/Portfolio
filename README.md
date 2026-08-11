@@ -16,7 +16,7 @@ This project is a unique "Hub" that splits the professional persona into two dis
 - **Dev Portfolio:** Focused on Fullstack development, SaaS, and premium UX. Features an integrated **Interactive Terminal Mode** simulating a real command-line environment.
 - **Ops/TI Portfolio:** Focused on Infrastructure, Networking, and Automation.
 
-It features a custom-built theme system that switches styles dynamically based on the active route, providing a tailored experience for different professional audiences.
+It features a daisyUI theme system that switches styles based on the active route, providing a tailored experience for different professional audiences. Thirteen themes cover two skins — `retro` for the hub and Ops track, `terminal` for the Dev track, where visitors pick their own light and dark palette.
 
 ## 🛠️ Tech Stack
 
@@ -24,7 +24,7 @@ It features a custom-built theme system that switches styles dynamically based o
 - **Language:** [TypeScript](https://www.typescriptlang.org/)
 - **Styling:** [Tailwind CSS v4](https://tailwindcss.com/) + [daisyUI 5](https://daisyui.com/)
 - **Animations:** [Framer Motion](https://www.framer.com/motion/)
-- **State Management:** React Context API for themes and terminal state.
+- **State Management:** React Context API for the skin and terminal state.
 
 ## ✨ Key Features
 
@@ -87,7 +87,9 @@ All textual content, projects, and experiences are strictly separated from UI co
 - **Ops/TI Persona:** Edit `src/data/ti-config.ts`.
 - **Global Hub/SEO:** Edit `src/data/seo-config.ts`.
 
-Both configuration files satisfy the `PortfolioContent` type (`src/types/content.ts`). If you want to add new fields (like a new social link or metadata), add the type to `PortfolioContent` first, then update both configs.
+Types live in `src/types/content.ts`. `PortfolioContent` holds what both personas render; `DevContent` adds the fields only the terminal skin has a surface for (system metadata, env variables, the extended hero). Each persona declares its own UI strings interface — `DevUiStrings` and `TiUiStrings` — so a typo in a key is a compile error rather than a silently missing label.
+
+To add a field, put it on the shared type only if both personas render it; otherwise extend the persona-specific one.
 
 ## 🚀 Getting Started
 
@@ -116,7 +118,13 @@ Both configuration files satisfy the `PortfolioContent` type (`src/types/content
    npm run dev
    ```
 
-4. Build for production:
+4. Run the checks (the same ones CI runs):
+
+   ```bash
+   npm run format:check && npm run lint && npm run typecheck && npm run build
+   ```
+
+5. Build for production:
    ```bash
    npm run build
    ```

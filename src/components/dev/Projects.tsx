@@ -284,7 +284,7 @@ export default function Projects() {
                       href={activeProject.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="retro-border border-accent/30 bg-accent/5 hover:bg-accent hover:text-accent-content px-4 py-2.5 font-mono text-xs font-bold tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer select-none text-center flex-1"
+                      className="btn btn-terminal font-mono flex-1 gap-2 select-none hover:bg-accent hover:text-accent-content"
                     >
                       <span>🌐</span>
                       <span>LAUNCH_LIVE_DEPL.EXE</span>
@@ -301,7 +301,7 @@ export default function Projects() {
                       href={activeProject.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="retro-border border-accent/30 bg-accent/5 hover:bg-accent hover:text-accent-content px-4 py-2.5 font-mono text-xs font-bold tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer select-none text-center flex-1"
+                      className="btn btn-terminal font-mono flex-1 gap-2 select-none hover:bg-accent hover:text-accent-content"
                     >
                       <span>📂</span>
                       <span>OPEN_SOURCE_REPO.SH</span>

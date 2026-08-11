@@ -32,15 +32,12 @@ export default function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-4 w-full sm:w-auto">
-              <a
-                href="#projects"
-                className="retro-border bg-accent text-accent-content px-8 py-3.5 md:py-4 font-black text-sm md:text-base hover:bg-base-content transition-colors uppercase text-center"
-              >
+              <a href="#projects" className="btn btn-retro hover:bg-base-content">
                 {tiContent.ui.heroProjectsButton}
               </a>
               <a
                 href="#contact"
-                className="retro-border border-2 border-accent bg-transparent text-base-content hover:bg-accent hover:text-accent-content px-8 py-3.5 md:py-4 font-black text-sm md:text-base transition-colors uppercase text-center"
+                className="btn btn-retro-outline hover:bg-accent hover:text-accent-content"
               >
                 {tiContent.ui.heroContactButton}
               </a>

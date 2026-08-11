@@ -34,6 +34,10 @@
  * retro-hub-light is declared first and marked default, so it also lands on `:root`.
  * Every other theme must come after it — `:root` and `[data-theme=...]` have equal
  * specificity, so source order is what lets the others win.
+ *
+ * That same cascade is why a token every theme agrees on — `--frame-border` — is declared
+ * once, in retro-hub-light: the others inherit it from `:root` and only need a line of
+ * their own the day one of them wants a different value.
  */
 
 @plugin "daisyui/theme" {
@@ -75,6 +79,13 @@
   --scanline-color: rgba(0, 0, 0, 0.05);
   --hub-dev-hover: #0a0f1e;
   --hub-ti-hover: #dc143c;
+
+  /*
+   * Width of the window frames `.retro-border` draws, inherited by every other theme.
+   * Deliberately not `--border`: that one is daisyUI's control border, which the terminal
+   * skin keeps at 1px for its buttons while its frames stay at 2px like the retro skin's.
+   */
+  --frame-border: 2px;
 }
 
 @plugin "daisyui/theme" {
@@ -653,7 +664,7 @@ body {
 }
 
 @utility retro-border {
-  border: 2px solid var(--color-base-300);
+  border: var(--frame-border) solid var(--color-base-300);
 }
 
 @utility terminal-glow {

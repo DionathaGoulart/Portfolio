@@ -8,6 +8,10 @@ import { projectFilename } from "@/lib/slug";
 import { LogoWatermark } from "@/components/ui/LogoWatermark";
 import { WindowDots } from "@/components/ui/WindowDots";
 
+// Decorative shell strings — scenography, not content.
+const TERMINAL_PATH = "root@dg-os: ~/workspace/projects-repository";
+const FILE_PERMISSIONS = "-rwxr-xr-x";
+
 export default function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -83,7 +87,7 @@ export default function Projects() {
 
   return (
     <section ref={sectionRef} className="relative w-full" id="projects">
-      <SectionTitle number="03" title="projects_repo" variant="terminal" />
+      <SectionTitle number="03" title={devContent.ui.projectsTitle} variant="terminal" />
 
       {/* Main Terminal Window */}
       <div
@@ -94,9 +98,7 @@ export default function Projects() {
         {/* Terminal Header Bar */}
         <div className="bg-accent/5 border-b border-accent/10 px-4 py-2 flex justify-between items-center text-[10px] font-mono tracking-wider text-accent/50 font-black min-w-0">
           <WindowDots className="shrink-0 opacity-50" />
-          <span className="truncate mx-2 flex-1 text-center font-normal">
-            root@dg-os: ~/workspace/projects-repository
-          </span>
+          <span className="truncate mx-2 flex-1 text-center font-normal">{TERMINAL_PATH}</span>
           <span className="hidden sm:inline text-[9px] bg-accent/10 px-1 py-0.5 rounded text-accent/50 shrink-0 font-normal">
             {isPaused ? "● PAUSED" : "● AUTO_PLAY"}
           </span>
@@ -137,7 +139,7 @@ export default function Projects() {
 
                         {/* Mock permissions - Hidden on narrow screens */}
                         <span className="hidden sm:inline text-[10px] opacity-40 shrink-0 font-light tracking-tight select-none mr-1 font-mono">
-                          -rwxr-xr-x
+                          {FILE_PERMISSIONS}
                         </span>
 
                         <span
@@ -170,9 +172,9 @@ export default function Projects() {
 
             {/* Terminal Shortcuts Legend Footer */}
             <div className="p-4 border-t border-accent/15 font-mono text-[9px] text-accent/50 leading-relaxed space-y-0.5 select-none bg-accent/[0.005]">
-              <p className="hidden lg:block">● [↑ / ↓] NAVEGAR ENTRE PROJETOS</p>
-              <p>● [ENTER] ABRIR VERSÃO PRODUÇÃO (LIVE)</p>
-              <p>● [G] VISITAR CÓDIGO FONTE (GITHUB)</p>
+              <p className="hidden lg:block">● [↑ / ↓] {devContent.ui.projectsHintNavigate}</p>
+              <p>● [ENTER] {devContent.ui.projectsHintOpen}</p>
+              <p>● [G] {devContent.ui.projectsHintSource}</p>
             </div>
           </div>
 

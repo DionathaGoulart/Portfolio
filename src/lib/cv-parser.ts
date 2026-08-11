@@ -130,6 +130,22 @@ export function toBlocks(lines: string[]): CvBlock[] {
   return blocks;
 }
 
+export interface ContactEntry {
+  label: string;
+  href?: string;
+}
+
+/**
+ * One `|`-separated piece of the contact line. The e-mail is written as a markdown link,
+ * and the viewers print these as plain chips — so `[a@b.com](mailto:a@b.com)` was being
+ * shown verbatim on both CV pages.
+ */
+export function parseContactEntry(entry: string): ContactEntry {
+  const trimmed = entry.trim();
+  const link = trimmed.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+  return link ? { label: link[1] ?? trimmed, href: link[2] } : { label: trimmed };
+}
+
 export interface InlineToken {
   bold: boolean;
   text: string;

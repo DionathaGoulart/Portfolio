@@ -10,18 +10,18 @@ import { Footer } from "@/components/shared/Footer";
 import { devContent } from "@/data/dev-config";
 
 export const metadata: Metadata = {
-  title: "CV | Software Engineer - Dionatha Goulart",
+  title: "CV | Software Engineer",
   description:
     "Currículo de Dionatha Goulart focado em Engenharia de Software e Desenvolvimento Fullstack.",
   alternates: { canonical: "/dev/cv" },
   openGraph: {
-    title: "CV | Software Engineer - Dionatha Goulart",
+    title: "CV | Software Engineer | Dionatha Goulart",
     description:
       "Currículo de Dionatha Goulart focado em Engenharia de Software e Desenvolvimento Fullstack.",
     url: "/dev/cv",
   },
   twitter: {
-    title: "CV | Software Engineer - Dionatha Goulart",
+    title: "CV | Software Engineer | Dionatha Goulart",
     description:
       "Currículo de Dionatha Goulart focado em Engenharia de Software e Desenvolvimento Fullstack.",
   },

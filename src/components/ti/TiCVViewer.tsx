@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { parseCV, toBlocks, splitBold } from "@/lib/cv-parser";
+import { parseCV, parseContactEntry, toBlocks, splitBold } from "@/lib/cv-parser";
 import { WindowDots } from "@/components/ui/WindowDots";
 
 interface TiCVViewerProps {
@@ -102,14 +102,23 @@ export default function TiCVViewer({ content }: TiCVViewerProps) {
             {subtitle}
           </p>
           <div className="flex flex-wrap gap-2">
-            {contact.split("|").map((c, i) => (
-              <span
-                key={i}
-                className="retro-border bg-base-100 px-3 py-1.5 font-mono text-[10px] text-base-content/60 uppercase tracking-widest"
-              >
-                {c.trim()}
-              </span>
-            ))}
+            {contact.split("|").map((entry, i) => {
+              const { label, href } = parseContactEntry(entry);
+              return (
+                <span
+                  key={i}
+                  className="retro-border bg-base-100 px-3 py-1.5 font-mono text-[10px] text-base-content/60 uppercase tracking-widest"
+                >
+                  {href ? (
+                    <a href={href} className="hover:text-accent transition-colors">
+                      {label}
+                    </a>
+                  ) : (
+                    label
+                  )}
+                </span>
+              );
+            })}
           </div>
         </div>
 

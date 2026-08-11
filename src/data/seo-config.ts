@@ -26,14 +26,14 @@ export const seoHub = {
 };
 
 export const seoDev = {
-  title: "Desenvolvedor Fullstack | Dionatha Goulart",
+  title: "Desenvolvedor Fullstack",
   description:
     "Portfólio de Engenharia de Software focado em aplicações SaaS, Next.js e experiências digitais de alta performance.",
   keywords: ["Fullstack Developer", "React", "Next.js", "SaaS", "TypeScript"],
 };
 
 export const seoTi = {
-  title: "Operações de TI & Infraestrutura | Dionatha Goulart",
+  title: "Operações de TI & Infraestrutura",
   description:
     "Especialista em infraestrutura, redes e automação de sistemas. Focado em resiliência e performance operacional.",
   keywords: ["IT Operations", "Infrastructure", "Networks", "Automation", "Linux"],

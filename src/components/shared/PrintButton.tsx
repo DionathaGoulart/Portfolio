@@ -116,8 +116,11 @@ export function PrintButton({ persona, content }: { persona: "DEV" | "TI"; conte
         <div aria-hidden="true" inert style={{ position: "absolute", left: "-9999px", top: 0 }}>
           <div
             ref={hiddenRef}
-            className="p-10 bg-white text-black font-sans leading-normal w-[210mm]"
-            style={{ minHeight: "297mm" }}
+            /* A4 is 210x297mm and html2pdf applies its 15mm margins on top of the source,
+               so a full-width element pushed ~30mm of every line off the page. Sizing the
+               source to the printable area keeps the text inside it. */
+            className="p-10 bg-white text-black font-sans leading-normal w-[180mm]"
+            style={{ minHeight: "267mm" }}
           >
             <style
               dangerouslySetInnerHTML={{

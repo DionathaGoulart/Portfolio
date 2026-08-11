@@ -11,7 +11,7 @@ export default function Experience() {
 
   return (
     <section ref={sectionRef} className="relative w-full" id="experience">
-      <SectionTitle number="02" title="operational_history" variant="terminal" />
+      <SectionTitle number="02" title={devContent.ui.experienceTitle} variant="terminal" />
 
       {/* Main Terminal Window (Like Projects.tsx) */}
       <div className="retro-border bg-base-200 retro-shadow overflow-hidden w-full flex flex-col relative h-auto">

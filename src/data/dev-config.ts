@@ -182,6 +182,11 @@ export const devContent: DevContent = {
   // ─── UI / App Strings ────────────────────────────────────────────────────────
   ui: {
     aboutTitle: "// System_Overview",
+    experienceTitle: "operational_history",
+    projectsTitle: "projects_repo",
+    projectsHintNavigate: "NAVEGAR ENTRE PROJETOS",
+    projectsHintOpen: "ABRIR VERSÃO PRODUÇÃO (LIVE)",
+    projectsHintSource: "VISITAR CÓDIGO FONTE (GITHUB)",
     aboutSubtitle: "Hardware & Cognitive Specs v4.0",
     aboutModuleBio: "MODULE: PRIMARY_BIO",
     aboutModuleEnv: "MODULE: ENV_CONFIG",

@@ -75,6 +75,11 @@ export interface PortfolioContent {
  */
 export interface DevUiStrings {
   aboutTitle: string;
+  experienceTitle: string;
+  projectsTitle: string;
+  projectsHintNavigate: string;
+  projectsHintOpen: string;
+  projectsHintSource: string;
   aboutSubtitle: string;
   aboutModuleBio: string;
   aboutModuleEnv: string;

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -60,6 +60,7 @@ export const metadata: Metadata = {
   keywords: seoHub.keywords,
   authors: [{ name: seoGlobal.author }],
   creator: seoGlobal.author,
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "pt_BR",
@@ -67,26 +68,18 @@ export const metadata: Metadata = {
     siteName: seoGlobal.siteName,
     title: seoHub.title,
     description: seoHub.description,
-    images: [
-      {
-        url: seoHub.ogImage,
-        width: 1200,
-        height: 630,
-        alt: seoGlobal.siteName,
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: seoHub.title,
     description: seoHub.description,
     creator: seoGlobal.twitterHandle,
-    images: [seoHub.ogImage],
   },
   robots: {
     index: seoGlobal.robots.index,
     follow: seoGlobal.robots.follow,
   },
+  other: { "view-transition": "same-origin" },
   icons: {
     icon: [
       {
@@ -106,6 +99,13 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f2efe7" },
+    { media: "(prefers-color-scheme: dark)", color: "#121212" },
+  ],
+};
+
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import { SkinProvider } from "@/components/shared/SkinProvider";
 import { MODE_STORAGE_KEY, THEME_INIT_SCRIPT } from "@/data/theme-config";
@@ -118,7 +118,6 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
-        <meta name="view-transition" content="same-origin" />
         {/* Stamps data-theme/data-skin before first paint so dark visitors never see a light flash. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>

@@ -6,15 +6,15 @@ export const metadata: Metadata = {
   title: seoDev.title,
   description: seoDev.description,
   keywords: seoDev.keywords,
+  alternates: { canonical: "/dev" },
   openGraph: {
     title: seoDev.title,
     description: seoDev.description,
-    images: [{ url: seoDev.ogImage }],
+    url: "/dev",
   },
   twitter: {
     title: seoDev.title,
     description: seoDev.description,
-    images: [seoDev.ogImage],
   },
 };
 

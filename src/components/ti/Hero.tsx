@@ -64,6 +64,8 @@ export default function Hero() {
                 src="/me.png"
                 alt={tiContent.name}
                 fill
+                priority
+                sizes="(max-width: 768px) 192px, 240px"
                 className="object-cover grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
               />
             </div>

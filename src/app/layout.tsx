@@ -5,47 +5,52 @@ import "./globals.css";
 const jetbrainsMono = localFont({
   src: [
     {
-      path: "../../public/fonts/JetBrainsMono-Regular.ttf",
+      path: "../assets/fonts/JetBrainsMono-Regular.woff2",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../../public/fonts/JetBrainsMono-Italic.ttf",
+      path: "../assets/fonts/JetBrainsMono-Italic.woff2",
       weight: "400",
       style: "italic",
     },
     {
-      path: "../../public/fonts/JetBrainsMono-Medium.ttf",
+      path: "../assets/fonts/JetBrainsMono-Medium.woff2",
       weight: "500",
       style: "normal",
     },
     {
-      path: "../../public/fonts/JetBrainsMono-Medium-Italic.ttf",
+      path: "../assets/fonts/JetBrainsMono-Medium-Italic.woff2",
       weight: "500",
       style: "italic",
     },
     {
-      path: "../../public/fonts/JetBrainsMono-Bold.ttf",
+      path: "../assets/fonts/JetBrainsMono-Bold.woff2",
       weight: "700",
       style: "normal",
     },
     {
-      path: "../../public/fonts/JetBrainsMono-Bold-Italic.ttf",
+      path: "../assets/fonts/JetBrainsMono-Bold-Italic.woff2",
       weight: "700",
       style: "italic",
     },
     {
-      path: "../../public/fonts/JetBrainsMono-ExtraBold.ttf",
+      path: "../assets/fonts/JetBrainsMono-ExtraBold.woff2",
       weight: "800",
       style: "normal",
     },
     {
-      path: "../../public/fonts/JetBrainsMono-ExtraBold-Italic.ttf",
+      path: "../assets/fonts/JetBrainsMono-ExtraBold-Italic.woff2",
       weight: "800",
       style: "italic",
     },
   ],
   variable: "--font-jetbrains-mono",
+  display: "swap",
+  // next/font preloads every declared face. With eight of them that was 1.1MB of
+  // render-blocking font requests on each page load; the browser now fetches only the
+  // faces a page actually uses.
+  preload: false,
 });
 
 import { seoGlobal, seoHub } from "@/data/seo-config";
@@ -91,11 +96,8 @@ export const metadata: Metadata = {
         media: "(prefers-color-scheme: dark)",
       },
     ],
-    apple: [
-      {
-        url: "/icon-dark.ico",
-      },
-    ],
+    // Was pointing at the 215KB .ico; this is a 6KB 180x180 png generated from it.
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
   },
 };
 

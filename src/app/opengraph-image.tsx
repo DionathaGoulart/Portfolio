@@ -32,7 +32,7 @@ export default function Image() {
           letterSpacing: 8,
           textTransform: "uppercase",
           color: ACCENT,
-          fontWeight: 700,
+          fontWeight: 800,
         }}
       >
         {seoGlobal.url.replace("https://", "")}

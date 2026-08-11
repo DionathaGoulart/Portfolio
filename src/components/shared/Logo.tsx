@@ -8,6 +8,8 @@ export const Logo: React.FC<LogoProps> = ({ className, ...props }) => {
   return (
     <svg
       viewBox="0 0 1357 1080"
+      aria-hidden="true"
+      focusable="false"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}

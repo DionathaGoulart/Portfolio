@@ -384,7 +384,8 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
         </div>
 
         {/* Input row */}
-        <div className="border-t border-accent/20 px-5 md:px-8 py-3 flex items-center gap-3 font-mono text-xs bg-accent/[0.02] shrink-0 relative z-10">
+        {/* The input suppresses its own outline, so the row carries the focus ring. */}
+        <div className="border-t border-accent/20 px-5 md:px-8 py-3 flex items-center gap-3 font-mono text-xs bg-accent/[0.02] shrink-0 relative z-10 has-[input:focus-visible]:outline has-[input:focus-visible]:outline-2 has-[input:focus-visible]:outline-accent has-[input:focus-visible]:-outline-offset-2">
           <span className="text-accent font-black whitespace-nowrap">
             {wizardStep === "light" && `paleta-light[1–${TERMINAL_LIGHT_THEMES.length}]:`}
             {wizardStep === "dark" && `paleta-dark[1–${TERMINAL_DARK_THEMES.length}]:`}
@@ -395,7 +396,8 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent outline-none text-base-content caret-accent placeholder:text-base-content/20"
+            aria-label="Terminal de comandos"
+            className="flex-1 bg-transparent outline-none text-base-content caret-accent placeholder:text-base-content/20 focus-visible:outline-none"
             placeholder="type a command..."
             autoComplete="off"
             autoCorrect="off"

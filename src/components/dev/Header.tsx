@@ -91,6 +91,9 @@ export function Header({ cvContent }: { cvContent?: string }) {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-expanded={isMenuOpen}
+            aria-controls="dev-mobile-menu"
+            aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
             className="lg:hidden font-mono text-xs uppercase border border-accent/30 px-3 py-2 text-accent"
           >
             {isMenuOpen ? "[ X ]" : "[MENU]"}
@@ -106,6 +109,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
+            id="dev-mobile-menu"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}

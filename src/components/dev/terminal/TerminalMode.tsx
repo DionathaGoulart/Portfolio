@@ -1,60 +1,14 @@
 "use client";
 import { useState, useRef, useEffect, KeyboardEvent } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { devContent } from "@/data/dev-config";
 import { Logo } from "@/components/shared/Logo";
 import { useSkin } from "@/components/shared/SkinProvider";
 import { TERMINAL_LIGHT_THEMES, TERMINAL_DARK_THEMES } from "@/data/theme-config";
-import { slugify } from "@/lib/slug";
 import { asciiBar, skillFilename, fakeCommitHash } from "@/lib/terminal";
+import { slugify } from "@/lib/slug";
 
-type OutputLine = {
-  id: number;
-  type: "input" | "output" | "error" | "success" | "info" | "blank";
-  content: string | React.ReactNode;
-};
-
-const HELP_TEXT = `
-COMANDOS DISPONÍVEIS:
-──────────────────────────────────────────────
-  help              → Lista todos os comandos
-  whoami            → Informações sobre o sistema
-  ls                → Lista módulos disponíveis
-  cat about         → Exibe bio e habilidades
-  cat projects      → Lista todos os projetos
-  cat <projeto>     → Detalhes de um projeto específico
-  cat experience    → Histórico de experiências
-  cat skills        → Mapa de habilidades técnicas
-  cat cv            → Abre o currículo completo
-  theme             → Altera paleta de cores e fonte
-  clear             → Limpa o terminal
-  gui               → Volta para o modo gráfico
-──────────────────────────────────────────────
-Dica: Use [TAB] para auto-completar comandos.
-`;
-
-const PROJECT_NAMES = devContent.projects.map((p) => slugify(p.title));
-
-const ALL_COMMANDS = [
-  "help",
-  "whoami",
-  "ls",
-  "clear",
-  "gui",
-  "theme",
-  "cat about",
-  "cat projects",
-  "cat experience",
-  "cat skills",
-  "cat cv",
-  "cd about",
-  "cd projects",
-  "cd experience",
-  "cd skills",
-  "cd cv",
-  ...PROJECT_NAMES.map((n) => `cat ${n}`),
-  ...PROJECT_NAMES.map((n) => `cd ${n}`),
-];
+import { ALL_COMMANDS, HELP_TEXT, MAX_OUTPUT_LINES, type OutputLine } from "./constants";
 
 export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -100,7 +54,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
   }, []);
 
   function pushLines(lines: OutputLine[]) {
-    setOutput((prev) => [...prev, ...lines]);
+    setOutput((prev) => [...prev, ...lines].slice(-MAX_OUTPUT_LINES));
   }
 
   function runCommand(raw: string, recordHistory = true) {
@@ -672,38 +626,38 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
 
         {/* Output area */}
         <div className="flex-1 overflow-y-auto p-5 md:p-8 font-mono text-xs relative z-10 space-y-1">
-          <AnimatePresence initial={false}>
-            {output.map((line) => (
-              <motion.div
-                key={line.id}
-                initial={{ opacity: 0, x: -4 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.1 }}
-              >
-                {line.type === "input" && (
-                  <div className="flex items-start gap-2 text-base-content/90">
-                    <span className="text-accent font-black shrink-0">
-                      {devContent.meta.username.split("_")[0]}@dg-os:~$
-                    </span>
-                    <span>{line.content}</span>
-                  </div>
-                )}
-                {line.type === "output" && (
-                  <div className="pl-2 border-l border-accent/10 py-1">{line.content}</div>
-                )}
-                {line.type === "error" && (
-                  <div className="text-red-400/90 pl-2">{line.content as string}</div>
-                )}
-                {line.type === "success" && (
-                  <div className="text-green-400/90 pl-2">{line.content as string}</div>
-                )}
-                {line.type === "info" && (
-                  <div className="text-base-content/70 pl-2">{line.content}</div>
-                )}
-                {line.type === "blank" && <div className="h-2" />}
-              </motion.div>
-            ))}
-          </AnimatePresence>
+          {output.map((line, idx) => (
+            <motion.div
+              key={line.id}
+              // Only the line that just arrived animates; replaying the whole scrollback on
+              // every command was the reason this sat inside an AnimatePresence.
+              initial={idx === output.length - 1 ? { opacity: 0, x: -4 } : false}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.1 }}
+            >
+              {line.type === "input" && (
+                <div className="flex items-start gap-2 text-base-content/90">
+                  <span className="text-accent font-black shrink-0">
+                    {devContent.meta.username.split("_")[0]}@dg-os:~$
+                  </span>
+                  <span>{line.content}</span>
+                </div>
+              )}
+              {line.type === "output" && (
+                <div className="pl-2 border-l border-accent/10 py-1">{line.content}</div>
+              )}
+              {line.type === "error" && (
+                <div className="text-red-400/90 pl-2">{line.content as string}</div>
+              )}
+              {line.type === "success" && (
+                <div className="text-green-400/90 pl-2">{line.content as string}</div>
+              )}
+              {line.type === "info" && (
+                <div className="text-base-content/70 pl-2">{line.content}</div>
+              )}
+              {line.type === "blank" && <div className="h-2" />}
+            </motion.div>
+          ))}
           <div ref={bottomRef} />
         </div>
 

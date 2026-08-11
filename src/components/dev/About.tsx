@@ -126,7 +126,7 @@ export default function About() {
                       href={env.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-accent hover:text-card hover:bg-accent px-1 transition-colors font-black tracking-wider flex items-center gap-1 cursor-pointer"
+                      className="text-accent hover:text-base-200 hover:bg-accent px-1 transition-colors font-black tracking-wider flex items-center gap-1 cursor-pointer"
                     >
                       {env.value}
                       <span className="text-[8px] opacity-50">↗</span>

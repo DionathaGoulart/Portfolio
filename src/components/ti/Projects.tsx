@@ -21,7 +21,7 @@ export default function Projects() {
               "Uma vitrine de soluções reais desenvolvidas com precisão."}
           </p>
         </div>
-        <div className="hidden md:block retro-border bg-card p-6 retro-shadow-sm font-black text-2xl animate-bounce">
+        <div className="hidden md:block retro-border bg-base-200 p-6 retro-shadow-sm font-black text-2xl animate-bounce">
           {tiContent.ui?.projectsScrollHint || "SCROLL ↓"}
         </div>
       </div>
@@ -36,12 +36,12 @@ export default function Projects() {
             transition={{ delay: i * 0.1 }}
             className="group"
           >
-            <div className="retro-border bg-card overflow-hidden retro-shadow-sm group-hover:retro-shadow transition-all group-hover:-translate-x-1 group-hover:-translate-y-1 h-full flex flex-col">
-              <div className="border-b-2 border-border-custom bg-background p-3 md:p-4 flex justify-between items-center shrink-0">
+            <div className="retro-border bg-base-200 overflow-hidden retro-shadow-sm group-hover:retro-shadow transition-all group-hover:-translate-x-1 group-hover:-translate-y-1 h-full flex flex-col">
+              <div className="border-b-2 border-base-300 bg-base-100 p-3 md:p-4 flex justify-between items-center shrink-0">
                 <div className="flex gap-1.5 md:gap-2">
                   <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-accent" />
-                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-border-custom" />
-                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-border-custom" />
+                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-base-300" />
+                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-base-300" />
                 </div>
                 <span className="font-mono text-[10px] md:text-xs font-bold opacity-40 uppercase">
                   PROJECT_FILE_{i + 1}.EXE
@@ -62,7 +62,7 @@ export default function Projects() {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="retro-border bg-background px-2 py-1 md:px-3 md:py-1 text-[10px] md:text-xs font-black uppercase tracking-widest"
+                      className="retro-border bg-base-100 px-2 py-1 md:px-3 md:py-1 text-[10px] md:text-xs font-black uppercase tracking-widest"
                     >
                       {tag}
                     </span>
@@ -75,18 +75,18 @@ export default function Projects() {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 text-center retro-border bg-foreground text-background px-4 py-3 font-black text-xs md:text-sm hover:bg-accent hover:text-white transition-colors uppercase"
+                      className="flex-1 text-center retro-border bg-base-content text-base-100 px-4 py-3 font-black text-xs md:text-sm hover:bg-accent hover:text-accent-content transition-colors uppercase"
                     >
                       {tiContent.ui?.projectsDeployButton || "Deploy Production"}
                     </a>
                   ) : (
-                    <span className="flex-1 text-center retro-border border-foreground/20 text-foreground/40 px-4 py-3 font-black text-xs md:text-sm uppercase cursor-not-allowed">
+                    <span className="flex-1 text-center retro-border border-base-content/20 text-base-content/40 px-4 py-3 font-black text-xs md:text-sm uppercase cursor-not-allowed">
                       {tiContent.ui?.projectsOfflineButton || "Offline"}
                     </span>
                   )}
 
                   {project.github === "private" ? (
-                    <span className="flex-1 text-center retro-border border-foreground/20 text-foreground/40 px-4 py-3 font-black text-xs md:text-sm uppercase cursor-not-allowed">
+                    <span className="flex-1 text-center retro-border border-base-content/20 text-base-content/40 px-4 py-3 font-black text-xs md:text-sm uppercase cursor-not-allowed">
                       {tiContent.ui?.projectsPrivateButton || "GitHub Privado"}
                     </span>
                   ) : project.github ? (
@@ -94,7 +94,7 @@ export default function Projects() {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 text-center retro-border border-foreground text-foreground px-4 py-3 font-black text-xs md:text-sm hover:bg-foreground hover:text-background transition-colors uppercase"
+                      className="flex-1 text-center retro-border border-base-content text-base-content px-4 py-3 font-black text-xs md:text-sm hover:bg-base-content hover:text-base-100 transition-colors uppercase"
                     >
                       {tiContent.ui?.projectsRepoButton || "GitHub Repo"}
                     </a>

@@ -22,8 +22,8 @@ It features a custom-built theme system that switches styles dynamically based o
 
 - **Framework:** [Next.js 16+](https://nextjs.org/) (App Router)
 - **Language:** [TypeScript](https://www.typescriptlang.org/)
-- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
-- **Animations:** [GSAP](https://greensock.com/gsap/) & [Framer Motion](https://www.framer.com/motion/)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/) + [daisyUI 5](https://daisyui.com/)
+- **Animations:** [Framer Motion](https://www.framer.com/motion/)
 - **State Management:** React Context API for themes and terminal state.
 
 ## ✨ Key Features
@@ -32,7 +32,7 @@ It features a custom-built theme system that switches styles dynamically based o
 - 🎨 **Terminal Theme Customizer:** An interactive CLI wizard that allows users to change light and dark color palettes dynamically. Preferences are persisted in `localStorage`.
 - 🌓 **Dynamic Theming:** Route-based theme switching (Hub, Dev, TI).
 - 📱 **Fully Responsive:** Optimized for all screen sizes with a mobile-first approach. Custom UI handling for touch devices.
-- 🎭 **Immersive Animations:** GSAP ScrollTrigger and Framer Motion for high-end interactions.
+- 🎭 **Immersive Animations:** Framer Motion for high-end interactions.
 - ⚙️ **Data-Driven Configuration:** Content is strictly separated from presentation through strongly typed configuration files (`dev-config.ts`, `ti-config.ts`), making content updates trivial.
 - 🔍 **SEO Optimized:** Metadata and Schema.org JSON-LD structured data included.
 
@@ -40,31 +40,44 @@ It features a custom-built theme system that switches styles dynamically based o
 
 ### How to Add New Color Palettes
 
-The interactive terminal features a built-in theme wizard. To add a new palette (e.g., a new Dark Theme), follow these steps:
+Colors live in exactly one place: the `@plugin "daisyui/theme"` blocks in `src/app/globals.css`. Nothing in TypeScript holds a color that paints the page.
 
-1. Open `src/context/ThemeCustomContext.tsx`.
-2. Add your new palette to the `DARK_PALETTES` (or `LIGHT_PALETTES`) array:
-   ```typescript
-   export const DARK_PALETTES = [
-     // ... existing palettes
-     { id: "d6", name: "Neon Matrix", bg: "#000000", acc: "#00ff00", fg: "#ffffff" },
-   ];
+The interactive terminal features a built-in theme wizard. Adding a palette to it takes two steps:
+
+1. Add a theme block to `src/app/globals.css`. Copy an existing `terminal-*` block and change the values — every listed variable is required by daisyUI:
+
+   ```css
+   @plugin "daisyui/theme" {
+     name: "terminal-matrix";
+     color-scheme: dark;
+
+     --color-base-100: #000000; /* page background */
+     --color-base-200: #111111; /* card / elevated surface */
+     --color-base-300: #00ff00; /* border color, used by .retro-border */
+     --color-base-content: #ffffff; /* body text */
+     --color-accent: #00ff00;
+     --color-accent-content: #000000; /* text sitting on top of accent */
+     /* ...remaining daisyUI tokens, see the neighboring blocks... */
+
+     --shadow: #00ff00; /* offset shadow of .retro-shadow */
+     --scanline-color: rgba(0, 0, 0, 0.2); /* CRT overlay */
+   }
    ```
-3. Update the `PALETTE_VARS` dictionary with your specific CSS variable mappings:
+
+2. Register it in `src/data/theme-config.ts` by appending to `TERMINAL_DARK_THEMES` (or `TERMINAL_LIGHT_THEMES`):
+
    ```typescript
-   const PALETTE_VARS = {
-     // ... existing variables
-     d6: {
-       bg: "#000000",
-       fg: "#ffffff",
-       acc: "#00ff00",
-       card: "#111111",
-       border: "#00ff00",
-       shadow: "#00ff00",
-     },
-   };
+   {
+     palette: "d6",              // id persisted in localStorage
+     theme: "terminal-matrix",   // must match the CSS block name
+     name: "Neon Matrix",        // label shown by the `theme` command
+     bg: "#000000", acc: "#00ff00", fg: "#ffffff",  // swatch preview only
+   }
    ```
-4. Add your new `id` (`"d6"`) to the `PaletteId` type definition at the top of the file so TypeScript allows it.
+
+The wizard's numbering, its `[1–N]` prompts and the blocking theme script all derive from these arrays, so there is nothing else to update.
+
+Routes map to skins in the same file: `/dev*` renders the `terminal` skin, everything else renders `retro`. The theme is stamped onto `<html>` before first paint by `THEME_INIT_SCRIPT`, which is why switching modes or routes never flashes.
 
 ### How to Modify Content
 

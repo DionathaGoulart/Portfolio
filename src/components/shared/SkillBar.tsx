@@ -34,7 +34,7 @@ export function SkillBar({ name, level, variant, delay = 0 }: SkillBarProps) {
   }
 
   return (
-    <div className="retro-border bg-background px-3 py-1 md:px-4 md:py-2 font-bold text-xs md:text-sm">
+    <div className="retro-border bg-base-100 px-3 py-1 md:px-4 md:py-2 font-bold text-xs md:text-sm">
       {name.toUpperCase()}
     </div>
   );

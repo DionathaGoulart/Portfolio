@@ -18,7 +18,7 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="retro-border bg-card retro-shadow overflow-hidden w-full flex flex-col"
+        className="retro-border bg-base-200 retro-shadow overflow-hidden w-full flex flex-col"
       >
         {/* Terminal Header */}
         <div className="bg-accent/10 border-b-2 border-accent flex justify-center sm:justify-between items-center px-6 py-3 shrink-0 min-w-0">
@@ -49,12 +49,12 @@ export default function Hero() {
                 <div key={i} className="space-y-1">
                   <div className="flex items-center gap-2">
                     <span className="text-accent/30 font-bold text-xs md:text-sm">{">"}</span>
-                    <span className="text-foreground/30 text-xs md:text-sm font-medium">
+                    <span className="text-base-content/30 text-xs md:text-sm font-medium">
                       {line.cmd}
                     </span>
                   </div>
                   <div className="pl-4 md:pl-6 border-l-2 border-accent/10 min-h-[1.5rem] mt-1">
-                    <span className={`${line.color || "text-foreground"} text-sm md:text-base`}>
+                    <span className={`${line.color || "text-base-content"} text-sm md:text-base`}>
                       {line.isTyping ? (
                         <span className="text-accent terminal-glow font-bold">
                           <TypingText text={line.value} speed={40} />
@@ -69,7 +69,7 @@ export default function Hero() {
 
               <div className="pt-6 space-y-2">
                 <div className="pl-4 md:pl-6 border-l-2 border-accent/20">
-                  <p className="text-foreground/80 leading-snug max-w-2xl uppercase font-bold tracking-tight text-base md:text-xl italic">
+                  <p className="text-base-content/80 leading-snug max-w-2xl uppercase font-bold tracking-tight text-base md:text-xl italic">
                     {devContent.hero.description}
                   </p>
                 </div>
@@ -97,7 +97,7 @@ export default function Hero() {
             <div className="relative group scale-110 md:scale-125">
               <div className="absolute -inset-6 border-2 border-accent/30 md:border-accent/10 md:group-hover:border-accent/30 transition-colors animate-[spin_15s_linear_infinite] rounded-full" />
               <div className="absolute -inset-12 border border-accent/5 animate-[spin_20s_linear_infinite_reverse] rounded-full" />
-              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-accent/60 md:border-accent/20 md:group-hover:border-accent/60 transition-colors duration-500 z-10 bg-card">
+              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-accent/60 md:border-accent/20 md:group-hover:border-accent/60 transition-colors duration-500 z-10 bg-base-200">
                 {/* Logo background inside circle */}
                 <div className="absolute inset-0 flex items-center justify-center p-4 opacity-50 scale-110 md:opacity-30 md:scale-100 md:group-hover:opacity-50 md:group-hover:scale-110 transition-all duration-700">
                   <Logo className="w-full h-full text-accent" />
@@ -170,7 +170,7 @@ export default function Hero() {
         </div>
 
         {/* Bottom Status Bar */}
-        <div className="bg-accent text-white px-4 py-1.5 flex justify-between items-center font-mono text-[9px] uppercase tracking-[0.3em]">
+        <div className="bg-accent text-accent-content px-4 py-1.5 flex justify-between items-center font-mono text-[9px] uppercase tracking-[0.3em]">
           <div className="flex gap-6">
             <span className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 bg-white rounded-full" />

@@ -188,14 +188,3 @@ export const devContent: PortfolioContent = {
     aboutSysHtop: "HTOP / CORE_MODULES",
   },
 };
-
-export const themeConfig = {
-  routes: {
-    "/": "theme-default",
-    "/dev": "theme-dev",
-    "/ti": "theme-ti",
-    "/dev/cv": "theme-dev",
-    "/ti/cv": "theme-ti",
-  },
-  default: "theme-default",
-};

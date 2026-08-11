@@ -72,7 +72,7 @@ function renderBody(lines: string[]) {
       const parts = text.split("|");
       result.push(
         <div key={i} className="mt-5 mb-1">
-          <div className="font-black text-sm md:text-base uppercase tracking-tighter text-foreground">
+          <div className="font-black text-sm md:text-base uppercase tracking-tighter text-base-content">
             {parts[0]?.replace(/\*\*/g, "").trim()}
             {parts[1] && (
               <span className="text-accent ml-2 font-mono text-xs normal-case tracking-widest">
@@ -90,7 +90,7 @@ function renderBody(lines: string[]) {
       result.push(
         <div
           key={i}
-          className="font-mono text-[10px] text-foreground/40 uppercase tracking-widest mb-2"
+          className="font-mono text-[10px] text-base-content/40 uppercase tracking-widest mb-2"
         >
           {line.replace(/\*/g, "")}
         </div>
@@ -114,13 +114,13 @@ function renderBody(lines: string[]) {
             return (
               <li
                 key={j}
-                className="flex items-start gap-2 text-sm text-foreground/70 leading-relaxed"
+                className="flex items-start gap-2 text-sm text-base-content/70 leading-relaxed"
               >
                 <span className="text-accent font-black shrink-0 mt-0.5">›</span>
                 <span>
                   {parts.map((p, k) =>
                     p.startsWith("**") ? (
-                      <strong key={k} className="text-foreground font-black">
+                      <strong key={k} className="text-base-content font-black">
                         {p.replace(/\*\*/g, "")}
                       </strong>
                     ) : (
@@ -138,10 +138,10 @@ function renderBody(lines: string[]) {
 
     const parts = line.split(/(\*\*[^*]+\*\*)/g);
     result.push(
-      <p key={i} className="text-sm text-foreground/70 leading-relaxed mb-2">
+      <p key={i} className="text-sm text-base-content/70 leading-relaxed mb-2">
         {parts.map((p, k) =>
           p.startsWith("**") ? (
-            <strong key={k} className="text-foreground font-black">
+            <strong key={k} className="text-base-content font-black">
               {p.replace(/\*\*/g, "")}
             </strong>
           ) : (
@@ -163,40 +163,40 @@ export default function TiCVViewer({ content }: TiCVViewerProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="retro-border bg-card retro-shadow relative overflow-hidden"
+      className="retro-border bg-base-200 retro-shadow relative overflow-hidden"
     >
       {/* Top accent stripe */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-accent" />
 
       {/* Header */}
-      <div className="border-b-2 border-border-custom bg-background px-6 md:px-10 py-3 flex items-center justify-between">
+      <div className="border-b-2 border-base-300 bg-base-100 px-6 md:px-10 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <span className="font-mono text-[10px] text-accent font-black">CURRICULUM_VITAE.EXE</span>
         </div>
         <div className="flex gap-1.5">
           <div className="w-2.5 h-2.5 rounded-full bg-accent" />
-          <div className="w-2.5 h-2.5 rounded-full bg-border-custom" />
-          <div className="w-2.5 h-2.5 rounded-full bg-border-custom" />
+          <div className="w-2.5 h-2.5 rounded-full bg-base-300" />
+          <div className="w-2.5 h-2.5 rounded-full bg-base-300" />
         </div>
       </div>
 
       <div className="p-6 sm:p-8 md:p-12">
         {/* Name & Contact */}
-        <div className="mb-10 pb-8 border-b border-border-custom/20">
+        <div className="mb-10 pb-8 border-b border-base-300/20">
           <span className="font-mono text-accent text-[10px] uppercase tracking-widest font-bold mb-3 block">
             {">"} init_profile.sh
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter uppercase mb-2">
             {name}
           </h1>
-          <p className="text-xs md:text-sm font-bold text-foreground/50 uppercase tracking-widest mb-6">
+          <p className="text-xs md:text-sm font-bold text-base-content/50 uppercase tracking-widest mb-6">
             {subtitle}
           </p>
           <div className="flex flex-wrap gap-2">
             {contact.split("|").map((c, i) => (
               <span
                 key={i}
-                className="retro-border bg-background px-3 py-1.5 font-mono text-[10px] text-foreground/60 uppercase tracking-widest"
+                className="retro-border bg-base-100 px-3 py-1.5 font-mono text-[10px] text-base-content/60 uppercase tracking-widest"
               >
                 {c.trim()}
               </span>
@@ -207,7 +207,7 @@ export default function TiCVViewer({ content }: TiCVViewerProps) {
         {/* Sections */}
         <div className="space-y-8">
           {sections.map((section, i) => (
-            <div key={i} className="pb-8 border-b border-border-custom/10 last:border-0 last:pb-0">
+            <div key={i} className="pb-8 border-b border-base-300/10 last:border-0 last:pb-0">
               <div className="flex items-center gap-3 mb-4">
                 <span className="font-mono text-[10px] text-accent font-black shrink-0">
                   [{String(i + 1).padStart(2, "0")}]
@@ -215,7 +215,7 @@ export default function TiCVViewer({ content }: TiCVViewerProps) {
                 <h2 className="font-black text-sm md:text-base uppercase tracking-tighter">
                   {section.heading}
                 </h2>
-                <div className="flex-1 h-px bg-border-custom/20" />
+                <div className="flex-1 h-px bg-base-300/20" />
               </div>
               {renderBody(section.body)}
             </div>

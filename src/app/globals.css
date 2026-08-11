@@ -1,173 +1,579 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+@plugin "daisyui" {
+  themes: false;
+  logs: false;
+}
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-accent: var(--accent);
-  --color-card: var(--card-bg);
-  --color-border-custom: var(--border);
-  --color-shadow-custom: var(--shadow);
   --font-sans: var(--font-jetbrains-mono);
   --font-mono: var(--font-jetbrains-mono);
 }
 
-:root {
-  /* --- CATALOGO DE PALETAS --- */
+/*
+ * Theme catalog — the only place colors are defined in this app.
+ *
+ * Two skins share these themes (see src/data/theme-config.ts):
+ *   retro-*    -> /, /ti, /ti/cv   (neobrutalist; hub and ti diverge in dark mode)
+ *   terminal-* -> /dev, /dev/cv    (visitor picks one light and one dark palette)
+ *
+ * Beyond the daisyUI tokens each block carries two extras: `--shadow` (the hard
+ * offset shadow of the retro skin) and `--scanline-color` (CRT overlay).
+ *
+ * retro-hub-light is declared first and marked default, so it also lands on `:root`.
+ * Every other theme must come after it — `:root` and `[data-theme=...]` have equal
+ * specificity, so source order is what lets the others win.
+ */
 
-  /* P1: Crimson Chalk (Original) */
-  --p1-bg: #f2efe7;
-  --p1-fg: #1a0a0a;
-  --p1-acc: #dc143c;
-  --p1-card: #ffffff;
-  --p1-border: #1a0a0a;
-  --p1-shadow: #1a0a0a;
+@plugin "daisyui/theme" {
+  name: "retro-hub-light";
+  default: true;
+  color-scheme: light;
 
-  /* P2: Abyss Frost (Azul) */
-  --p2-bg: #e4f0f6;
-  --p2-fg: #0f172a;
-  --p2-acc: #0a0f1e;
-  --p2-card: #e4f0f6;
-  --p2-border: #0f172a;
-  --p2-shadow: #0a0f1e;
+  --color-base-100: #f2efe7;
+  --color-base-200: #ffffff;
+  --color-base-300: #1a0a0a;
+  --color-base-content: #1a0a0a;
+  --color-primary: #dc143c;
+  --color-primary-content: #ffffff;
+  --color-secondary: #1a0a0a;
+  --color-secondary-content: #f2efe7;
+  --color-accent: #dc143c;
+  --color-accent-content: #ffffff;
+  --color-neutral: #1a0a0a;
+  --color-neutral-content: #f2efe7;
+  --color-info: #2563eb;
+  --color-info-content: #ffffff;
+  --color-success: #16a34a;
+  --color-success-content: #ffffff;
+  --color-warning: #d97706;
+  --color-warning-content: #ffffff;
+  --color-error: #dc2626;
+  --color-error-content: #ffffff;
 
-  /* D1: Noir Rose (Original Dark) */
-  --d1-bg: #121212;
-  --d1-fg: #f2efe7;
-  --d1-acc: #e8729a;
-  --d1-card: #1a1a1a;
-  --d1-border: #f2efe7;
-  --d1-shadow: #e8729a;
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 2px;
+  --depth: 0;
+  --noise: 0;
 
-  /* D2: Vault Gold (Dourado) */
-  --d2-bg: #111111;
-  --d2-fg: #e0e0e0;
-  --d2-acc: #c8a96e;
-  --d2-card: #111111;
-  --d2-border: #c8a96e;
-  --d2-shadow: #c8a96e;
-
-  /* D3: Midnight Ember (Laranja/Verde) */
-  --d3-bg: #0d1117;
-  --d3-fg: #e0ffe0;
-  --d3-acc: #ff6b45;
-  --d3-card: #121a12;
-  --d3-border: #ff6b45;
-  --d3-shadow: #ff6b45;
+  --shadow: #1a0a0a;
+  --scanline-color: rgba(0, 0, 0, 0.05);
+  --hub-dev-hover: #0a0f1e;
+  --hub-ti-hover: #dc143c;
 }
 
-/* --- TEMA DEFAULT (HOME) --- */
-.theme-default {
-  --background: var(--p1-bg);
-  --foreground: var(--p1-fg);
-  --accent: var(--p1-acc);
-  --card-bg: var(--p1-card);
-  --border: var(--p1-border);
-  --shadow: var(--p1-shadow);
+@plugin "daisyui/theme" {
+  name: "retro-hub-dark";
+  color-scheme: dark;
 
-  /* CORES DE HOVER QUE SEGUEM OS OUTROS TEMAS */
-  /* Se você mudar o --accent do .theme-dev lá embaixo, mude aqui também para sincronizar */
-  --hub-dev-hover: var(--p2-acc);
-  --hub-ti-hover: var(--p1-acc);
-}
-.dark .theme-default {
-  --background: var(--d1-bg);
-  --foreground: var(--d1-fg);
-  --accent: var(--d1-acc);
-  --card-bg: var(--d1-card);
-  --border: var(--d1-border);
-  --shadow: var(--d1-shadow);
+  --color-base-100: #121212;
+  --color-base-200: #1a1a1a;
+  --color-base-300: #f2efe7;
+  --color-base-content: #f2efe7;
+  --color-primary: #e8729a;
+  --color-primary-content: #ffffff;
+  --color-secondary: #f2efe7;
+  --color-secondary-content: #121212;
+  --color-accent: #e8729a;
+  --color-accent-content: #ffffff;
+  --color-neutral: #f2efe7;
+  --color-neutral-content: #121212;
+  --color-info: #60a5fa;
+  --color-info-content: #0d0d0d;
+  --color-success: #4ade80;
+  --color-success-content: #0d0d0d;
+  --color-warning: #fbbf24;
+  --color-warning-content: #0d0d0d;
+  --color-error: #f87171;
+  --color-error-content: #0d0d0d;
 
-  --hub-dev-hover: var(--d2-acc);
-  --hub-ti-hover: var(--d3-acc);
-}
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 2px;
+  --depth: 0;
+  --noise: 0;
 
-/* --- TEMA DEV --- */
-.theme-dev {
-  --background: var(--p2-bg);
-  --foreground: var(--p2-fg);
-  --accent: var(--p2-acc);
-  --card-bg: var(--p2-card);
-  --border: var(--p2-border);
-  --shadow: var(--p2-shadow);
-}
-.dark .theme-dev {
-  --background: var(--d2-bg);
-  --foreground: var(--d2-fg);
-  --accent: var(--d2-acc);
-  --card-bg: var(--d2-card);
-  --border: var(--d2-border);
-  --shadow: var(--d2-shadow);
+  --shadow: #e8729a;
+  --scanline-color: rgba(0, 0, 0, 0.2);
+  --hub-dev-hover: #c8a96e;
+  --hub-ti-hover: #ff6b45;
 }
 
-/* --- TEMA TI --- */
-.theme-ti {
-  --background: var(--p1-bg);
-  --foreground: var(--p1-fg);
-  --accent: var(--p1-acc);
-  --card-bg: var(--p1-card);
-  --border: var(--p1-border);
-  --shadow: var(--p1-shadow);
+@plugin "daisyui/theme" {
+  name: "retro-ti-light";
+  color-scheme: light;
+
+  --color-base-100: #f2efe7;
+  --color-base-200: #ffffff;
+  --color-base-300: #1a0a0a;
+  --color-base-content: #1a0a0a;
+  --color-primary: #dc143c;
+  --color-primary-content: #ffffff;
+  --color-secondary: #1a0a0a;
+  --color-secondary-content: #f2efe7;
+  --color-accent: #dc143c;
+  --color-accent-content: #ffffff;
+  --color-neutral: #1a0a0a;
+  --color-neutral-content: #f2efe7;
+  --color-info: #2563eb;
+  --color-info-content: #ffffff;
+  --color-success: #16a34a;
+  --color-success-content: #ffffff;
+  --color-warning: #d97706;
+  --color-warning-content: #ffffff;
+  --color-error: #dc2626;
+  --color-error-content: #ffffff;
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 2px;
+  --depth: 0;
+  --noise: 0;
+
+  --shadow: #1a0a0a;
+  --scanline-color: rgba(0, 0, 0, 0.05);
 }
-.dark .theme-ti {
-  --background: var(--d3-bg);
-  --foreground: var(--d3-fg);
-  --accent: var(--d3-acc);
-  --card-bg: var(--d3-card);
-  --border: var(--d3-border);
-  --shadow: var(--d3-shadow);
+
+@plugin "daisyui/theme" {
+  name: "retro-ti-dark";
+  color-scheme: dark;
+
+  --color-base-100: #0d1117;
+  --color-base-200: #121a12;
+  --color-base-300: #ff6b45;
+  --color-base-content: #e0ffe0;
+  --color-primary: #ff6b45;
+  --color-primary-content: #ffffff;
+  --color-secondary: #e0ffe0;
+  --color-secondary-content: #0d1117;
+  --color-accent: #ff6b45;
+  --color-accent-content: #ffffff;
+  --color-neutral: #e0ffe0;
+  --color-neutral-content: #0d1117;
+  --color-info: #60a5fa;
+  --color-info-content: #0d0d0d;
+  --color-success: #4ade80;
+  --color-success-content: #0d0d0d;
+  --color-warning: #fbbf24;
+  --color-warning-content: #0d0d0d;
+  --color-error: #f87171;
+  --color-error-content: #0d0d0d;
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 2px;
+  --depth: 0;
+  --noise: 0;
+
+  --shadow: #ff6b45;
+  --scanline-color: rgba(0, 0, 0, 0.2);
+}
+
+@plugin "daisyui/theme" {
+  name: "terminal-crimson";
+  color-scheme: light;
+
+  --color-base-100: #f2efe7;
+  --color-base-200: #ffffff;
+  --color-base-300: #1a0a0a;
+  --color-base-content: #1a0a0a;
+  --color-primary: #dc143c;
+  --color-primary-content: #ffffff;
+  --color-secondary: #1a0a0a;
+  --color-secondary-content: #f2efe7;
+  --color-accent: #dc143c;
+  --color-accent-content: #ffffff;
+  --color-neutral: #1a0a0a;
+  --color-neutral-content: #f2efe7;
+  --color-info: #2563eb;
+  --color-info-content: #ffffff;
+  --color-success: #16a34a;
+  --color-success-content: #ffffff;
+  --color-warning: #d97706;
+  --color-warning-content: #ffffff;
+  --color-error: #dc2626;
+  --color-error-content: #ffffff;
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+
+  --shadow: #1a0a0a;
+  --scanline-color: rgba(0, 0, 0, 0.05);
+}
+
+@plugin "daisyui/theme" {
+  name: "terminal-frost";
+  color-scheme: light;
+
+  --color-base-100: #e4f0f6;
+  --color-base-200: #e4f0f6;
+  --color-base-300: #0f172a;
+  --color-base-content: #0f172a;
+  --color-primary: #0a0f1e;
+  --color-primary-content: #ffffff;
+  --color-secondary: #0f172a;
+  --color-secondary-content: #e4f0f6;
+  --color-accent: #0a0f1e;
+  --color-accent-content: #ffffff;
+  --color-neutral: #0f172a;
+  --color-neutral-content: #e4f0f6;
+  --color-info: #2563eb;
+  --color-info-content: #ffffff;
+  --color-success: #16a34a;
+  --color-success-content: #ffffff;
+  --color-warning: #d97706;
+  --color-warning-content: #ffffff;
+  --color-error: #dc2626;
+  --color-error-content: #ffffff;
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+
+  --shadow: #0a0f1e;
+  --scanline-color: rgba(0, 0, 0, 0.05);
+}
+
+@plugin "daisyui/theme" {
+  name: "terminal-forest";
+  color-scheme: light;
+
+  --color-base-100: #eef4ee;
+  --color-base-200: #f5faf5;
+  --color-base-300: #1a2e1a;
+  --color-base-content: #1a2e1a;
+  --color-primary: #2d6a2d;
+  --color-primary-content: #ffffff;
+  --color-secondary: #1a2e1a;
+  --color-secondary-content: #eef4ee;
+  --color-accent: #2d6a2d;
+  --color-accent-content: #ffffff;
+  --color-neutral: #1a2e1a;
+  --color-neutral-content: #eef4ee;
+  --color-info: #2563eb;
+  --color-info-content: #ffffff;
+  --color-success: #16a34a;
+  --color-success-content: #ffffff;
+  --color-warning: #d97706;
+  --color-warning-content: #ffffff;
+  --color-error: #dc2626;
+  --color-error-content: #ffffff;
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+
+  --shadow: #2d6a2d;
+  --scanline-color: rgba(0, 0, 0, 0.05);
+}
+
+@plugin "daisyui/theme" {
+  name: "terminal-amber";
+  color-scheme: light;
+
+  --color-base-100: #f5f0e8;
+  --color-base-200: #fffcf5;
+  --color-base-300: #2a1a0a;
+  --color-base-content: #2a1a0a;
+  --color-primary: #b56a30;
+  --color-primary-content: #ffffff;
+  --color-secondary: #2a1a0a;
+  --color-secondary-content: #f5f0e8;
+  --color-accent: #b56a30;
+  --color-accent-content: #ffffff;
+  --color-neutral: #2a1a0a;
+  --color-neutral-content: #f5f0e8;
+  --color-info: #2563eb;
+  --color-info-content: #ffffff;
+  --color-success: #16a34a;
+  --color-success-content: #ffffff;
+  --color-warning: #d97706;
+  --color-warning-content: #ffffff;
+  --color-error: #dc2626;
+  --color-error-content: #ffffff;
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+
+  --shadow: #b56a30;
+  --scanline-color: rgba(0, 0, 0, 0.05);
+}
+
+@plugin "daisyui/theme" {
+  name: "terminal-rose";
+  color-scheme: dark;
+
+  --color-base-100: #121212;
+  --color-base-200: #1a1a1a;
+  --color-base-300: #f2efe7;
+  --color-base-content: #f2efe7;
+  --color-primary: #e8729a;
+  --color-primary-content: #ffffff;
+  --color-secondary: #f2efe7;
+  --color-secondary-content: #121212;
+  --color-accent: #e8729a;
+  --color-accent-content: #ffffff;
+  --color-neutral: #f2efe7;
+  --color-neutral-content: #121212;
+  --color-info: #60a5fa;
+  --color-info-content: #0d0d0d;
+  --color-success: #4ade80;
+  --color-success-content: #0d0d0d;
+  --color-warning: #fbbf24;
+  --color-warning-content: #0d0d0d;
+  --color-error: #f87171;
+  --color-error-content: #0d0d0d;
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+
+  --shadow: #e8729a;
+  --scanline-color: rgba(0, 0, 0, 0.2);
+}
+
+@plugin "daisyui/theme" {
+  name: "terminal-gold";
+  color-scheme: dark;
+
+  --color-base-100: #111111;
+  --color-base-200: #111111;
+  --color-base-300: #c8a96e;
+  --color-base-content: #e0e0e0;
+  --color-primary: #c8a96e;
+  --color-primary-content: #ffffff;
+  --color-secondary: #e0e0e0;
+  --color-secondary-content: #111111;
+  --color-accent: #c8a96e;
+  --color-accent-content: #ffffff;
+  --color-neutral: #e0e0e0;
+  --color-neutral-content: #111111;
+  --color-info: #60a5fa;
+  --color-info-content: #0d0d0d;
+  --color-success: #4ade80;
+  --color-success-content: #0d0d0d;
+  --color-warning: #fbbf24;
+  --color-warning-content: #0d0d0d;
+  --color-error: #f87171;
+  --color-error-content: #0d0d0d;
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+
+  --shadow: #c8a96e;
+  --scanline-color: rgba(0, 0, 0, 0.2);
+}
+
+@plugin "daisyui/theme" {
+  name: "terminal-ember";
+  color-scheme: dark;
+
+  --color-base-100: #0d1117;
+  --color-base-200: #121a12;
+  --color-base-300: #ff6b45;
+  --color-base-content: #e0ffe0;
+  --color-primary: #ff6b45;
+  --color-primary-content: #ffffff;
+  --color-secondary: #e0ffe0;
+  --color-secondary-content: #0d1117;
+  --color-accent: #ff6b45;
+  --color-accent-content: #ffffff;
+  --color-neutral: #e0ffe0;
+  --color-neutral-content: #0d1117;
+  --color-info: #60a5fa;
+  --color-info-content: #0d0d0d;
+  --color-success: #4ade80;
+  --color-success-content: #0d0d0d;
+  --color-warning: #fbbf24;
+  --color-warning-content: #0d0d0d;
+  --color-error: #f87171;
+  --color-error-content: #0d0d0d;
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+
+  --shadow: #ff6b45;
+  --scanline-color: rgba(0, 0, 0, 0.2);
+}
+
+@plugin "daisyui/theme" {
+  name: "terminal-cyan";
+  color-scheme: dark;
+
+  --color-base-100: #0a0f14;
+  --color-base-200: #0f1820;
+  --color-base-300: #00e5ff;
+  --color-base-content: #e0f4ff;
+  --color-primary: #00e5ff;
+  --color-primary-content: #ffffff;
+  --color-secondary: #e0f4ff;
+  --color-secondary-content: #0a0f14;
+  --color-accent: #00e5ff;
+  --color-accent-content: #ffffff;
+  --color-neutral: #e0f4ff;
+  --color-neutral-content: #0a0f14;
+  --color-info: #60a5fa;
+  --color-info-content: #0d0d0d;
+  --color-success: #4ade80;
+  --color-success-content: #0d0d0d;
+  --color-warning: #fbbf24;
+  --color-warning-content: #0d0d0d;
+  --color-error: #f87171;
+  --color-error-content: #0d0d0d;
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+
+  --shadow: #00e5ff;
+  --scanline-color: rgba(0, 0, 0, 0.2);
+}
+
+@plugin "daisyui/theme" {
+  name: "terminal-violet";
+  color-scheme: dark;
+
+  --color-base-100: #0e0a14;
+  --color-base-200: #160f20;
+  --color-base-300: #b47aff;
+  --color-base-content: #ede0ff;
+  --color-primary: #b47aff;
+  --color-primary-content: #ffffff;
+  --color-secondary: #ede0ff;
+  --color-secondary-content: #0e0a14;
+  --color-accent: #b47aff;
+  --color-accent-content: #ffffff;
+  --color-neutral: #ede0ff;
+  --color-neutral-content: #0e0a14;
+  --color-info: #60a5fa;
+  --color-info-content: #0d0d0d;
+  --color-success: #4ade80;
+  --color-success-content: #0d0d0d;
+  --color-warning: #fbbf24;
+  --color-warning-content: #0d0d0d;
+  --color-error: #f87171;
+  --color-error-content: #0d0d0d;
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+
+  --shadow: #b47aff;
+  --scanline-color: rgba(0, 0, 0, 0.2);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  min-height: 100vh;
+  background: var(--color-base-100);
+  color: var(--color-base-content);
   font-family: var(--font-sans);
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
 }
 
-/* Retro Shadow Utility */
-.retro-shadow {
+/* Hard offset shadow of the retro skin. Reads --shadow, an extra token every theme sets. */
+@utility retro-shadow {
   box-shadow: 6px 6px 0px 0px var(--shadow);
 }
 
-.retro-shadow-sm {
+@utility retro-shadow-sm {
   box-shadow: 3px 3px 0px 0px var(--shadow);
 }
 
-.retro-border {
-  border: 2px solid var(--border);
+@utility retro-border {
+  border: 2px solid var(--color-base-300);
 }
 
-/* Terminal Effects */
-.terminal-glow {
-  text-shadow: 0 0 10px var(--accent);
+@utility terminal-glow {
+  text-shadow: 0 0 10px var(--color-accent);
 }
 
-.terminal-scanline {
+@utility terminal-scanline {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.05) 51%, transparent 51%);
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    var(--scanline-color) 51%,
+    transparent 51%
+  );
   background-size: 100% 4px;
   pointer-events: none;
   z-index: 100;
   opacity: 0.3;
 }
 
-.dark .terminal-scanline {
-  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.2) 51%, transparent 51%);
-  background-size: 100% 4px;
-}
-
-.terminal-cursor {
+@utility terminal-cursor {
   display: inline-block;
   width: 0.6em;
   height: 1.1em;
-  background-color: var(--accent);
+  background-color: var(--color-accent);
   vertical-align: middle;
   animation: blink 1s step-end infinite;
 }

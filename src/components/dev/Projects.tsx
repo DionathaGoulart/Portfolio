@@ -86,7 +86,7 @@ export default function Projects() {
       <div
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
-        className="retro-border bg-card retro-shadow overflow-hidden w-full flex flex-col relative h-auto"
+        className="retro-border bg-base-200 retro-shadow overflow-hidden w-full flex flex-col relative h-auto"
       >
         {/* Terminal Header Bar */}
         <div className="bg-accent/5 border-b border-accent/10 px-4 py-2 flex justify-between items-center text-[10px] font-mono tracking-wider text-accent/50 font-black min-w-0">
@@ -127,13 +127,13 @@ export default function Projects() {
                       onClick={() => selectProject(idx)}
                       className={`w-full text-left font-mono text-xs py-3 px-3 flex items-center justify-between transition-colors border-b border-accent/5 last:border-b-0 cursor-pointer group ${
                         isActive
-                          ? "bg-accent text-white font-black border-l-4 border-white"
-                          : "hover:bg-accent/10 text-foreground/85"
+                          ? "bg-accent text-accent-content font-black border-l-4 border-white"
+                          : "hover:bg-accent/10 text-base-content/85"
                       }`}
                     >
                       <div className="flex items-center gap-2 overflow-hidden mr-2">
                         <span
-                          className={`w-3 flex justify-center shrink-0 ${isActive ? "text-white" : "text-accent"}`}
+                          className={`w-3 flex justify-center shrink-0 ${isActive ? "text-accent-content" : "text-accent"}`}
                         >
                           {isActive ? "►" : " "}
                         </span>
@@ -144,7 +144,7 @@ export default function Projects() {
                         </span>
 
                         <span
-                          className={`truncate font-bold ${isActive ? "text-white" : "group-hover:text-accent"}`}
+                          className={`truncate font-bold ${isActive ? "text-accent-content" : "group-hover:text-accent"}`}
                         >
                           {getProjectFilename(project.title)}
                         </span>
@@ -158,7 +158,7 @@ export default function Projects() {
                         <span
                           className={`px-1.5 py-0.5 font-bold uppercase rounded-sm border ${
                             isActive
-                              ? "border-white/50 text-white bg-white/10"
+                              ? "border-white/50 text-accent-content bg-white/10"
                               : "border-accent/20 text-accent bg-accent/5"
                           }`}
                         >
@@ -207,13 +207,13 @@ export default function Projects() {
                         <h3 className="text-2xl md:text-3xl font-black text-accent uppercase tracking-tight">
                           {activeProject.title}
                         </h3>
-                        <p className="text-xs text-foreground/60 italic font-medium">
+                        <p className="text-xs text-base-content/60 italic font-medium">
                           Função: {activeProject.role || "Fullstack Developer"}
                         </p>
                       </div>
 
                       {/* Brief description */}
-                      <p className="text-sm md:text-base leading-relaxed text-foreground font-semibold">
+                      <p className="text-sm md:text-base leading-relaxed text-base-content font-semibold">
                         {activeProject.description}
                       </p>
 
@@ -226,7 +226,7 @@ export default function Projects() {
                           <h4 className="text-xs font-bold text-accent uppercase tracking-wider">
                             # RESUMO SISTÊMICO
                           </h4>
-                          <p className="text-xs md:text-sm text-foreground/80 leading-relaxed">
+                          <p className="text-xs md:text-sm text-base-content/80 leading-relaxed">
                             {activeProject.details}
                           </p>
                         </div>
@@ -238,7 +238,7 @@ export default function Projects() {
                           <h4 className="text-xs font-bold text-accent uppercase tracking-wider">
                             # CARACTERÍSTICAS TÉCNICAS (FEATURES)
                           </h4>
-                          <ul className="space-y-1.5 text-xs text-foreground/85">
+                          <ul className="space-y-1.5 text-xs text-base-content/85">
                             {activeProject.features.map((feature, fIdx) => (
                               <li key={fIdx} className="flex items-start gap-2 leading-relaxed">
                                 <span className="text-accent font-black shrink-0">[+]</span>
@@ -276,7 +276,7 @@ export default function Projects() {
                       href={activeProject.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="retro-border border-accent/30 bg-accent/5 hover:bg-accent hover:text-white px-4 py-2.5 font-mono text-xs font-bold tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer select-none text-center flex-1"
+                      className="retro-border border-accent/30 bg-accent/5 hover:bg-accent hover:text-accent-content px-4 py-2.5 font-mono text-xs font-bold tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer select-none text-center flex-1"
                     >
                       <span>🌐</span>
                       <span>LAUNCH_LIVE_DEPL.EXE</span>
@@ -293,7 +293,7 @@ export default function Projects() {
                       href={activeProject.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="retro-border border-accent/30 bg-accent/5 hover:bg-accent hover:text-white px-4 py-2.5 font-mono text-xs font-bold tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer select-none text-center flex-1"
+                      className="retro-border border-accent/30 bg-accent/5 hover:bg-accent hover:text-accent-content px-4 py-2.5 font-mono text-xs font-bold tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer select-none text-center flex-1"
                     >
                       <span>📂</span>
                       <span>OPEN_SOURCE_REPO.SH</span>

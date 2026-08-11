@@ -3,7 +3,8 @@ import { useState, useRef, useEffect, KeyboardEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { devContent } from "@/data/dev-config";
 import { Logo } from "@/components/shared/Logo";
-import { useThemeCustom, LIGHT_PALETTES, DARK_PALETTES } from "@/context/ThemeCustomContext";
+import { useSkin } from "@/components/shared/SkinProvider";
+import { TERMINAL_LIGHT_THEMES, TERMINAL_DARK_THEMES } from "@/data/theme-config";
 
 type OutputLine = {
   id: number;
@@ -66,7 +67,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [, setHistIdx] = useState(-1);
-  const { lightPalette, darkPalette, setLightPalette, setDarkPalette } = useThemeCustom();
+  const { lightPalette, darkPalette, setLightPalette, setDarkPalette } = useSkin();
   // wizard state: null = normal mode | "light" | "dark"
   const [wizardStep, setWizardStep] = useState<null | "light" | "dark">(null);
   const [output, setOutput] = useState<OutputLine[]>([
@@ -157,7 +158,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
           id: uid(),
           type: "output",
           content: (
-            <pre className="whitespace-pre-wrap text-foreground/80 text-xs leading-relaxed">
+            <pre className="whitespace-pre-wrap text-base-content/80 text-xs leading-relaxed">
               {HELP_TEXT}
             </pre>
           ),
@@ -229,7 +230,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
           content: (
             <div className="text-xs font-mono space-y-2">
               <p className="text-accent font-black uppercase tracking-widest mb-3"># PRIMARY_BIO</p>
-              <p className="text-foreground/90 leading-relaxed max-w-2xl">
+              <p className="text-base-content/90 leading-relaxed max-w-2xl">
                 {devContent.about.text}
               </p>
             </div>
@@ -253,7 +254,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
                   const bar = "█".repeat(active) + "▒".repeat(total - active);
                   return (
                     <div key={s.name} className="flex items-center gap-3">
-                      <span className="w-40 text-foreground">
+                      <span className="w-40 text-base-content">
                         {s.name.toLowerCase().replace(/[\s/]+/g, "_")}.sys
                       </span>
                       <span className="text-accent font-black w-10">{s.level}%</span>
@@ -283,13 +284,13 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
                     <span className="text-accent font-black">
                       [{String(i + 1).padStart(2, "0")}]
                     </span>{" "}
-                    <span className="text-foreground font-bold uppercase">{p.title}</span>{" "}
+                    <span className="text-base-content font-bold uppercase">{p.title}</span>{" "}
                     <span className="text-accent/50 ml-2 text-[10px] border border-accent/20 px-1">
                       {p.status}
                     </span>
                   </p>
-                  <p className="text-foreground/70">{p.description}</p>
-                  <p className="text-foreground/40 text-[10px]">
+                  <p className="text-base-content/70">{p.description}</p>
+                  <p className="text-base-content/40 text-[10px]">
                     → cat {p.title.toLowerCase().replace(/[^a-z0-9]/g, "-")} para detalhes
                   </p>
                 </div>
@@ -319,11 +320,11 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
                     db39
                   </p>
                   <p>
-                    <span className="text-foreground/50">Date:</span> {e.period}
+                    <span className="text-base-content/50">Date:</span> {e.period}
                   </p>
                   <p className="text-accent font-black uppercase">{e.company}</p>
-                  <p className="text-foreground">feat: {e.role}</p>
-                  <p className="text-foreground/70">{e.description}</p>
+                  <p className="text-base-content">feat: {e.role}</p>
+                  <p className="text-base-content/70">{e.description}</p>
                 </div>
               ))}
             </div>
@@ -349,11 +350,11 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
                 # SYSTEM_THEME_CONFIG
               </p>
               <div className="space-y-1">
-                <p className="text-foreground/50 text-[10px] uppercase tracking-widest">
+                <p className="text-base-content/50 text-[10px] uppercase tracking-widest">
                   ── PALETA LIGHT ──────────────────────────
                 </p>
-                {LIGHT_PALETTES.map((p, i) => (
-                  <p key={p.id}>
+                {TERMINAL_LIGHT_THEMES.map((p, i) => (
+                  <p key={p.palette}>
                     <span className="text-accent font-black w-4 inline-block">[{i + 1}]</span>{" "}
                     <span
                       className="inline-block w-3 h-3 rounded-sm mr-1 align-middle"
@@ -363,14 +364,16 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
                         outlineOffset: "1px",
                       }}
                     />
-                    <span className="text-foreground">{p.name}</span>
-                    {lightPalette === p.id && (
+                    <span className="text-base-content">{p.name}</span>
+                    {lightPalette === p.palette && (
                       <span className="text-accent/50 ml-2 text-[10px]">[atual]</span>
                     )}
                   </p>
                 ))}
               </div>
-              <p className="text-accent/70 animate-pulse">Digite o número da paleta light [1–4]:</p>
+              <p className="text-accent/70 animate-pulse">
+                Digite o número da paleta light [1–{TERMINAL_LIGHT_THEMES.length}]:
+              </p>
             </div>
           ),
         },
@@ -399,15 +402,15 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
                       PROJECTS_REPOSITORY // {project.status}
                     </p>
                     <p className="text-accent font-black text-lg uppercase">{project.title}</p>
-                    <p className="text-foreground/60 italic">
+                    <p className="text-base-content/60 italic">
                       Função: {project.role || "Fullstack Developer"}
                     </p>
                   </div>
-                  <p className="text-foreground/90 leading-relaxed">{project.description}</p>
+                  <p className="text-base-content/90 leading-relaxed">{project.description}</p>
                   {project.details && (
                     <div>
                       <p className="text-accent font-black mb-1"># RESUMO SISTÊMICO</p>
-                      <p className="text-foreground/80 leading-relaxed">{project.details}</p>
+                      <p className="text-base-content/80 leading-relaxed">{project.details}</p>
                     </div>
                   )}
                   {project.features && project.features.length > 0 && (
@@ -422,7 +425,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
                   )}
                   <div>
                     <p className="text-accent font-black mb-1"># STACKS</p>
-                    <p className="text-foreground/70">{project.tags.join(" · ")}</p>
+                    <p className="text-base-content/70">{project.tags.join(" · ")}</p>
                   </div>
                   <div className="flex gap-4 pt-2 border-t border-accent/10">
                     {project.link && project.link !== "#" && (
@@ -477,20 +480,20 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
 
     if (wizardStep === "light") {
       const idx = parseInt(val) - 1;
-      const palette = LIGHT_PALETTES[idx];
+      const palette = TERMINAL_LIGHT_THEMES[idx];
       if (!palette) {
         pushLines([
           inputLine,
           {
             id: uid(),
             type: "error",
-            content: `Opção inválida. Digite um número de 1 a ${LIGHT_PALETTES.length}.`,
+            content: `Opção inválida. Digite um número de 1 a ${TERMINAL_LIGHT_THEMES.length}.`,
           },
         ]);
         setInput("");
         return;
       }
-      setLightPalette(palette.id);
+      setLightPalette(palette.palette);
       // Show dark palette options
       pushLines([
         inputLine,
@@ -501,11 +504,11 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
           content: (
             <div className="font-mono text-xs space-y-3">
               <div className="space-y-1">
-                <p className="text-foreground/50 text-[10px] uppercase tracking-widest">
+                <p className="text-base-content/50 text-[10px] uppercase tracking-widest">
                   ── PALETA DARK ───────────────────────────
                 </p>
-                {DARK_PALETTES.map((p, i) => (
-                  <p key={p.id}>
+                {TERMINAL_DARK_THEMES.map((p, i) => (
+                  <p key={p.palette}>
                     <span className="text-accent font-black w-4 inline-block">[{i + 1}]</span>{" "}
                     <span
                       className="inline-block w-3 h-3 rounded-sm mr-1 align-middle"
@@ -515,14 +518,16 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
                         outlineOffset: "1px",
                       }}
                     />
-                    <span className="text-foreground">{p.name}</span>
-                    {darkPalette === p.id && (
+                    <span className="text-base-content">{p.name}</span>
+                    {darkPalette === p.palette && (
                       <span className="text-accent/50 ml-2 text-[10px]">[atual]</span>
                     )}
                   </p>
                 ))}
               </div>
-              <p className="text-accent/70 animate-pulse">Digite o número da paleta dark [1–5]:</p>
+              <p className="text-accent/70 animate-pulse">
+                Digite o número da paleta dark [1–{TERMINAL_DARK_THEMES.length}]:
+              </p>
             </div>
           ),
         },
@@ -534,20 +539,20 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
 
     if (wizardStep === "dark") {
       const idx = parseInt(val) - 1;
-      const palette = DARK_PALETTES[idx];
+      const palette = TERMINAL_DARK_THEMES[idx];
       if (!palette) {
         pushLines([
           inputLine,
           {
             id: uid(),
             type: "error",
-            content: `Opção inválida. Digite um número de 1 a ${DARK_PALETTES.length}.`,
+            content: `Opção inválida. Digite um número de 1 a ${TERMINAL_DARK_THEMES.length}.`,
           },
         ]);
         setInput("");
         return;
       }
-      setDarkPalette(palette.id);
+      setDarkPalette(palette.palette);
       // Finish wizard
       pushLines([
         inputLine,
@@ -627,7 +632,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
             id: uid(),
             type: "info",
             content: (
-              <span className="text-foreground/50 text-xs">
+              <span className="text-base-content/50 text-xs">
                 {matches.map((m, i) => (
                   <span key={m}>
                     <span className="text-accent/80">{m}</span>
@@ -652,7 +657,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
       className="h-[100dvh] flex flex-col pt-20 pb-4 px-4 sm:px-6 md:px-10 md:py-24 md:min-h-screen md:h-auto md:justify-center"
     >
       <div
-        className="retro-border bg-card retro-shadow overflow-hidden w-full max-w-7xl mx-auto flex flex-col relative h-[75vh] min-h-[500px] md:min-h-[650px]"
+        className="retro-border bg-base-200 retro-shadow overflow-hidden w-full max-w-7xl mx-auto flex flex-col relative h-[75vh] min-h-[500px] md:min-h-[650px]"
         onClick={() => inputRef.current?.focus()}
       >
         {/* Logo watermark */}
@@ -684,7 +689,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
                 transition={{ duration: 0.1 }}
               >
                 {line.type === "input" && (
-                  <div className="flex items-start gap-2 text-foreground/90">
+                  <div className="flex items-start gap-2 text-base-content/90">
                     <span className="text-accent font-black shrink-0">
                       {devContent.meta.username.split("_")[0]}@dg-os:~$
                     </span>
@@ -701,7 +706,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
                   <div className="text-green-400/90 pl-2">{line.content as string}</div>
                 )}
                 {line.type === "info" && (
-                  <div className="text-foreground/70 pl-2">{line.content}</div>
+                  <div className="text-base-content/70 pl-2">{line.content}</div>
                 )}
                 {line.type === "blank" && <div className="h-2" />}
               </motion.div>
@@ -713,8 +718,8 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
         {/* Input row */}
         <div className="border-t border-accent/20 px-5 md:px-8 py-3 flex items-center gap-3 font-mono text-xs bg-accent/[0.02] shrink-0 relative z-10">
           <span className="text-accent font-black whitespace-nowrap">
-            {wizardStep === "light" && "paleta-light[1–4]:"}
-            {wizardStep === "dark" && "paleta-dark[1–5]:"}
+            {wizardStep === "light" && `paleta-light[1–${TERMINAL_LIGHT_THEMES.length}]:`}
+            {wizardStep === "dark" && `paleta-dark[1–${TERMINAL_DARK_THEMES.length}]:`}
             {!wizardStep && `${devContent.meta.username.split("_")[0]}@dg-os:~$`}
           </span>
           <input
@@ -722,7 +727,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent outline-none text-foreground caret-accent placeholder:text-foreground/20"
+            className="flex-1 bg-transparent outline-none text-base-content caret-accent placeholder:text-base-content/20"
             placeholder="type a command..."
             autoComplete="off"
             autoCorrect="off"

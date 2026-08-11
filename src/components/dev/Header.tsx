@@ -23,13 +23,13 @@ export function Header({ cvContent }: { cvContent?: string }) {
           <Link
             href="/dev"
             onClick={scrollToTop}
-            className="font-mono font-bold text-accent hover:bg-accent hover:text-white px-2 py-1 transition-colors flex items-center gap-2 group"
+            className="font-mono font-bold text-accent hover:bg-accent hover:text-accent-content px-2 py-1 transition-colors flex items-center gap-2 group"
           >
             <span className="flex items-center gap-1.5">
-              <Logo className="w-4 h-4 text-accent group-hover:text-white" />
+              <Logo className="w-4 h-4 text-accent group-hover:text-accent-content" />
               <span className="hidden sm:inline">@SYSTEM:</span>
               <span className="sm:hidden">@SYS:</span>
-              <span className="text-foreground group-hover:text-white">~ $</span>
+              <span className="text-base-content group-hover:text-accent-content">~ $</span>
               <span className="terminal-cursor group-hover:bg-white" />
             </span>
           </Link>
@@ -41,7 +41,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
           )}
 
           <div className="hidden lg:flex gap-2 md:gap-4 items-center overflow-hidden font-mono uppercase">
-            <span className="text-border-custom/30 text-[10px] md:text-base">|</span>
+            <span className="text-base-300/30 text-[10px] md:text-base">|</span>
             {isCV ? (
               <span className="text-[9px] md:text-xs animate-pulse text-accent whitespace-nowrap flex items-center gap-1">
                 <span className="h-1.5 w-1.5 rounded-full bg-accent" />
@@ -51,17 +51,19 @@ export function Header({ cvContent }: { cvContent?: string }) {
               <button
                 onClick={toggleMode}
                 title={mode === "graphic" ? "Entrar no modo terminal" : "Voltar ao modo gráfico"}
-                className="group flex items-center gap-1.5 border border-accent/30 px-2 py-1 text-[9px] md:text-[10px] font-black tracking-wider hover:bg-accent hover:text-white transition-all"
+                className="group flex items-center gap-1.5 border border-accent/30 px-2 py-1 text-[9px] md:text-[10px] font-black tracking-wider hover:bg-accent hover:text-accent-content transition-all"
               >
                 {mode === "graphic" ? (
                   <>
-                    <span className="font-mono text-accent group-hover:text-white">▶_</span>
-                    <span className="text-accent group-hover:text-white">TERMINAL</span>
+                    <span className="font-mono text-accent group-hover:text-accent-content">
+                      ▶_
+                    </span>
+                    <span className="text-accent group-hover:text-accent-content">TERMINAL</span>
                   </>
                 ) : (
                   <>
-                    <span className="font-mono text-accent group-hover:text-white">⊞</span>
-                    <span className="text-accent group-hover:text-white">GRAPHIC</span>
+                    <span className="font-mono text-accent group-hover:text-accent-content">⊞</span>
+                    <span className="text-accent group-hover:text-accent-content">GRAPHIC</span>
                   </>
                 )}
               </button>
@@ -77,7 +79,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-foreground hover:text-accent transition-colors relative group"
+                  className="text-base-content hover:text-accent transition-colors relative group"
                 >
                   <span className="opacity-40 group-hover:opacity-100 mr-1">{">"}</span>
                   {link.label}
@@ -107,7 +109,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 w-full h-[100dvh] bg-background/95 backdrop-blur-md pointer-events-auto lg:hidden flex flex-col pt-16 pb-6 px-6 z-40"
+            className="fixed inset-0 w-full h-[100dvh] bg-base-100/95 backdrop-blur-md pointer-events-auto lg:hidden flex flex-col pt-16 pb-6 px-6 z-40"
           >
             <div className="flex flex-col gap-4 font-mono h-full overflow-y-auto">
               {navLinks.map((link) => (
@@ -129,7 +131,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
                       toggleMode();
                       setIsMenuOpen(false);
                     }}
-                    className="flex items-center justify-center gap-3 border border-accent/30 px-4 py-3 text-sm font-black tracking-wider text-accent hover:bg-accent hover:text-white transition-all w-full"
+                    className="flex items-center justify-center gap-3 border border-accent/30 px-4 py-3 text-sm font-black tracking-wider text-accent hover:bg-accent hover:text-accent-content transition-all w-full"
                   >
                     {mode === "graphic" ? (
                       <>

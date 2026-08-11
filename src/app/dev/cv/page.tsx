@@ -18,7 +18,7 @@ export default function DevCVPage() {
   const schema = generatePersonSchema("DEV");
 
   return (
-    <div className="selection:bg-accent selection:text-white">
+    <div className="selection:bg-accent selection:text-accent-content">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
@@ -27,7 +27,7 @@ export default function DevCVPage() {
       <PageTransition className="max-w-7xl mx-auto px-6 md:px-10 pb-20 pt-28 md:pt-32">
         <DevCVViewer content={content} />
 
-        <footer className="py-12 border-t-2 border-border-custom font-black uppercase tracking-widest opacity-40 text-sm mt-20">
+        <footer className="py-12 border-t-2 border-base-300 font-black uppercase tracking-widest opacity-40 text-sm mt-20">
           Dionatha Goulart {"//"} {new Date().getFullYear()}
         </footer>
       </PageTransition>

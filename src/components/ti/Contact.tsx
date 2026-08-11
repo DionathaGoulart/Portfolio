@@ -12,7 +12,7 @@ export default function Contact() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="retro-border bg-card retro-shadow relative overflow-hidden"
+        className="retro-border bg-base-200 retro-shadow relative overflow-hidden"
       >
         {/* Decorative accent stripe */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-accent" />
@@ -27,7 +27,7 @@ export default function Contact() {
               {tiContent.contact.title.split("?")[0]}
               {tiContent.contact.title.includes("?") && <span className="text-accent">?</span>}
             </h2>
-            <p className="mt-6 text-base sm:text-lg md:text-xl font-medium text-foreground/60 max-w-2xl leading-relaxed">
+            <p className="mt-6 text-base sm:text-lg md:text-xl font-medium text-base-content/60 max-w-2xl leading-relaxed">
               {tiContent.contact.description}
             </p>
           </div>
@@ -49,7 +49,7 @@ export default function Contact() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group retro-border bg-background flex flex-col items-center justify-center gap-3 p-6 md:p-8 hover:bg-accent hover:text-white transition-all duration-300 retro-shadow-sm hover:retro-shadow hover:-translate-y-1 active:translate-y-0"
+                    className="group retro-border bg-base-100 flex flex-col items-center justify-center gap-3 p-6 md:p-8 hover:bg-accent hover:text-accent-content transition-all duration-300 retro-shadow-sm hover:retro-shadow hover:-translate-y-1 active:translate-y-0"
                   >
                     <Icon size={28} />
                     <span className="font-black text-xs uppercase tracking-widest text-center">
@@ -62,11 +62,11 @@ export default function Contact() {
           </div>
 
           {/* Footer line */}
-          <div className="mt-12 md:mt-16 pt-8 border-t border-border-custom/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-foreground/30">
+          <div className="mt-12 md:mt-16 pt-8 border-t border-base-300/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-base-content/30">
               {tiContent.ui?.contactFooterText || "Connection encrypted • Protocol active"}
             </p>
-            <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-foreground/30">
+            <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-base-content/30">
               <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
               {tiContent.ui?.contactStatus || "Online"}
             </div>

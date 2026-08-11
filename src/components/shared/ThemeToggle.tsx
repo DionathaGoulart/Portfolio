@@ -21,7 +21,7 @@ export function ThemeToggle({ isTerminal }: { isTerminal?: boolean }) {
     return (
       <button
         onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-        className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-accent hover:bg-accent hover:text-white px-2 py-1 transition-all cursor-pointer border border-accent/20"
+        className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-accent hover:bg-accent hover:text-accent-content px-2 py-1 transition-all cursor-pointer border border-accent/20"
         aria-label="Toggle theme"
       >
         {resolvedTheme === "dark" ? "[MODE:DARK]" : "[MODE:LIGHT]"}
@@ -32,7 +32,7 @@ export function ThemeToggle({ isTerminal }: { isTerminal?: boolean }) {
   return (
     <button
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="p-2 rounded-full bg-foreground/5 hover:bg-foreground/10 transition-colors border border-border-custom cursor-pointer"
+      className="p-2 rounded-full bg-base-content/5 hover:bg-base-content/10 transition-colors border border-base-300 cursor-pointer"
       aria-label="Toggle theme"
     >
       {resolvedTheme === "dark" ? <Sun size={20} /> : <Moon size={20} />}

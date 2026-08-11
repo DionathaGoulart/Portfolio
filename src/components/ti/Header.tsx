@@ -17,9 +17,9 @@ export function Header({ cvContent }: { cvContent?: string }) {
           <Link
             href="/ti"
             onClick={scrollToTop}
-            className="retro-border bg-card p-1 retro-shadow-sm group flex items-center justify-center min-w-[42px] min-h-[42px] hover:bg-accent transition-all duration-200"
+            className="retro-border bg-base-200 p-1 retro-shadow-sm group flex items-center justify-center min-w-[42px] min-h-[42px] hover:bg-accent transition-all duration-200"
           >
-            <Logo className="w-7 h-7 md:w-9 md:h-9 text-foreground group-hover:text-white transition-all duration-200" />
+            <Logo className="w-7 h-7 md:w-9 md:h-9 text-base-content group-hover:text-accent-content transition-all duration-200" />
           </Link>
 
           {isCV && (
@@ -31,12 +31,12 @@ export function Header({ cvContent }: { cvContent?: string }) {
 
         <div className="flex gap-2 md:gap-4 items-center">
           <div className="hidden lg:flex items-center">
-            <div className="retro-border bg-card p-1 retro-shadow-sm">
+            <div className="retro-border bg-base-200 p-1 retro-shadow-sm">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="px-4 py-2 hover:bg-accent hover:text-white transition-all font-bold text-sm uppercase tracking-tighter"
+                  className="px-4 py-2 hover:bg-accent hover:text-accent-content transition-all font-bold text-sm uppercase tracking-tighter"
                 >
                   {link.label}
                 </Link>
@@ -46,12 +46,12 @@ export function Header({ cvContent }: { cvContent?: string }) {
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden retro-border bg-card p-2 md:p-3 retro-shadow-sm font-black text-sm uppercase tracking-tighter"
+            className="lg:hidden retro-border bg-base-200 p-2 md:p-3 retro-shadow-sm font-black text-sm uppercase tracking-tighter"
           >
             {isMenuOpen ? "Fechar" : "Menu"}
           </button>
 
-          <div className="retro-border bg-card p-1 sm:p-1.5 md:p-1 retro-shadow-sm flex items-center">
+          <div className="retro-border bg-base-200 p-1 sm:p-1.5 md:p-1 retro-shadow-sm flex items-center">
             <ThemeToggle />
           </div>
         </div>
@@ -65,13 +65,13 @@ export function Header({ cvContent }: { cvContent?: string }) {
             exit={{ opacity: 0, y: -20 }}
             className="absolute top-full left-0 w-full px-4 pt-2 pointer-events-auto lg:hidden"
           >
-            <div className="retro-border bg-card p-4 retro-shadow-sm flex flex-col gap-2">
+            <div className="retro-border bg-base-200 p-4 retro-shadow-sm flex flex-col gap-2">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="retro-border bg-background p-4 font-black text-base uppercase tracking-widest hover:bg-accent hover:text-white transition-all text-center"
+                  className="retro-border bg-base-100 p-4 font-black text-base uppercase tracking-widest hover:bg-accent hover:text-accent-content transition-all text-center"
                 >
                   {link.label}
                 </Link>

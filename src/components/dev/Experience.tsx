@@ -13,7 +13,7 @@ export default function Experience() {
       <SectionTitle number="02" title="operational_history" variant="terminal" />
 
       {/* Main Terminal Window (Like Projects.tsx) */}
-      <div className="retro-border bg-card retro-shadow overflow-hidden w-full flex flex-col relative h-auto">
+      <div className="retro-border bg-base-200 retro-shadow overflow-hidden w-full flex flex-col relative h-auto">
         {/* Terminal Header Bar (Like Projects.tsx) */}
         <div className="bg-accent/5 border-b border-accent/10 px-4 py-2 flex justify-between items-center text-[10px] font-mono tracking-wider text-accent/50 font-normal relative z-20">
           <div className="flex gap-1.5 shrink-0 opacity-50">
@@ -46,15 +46,15 @@ export default function Experience() {
                   >
                     {/* Author & Date */}
                     <div className="grid grid-cols-[60px_1fr] md:grid-cols-[80px_1fr] gap-x-2 gap-y-1 mb-5 text-[11px] md:text-xs">
-                      <div className="text-foreground/50">Author:</div>
-                      <div className="text-foreground/90">
+                      <div className="text-base-content/50">Author:</div>
+                      <div className="text-base-content/90">
                         {devContent.name} {"<"}
                         {devContent.email}
                         {">"}
                       </div>
 
-                      <div className="text-foreground/50">Date:</div>
-                      <div className="text-foreground/90">{exp.period}</div>
+                      <div className="text-base-content/50">Date:</div>
+                      <div className="text-base-content/90">{exp.period}</div>
                     </div>
 
                     {/* Commit Message Body */}
@@ -62,10 +62,10 @@ export default function Experience() {
                       <div className="text-accent font-black text-base md:text-lg uppercase tracking-tight">
                         {exp.company}
                       </div>
-                      <div className="text-foreground font-bold opacity-90 text-xs md:text-sm">
+                      <div className="text-base-content font-bold opacity-90 text-xs md:text-sm">
                         feat: {exp.role}
                       </div>
-                      <div className="text-foreground/70 leading-relaxed text-xs md:text-sm max-w-2xl mt-2">
+                      <div className="text-base-content/70 leading-relaxed text-xs md:text-sm max-w-2xl mt-2">
                         {exp.description}
                       </div>
                     </div>

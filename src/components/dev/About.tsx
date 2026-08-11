@@ -36,7 +36,7 @@ export default function About() {
           <h2 className="font-mono text-2xl md:text-4xl font-black text-accent tracking-tighter uppercase">
             {devContent.ui?.aboutTitle || "// System_Overview"}
           </h2>
-          <p className="font-mono text-xs md:text-sm text-foreground/60 mt-2 tracking-widest uppercase">
+          <p className="font-mono text-xs md:text-sm text-base-content/60 mt-2 tracking-widest uppercase">
             {devContent.ui?.aboutSubtitle || "Hardware & Cognitive Specs v4.0"}
           </p>
         </div>
@@ -53,7 +53,7 @@ export default function About() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
-          className="md:col-span-12 lg:col-span-7 retro-border bg-card retro-shadow-sm flex flex-col relative overflow-hidden"
+          className="md:col-span-12 lg:col-span-7 retro-border bg-base-200 retro-shadow-sm flex flex-col relative overflow-hidden"
         >
           <div className="bg-accent/10 border-b border-accent/20 px-4 py-2 flex items-center justify-between text-[10px] font-mono tracking-wider text-accent font-bold z-20">
             <span>[ {devContent.ui?.aboutModuleBio || "MODULE: PRIMARY_BIO"} ]</span>
@@ -63,17 +63,17 @@ export default function About() {
           <div className="p-5 md:p-6 flex-1 flex flex-col gap-4 items-start relative z-10">
             <div className="space-y-3 font-mono">
               <div>
-                <h3 className="text-xl md:text-3xl font-black text-foreground uppercase tracking-tight">
+                <h3 className="text-xl md:text-3xl font-black text-base-content uppercase tracking-tight">
                   {devContent.name.toLowerCase()}
                 </h3>
                 <p className="text-accent text-xs tracking-widest uppercase mt-1">
                   {devContent.about.subtitle}
                 </p>
               </div>
-              <p className="text-sm text-foreground/80 leading-relaxed max-w-2xl font-sans">
+              <p className="text-sm text-base-content/80 leading-relaxed max-w-2xl font-sans">
                 {devContent.about.text}
               </p>
-              <div className="flex flex-wrap gap-3 text-[10px] text-foreground/50 border-t border-accent/10 pt-3 mt-2">
+              <div className="flex flex-wrap gap-3 text-[10px] text-base-content/50 border-t border-accent/10 pt-3 mt-2">
                 <p>
                   <span className="text-accent font-bold">HOST:</span> {devContent.meta.host}
                 </p>
@@ -98,7 +98,7 @@ export default function About() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="md:col-span-12 lg:col-span-5 retro-border bg-card retro-shadow-sm flex flex-col relative z-10"
+          className="md:col-span-12 lg:col-span-5 retro-border bg-base-200 retro-shadow-sm flex flex-col relative z-10"
         >
           <div className="bg-accent/10 border-b border-accent/20 px-4 py-2 flex items-center justify-between text-[10px] font-mono tracking-wider text-accent font-bold">
             <span>[ {devContent.ui?.aboutModuleEnv || "MODULE: ENV_CONFIG"} ]</span>
@@ -125,7 +125,7 @@ export default function About() {
                       <span className="text-[8px] opacity-50">↗</span>
                     </a>
                   ) : (
-                    <span className="text-foreground font-bold tracking-wider opacity-90">
+                    <span className="text-base-content font-bold tracking-wider opacity-90">
                       {env.value}
                     </span>
                   )}
@@ -140,7 +140,7 @@ export default function About() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="md:col-span-12 retro-border bg-card retro-shadow-sm flex flex-col relative z-10"
+          className="md:col-span-12 retro-border bg-base-200 retro-shadow-sm flex flex-col relative z-10"
         >
           <div className="bg-accent/10 border-b border-accent/20 px-4 py-2 flex items-center justify-between text-[10px] font-mono tracking-wider text-accent font-bold relative z-20">
             <span>[ {devContent.ui?.aboutModuleSys || "MODULE: SYSTEM_SERVICES"} ]</span>
@@ -152,7 +152,7 @@ export default function About() {
             <Logo className="w-[150%] h-[150%] md:w-[120%] md:h-[120%] object-cover -rotate-12" />
           </div>
 
-          <div className="p-4 md:p-6 bg-transparent font-mono text-xs md:text-sm text-foreground/80 relative z-10">
+          <div className="p-4 md:p-6 bg-transparent font-mono text-xs md:text-sm text-base-content/80 relative z-10">
             <div className="w-full">
               {/* Table Header */}
               <div className="flex border-b border-accent/10 pb-2 mb-3 text-[10px] md:text-xs text-accent/50 font-black tracking-widest uppercase">
@@ -177,7 +177,7 @@ export default function About() {
                       transition={{ duration: 0.3, delay: 0.4 + i * 0.1 }}
                       className="flex items-center text-[10px] md:text-xs hover:bg-accent/10 py-1 transition-colors group"
                     >
-                      <div className="w-[60%] md:w-[30%] font-bold text-foreground group-hover:text-accent flex items-center gap-2">
+                      <div className="w-[60%] md:w-[30%] font-bold text-base-content group-hover:text-accent flex items-center gap-2">
                         <span className="text-accent/50">{">"}</span>
                         {skill.name.toLowerCase().replace(/[\s/]+/g, "_")}.sys
                       </div>

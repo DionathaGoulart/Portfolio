@@ -71,7 +71,7 @@ function renderBody(lines: string[]) {
       const parts = text.split("|");
       result.push(
         <div key={i} className="mt-5 mb-0.5 font-mono">
-          <div className="text-sm font-black uppercase tracking-tighter text-foreground">
+          <div className="text-sm font-black uppercase tracking-tighter text-base-content">
             <span className="text-accent mr-2">$</span>
             {parts[0]?.replace(/\*\*/g, "").trim()}
             {parts[1] && (
@@ -115,7 +115,7 @@ function renderBody(lines: string[]) {
             return (
               <li
                 key={j}
-                className="flex items-start gap-2 text-xs text-foreground/70 leading-relaxed pl-2"
+                className="flex items-start gap-2 text-xs text-base-content/70 leading-relaxed pl-2"
               >
                 <span className="text-accent font-black shrink-0 mt-0.5">›</span>
                 <span>
@@ -139,7 +139,7 @@ function renderBody(lines: string[]) {
 
     const parts = line.split(/(\*\*[^*]+\*\*)/g);
     result.push(
-      <p key={i} className="text-xs text-foreground/70 leading-relaxed mb-2 font-mono pl-2">
+      <p key={i} className="text-xs text-base-content/70 leading-relaxed mb-2 font-mono pl-2">
         {parts.map((p, k) =>
           p.startsWith("**") ? (
             <strong key={k} className="text-accent font-black">
@@ -164,7 +164,7 @@ export default function DevCVViewer({ content }: DevCVViewerProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="retro-border bg-card retro-shadow overflow-hidden"
+      className="retro-border bg-base-200 retro-shadow overflow-hidden"
     >
       {/* Terminal Header Bar */}
       <div className="bg-accent/10 border-b-2 border-accent flex justify-center sm:justify-between items-center px-6 py-3 shrink-0">
@@ -195,10 +195,10 @@ export default function DevCVViewer({ content }: DevCVViewerProps) {
             <div className="font-mono space-y-1 pb-6 border-b border-accent/10">
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-accent font-bold text-sm">dionatha@linux:~$</span>
-                <span className="text-foreground/60 text-sm">cat cv.md</span>
+                <span className="text-base-content/60 text-sm">cat cv.md</span>
               </div>
               <div className="pl-6 border-l-2 border-accent/20">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter uppercase text-foreground">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter uppercase text-base-content">
                   {name}
                 </h1>
                 <p className="text-[10px] md:text-xs text-accent/70 uppercase tracking-widest font-bold mt-1 mb-3">
@@ -209,7 +209,7 @@ export default function DevCVViewer({ content }: DevCVViewerProps) {
                   {contact.split("|").map((c, i) => (
                     <span
                       key={i}
-                      className="border border-accent/20 bg-accent/5 px-2 py-0.5 text-[10px] text-foreground/50 uppercase tracking-widest"
+                      className="border border-accent/20 bg-accent/5 px-2 py-0.5 text-[10px] text-base-content/50 uppercase tracking-widest"
                     >
                       {c.trim()}
                     </span>
@@ -223,7 +223,7 @@ export default function DevCVViewer({ content }: DevCVViewerProps) {
               <div key={i} className="space-y-2">
                 <div className="flex items-center gap-3 font-mono">
                   <span className="text-accent font-bold text-sm">dionatha@linux:~$</span>
-                  <span className="text-foreground/60 text-sm">
+                  <span className="text-base-content/60 text-sm">
                     cat {section.heading.toLowerCase().replace(/\s+/g, "_")}.md
                   </span>
                 </div>
@@ -241,7 +241,7 @@ export default function DevCVViewer({ content }: DevCVViewerProps) {
       </div>
 
       {/* Bottom Status Bar */}
-      <div className="bg-accent text-white px-4 py-1.5 flex justify-between items-center font-mono text-[9px] uppercase tracking-[0.3em]">
+      <div className="bg-accent text-accent-content px-4 py-1.5 flex justify-between items-center font-mono text-[9px] uppercase tracking-[0.3em]">
         <div className="flex gap-6">
           <span className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 bg-white rounded-full" />

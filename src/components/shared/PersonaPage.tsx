@@ -16,12 +16,12 @@ export function PersonaPage({
   className = "",
 }: PersonaPageProps) {
   return (
-    <div className={`selection:bg-accent selection:text-white ${className}`}>
+    <div className={`selection:bg-accent selection:text-accent-content ${className}`}>
       <main className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 pb-20 pt-20 md:pt-24">
         {children}
 
         {footerContent || (
-          <footer className="py-12 border-t-2 border-border-custom font-black uppercase tracking-widest opacity-40 text-sm">
+          <footer className="py-12 border-t-2 border-base-300 font-black uppercase tracking-widest opacity-40 text-sm">
             {content.name} {"//"} {new Date().getFullYear()}
           </footer>
         )}

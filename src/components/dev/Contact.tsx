@@ -12,7 +12,7 @@ export default function Contact() {
         viewport={{ once: true }}
         className="border border-accent/30 bg-accent/5 p-1"
       >
-        <div className="bg-accent text-white p-2 font-black uppercase text-xs tracking-widest mb-1">
+        <div className="bg-accent text-accent-content p-2 font-black uppercase text-xs tracking-widest mb-1">
           {">"} ESTABLISH_COMMUNICATION_PROTOCOL
         </div>
 

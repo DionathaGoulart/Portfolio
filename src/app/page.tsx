@@ -11,7 +11,7 @@ import { iconMap } from "@/components/shared/Icons";
 
 export default function HubPage() {
   return (
-    <main className="selection:bg-accent selection:text-white min-h-screen flex flex-col justify-center py-12 px-4 md:px-6 overflow-x-hidden relative">
+    <main className="selection:bg-accent selection:text-accent-content min-h-screen flex flex-col justify-center py-12 px-4 md:px-6 overflow-x-hidden relative">
       {/* Background Terminal Scanline (Hybrid) */}
       <div className="terminal-scanline opacity-10" />
 
@@ -34,7 +34,7 @@ export default function HubPage() {
             <div className="flex flex-row gap-4 items-center md:items-end">
               {/* Profile Photo Container with Logo Background */}
               <div className="relative group shrink-0">
-                <div className="w-32 h-32 md:w-48 md:h-48 retro-border bg-card overflow-hidden retro-shadow md:retro-shadow-sm md:group-hover:retro-shadow transition-all relative flex items-center justify-center">
+                <div className="w-32 h-32 md:w-48 md:h-48 retro-border bg-base-200 overflow-hidden retro-shadow md:retro-shadow-sm md:group-hover:retro-shadow transition-all relative flex items-center justify-center">
                   {/* Logo Background */}
                   <div className="absolute inset-0 flex items-center justify-center p-4 opacity-40 scale-110 md:opacity-20 md:scale-100 md:group-hover:opacity-40 md:group-hover:scale-110 transition-all duration-500">
                     <Logo className="w-full h-full text-accent" />
@@ -49,7 +49,7 @@ export default function HubPage() {
                   />
 
                   {/* Terminal overlay on photo */}
-                  <div className="absolute inset-0 bg-accent/5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity pointer-events-none flex flex-col justify-end p-2 font-mono text-[8px] text-white z-20">
+                  <div className="absolute inset-0 bg-accent/5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity pointer-events-none flex flex-col justify-end p-2 font-mono text-[8px] text-accent-content z-20">
                     <span className="bg-accent px-1 w-fit">SYNC_COMPLETE</span>
                   </div>
                 </div>
@@ -65,7 +65,7 @@ export default function HubPage() {
                     <Link
                       key={social.name}
                       href={social.url}
-                      className="retro-border bg-card p-4 sm:p-5 flex items-center justify-center hover:bg-accent hover:text-white transition-all relative group retro-shadow-sm hover:retro-shadow-sm hover:-translate-y-1 active:translate-y-0 text-foreground"
+                      className="retro-border bg-base-200 p-4 sm:p-5 flex items-center justify-center hover:bg-accent hover:text-accent-content transition-all relative group retro-shadow-sm hover:retro-shadow-sm hover:-translate-y-1 active:translate-y-0 text-base-content"
                       title={social.name}
                     >
                       <Icon size={24} />
@@ -76,13 +76,13 @@ export default function HubPage() {
             </div>
 
             <div className="retro-border bg-accent p-6 md:p-8 retro-shadow inline-block flex-1">
-              <h1 className="text-5xl sm:text-7xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] uppercase italic whitespace-pre-line">
+              <h1 className="text-5xl sm:text-7xl md:text-8xl font-black text-accent-content tracking-tighter leading-[0.85] uppercase italic whitespace-pre-line">
                 {hubContent.name.replace(" ", " \n ")}
               </h1>
             </div>
           </div>
 
-          <div className="retro-border bg-card p-6 md:p-8 retro-shadow-sm space-y-4 relative overflow-hidden">
+          <div className="retro-border bg-base-200 p-6 md:p-8 retro-shadow-sm space-y-4 relative overflow-hidden">
             {/* Terminal hint */}
             <div className="absolute top-0 right-0 p-2 font-mono text-[10px] opacity-10 select-none uppercase">
               {"// system_manifest_v2.0"}
@@ -107,13 +107,13 @@ export default function HubPage() {
           {Object.entries(hubContent.sections).map(([key, section]) => (
             <Link key={key} href={section.href} className="group">
               <div
-                className="retro-border bg-card p-1 retro-shadow-sm group-hover:retro-shadow transition-all transform group-hover:-translate-y-2 relative overflow-hidden group-hover:text-white"
+                className="retro-border bg-base-200 p-1 retro-shadow-sm group-hover:retro-shadow transition-all transform group-hover:-translate-y-2 relative overflow-hidden group-hover:text-white"
                 style={{ "--hub-hover-bg": section.hoverColor } as React.CSSProperties}
               >
                 {/* Terminal Title Bar */}
-                <div className="bg-accent text-white px-3 py-1.5 flex justify-between items-center mb-1 group-hover:bg-white transition-colors">
+                <div className="bg-accent text-accent-content px-3 py-1.5 flex justify-between items-center mb-1 group-hover:bg-white transition-colors">
                   <span className="font-mono text-[10px] font-black uppercase tracking-widest flex items-center gap-2 group-hover:text-[var(--hub-hover-bg)]">
-                    <Logo className="w-3 h-3 text-white group-hover:text-[var(--hub-hover-bg)]" />
+                    <Logo className="w-3 h-3 text-accent-content group-hover:text-[var(--hub-hover-bg)]" />
                     {section.subtitle}
                   </span>
                   <div className="flex gap-1">
@@ -151,7 +151,7 @@ export default function HubPage() {
       </div>
 
       {/* Footer Decoration */}
-      <div className="max-w-7xl mx-auto mt-16 md:mt-24 w-full flex flex-col md:flex-row justify-between items-center gap-8 border-t-2 border-border-custom/10 pt-12 relative z-10">
+      <div className="max-w-7xl mx-auto mt-16 md:mt-24 w-full flex flex-col md:flex-row justify-between items-center gap-8 border-t-2 border-base-300/10 pt-12 relative z-10">
         <div className="hidden md:flex flex-wrap gap-4 sm:gap-6 justify-center">
           {hubContent.socials.map((social) => {
             const Icon = iconMap[social.type as keyof typeof iconMap];
@@ -159,13 +159,13 @@ export default function HubPage() {
               <Link
                 key={social.name}
                 href={social.url}
-                className="retro-border bg-card p-3 sm:p-4 hover:bg-accent hover:text-white transition-all relative group retro-shadow-sm hover:retro-shadow-sm hover:-translate-y-1 active:translate-y-0 text-foreground"
+                className="retro-border bg-base-200 p-3 sm:p-4 hover:bg-accent hover:text-accent-content transition-all relative group retro-shadow-sm hover:retro-shadow-sm hover:-translate-y-1 active:translate-y-0 text-base-content"
                 title={social.name}
               >
                 <Icon size={20} />
 
                 {/* Tooltip style label */}
-                <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-accent text-white text-[10px] font-black px-2 py-1 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap retro-border">
+                <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-accent text-accent-content text-[10px] font-black px-2 py-1 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap retro-border">
                   {social.name}
                 </span>
               </Link>
@@ -173,7 +173,7 @@ export default function HubPage() {
           })}
         </div>
 
-        <div className="font-mono text-[10px] opacity-30 uppercase tracking-[0.2em] text-center md:text-right text-foreground">
+        <div className="font-mono text-[10px] opacity-30 uppercase tracking-[0.2em] text-center md:text-right text-base-content">
           {hubContent.footer.core} {"//"} {hubContent.footer.build}
           <br />
           {hubContent.footer.root}

@@ -15,10 +15,10 @@ export default function Experience() {
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="retro-border bg-card p-6 md:p-12 retro-shadow-sm flex flex-col md:flex-row gap-6 md:gap-8 items-start hover:retro-shadow transition-all text-left"
+            className="retro-border bg-base-200 p-6 md:p-12 retro-shadow-sm flex flex-col md:flex-row gap-6 md:gap-8 items-start hover:retro-shadow transition-all text-left"
           >
             <div className="w-full md:w-1/4">
-              <span className="inline-block retro-border bg-accent text-white px-4 py-2 font-black text-xs md:text-sm uppercase whitespace-nowrap">
+              <span className="inline-block retro-border bg-accent text-accent-content px-4 py-2 font-black text-xs md:text-sm uppercase whitespace-nowrap">
                 {exp.period}
               </span>
             </div>

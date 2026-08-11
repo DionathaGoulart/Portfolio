@@ -9,6 +9,7 @@ import { asciiBar, skillFilename, fakeCommitHash } from "@/lib/terminal";
 import { slugify } from "@/lib/slug";
 
 import { ALL_COMMANDS, HELP_TEXT, MAX_OUTPUT_LINES, type OutputLine } from "./constants";
+import { WindowDots } from "@/components/ui/WindowDots";
 
 export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -613,11 +614,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
 
         {/* Terminal Header */}
         <div className="bg-accent/10 border-b-2 border-accent/20 px-4 py-2 flex justify-between items-center text-[10px] font-mono tracking-wider text-accent font-black shrink-0 relative z-10">
-          <div className="flex gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-accent" />
-            <span className="w-2.5 h-2.5 rounded-full bg-accent/40" />
-            <span className="w-2.5 h-2.5 rounded-full bg-accent/20" />
-          </div>
+          <WindowDots />
           <span className="truncate mx-2">root@dg-os: ~/workspace — TERMINAL_MODE</span>
           <span className="hidden sm:inline animate-pulse text-[9px] bg-accent/20 px-1 py-0.5 rounded text-accent">
             ● LIVE

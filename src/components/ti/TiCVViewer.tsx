@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { parseCV, toBlocks, splitBold } from "@/lib/cv-parser";
+import { WindowDots } from "@/components/ui/WindowDots";
 
 interface TiCVViewerProps {
   content: string;
@@ -85,11 +86,7 @@ export default function TiCVViewer({ content }: TiCVViewerProps) {
         <div className="flex items-center gap-3">
           <span className="font-mono text-[10px] text-accent font-black">CURRICULUM_VITAE.EXE</span>
         </div>
-        <div className="flex gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-accent" />
-          <div className="w-2.5 h-2.5 rounded-full bg-base-300" />
-          <div className="w-2.5 h-2.5 rounded-full bg-base-300" />
-        </div>
+        <WindowDots tone="retro" />
       </div>
 
       <div className="p-6 sm:p-8 md:p-12">

@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
-import { Logo } from "@/components/shared/Logo";
 import { parseCV, toBlocks, splitBold } from "@/lib/cv-parser";
+import { LogoWatermark } from "@/components/ui/LogoWatermark";
 
 interface DevCVViewerProps {
   content: string;
@@ -100,9 +100,7 @@ export default function DevCVViewer({ content }: DevCVViewerProps) {
       <div>
         <div className="p-6 sm:p-8 md:p-10 relative overflow-hidden">
           {/* Watermark logo */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 opacity-[0.03] pointer-events-none">
-            <Logo className="w-full h-full text-accent" />
-          </div>
+          <LogoWatermark variant="badge" />
 
           <div className="relative z-10 space-y-6">
             {/* Header block */}

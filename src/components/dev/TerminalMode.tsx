@@ -6,6 +6,7 @@ import { Logo } from "@/components/shared/Logo";
 import { useSkin } from "@/components/shared/SkinProvider";
 import { TERMINAL_LIGHT_THEMES, TERMINAL_DARK_THEMES } from "@/data/theme-config";
 import { slugify } from "@/lib/slug";
+import { asciiBar, skillFilename, fakeCommitHash } from "@/lib/terminal";
 
 type OutputLine = {
   id: number;
@@ -255,14 +256,10 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
               </p>
               <div className="space-y-2">
                 {devContent.about.stacks.map((s) => {
-                  const total = 20;
-                  const active = Math.floor((s.level / 100) * total);
-                  const bar = "█".repeat(active) + "▒".repeat(total - active);
+                  const bar = asciiBar(s.level);
                   return (
                     <div key={s.name} className="flex items-center gap-3">
-                      <span className="w-40 text-base-content">
-                        {s.name.toLowerCase().replace(/[\s/]+/g, "_")}.sys
-                      </span>
+                      <span className="w-40 text-base-content">{skillFilename(s.name)}</span>
                       <span className="text-accent font-black w-10">{s.level}%</span>
                       <span className="text-green-400 w-10 animate-pulse">[ OK ]</span>
                       <span className="text-accent/70 tracking-widest">{bar}</span>
@@ -318,12 +315,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
               {devContent.experience.map((e) => (
                 <div key={e.company} className="border-l-2 border-accent/30 pl-3 space-y-1">
                   <p className="text-yellow-400/90 font-bold">
-                    commit{" "}
-                    {(e.company + e.period)
-                      .toLowerCase()
-                      .replace(/[^a-z0-9]/g, "")
-                      .substring(0, 8)}
-                    db39
+                    commit {fakeCommitHash(e.company + e.period)}
                   </p>
                   <p>
                     <span className="text-base-content/50">Date:</span> {e.period}

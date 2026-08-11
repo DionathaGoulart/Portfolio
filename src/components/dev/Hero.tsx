@@ -7,10 +7,10 @@ import Image from "next/image";
 
 export default function Hero() {
   const terminalLines = [
-    { cmd: "whoami",     value: devContent.meta.username, color: "text-accent" },
+    { cmd: "whoami", value: devContent.meta.username, color: "text-accent" },
     { cmd: "fetch --role", value: devContent.role, isTyping: true },
-    { cmd: "git branch",   value: devContent.hero.gitBranch },
-    { cmd: "uptime",       value: devContent.hero.uptime },
+    { cmd: "git branch", value: devContent.hero.gitBranch },
+    { cmd: "uptime", value: devContent.hero.uptime },
   ];
 
   return (
@@ -48,17 +48,13 @@ export default function Hero() {
               {terminalLines.map((line, i) => (
                 <div key={i} className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-accent/30 font-bold text-xs md:text-sm">
-                      {">"}
-                    </span>
+                    <span className="text-accent/30 font-bold text-xs md:text-sm">{">"}</span>
                     <span className="text-foreground/30 text-xs md:text-sm font-medium">
                       {line.cmd}
                     </span>
                   </div>
                   <div className="pl-4 md:pl-6 border-l-2 border-accent/10 min-h-[1.5rem] mt-1">
-                    <span
-                      className={`${line.color || "text-foreground"} text-sm md:text-base`}
-                    >
+                    <span className={`${line.color || "text-foreground"} text-sm md:text-base`}>
                       {line.isTyping ? (
                         <span className="text-accent terminal-glow font-bold">
                           <TypingText text={line.value} speed={40} />
@@ -79,11 +75,8 @@ export default function Hero() {
                 </div>
               </div>
 
-
               <div className="flex items-center gap-2 pt-4">
-                <span className="text-accent/30 font-bold text-xs md:text-sm">
-                  {">"}
-                </span>
+                <span className="text-accent/30 font-bold text-xs md:text-sm">{">"}</span>
                 <span className="w-2.5 h-4 bg-accent/40 animate-pulse" />
               </div>
             </div>
@@ -95,8 +88,7 @@ export default function Hero() {
             <div
               className="absolute inset-0 opacity-[0.05] pointer-events-none"
               style={{
-                backgroundImage:
-                  "radial-gradient(var(--color-accent) 1px, transparent 1px)",
+                backgroundImage: "radial-gradient(var(--color-accent) 1px, transparent 1px)",
                 backgroundSize: "20px 20px",
               }}
             />
@@ -154,7 +146,9 @@ export default function Hero() {
                 </div>
                 <div className="flex justify-between items-center text-xs">
                   <span className="opacity-40 uppercase">Experience</span>
-                  <span className="text-accent font-black">{devContent.hero.yearsOfExperience}</span>
+                  <span className="text-accent font-black">
+                    {devContent.hero.yearsOfExperience}
+                  </span>
                 </div>
               </div>
 
@@ -186,9 +180,7 @@ export default function Hero() {
           </div>
           <div className="flex gap-4 items-center">
             <span className="opacity-60 hidden md:inline">CPU: 2%</span>
-            <span className="bg-white text-accent px-2 font-black py-0.5">
-              DG_ROOT_ACCESS
-            </span>
+            <span className="bg-white text-accent px-2 font-black py-0.5">DG_ROOT_ACCESS</span>
           </div>
         </div>
       </motion.div>

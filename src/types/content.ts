@@ -50,29 +50,29 @@ export interface PortfolioContent {
     contact: SectionConfig;
   };
   meta: {
-    username: string;       // e.g. "dionatha_goulart"
-    prompt: string;         // e.g. "dionatha@linux:~$"
-    host: string;           // e.g. "DG-WORKSTATION"
-    kernel: string;         // e.g. "6.1.0-STABLE"
-    shell: string;          // e.g. "/bin/zsh"
-    copyright: string;      // e.g. "DIONATHA GOULART"
+    username: string; // e.g. "dionatha_goulart"
+    prompt: string; // e.g. "dionatha@linux:~$"
+    host: string; // e.g. "DG-WORKSTATION"
+    kernel: string; // e.g. "6.1.0-STABLE"
+    shell: string; // e.g. "/bin/zsh"
+    copyright: string; // e.g. "DIONATHA GOULART"
   };
   hero: {
     title: string;
     description: string;
-    gitBranch: string;      // e.g. "production/stable"
-    uptime: string;         // e.g. "3 years, 128 days, 4 hours"
-    status: string;         // e.g. "Available_to_Code"
-    expertise: string;      // e.g. "Fullstack_Dev"
-    location: string;       // e.g. "Rio_Grande_do_Sul"
+    gitBranch: string; // e.g. "production/stable"
+    uptime: string; // e.g. "3 years, 128 days, 4 hours"
+    status: string; // e.g. "Available_to_Code"
+    expertise: string; // e.g. "Fullstack_Dev"
+    location: string; // e.g. "Rio_Grande_do_Sul"
     yearsOfExperience: string; // e.g. "3+ Years"
-    badges?: string[];      // e.g. ["LVL: 99", "OPS_READY"]
+    badges?: string[]; // e.g. ["LVL: 99", "OPS_READY"]
   };
   about: {
     text: string;
-    subtitle: string;       // e.g. "Engenheiro de Software Fullstack"
+    subtitle: string; // e.g. "Engenheiro de Software Fullstack"
     stacks: Skill[];
-    envVars: EnvVar[];      // contact/env variables shown in ENV_CONFIG module
+    envVars: EnvVar[]; // contact/env variables shown in ENV_CONFIG module
   };
   projects: Project[];
   experience: Experience[];

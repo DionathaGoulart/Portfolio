@@ -93,7 +93,9 @@ export default function Projects() {
             <span className="w-2.5 h-2.5 rounded-full bg-accent/40" />
             <span className="w-2.5 h-2.5 rounded-full bg-accent/20" />
           </div>
-          <span className="truncate mx-2 flex-1 text-center font-normal">root@dg-os: ~/workspace/projects-repository</span>
+          <span className="truncate mx-2 flex-1 text-center font-normal">
+            root@dg-os: ~/workspace/projects-repository
+          </span>
           <span className="hidden sm:inline text-[9px] bg-accent/10 px-1 py-0.5 rounded text-accent/50 shrink-0 font-normal">
             {isPaused ? "● PAUSED" : "● AUTO_PLAY"}
           </span>
@@ -106,7 +108,6 @@ export default function Projects() {
 
         {/* Terminal Body Split Pane */}
         <div className="grid grid-cols-1 lg:grid-cols-12 flex-1 min-h-0 relative z-10">
-
           {/* Left Column: Interactive File Manager List */}
           <div className="lg:col-span-5 border-b lg:border-b-0 lg:border-r border-accent/20 bg-accent/[0.01] flex flex-col justify-between">
             <div className="p-4 space-y-1">
@@ -122,13 +123,16 @@ export default function Projects() {
                     <button
                       key={project.title}
                       onClick={() => selectProject(idx)}
-                      className={`w-full text-left font-mono text-xs py-3 px-3 flex items-center justify-between transition-colors border-b border-accent/5 last:border-b-0 cursor-pointer group ${isActive
+                      className={`w-full text-left font-mono text-xs py-3 px-3 flex items-center justify-between transition-colors border-b border-accent/5 last:border-b-0 cursor-pointer group ${
+                        isActive
                           ? "bg-accent text-white font-black border-l-4 border-white"
                           : "hover:bg-accent/10 text-foreground/85"
-                        }`}
+                      }`}
                     >
                       <div className="flex items-center gap-2 overflow-hidden mr-2">
-                        <span className={`w-3 flex justify-center shrink-0 ${isActive ? "text-white" : "text-accent"}`}>
+                        <span
+                          className={`w-3 flex justify-center shrink-0 ${isActive ? "text-white" : "text-accent"}`}
+                        >
                           {isActive ? "►" : " "}
                         </span>
 
@@ -137,7 +141,9 @@ export default function Projects() {
                           -rwxr-xr-x
                         </span>
 
-                        <span className={`truncate font-bold ${isActive ? "text-white" : "group-hover:text-accent"}`}>
+                        <span
+                          className={`truncate font-bold ${isActive ? "text-white" : "group-hover:text-accent"}`}
+                        >
                           {getProjectFilename(project.title)}
                         </span>
                       </div>
@@ -148,10 +154,11 @@ export default function Projects() {
                           {idx === 0 ? "4.2K" : idx === 1 ? "3.8K" : idx === 2 ? "5.1K" : "6.4K"}
                         </span>
                         <span
-                          className={`px-1.5 py-0.5 font-bold uppercase rounded-sm border ${isActive
+                          className={`px-1.5 py-0.5 font-bold uppercase rounded-sm border ${
+                            isActive
                               ? "border-white/50 text-white bg-white/10"
                               : "border-accent/20 text-accent bg-accent/5"
-                            }`}
+                          }`}
                         >
                           {project.status || "STABLE"}
                         </span>
@@ -188,77 +195,76 @@ export default function Projects() {
                 <div className="flex-1 overflow-y-auto p-6 md:p-8 pb-4">
                   {/* Simulated Viewer Command */}
                   <div className="space-y-6 font-mono">
-
-                  {/* README Body */}
-                  <div className="space-y-5">
-                    {/* Retro Banner Header */}
-                    <div className="border-l-4 border-accent pl-3 space-y-1">
-                      <span className="text-[10px] tracking-wider text-accent opacity-60 uppercase font-black">
-                        PROJECTS_REPOSITORY // {activeProject.status || "STABLE"}
-                      </span>
-                      <h3 className="text-2xl md:text-3xl font-black text-accent uppercase tracking-tight">
-                        {activeProject.title}
-                      </h3>
-                      <p className="text-xs text-foreground/60 italic font-medium">
-                        Função: {activeProject.role || "Fullstack Developer"}
-                      </p>
-                    </div>
-
-                    {/* Brief description */}
-                    <p className="text-sm md:text-base leading-relaxed text-foreground font-semibold">
-                      {activeProject.description}
-                    </p>
-
-                    {/* System Separator */}
-                    <div className="w-full border-t border-dashed border-accent/20 select-none" />
-
-                    {/* Rich Details */}
-                    {activeProject.details && (
-                      <div className="space-y-2">
-                        <h4 className="text-xs font-bold text-accent uppercase tracking-wider">
-                          # RESUMO SISTÊMICO
-                        </h4>
-                        <p className="text-xs md:text-sm text-foreground/80 leading-relaxed">
-                          {activeProject.details}
+                    {/* README Body */}
+                    <div className="space-y-5">
+                      {/* Retro Banner Header */}
+                      <div className="border-l-4 border-accent pl-3 space-y-1">
+                        <span className="text-[10px] tracking-wider text-accent opacity-60 uppercase font-black">
+                          PROJECTS_REPOSITORY // {activeProject.status || "STABLE"}
+                        </span>
+                        <h3 className="text-2xl md:text-3xl font-black text-accent uppercase tracking-tight">
+                          {activeProject.title}
+                        </h3>
+                        <p className="text-xs text-foreground/60 italic font-medium">
+                          Função: {activeProject.role || "Fullstack Developer"}
                         </p>
                       </div>
-                    )}
 
-                    {/* Features checklist */}
-                    {activeProject.features && activeProject.features.length > 0 && (
-                      <div className="space-y-2.5">
+                      {/* Brief description */}
+                      <p className="text-sm md:text-base leading-relaxed text-foreground font-semibold">
+                        {activeProject.description}
+                      </p>
+
+                      {/* System Separator */}
+                      <div className="w-full border-t border-dashed border-accent/20 select-none" />
+
+                      {/* Rich Details */}
+                      {activeProject.details && (
+                        <div className="space-y-2">
+                          <h4 className="text-xs font-bold text-accent uppercase tracking-wider">
+                            # RESUMO SISTÊMICO
+                          </h4>
+                          <p className="text-xs md:text-sm text-foreground/80 leading-relaxed">
+                            {activeProject.details}
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Features checklist */}
+                      {activeProject.features && activeProject.features.length > 0 && (
+                        <div className="space-y-2.5">
+                          <h4 className="text-xs font-bold text-accent uppercase tracking-wider">
+                            # CARACTERÍSTICAS TÉCNICAS (FEATURES)
+                          </h4>
+                          <ul className="space-y-1.5 text-xs text-foreground/85">
+                            {activeProject.features.map((feature, fIdx) => (
+                              <li key={fIdx} className="flex items-start gap-2 leading-relaxed">
+                                <span className="text-accent font-black shrink-0">[+]</span>
+                                <span>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {/* Tech Tags */}
+                      <div className="space-y-2">
                         <h4 className="text-xs font-bold text-accent uppercase tracking-wider">
-                          # CARACTERÍSTICAS TÉCNICAS (FEATURES)
+                          # INTEGRATED_STACKS
                         </h4>
-                        <ul className="space-y-1.5 text-xs text-foreground/85">
-                          {activeProject.features.map((feature, fIdx) => (
-                            <li key={fIdx} className="flex items-start gap-2 leading-relaxed">
-                              <span className="text-accent font-black shrink-0">[+]</span>
-                              <span>{feature}</span>
-                            </li>
+                        <div className="flex flex-wrap gap-1.5">
+                          {activeProject.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="text-[9px] font-bold border border-accent/20 px-2 py-0.5 text-accent bg-accent/5"
+                            >
+                              {tag}
+                            </span>
                           ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {/* Tech Tags */}
-                    <div className="space-y-2">
-                      <h4 className="text-xs font-bold text-accent uppercase tracking-wider">
-                        # INTEGRATED_STACKS
-                      </h4>
-                      <div className="flex flex-wrap gap-1.5">
-                        {activeProject.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-[9px] font-bold border border-accent/20 px-2 py-0.5 text-accent bg-accent/5"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
                 </div>
 
                 {/* Simulated Terminal Action Bar buttons - FIXED AT BOTTOM */}
@@ -300,7 +306,6 @@ export default function Projects() {
               </motion.div>
             </AnimatePresence>
           </div>
-
         </div>
       </div>
     </section>

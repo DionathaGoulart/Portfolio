@@ -19,16 +19,34 @@ function parseCV(md: string) {
   for (const line of lines) {
     const trimmed = line.trim();
     if (!headerDone) {
-      if (trimmed.startsWith("# ")) { name = trimmed.replace("# ", ""); continue; }
-      if (trimmed.startsWith("**") && !subtitle) { subtitle = trimmed.replace(/\*\*/g, ""); continue; }
+      if (trimmed.startsWith("# ")) {
+        name = trimmed.replace("# ", "");
+        continue;
+      }
+      if (trimmed.startsWith("**") && !subtitle) {
+        subtitle = trimmed.replace(/\*\*/g, "");
+        continue;
+      }
       if (!subtitle && trimmed === "") continue;
-      if (subtitle && !contact && trimmed && !trimmed.startsWith("##") && !trimmed.startsWith("[")) { contact = trimmed; continue; }
+      if (
+        subtitle &&
+        !contact &&
+        trimmed &&
+        !trimmed.startsWith("##") &&
+        !trimmed.startsWith("[")
+      ) {
+        contact = trimmed;
+        continue;
+      }
       if (trimmed.startsWith("[") || trimmed === "---") continue;
       if (trimmed.startsWith("## ")) headerDone = true;
     }
     if (trimmed.startsWith("## ")) {
       if (currentSection) sections.push(currentSection);
-      currentSection = { heading: trimmed.replace(/^##\s+/, "").replace(/^[^\w\s]+\s*/, ""), body: [] };
+      currentSection = {
+        heading: trimmed.replace(/^##\s+/, "").replace(/^[^\w\s]+\s*/, ""),
+        body: [],
+      };
     } else if (trimmed.startsWith("### ")) {
       currentSection?.body.push(`__H3__${trimmed.replace(/^###\s+/, "")}`);
     } else if (currentSection) {
@@ -44,7 +62,10 @@ function renderBody(lines: string[]) {
   let i = 0;
   while (i < lines.length) {
     const line = lines[i];
-    if (!line || line === "---") { i++; continue; }
+    if (!line || line === "---") {
+      i++;
+      continue;
+    }
 
     if (line.startsWith("__H3__")) {
       const text = line.replace("__H3__", "");
@@ -62,16 +83,21 @@ function renderBody(lines: string[]) {
           </div>
         </div>
       );
-      i++; continue;
+      i++;
+      continue;
     }
 
     if (line.startsWith("*") && line.endsWith("*") && !line.startsWith("**")) {
       result.push(
-        <div key={i} className="font-mono text-[10px] text-accent/50 uppercase tracking-widest mb-2 pl-4">
+        <div
+          key={i}
+          className="font-mono text-[10px] text-accent/50 uppercase tracking-widest mb-2 pl-4"
+        >
           # {line.replace(/\*/g, "")}
         </div>
       );
-      i++; continue;
+      i++;
+      continue;
     }
 
     if (line.startsWith("- ")) {
@@ -85,13 +111,20 @@ function renderBody(lines: string[]) {
           {bulletLines.map((b, j) => {
             const parts = b.split(/(\*\*[^*]+\*\*)/g);
             return (
-              <li key={j} className="flex items-start gap-2 text-xs text-foreground/70 leading-relaxed pl-2">
+              <li
+                key={j}
+                className="flex items-start gap-2 text-xs text-foreground/70 leading-relaxed pl-2"
+              >
                 <span className="text-accent font-black shrink-0 mt-0.5">›</span>
                 <span>
                   {parts.map((p, k) =>
                     p.startsWith("**") ? (
-                      <strong key={k} className="text-accent font-black">{p.replace(/\*\*/g, "")}</strong>
-                    ) : p
+                      <strong key={k} className="text-accent font-black">
+                        {p.replace(/\*\*/g, "")}
+                      </strong>
+                    ) : (
+                      p
+                    )
                   )}
                 </span>
               </li>
@@ -107,8 +140,12 @@ function renderBody(lines: string[]) {
       <p key={i} className="text-xs text-foreground/70 leading-relaxed mb-2 font-mono pl-2">
         {parts.map((p, k) =>
           p.startsWith("**") ? (
-            <strong key={k} className="text-accent font-black">{p.replace(/\*\*/g, "")}</strong>
-          ) : p
+            <strong key={k} className="text-accent font-black">
+              {p.replace(/\*\*/g, "")}
+            </strong>
+          ) : (
+            p
+          )
         )}
       </p>
     );
@@ -167,7 +204,10 @@ export default function DevCVViewer({ content }: DevCVViewerProps) {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {contact.split("|").map((c, i) => (
-                    <span key={i} className="border border-accent/20 bg-accent/5 px-2 py-0.5 text-[10px] text-foreground/50 uppercase tracking-widest">
+                    <span
+                      key={i}
+                      className="border border-accent/20 bg-accent/5 px-2 py-0.5 text-[10px] text-foreground/50 uppercase tracking-widest"
+                    >
                       {c.trim()}
                     </span>
                   ))}
@@ -180,11 +220,11 @@ export default function DevCVViewer({ content }: DevCVViewerProps) {
               <div key={i} className="space-y-2">
                 <div className="flex items-center gap-3 font-mono">
                   <span className="text-accent font-bold text-sm">dionatha@linux:~$</span>
-                  <span className="text-foreground/60 text-sm">cat {section.heading.toLowerCase().replace(/\s+/g, "_")}.md</span>
+                  <span className="text-foreground/60 text-sm">
+                    cat {section.heading.toLowerCase().replace(/\s+/g, "_")}.md
+                  </span>
                 </div>
-                <div className="pl-6 border-l-2 border-accent/10">
-                  {renderBody(section.body)}
-                </div>
+                <div className="pl-6 border-l-2 border-accent/10">{renderBody(section.body)}</div>
               </div>
             ))}
 

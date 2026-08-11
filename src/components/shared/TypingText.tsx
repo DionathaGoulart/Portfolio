@@ -9,12 +9,12 @@ interface TypingTextProps {
   loop?: boolean;
 }
 
-export const TypingText: React.FC<TypingTextProps> = ({ 
-  text, 
-  speed = 50, 
-  delay = 2000, 
+export const TypingText: React.FC<TypingTextProps> = ({
+  text,
+  speed = 50,
+  delay = 2000,
   className,
-  loop = true
+  loop = true,
 }) => {
   const [displayedText, setDisplayedText] = useState("");
   const [isTyping, setIsTyping] = useState(true);

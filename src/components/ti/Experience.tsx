@@ -26,9 +26,7 @@ export default function Experience() {
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight uppercase leading-tight">
                 {exp.role}
               </h3>
-              <h4 className="text-lg md:text-xl font-bold text-accent italic">
-                {exp.company}
-              </h4>
+              <h4 className="text-lg md:text-xl font-bold text-accent italic">{exp.company}</h4>
               <p className="text-base md:text-xl font-medium opacity-70 leading-relaxed">
                 {exp.description}
               </p>

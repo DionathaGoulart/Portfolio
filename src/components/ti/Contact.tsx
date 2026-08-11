@@ -25,9 +25,7 @@ export default function Contact() {
             </span>
             <h2 className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] uppercase">
               {tiContent.contact.title.split("?")[0]}
-              {tiContent.contact.title.includes("?") && (
-                <span className="text-accent">?</span>
-              )}
+              {tiContent.contact.title.includes("?") && <span className="text-accent">?</span>}
             </h2>
             <p className="mt-6 text-base sm:text-lg md:text-xl font-medium text-foreground/60 max-w-2xl leading-relaxed">
               {tiContent.contact.description}

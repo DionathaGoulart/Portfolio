@@ -49,12 +49,32 @@ export const devContent: PortfolioContent = {
       { name: "Docker / DevOps", level: 80 },
     ],
     envVars: [
-      { key: "DG_EMAIL",    value: "dionatha.work@gmail.com",         isLink: true, href: "mailto:dionatha.work@gmail.com" },
-      { key: "DG_LINKEDIN", value: "linkedin.com/in/dionathagoulart", isLink: true, href: "https://linkedin.com/in/dionathagoulart" },
-      { key: "DG_GITHUB",   value: "github.com/DionathaGoulart",      isLink: true, href: "https://github.com/DionathaGoulart" },
-      { key: "DG_PHONE",    value: "+55 (51) 98648-5232",             isLink: true, href: "https://wa.me/5551986485232" },
-      { key: "DG_STATUS",   value: "READY_FOR_DEPLOYMENT" },
-      { key: "DG_ROLE",     value: "FULLSTACK_ENGINEER" },
+      {
+        key: "DG_EMAIL",
+        value: "dionatha.work@gmail.com",
+        isLink: true,
+        href: "mailto:dionatha.work@gmail.com",
+      },
+      {
+        key: "DG_LINKEDIN",
+        value: "linkedin.com/in/dionathagoulart",
+        isLink: true,
+        href: "https://linkedin.com/in/dionathagoulart",
+      },
+      {
+        key: "DG_GITHUB",
+        value: "github.com/DionathaGoulart",
+        isLink: true,
+        href: "https://github.com/DionathaGoulart",
+      },
+      {
+        key: "DG_PHONE",
+        value: "+55 (51) 98648-5232",
+        isLink: true,
+        href: "https://wa.me/5551986485232",
+      },
+      { key: "DG_STATUS", value: "READY_FOR_DEPLOYMENT" },
+      { key: "DG_ROLE", value: "FULLSTACK_ENGINEER" },
     ],
   },
 
@@ -62,7 +82,8 @@ export const devContent: PortfolioContent = {
   projects: [
     {
       title: "Mil Ideias®",
-      description: "Plataforma premium para catálogo de produtos e geração de orçamentos personalizados.",
+      description:
+        "Plataforma premium para catálogo de produtos e geração de orçamentos personalizados.",
       tags: ["Next.js", "PostgreSQL", "Tailwind"],
       link: "https://milideias.com.br",
       github: "https://github.com/DionathaGoulart",
@@ -136,7 +157,8 @@ export const devContent: PortfolioContent = {
       company: "Containner®",
       role: "Fullstack Developer (Freelance)",
       period: "2025 - Presente",
-      description: "Liderança técnica no desenvolvimento de aplicações imersivas e arquitetura de monorepos.",
+      description:
+        "Liderança técnica no desenvolvimento de aplicações imersivas e arquitetura de monorepos.",
     },
     {
       company: "Cybernetrs",

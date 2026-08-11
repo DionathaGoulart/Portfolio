@@ -12,6 +12,7 @@ A high-performance, dual-track portfolio designed to showcase expertise in both 
 ## 📖 Overview
 
 This project is a unique "Hub" that splits the professional persona into two distinct paths:
+
 - **Dev Portfolio:** Focused on Fullstack development, SaaS, and premium UX. Features an integrated **Interactive Terminal Mode** simulating a real command-line environment.
 - **Ops/TI Portfolio:** Focused on Infrastructure, Networking, and Automation.
 
@@ -38,6 +39,7 @@ It features a custom-built theme system that switches styles dynamically based o
 ## 🧩 Developer Guide
 
 ### How to Add New Color Palettes
+
 The interactive terminal features a built-in theme wizard. To add a new palette (e.g., a new Dark Theme), follow these steps:
 
 1. Open `src/context/ThemeCustomContext.tsx`.
@@ -52,13 +54,22 @@ The interactive terminal features a built-in theme wizard. To add a new palette 
    ```typescript
    const PALETTE_VARS = {
      // ... existing variables
-     d6: { bg: "#000000", fg: "#ffffff", acc: "#00ff00", card: "#111111", border: "#00ff00", shadow: "#00ff00" },
+     d6: {
+       bg: "#000000",
+       fg: "#ffffff",
+       acc: "#00ff00",
+       card: "#111111",
+       border: "#00ff00",
+       shadow: "#00ff00",
+     },
    };
    ```
 4. Add your new `id` (`"d6"`) to the `PaletteId` type definition at the top of the file so TypeScript allows it.
 
 ### How to Modify Content
+
 All textual content, projects, and experiences are strictly separated from UI components.
+
 - **Developer Persona:** Edit `src/data/dev-config.ts`.
 - **Ops/TI Persona:** Edit `src/data/ti-config.ts`.
 - **Global Hub/SEO:** Edit `src/data/seo-config.ts`.
@@ -75,16 +86,19 @@ Both configuration files satisfy the `PortfolioContent` type (`src/types/content
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/DionathaGoulart/portfolio.git
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
    ```
 
 3. Start the development server:
+
    ```bash
    npm run dev
    ```
@@ -113,6 +127,7 @@ This project is licensed under the **MIT License with a Mandatory Attribution Cl
 You are free to use, copy, and modify this software for personal or commercial use, provided that you **keep a visible credit link** in the footer of your website.
 
 **Required Attribution:**
+
 > "Feito por [Dionatha Goulart](https://github.com/DionathaGoulart)" (or equivalent visual credit).
 
 See the [LICENSE](LICENSE) file for the full legal text.
@@ -122,11 +137,13 @@ See the [LICENSE](LICENSE) file for the full legal text.
 ## 👤 Contact
 
 **Dionatha Goulart**
+
 - 📧 [dionatha.work@gmail.com](mailto:dionatha.work@gmail.com)
 - 🔗 [LinkedIn](https://linkedin.com/in/dionathagoulart)
 - 🐙 [GitHub](https://github.com/DionathaGoulart)
 
 ---
+
 <p align="center">
   Built with ❤️ by <a href="https://github.com/DionathaGoulart">Dionatha Goulart</a>
 </p>

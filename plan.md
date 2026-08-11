@@ -50,25 +50,26 @@
 
 **Famílias de temas** (nomes finais; um bloco `@plugin "daisyui/theme"` por tema):
 
-| Família (skin) | Temas light | Temas dark | Usado em |
-|---|---|---|---|
-| `retro` | `retro-light` | `retro-dark` | `/`, `/ti`, `/ti/cv` |
-| `terminal` | `terminal-crimson` (p1, default), `terminal-frost` (p2), `terminal-forest` (p3), `terminal-amber` (p4) | `terminal-rose` (d1, prefersdark), `terminal-gold` (d2), `terminal-ember` (d3), `terminal-cyan` (d4), `terminal-violet` (d5) | `/dev`, `/dev/cv` |
+| Família (skin) | Temas light                                                                                            | Temas dark                                                                                                                   | Usado em             |
+| -------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `retro`        | `retro-light`                                                                                          | `retro-dark`                                                                                                                 | `/`, `/ti`, `/ti/cv` |
+| `terminal`     | `terminal-crimson` (p1, default), `terminal-frost` (p2), `terminal-forest` (p3), `terminal-amber` (p4) | `terminal-rose` (d1, prefersdark), `terminal-gold` (d2), `terminal-ember` (d3), `terminal-cyan` (d4), `terminal-violet` (d5) | `/dev`, `/dev/cv`    |
 
 - **Fonte dos valores hex:** `PALETTE_VARS` em `src/context/ThemeCustomContext.tsx:42-52` (é o catálogo mais completo — 9 paletas × 6 valores). Para `retro-light`/`retro-dark`, extrair os mapeamentos atuais de `.theme-ti`/`.theme-default` em `globals.css:60-119` (hoje `/` e `/ti` compartilham design; se as paletas divergirem entre `.theme-default` e `.theme-ti`, preservar a aparência atual de cada rota criando `retro-hub-*` adicional — decidir lendo o CSS, não chutando).
 - **Mapeamento de tokens** (antigo → daisyUI):
 
-| Var atual | Token daisyUI | Utility antes → depois |
-|---|---|---|
-| `--background` | `--color-base-100` | `bg-background` → `bg-base-100` |
-| `--card-bg` | `--color-base-200` | `bg-card` → `bg-base-200` |
-| `--border` | `--color-base-300` | `border-border-custom` → `border-base-300` |
-| `--foreground` | `--color-base-content` | `text-foreground` → `text-base-content` |
-| `--accent` | `--color-accent` | `text-accent`/`bg-accent` → **inalterado** |
-| (texto sobre accent) | `--color-accent-content` | `text-white` sobre accent → `text-accent-content` |
-| `--shadow` | manter `--shadow` como var extra dentro do bloco de tema (daisyUI aceita vars extras) | `.retro-shadow` continua lendo `var(--shadow)` |
+| Var atual            | Token daisyUI                                                                         | Utility antes → depois                            |
+| -------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| `--background`       | `--color-base-100`                                                                    | `bg-background` → `bg-base-100`                   |
+| `--card-bg`          | `--color-base-200`                                                                    | `bg-card` → `bg-base-200`                         |
+| `--border`           | `--color-base-300`                                                                    | `border-border-custom` → `border-base-300`        |
+| `--foreground`       | `--color-base-content`                                                                | `text-foreground` → `text-base-content`           |
+| `--accent`           | `--color-accent`                                                                      | `text-accent`/`bg-accent` → **inalterado**        |
+| (texto sobre accent) | `--color-accent-content`                                                              | `text-white` sobre accent → `text-accent-content` |
+| `--shadow`           | manter `--shadow` como var extra dentro do bloco de tema (daisyUI aceita vars extras) | `.retro-shadow` continua lendo `var(--shadow)`    |
 
-  Preencher os tokens obrigatórios restantes de cada tema (`primary`, `secondary`, `neutral`, `info`, `success`, `warning`, `error` + `*-content`) com valores derivados coerentes da paleta (ex.: `primary` = accent, `error` = tom vermelho legível na base). Todos os temas: `--radius-selector: 0rem; --radius-field: 0rem; --radius-box: 0rem;` (design é 100% quadrado), `--depth: 0; --noise: 0;` `--border: 2px` nos temas `retro-*`, `1px` nos `terminal-*`.
+Preencher os tokens obrigatórios restantes de cada tema (`primary`, `secondary`, `neutral`, `info`, `success`, `warning`, `error` + `*-content`) com valores derivados coerentes da paleta (ex.: `primary` = accent, `error` = tom vermelho legível na base). Todos os temas: `--radius-selector: 0rem; --radius-field: 0rem; --radius-box: 0rem;` (design é 100% quadrado), `--depth: 0; --noise: 0;` `--border: 2px` nos temas `retro-*`, `1px` nos `terminal-*`.
+
 - **`--hub-dev-hover` / `--hub-ti-hover`** (hoje em `globals.css:70-82`): mover como vars extras do tema `retro-*`.
 - **Aplicação do tema:** substituir `RouteThemeProvider` + `ThemeCustomContext` por um único **`SkinProvider`** (`src/components/shared/SkinProvider.tsx`, client):
   1. Deriva o skin do pathname (`/dev*` → `terminal`, resto → `retro`) — mapa em `src/data/theme-config.ts` (novo arquivo; remove `themeConfig` de `dev-config.ts:176-185`).
@@ -136,6 +137,7 @@ src/
 ### FASE 2 — Fundação de temas daisyUI
 
 Implementar EXATAMENTE a seção 2.1:
+
 1. Reescrever `globals.css` (plugin daisyUI, 11 blocos de tema, utilities em `@utility`, `body` base styles; `.terminal-scanline` escopado a `[data-skin="terminal"]`).
 2. Criar `src/data/theme-config.ts` (skin por rota + catálogo de temas terminal com metadados de preview p/ o comando `theme`).
 3. Criar `SkinProvider`, plugar em `app/layout.tsx` no lugar de `RouteThemeProvider`; deletar `RouteThemeProvider.tsx`, `ThemeCustomContext.tsx` e o `themeConfig` de `dev-config.ts`.
@@ -193,6 +195,7 @@ Ordem: `ti/*` (mais simples) → hub (`app/page.tsx`) → `dev/*` → CV viewers
 ### FASE 6 — A11y + Performance
 
 **A11y:**
+
 1. `<h1>` no skin terminal: promover o texto principal do `dev/Hero` a `<h1>` (estilização inalterada) e garantir hierarquia h2/h3 nas seções de ambos os skins.
 2. `focus-visible` global no `globals.css` (`outline accent 2px offset 2px`) + conferir que os primitivos `ui/` (btn/menu/dropdown daisyUI já trazem focus) não o suprimem. Remover `outline-none` sem substituto no input do terminal (dar focus ring no container).
 3. `Icons.tsx`: `aria-hidden="true"` (decorativos) + `aria-label` nos links icon-only (`SocialLinks`, hub). `Logo.tsx`: `aria-hidden` + `focusable="false"`.
@@ -204,13 +207,7 @@ Ordem: `ti/*` (mais simples) → hub (`app/page.tsx`) → `dev/*` → CV viewers
 9. Spans "disabled" (`ti/Projects.tsx:78-86`, `dev/Projects.tsx:277-297`) → `Button` disabled real ou `aria-disabled` + role.
 10. `dev/About.tsx` `useInView`: garantir conteúdo visível sem JS (inicial `opacity-100` com animação aplicada só quando JS ativo — padrão framer `whileInView` já degrada ok; conferir).
 
-**Perf:**
-11. Fontes: converter para `.woff2` e registrar SÓ os pesos usados (grep `font-` de peso no código; provável: 400/500/700/800). `next/font/local` com `preload` só no peso principal. Meta: ~1.1 MB → <200 KB.
-12. `me.png` (370 KB): reexportar otimizado (≤120 KB) e adicionar `sizes` + `priority` nos 3 usos de `<Image fill>` (`app/page.tsx:43-48`, `dev/Hero.tsx:114-119`, `ti/Hero.tsx:63-68`).
-13. `apple-touch-icon`: gerar PNG 180×180 (hoje aponta para `.ico` de 215 KB em `layout.tsx:100-104`).
-14. `react-markdown`/`remark-gfm`: sai do `PrintButton` estático — o DOM de impressão pode reusar o `cv-parser` (mesma fonte dos viewers); se mantiver markdown, importar dinamicamente no clique. `html2pdf.js` já é dynamic (ok).
-15. `.terminal-scanline`: garantir no máximo 1 instância montada (mover para o layout do skin, não por-componente); `100vw` → `100%` para não estourar scrollbar.
-16. `vercel.json`: adicionar headers de cache p/ `/fonts/*` (immutable) — ou mover fontes para `src/` e deixar o next/font cuidar (preferido).
+**Perf:** 11. Fontes: converter para `.woff2` e registrar SÓ os pesos usados (grep `font-` de peso no código; provável: 400/500/700/800). `next/font/local` com `preload` só no peso principal. Meta: ~1.1 MB → <200 KB. 12. `me.png` (370 KB): reexportar otimizado (≤120 KB) e adicionar `sizes` + `priority` nos 3 usos de `<Image fill>` (`app/page.tsx:43-48`, `dev/Hero.tsx:114-119`, `ti/Hero.tsx:63-68`). 13. `apple-touch-icon`: gerar PNG 180×180 (hoje aponta para `.ico` de 215 KB em `layout.tsx:100-104`). 14. `react-markdown`/`remark-gfm`: sai do `PrintButton` estático — o DOM de impressão pode reusar o `cv-parser` (mesma fonte dos viewers); se mantiver markdown, importar dinamicamente no clique. `html2pdf.js` já é dynamic (ok). 15. `.terminal-scanline`: garantir no máximo 1 instância montada (mover para o layout do skin, não por-componente); `100vw` → `100%` para não estourar scrollbar. 16. `vercel.json`: adicionar headers de cache p/ `/fonts/*` (immutable) — ou mover fontes para `src/` e deixar o next/font cuidar (preferido).
 
 ### FASE 7 — Verificação final
 

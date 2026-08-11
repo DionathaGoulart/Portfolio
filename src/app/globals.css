@@ -151,12 +151,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
-    to bottom,
-    transparent 50%,
-    rgba(0, 0, 0, 0.05) 51%,
-    transparent 51%
-  );
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.05) 51%, transparent 51%);
   background-size: 100% 4px;
   pointer-events: none;
   z-index: 100;
@@ -164,12 +159,7 @@ body {
 }
 
 .dark .terminal-scanline {
-  background: linear-gradient(
-    to bottom,
-    transparent 50%,
-    rgba(0, 0, 0, 0.2) 51%,
-    transparent 51%
-  );
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.2) 51%, transparent 51%);
   background-size: 100% 4px;
 }
 
@@ -183,6 +173,11 @@ body {
 }
 
 @keyframes blink {
-  from, to { opacity: 1; }
-  50% { opacity: 0; }
+  from,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }

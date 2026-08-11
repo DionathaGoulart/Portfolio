@@ -9,7 +9,12 @@ interface PersonaPageProps {
   className?: string;
 }
 
-export function PersonaPage({ content, children, footerContent, className = "" }: PersonaPageProps) {
+export function PersonaPage({
+  content,
+  children,
+  footerContent,
+  className = "",
+}: PersonaPageProps) {
   return (
     <div className={`selection:bg-accent selection:text-white ${className}`}>
       <main className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 pb-20 pt-20 md:pt-24">

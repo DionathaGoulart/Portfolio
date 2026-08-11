@@ -69,7 +69,7 @@ export default function Projects() {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 text-center retro-border bg-base-content text-base-100 px-4 py-3 font-black text-xs md:text-sm hover:bg-accent hover:text-accent-content transition-colors uppercase"
+                      className="btn btn-retro-invert flex-1 hover:bg-accent hover:text-accent-content"
                     >
                       {tiContent.ui.projectsDeployButton}
                     </a>
@@ -88,7 +88,7 @@ export default function Projects() {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 text-center retro-border border-base-content text-base-content px-4 py-3 font-black text-xs md:text-sm hover:bg-base-content hover:text-base-100 transition-colors uppercase"
+                      className="btn btn-retro-invert flex-1 bg-transparent text-base-content hover:bg-base-content hover:text-base-100"
                     >
                       {tiContent.ui.projectsRepoButton}
                     </a>

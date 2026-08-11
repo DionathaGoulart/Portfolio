@@ -123,6 +123,14 @@ export default function RootLayout({
       <head>
         {/* Stamps data-theme/data-skin before first paint so dark visitors never see a light flash. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        {/*
+          Framer Motion renders its `initial` state as an inline style, so server output
+          carries opacity:0 on every reveal and the content stayed invisible when scripts
+          did not run. This shows it instead of hiding it.
+        */}
+        <noscript>
+          <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
       </head>
       <body className={`${jetbrainsMono.variable} antialiased`} suppressHydrationWarning>
         <ThemeProvider

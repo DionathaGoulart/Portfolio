@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "check:excluded": "node scripts/check-excluded.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

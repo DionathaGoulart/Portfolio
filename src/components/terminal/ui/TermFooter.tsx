@@ -12,7 +12,7 @@ export function TermFooter({ name, className }: { name: string; className?: stri
       )}
     >
       <div className="flex items-center gap-2">
-        <span className="w-2 h-2 bg-accent/40 rounded-full animate-pulse" />
+        <span className="status rounded-full bg-accent/40 animate-pulse" />
         SYS_BUILD {"//"} {year}
       </div>
       <div className="text-center md:text-right">

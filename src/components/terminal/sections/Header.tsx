@@ -44,7 +44,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
             <span className="text-base-300/30 text-[10px] md:text-base">|</span>
             {isCV ? (
               <span className="text-[9px] md:text-xs animate-pulse text-accent whitespace-nowrap flex items-center gap-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                <span className="status h-1.5 w-1.5 rounded-full bg-accent" />
                 <span>CV_SESSION_ACTIVE</span>
               </span>
             ) : (

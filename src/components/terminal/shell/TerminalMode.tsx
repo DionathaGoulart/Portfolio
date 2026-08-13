@@ -6,7 +6,8 @@ import { Logo } from "@/components/shared/Logo";
 import { useSkin } from "@/components/shared/SkinProvider";
 import { TERMINAL_LIGHT_THEMES, TERMINAL_DARK_THEMES } from "@/data/theme-config";
 import { slugify } from "@/lib/slug";
-import { WindowDots } from "@/components/terminal/ui/WindowDots";
+import { TermWindow } from "@/components/terminal/ui/TermWindow";
+import { TermBadge } from "@/components/terminal/ui/TermBadge";
 import { ALL_COMMANDS, MAX_OUTPUT_LINES, type OutputLine } from "./constants";
 import { COMMAND_OUTPUTS, PaletteList, ProjectDetailOutput } from "./output";
 
@@ -328,22 +329,23 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
       transition={{ duration: 0.25 }}
       className="h-[100dvh] flex flex-col pt-20 pb-4 px-4 sm:px-6 md:px-10 md:py-24 md:min-h-screen md:h-auto md:justify-center"
     >
-      <div
-        className="retro-border bg-base-200 retro-shadow overflow-hidden w-full max-w-7xl mx-auto flex flex-col relative h-[75vh] min-h-[500px] md:min-h-[650px]"
+      <TermWindow
+        chrome="shell"
+        className="max-w-7xl mx-auto relative h-[75vh] min-h-[500px] md:min-h-[650px]"
         onClick={() => inputRef.current?.focus()}
+        title="root@dg-os: ~/workspace — TERMINAL_MODE"
+        right={
+          <TermBadge
+            variant="pill"
+            className="hidden sm:inline-flex animate-pulse bg-accent/20 text-accent"
+          >
+            ● LIVE
+          </TermBadge>
+        }
       >
         {/* Logo watermark */}
         <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.025] pointer-events-none overflow-hidden text-accent select-none">
           <Logo className="w-[140%] h-[140%] object-cover -rotate-12" />
-        </div>
-
-        {/* Terminal Header */}
-        <div className="bg-accent/10 border-b-2 border-accent/20 px-4 py-2 flex justify-between items-center text-[10px] font-mono tracking-wider text-accent font-black shrink-0 relative z-10">
-          <WindowDots />
-          <span className="truncate mx-2">root@dg-os: ~/workspace — TERMINAL_MODE</span>
-          <span className="hidden sm:inline animate-pulse text-[9px] bg-accent/20 px-1 py-0.5 rounded text-accent">
-            ● LIVE
-          </span>
         </div>
 
         {/* Output area */}
@@ -406,7 +408,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
           />
           <span className="w-2 h-4 bg-accent animate-pulse shrink-0" />
         </div>
-      </div>
+      </TermWindow>
     </motion.div>
   );
 }

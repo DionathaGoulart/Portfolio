@@ -5,6 +5,7 @@ import { motion, useInView } from "framer-motion";
 import { devContent } from "@/data/dev-config";
 import { asciiBar, skillFilename } from "@/lib/terminal";
 import { LogoWatermark } from "@/components/shared/LogoWatermark";
+import { TermModuleHeader } from "../ui/TermModuleHeader";
 
 /**
  * Ticks once per second. Kept apart from About so the whole section does not re-render
@@ -64,10 +65,11 @@ export default function About() {
           transition={{ duration: 0.5 }}
           className="md:col-span-12 lg:col-span-7 retro-border bg-base-200 retro-shadow-sm flex flex-col relative overflow-hidden"
         >
-          <div className="bg-accent/10 border-b border-accent/20 px-4 py-2 flex items-center justify-between text-[10px] font-mono tracking-wider text-accent font-bold z-20">
-            <span>[ {devContent.ui.aboutModuleBio} ]</span>
-            <span>PID: 001</span>
-          </div>
+          <TermModuleHeader
+            className="z-20"
+            label={devContent.ui.aboutModuleBio}
+            right="PID: 001"
+          />
 
           <div className="p-5 md:p-6 flex-1 flex flex-col gap-4 items-start relative z-10">
             <div className="space-y-3 font-mono">
@@ -107,10 +109,7 @@ export default function About() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="md:col-span-12 lg:col-span-5 retro-border bg-base-200 retro-shadow-sm flex flex-col relative z-10"
         >
-          <div className="bg-accent/10 border-b border-accent/20 px-4 py-2 flex items-center justify-between text-[10px] font-mono tracking-wider text-accent font-bold">
-            <span>[ {devContent.ui.aboutModuleEnv} ]</span>
-            <span>PRINTENV</span>
-          </div>
+          <TermModuleHeader label={devContent.ui.aboutModuleEnv} right="PRINTENV" />
           <div className="p-5 flex-1 flex flex-col justify-center">
             <div className="space-y-2">
               {envVars.map((env) => (
@@ -149,10 +148,11 @@ export default function About() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="md:col-span-12 retro-border bg-base-200 retro-shadow-sm flex flex-col relative z-10"
         >
-          <div className="bg-accent/10 border-b border-accent/20 px-4 py-2 flex items-center justify-between text-[10px] font-mono tracking-wider text-accent font-bold relative z-20">
-            <span>[ {devContent.ui.aboutModuleSys} ]</span>
-            <span>{devContent.ui.aboutSysHtop}</span>
-          </div>
+          <TermModuleHeader
+            className="relative z-20"
+            label={devContent.ui.aboutModuleSys}
+            right={devContent.ui.aboutSysHtop}
+          />
 
           {/* Decorative Logo Background Watermark */}
           <LogoWatermark className="mt-8" />

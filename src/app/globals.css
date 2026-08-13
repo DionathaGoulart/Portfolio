@@ -16,7 +16,7 @@
 @plugin "daisyui" {
   themes: false;
   logs: false;
-  exclude: tooltip, menu, card, badge, progress, navbar, input, label, status, steps, swap, toggle;
+  exclude: tooltip, menu, card, progress, navbar, input, label, steps, toggle;
 }
 
 @theme inline {

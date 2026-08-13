@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { devContent } from "@/data/dev-config";
 import { TermSectionTitle } from "../ui/TermSectionTitle";
 import { LogoWatermark } from "@/components/shared/LogoWatermark";
-import { WindowDots } from "@/components/terminal/ui/WindowDots";
+import { TermWindow } from "@/components/terminal/ui/TermWindow";
 
 export default function Experience() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -14,14 +14,13 @@ export default function Experience() {
       <TermSectionTitle number="02" title={devContent.ui.experienceTitle} />
 
       {/* Main Terminal Window (Like Projects.tsx) */}
-      <div className="retro-border bg-base-200 retro-shadow overflow-hidden w-full flex flex-col relative h-auto">
-        {/* Terminal Header Bar (Like Projects.tsx) */}
-        <div className="bg-accent/5 border-b border-accent/10 px-4 py-2 flex justify-between items-center text-[10px] font-mono tracking-wider text-accent/50 font-normal relative z-20">
-          <WindowDots className="shrink-0 opacity-50" />
-          <span className="truncate mx-2">root@dg-os: ~/workspace/experience-logs</span>
-          <span className="hidden sm:inline opacity-30">(C) {devContent.meta.copyright}</span>
-        </div>
-
+      <TermWindow
+        chrome="bar"
+        className="relative h-auto"
+        barClassName="relative z-20"
+        title="root@dg-os: ~/workspace/experience-logs"
+        right={<span className="hidden sm:inline opacity-30">(C) {devContent.meta.copyright}</span>}
+      >
         {/* Decorative Logo Background Watermark */}
         <LogoWatermark className="mt-8" />
 
@@ -70,7 +69,7 @@ export default function Experience() {
             </div>
           </div>
         </div>
-      </div>
+      </TermWindow>
     </section>
   );
 }

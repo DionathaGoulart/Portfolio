@@ -6,7 +6,8 @@ import { devContent } from "@/data/dev-config";
 import { TermSectionTitle } from "../ui/TermSectionTitle";
 import { projectFilename } from "@/lib/slug";
 import { LogoWatermark } from "@/components/shared/LogoWatermark";
-import { WindowDots } from "@/components/terminal/ui/WindowDots";
+import { TermWindow } from "@/components/terminal/ui/TermWindow";
+import { TermBadge } from "@/components/terminal/ui/TermBadge";
 
 // Decorative shell strings — scenography, not content.
 const TERMINAL_PATH = "root@dg-os: ~/workspace/projects-repository";
@@ -90,20 +91,20 @@ export default function Projects() {
       <TermSectionTitle number="03" title={devContent.ui.projectsTitle} />
 
       {/* Main Terminal Window */}
-      <div
+      <TermWindow
+        chrome="bar"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
-        className="retro-border bg-base-200 retro-shadow overflow-hidden w-full flex flex-col relative h-auto"
-      >
-        {/* Terminal Header Bar */}
-        <div className="bg-accent/5 border-b border-accent/10 px-4 py-2 flex justify-between items-center text-[10px] font-mono tracking-wider text-accent/50 font-black min-w-0">
-          <WindowDots className="shrink-0 opacity-50" />
-          <span className="truncate mx-2 flex-1 text-center font-normal">{TERMINAL_PATH}</span>
-          <span className="hidden sm:inline text-[9px] bg-accent/10 px-1 py-0.5 rounded text-accent/50 shrink-0 font-normal">
+        className="relative h-auto"
+        barClassName="font-black"
+        title={TERMINAL_PATH}
+        titleClassName="flex-1 text-center font-normal"
+        right={
+          <TermBadge variant="pill" className="hidden sm:inline-flex shrink-0">
             {isPaused ? "● PAUSED" : "● AUTO_PLAY"}
-          </span>
-        </div>
-
+          </TermBadge>
+        }
+      >
         {/* Decorative Logo Background Watermark */}
         <LogoWatermark className="mt-8" />
 
@@ -264,12 +265,9 @@ export default function Projects() {
                         </h4>
                         <div className="flex flex-wrap gap-1.5">
                           {activeProject.tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className="text-[9px] font-bold border border-accent/20 px-2 py-0.5 text-accent bg-accent/5"
-                            >
+                            <TermBadge variant="tag" key={tag}>
                               {tag}
-                            </span>
+                            </TermBadge>
                           ))}
                         </div>
                       </div>
@@ -317,7 +315,7 @@ export default function Projects() {
             </AnimatePresence>
           </div>
         </div>
-      </div>
+      </TermWindow>
     </section>
   );
 }

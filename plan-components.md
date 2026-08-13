@@ -30,11 +30,11 @@
 
 ## 2. Princípio arquitetural — as três camadas
 
-| Camada | Onde vive | Pode cruzar skins? |
-|---|---|---|
-| **1. Paletas e temas** | CSS (`@plugin "daisyui/theme"`) | **Sim** — paleta é dado, não comportamento |
-| **2. Classes daisyUI** | CSS gerado pelo plugin | **Sim** — `card`/`badge`/`navbar` são motor neutro como `flex`; o TEMA define a cara (radius 0, `--border` 2px vs 1px, `--shadow`) |
-| **3. Componentes React** | `src/components/` | **NÃO** — única camada com regra de isolamento, imposta por ESLint |
+| Camada                   | Onde vive                       | Pode cruzar skins?                                                                                                                 |
+| ------------------------ | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Paletas e temas**   | CSS (`@plugin "daisyui/theme"`) | **Sim** — paleta é dado, não comportamento                                                                                         |
+| **2. Classes daisyUI**   | CSS gerado pelo plugin          | **Sim** — `card`/`badge`/`navbar` são motor neutro como `flex`; o TEMA define a cara (radius 0, `--border` 2px vs 1px, `--shadow`) |
+| **3. Componentes React** | `src/components/`               | **NÃO** — única camada com regra de isolamento, imposta por ESLint                                                                 |
 
 Regra da camada 3: `retro/**` nunca importa de `terminal/**` e vice-versa; `shared/` não conhece skin nenhuma (proibido prop `variant`/`isTerminal`/`tone` de skin — se um componente precisa disso, ele pertence a uma skin ou vira dois).
 
@@ -76,41 +76,41 @@ Coluna "exclude": o nome que sai da lista na task correspondente.
 
 ### Skin terminal
 
-| Padrão atual | daisyUI | Wrapper novo | exclude | Notas |
-|---|---|---|---|---|
-| Chrome de janela fake (WindowDots + barra de path, ×5 no terminal) | `mockup-window` / `mockup-code` | `TermWindow` | — (mockup-* não está no exclude) | Ler doc dos dois; `mockup-code` para blocos de código do Hero, `mockup-window` para frames. Dots nativos: spike S2 confirma se as cores dos dots aceitam token; senão dots custom dentro do wrapper |
-| `SkillBar` variant terminal (barra + glow) | `progress` | `TermSkillMeter` | `progress` | Manter glow via utility e o `aria-valuenow` atual; `progress` já é theme-aware |
-| Input de comando (`TerminalMode.tsx:394`) | `input` (ghost) + `kbd` | `TermPrompt` | `input`, `label` se usar | Estilo ghost sem borda, caret custom `terminal-cursor` permanece |
-| Tags de tech nos projetos | `badge badge-outline` | `TermBadge` | `badge` (compartilhado com retro — sai na primeira task que adotar) | |
-| Header do /dev | `navbar` + `menu` | `TermNavbar` | `navbar`, `menu` | |
-| Toggle `[MODE:DARK]`/`[MODE:LIGHT]` | `swap` | `TermModeSwitch` | `swap` | `swap-on`/`swap-off` com os dois textos; lógica next-themes intacta |
-| Indicadores pulsantes (animate-pulse ×14 no app) | `status` | `TermStatus` | `status` | Só onde for semanticamente um indicador; pulse decorativo genérico fica como está |
-| Spinner/loading do terminal (se existir no shell) | `loading` | interno ao shell | — | Auditar `TerminalMode` na task |
+| Padrão atual                                                       | daisyUI                         | Wrapper novo     | exclude                                                             | Notas                                                                                                                                                                                               |
+| ------------------------------------------------------------------ | ------------------------------- | ---------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Chrome de janela fake (WindowDots + barra de path, ×5 no terminal) | `mockup-window` / `mockup-code` | `TermWindow`     | — (mockup-* não está no exclude)                                    | Ler doc dos dois; `mockup-code` para blocos de código do Hero, `mockup-window` para frames. Dots nativos: spike S2 confirma se as cores dos dots aceitam token; senão dots custom dentro do wrapper |
+| `SkillBar` variant terminal (barra + glow)                         | `progress`                      | `TermSkillMeter` | `progress`                                                          | Manter glow via utility e o `aria-valuenow` atual; `progress` já é theme-aware                                                                                                                      |
+| Input de comando (`TerminalMode.tsx:394`)                          | `input` (ghost) + `kbd`         | `TermPrompt`     | `input`, `label` se usar                                            | Estilo ghost sem borda, caret custom `terminal-cursor` permanece                                                                                                                                    |
+| Tags de tech nos projetos                                          | `badge badge-outline`           | `TermBadge`      | `badge` (compartilhado com retro — sai na primeira task que adotar) |                                                                                                                                                                                                     |
+| Header do /dev                                                     | `navbar` + `menu`               | `TermNavbar`     | `navbar`, `menu`                                                    |                                                                                                                                                                                                     |
+| Toggle `[MODE:DARK]`/`[MODE:LIGHT]`                                | `swap`                          | `TermModeSwitch` | `swap`                                                              | `swap-on`/`swap-off` com os dois textos; lógica next-themes intacta                                                                                                                                 |
+| Indicadores pulsantes (animate-pulse ×14 no app)                   | `status`                        | `TermStatus`     | `status`                                                            | Só onde for semanticamente um indicador; pulse decorativo genérico fica como está                                                                                                                   |
+| Spinner/loading do terminal (se existir no shell)                  | `loading`                       | interno ao shell | —                                                                   | Auditar `TerminalMode` na task                                                                                                                                                                      |
 
 ### Skin retro
 
-| Padrão atual | daisyUI | Wrapper novo | exclude | Notas |
-|---|---|---|---|---|
-| ProfileCard, cards de projeto, blocos `retro-border`+`retro-shadow` | `card` (card-border) | `RetroCard` | `card` | `--radius-box: 0` e `--border: 2px` já vêm do tema; `retro-shadow` continua utility aplicada pelo wrapper |
-| `SkillBar` variant retro (chip) | `badge` | `RetroSkillChip` | `badge` | |
-| Tags de tech | `badge` | `RetroBadge` | `badge` | |
-| Header do /ti | `navbar` + `menu` | `RetroNavbar` | `navbar`, `menu` | |
-| `ui/Tooltip.tsx` (bloco chapado accent) | `tooltip` restilizado por tokens | `RetroTooltip` | `tooltip` | **Spike S3 decide**: se a seta/surface do daisyUI não vira o bloco chapado sem hack, manter markup custom dentro de `RetroTooltip` e `tooltip` fica no exclude |
-| Experience / linhas do tempo | `timeline` vertical | `RetroTimeline` | — | **Spike S4 decide** fidelidade; senão manter markup atual |
-| Footers (HubFooter, Footer retro) | `footer` | `RetroFooter` | — (`footer` não está no exclude) | Cláusula de atribuição preservada |
-| ThemeToggle retro (Sun/Moon) | `swap swap-rotate` | `RetroThemeToggle` | `swap` | |
+| Padrão atual                                                        | daisyUI                          | Wrapper novo       | exclude                          | Notas                                                                                                                                                          |
+| ------------------------------------------------------------------- | -------------------------------- | ------------------ | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ProfileCard, cards de projeto, blocos `retro-border`+`retro-shadow` | `card` (card-border)             | `RetroCard`        | `card`                           | `--radius-box: 0` e `--border: 2px` já vêm do tema; `retro-shadow` continua utility aplicada pelo wrapper                                                      |
+| `SkillBar` variant retro (chip)                                     | `badge`                          | `RetroSkillChip`   | `badge`                          |                                                                                                                                                                |
+| Tags de tech                                                        | `badge`                          | `RetroBadge`       | `badge`                          |                                                                                                                                                                |
+| Header do /ti                                                       | `navbar` + `menu`                | `RetroNavbar`      | `navbar`, `menu`                 |                                                                                                                                                                |
+| `ui/Tooltip.tsx` (bloco chapado accent)                             | `tooltip` restilizado por tokens | `RetroTooltip`     | `tooltip`                        | **Spike S3 decide**: se a seta/surface do daisyUI não vira o bloco chapado sem hack, manter markup custom dentro de `RetroTooltip` e `tooltip` fica no exclude |
+| Experience / linhas do tempo                                        | `timeline` vertical              | `RetroTimeline`    | —                                | **Spike S4 decide** fidelidade; senão manter markup atual                                                                                                      |
+| Footers (HubFooter, Footer retro)                                   | `footer`                         | `RetroFooter`      | — (`footer` não está no exclude) | Cláusula de atribuição preservada                                                                                                                              |
+| ThemeToggle retro (Sun/Moon)                                        | `swap swap-rotate`               | `RetroThemeToggle` | `swap`                           |                                                                                                                                                                |
 
 ### Shared que morrem (split por skin)
 
-| Hoje | Vira |
-|---|---|
-| `shared/SkillBar.tsx` | `terminal/ui/TermSkillMeter` + `retro/ui/RetroSkillChip` |
-| `shared/ThemeToggle.tsx` | `terminal/ui/TermModeSwitch` + `retro/ui/RetroThemeToggle` |
-| `ui/WindowDots.tsx` | absorvido por `TermWindow` e `RetroWindow` |
-| `ui/Tooltip.tsx` | `retro/ui/RetroTooltip` |
-| `shared/SocialLinks.tsx` | `RetroSocialLinks` + `TermSocialLinks` (12 hits de skin — split limpo vence render-prop) |
-| `shared/Footer.tsx` | `RetroFooter` + `TermFooter` |
-| `shared/SectionTitle.tsx` | `RetroSectionTitle` + `TermSectionTitle` |
+| Hoje                      | Vira                                                                                     |
+| ------------------------- | ---------------------------------------------------------------------------------------- |
+| `shared/SkillBar.tsx`     | `terminal/ui/TermSkillMeter` + `retro/ui/RetroSkillChip`                                 |
+| `shared/ThemeToggle.tsx`  | `terminal/ui/TermModeSwitch` + `retro/ui/RetroThemeToggle`                               |
+| `ui/WindowDots.tsx`       | absorvido por `TermWindow` e `RetroWindow`                                               |
+| `ui/Tooltip.tsx`          | `retro/ui/RetroTooltip`                                                                  |
+| `shared/SocialLinks.tsx`  | `RetroSocialLinks` + `TermSocialLinks` (12 hits de skin — split limpo vence render-prop) |
+| `shared/Footer.tsx`       | `RetroFooter` + `TermFooter`                                                             |
+| `shared/SectionTitle.tsx` | `RetroSectionTitle` + `TermSectionTitle`                                                 |
 
 Permanecem em `shared/` (skin-agnósticos de verdade): `Logo`, `Icons`, `LogoWatermark`*, `PageTransition`, `PrintButton`, `TypingText`, `PersonaPage`, `ThemeProvider`, `SkinProvider`. (*auditar os 3 hits do grep na Fase 1; se houver branch de skin, split.)
 

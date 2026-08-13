@@ -1,0 +1,7 @@
+/*
+ * Palette catalog — will hold the raw hex values shared by the themes in themes.css,
+ * so each color of the design exists exactly once (Fase 4 of plan-components.md).
+ *
+ * Spike S5 validated that daisyUI theme blocks accept `var(--palette-*)` as token
+ * values: the reference survives the build untouched and resolves at runtime.
+ */

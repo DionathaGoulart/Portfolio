@@ -1,0 +1,57 @@
+/*
+ * Utilities of the terminal skin (shell / CRT): /dev, /dev/cv.
+ * btn-terminal extends `btn` via its tokens — see the note in retro.css.
+ */
+
+/* Compact monospace button of the terminal skin. */
+@utility btn-terminal {
+  --btn-color: color-mix(in srgb, var(--color-accent) 5%, transparent);
+  --btn-fg: var(--color-accent);
+  --btn-p: 1rem;
+  --size: 2.5rem;
+  --fontsize: 0.75rem;
+  border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+@utility terminal-glow {
+  text-shadow: 0 0 10px var(--color-accent);
+}
+
+@utility terminal-scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    var(--scanline-color) 51%,
+    transparent 51%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.3;
+}
+
+@utility terminal-cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  background-color: var(--color-accent);
+  vertical-align: middle;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  from,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

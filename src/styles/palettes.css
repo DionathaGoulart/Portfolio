@@ -1,7 +1,84 @@
 /*
- * Palette catalog — will hold the raw hex values shared by the themes in themes.css,
- * so each color of the design exists exactly once (Fase 4 of plan-components.md).
+ * Palette catalog — the single place a color of the design exists.
  *
- * Spike S5 validated that daisyUI theme blocks accept `var(--palette-*)` as token
- * values: the reference survives the build untouched and resolves at runtime.
+ * themes.css builds every daisyUI theme out of these variables (spike S5 validated that
+ * daisyUI theme tokens accept var() references untouched), and the terminal `theme`
+ * wizard's swatches in theme-config.ts point at the same names. The only literal copies
+ * left in the app are THEME_COLOR_LIGHT/DARK in theme-config.ts, because a <meta>
+ * theme-color cannot read a CSS variable — keep those equal to --palette-cream and
+ * --palette-noir.
+ *
+ * These sit on :root, outside any theme: a palette is data shared by both skins.
  */
+:root {
+  /* Neutrals */
+  --palette-white: #ffffff;
+  --palette-black: #000000;
+  --palette-near-black: #0d0d0d;
+  --palette-cream: #f2efe7;
+  --palette-ink: #1a0a0a;
+  --palette-noir: #121212;
+  --palette-noir-raised: #1a1a1a;
+  --palette-graphite: #111111;
+  --palette-silver: #e0e0e0;
+
+  /* Brand accents */
+  --palette-crimson: #dc143c;
+  --palette-rose: #e8729a;
+  --palette-ember: #ff6b45;
+  --palette-gold: #c8a96e;
+
+  /* Frost / abyss family */
+  --palette-frost-bg: #e4f0f6;
+  --palette-frost-ink: #0f172a;
+  --palette-abyss: #0a0f1e;
+
+  /* Forest family */
+  --palette-forest-bg: #eef4ee;
+  --palette-forest-bg-raised: #f5faf5;
+  --palette-forest-ink: #1a2e1a;
+  --palette-forest-green: #2d6a2d;
+
+  /* Sand family */
+  --palette-sand-bg: #f5f0e8;
+  --palette-sand-bg-raised: #fffcf5;
+  --palette-sand-ink: #2a1a0a;
+  --palette-copper: #b56a30;
+
+  /* Midnight / mint family (retro-ti-dark, terminal-ember) */
+  --palette-midnight: #0d1117;
+  --palette-midnight-raised: #121a12;
+  --palette-mint: #e0ffe0;
+
+  /* Cyan family */
+  --palette-cyan-bg: #0a0f14;
+  --palette-cyan-bg-raised: #0f1820;
+  --palette-cyan: #00e5ff;
+  --palette-cyan-mist: #e0f4ff;
+
+  /* Violet family */
+  --palette-violet-bg: #0e0a14;
+  --palette-violet-bg-raised: #160f20;
+  --palette-violet: #b47aff;
+  --palette-violet-mist: #ede0ff;
+
+  /* Matrix family */
+  --palette-matrix-bg-raised: #0a140a;
+  --palette-matrix-green: #00ff66;
+  --palette-matrix-mist: #d7ffd7;
+  --palette-matrix-ink: #001a08;
+
+  /* Status colors — full-strength on light themes, soft on dark */
+  --palette-info: #2563eb;
+  --palette-success: #16a34a;
+  --palette-warning: #d97706;
+  --palette-error: #dc2626;
+  --palette-info-soft: #60a5fa;
+  --palette-success-soft: #4ade80;
+  --palette-warning-soft: #fbbf24;
+  --palette-error-soft: #f87171;
+
+  /* Overlays */
+  --palette-scanline-light: rgba(0, 0, 0, 0.05);
+  --palette-scanline-dark: rgba(0, 0, 0, 0.2);
+}

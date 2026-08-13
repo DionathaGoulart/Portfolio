@@ -5,13 +5,16 @@
 @import "../styles/terminal.css";
 @plugin "@tailwindcss/typography";
 /*
- * `btn` is the only daisyUI component this app renders. Tailwind's scanner, though, harvests
- * every bare word in the source — `project.status`, `type: "input"`, an `aria-label` reading
- * "menu", the comment in Tooltip.tsx naming `tooltip` — and each hit pulled a whole component
- * into the stylesheet. That was 31KB of the 138KB build serving markup that does not exist.
+ * Tailwind's scanner harvests every bare word in the source, so a daisyUI component that
+ * exists as CSS but not as markup still ships (`project.status` once pulled the whole
+ * `status` component in — 31KB of dead CSS at the time). The list below excludes what the
+ * app provably does not render; scripts/check-excluded.mjs fails CI if markup starts using
+ * one of these classes without removing it here first.
  *
- * Keep this list in step with the markup: rendering one of these components without first
- * removing it here fails quietly, since the class simply never reaches the stylesheet.
+ * Why each stays excluded: menu/navbar — both skins' headers are fixed overlays, not
+ * navbar boxes; progress — the terminal skin draws its meters as ASCII/segments by design;
+ * input — the shell's command line is a bare borderless field with row-level focus;
+ * label, steps, toggle — no corresponding pattern in the app today.
  */
 @plugin "daisyui" {
   themes: false;

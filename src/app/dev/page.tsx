@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { seoGlobal, seoDev } from "@/data/seo-config";
-import DevPageClient from "@/components/dev/DevPageClient";
+import DevPageClient from "@/components/terminal/sections/DevPageClient";
 
 export const metadata: Metadata = {
   title: seoDev.title,

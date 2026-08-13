@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { seoGlobal, seoTi } from "@/data/seo-config";
-import TiPageClient from "@/components/ti/TiPageClient";
+import TiPageClient from "@/components/retro/ti/TiPageClient";
 
 export const metadata: Metadata = {
   title: seoTi.title,

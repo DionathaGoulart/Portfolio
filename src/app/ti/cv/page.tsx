@@ -1,11 +1,11 @@
 import fs from "fs";
 import { notFound } from "next/navigation";
 import path from "path";
-import TiCVViewer from "@/components/ti/TiCVViewer";
+import TiCVViewer from "@/components/retro/ti/TiCVViewer";
 import { Metadata } from "next";
 import { generatePersonSchema } from "@/lib/schema";
-import { Header } from "@/components/ti/Header";
-import { Footer } from "@/components/shared/Footer";
+import { Header } from "@/components/retro/ti/Header";
+import { RetroStatusFooter } from "@/components/retro/ui/RetroStatusFooter";
 
 export const metadata: Metadata = {
   title: "CV | IT Operations Specialist",
@@ -45,7 +45,7 @@ export default function TiCVPage() {
           <TiCVViewer content={content} />
         </div>
 
-        <Footer variant="ti" className="mt-20" />
+        <RetroStatusFooter className="mt-20" />
       </div>
     </main>
   );

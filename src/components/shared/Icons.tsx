@@ -69,3 +69,13 @@ export const iconMap = {
   whatsapp: WhatsAppIcon,
   gmail: GmailIcon,
 };
+
+/**
+ * Icon for a social entry, keyed off `type` when the config provides one, falling back
+ * to the display name. This lookup is why the dev config's "Email" entry had to become
+ * "Gmail" — there is no `email` icon, and the fallback silently lands on GitHub.
+ */
+export function iconFor(entry: { name: string; type?: string }) {
+  const key = (entry.type ?? entry.name).toLowerCase() as keyof typeof iconMap;
+  return iconMap[key] ?? iconMap.github;
+}

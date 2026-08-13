@@ -1,12 +1,12 @@
 import fs from "fs";
 import { notFound } from "next/navigation";
 import path from "path";
-import DevCVViewer from "@/components/dev/DevCVViewer";
+import DevCVViewer from "@/components/terminal/sections/DevCVViewer";
 import { Metadata } from "next";
-import { Header } from "@/components/dev/Header";
+import { Header } from "@/components/terminal/sections/Header";
 import { generatePersonSchema } from "@/lib/schema";
 import { PageTransition } from "@/components/shared/PageTransition";
-import { Footer } from "@/components/shared/Footer";
+import { CreditFooter } from "@/components/shared/CreditFooter";
 import { devContent } from "@/data/dev-config";
 
 export const metadata: Metadata = {
@@ -47,7 +47,7 @@ export default function DevCVPage() {
       <PageTransition className="max-w-7xl mx-auto px-6 md:px-10 pb-20 pt-28 md:pt-32">
         <DevCVViewer content={content} />
 
-        <Footer variant="retro" name={devContent.name} className="mt-20" />
+        <CreditFooter name={devContent.name} className="mt-20" />
       </PageTransition>
     </div>
   );

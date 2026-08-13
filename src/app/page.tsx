@@ -1,7 +1,7 @@
-import { ThemeToggle } from "@/components/shared/ThemeToggle";
-import { ProfileCard } from "@/components/hub/ProfileCard";
-import { PersonaSwitcher } from "@/components/hub/PersonaSwitcher";
-import { HubFooter } from "@/components/hub/HubFooter";
+import { RetroThemeToggle } from "@/components/retro/ui/RetroThemeToggle";
+import { ProfileCard } from "@/components/retro/hub/ProfileCard";
+import { PersonaSwitcher } from "@/components/retro/hub/PersonaSwitcher";
+import { HubFooter } from "@/components/retro/hub/HubFooter";
 
 export default function HubPage() {
   return (
@@ -14,7 +14,7 @@ export default function HubPage() {
           <span>Session: active</span>
           <span>Access: full_root</span>
         </div>
-        <ThemeToggle />
+        <RetroThemeToggle />
       </div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">

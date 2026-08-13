@@ -1,0 +1,75 @@
+/*
+ * Utilities of the retro skin (neobrutalist): /, /ti, /ti/cv.
+ *
+ * Button variants are written as daisyUI button tokens rather than as utilities layered
+ * on top of `btn`. `.btn` reads height from --size, horizontal padding from --btn-p,
+ * font size from --fontsize and its colours from --btn-color/--btn-fg, so setting those
+ * is how a project is meant to extend it — and `btn` keeps supplying the focus, active
+ * and disabled behaviour instead of each button reinventing it.
+ */
+@utility btn-retro {
+  --btn-color: var(--color-accent);
+  --btn-fg: var(--color-accent-content);
+  --btn-p: 2rem;
+  --size: 3.25rem;
+  --fontsize: 0.875rem;
+  border-color: var(--color-base-300);
+  font-weight: 900;
+  text-transform: uppercase;
+
+  @media (width >= 48rem) {
+    --size: 3.75rem;
+    --fontsize: 1rem;
+  }
+}
+
+/*
+ * The source wrote `border-accent` here, but `.retro-border`'s `border:` shorthand carries
+ * a colour and lands later in the cascade, so this outline always rendered with the dark
+ * base-300 border. Keeping what shipped.
+ */
+@utility btn-retro-outline {
+  --btn-color: transparent;
+  --btn-fg: var(--color-base-content);
+  --btn-p: 2rem;
+  --size: 3.25rem;
+  --fontsize: 0.875rem;
+  border-color: var(--color-base-300);
+  font-weight: 900;
+  text-transform: uppercase;
+
+  @media (width >= 48rem) {
+    --size: 3.75rem;
+    --fontsize: 1rem;
+  }
+}
+
+/* Solid dark button of the retro skin, used by the project cards. */
+@utility btn-retro-invert {
+  --btn-color: var(--color-base-content);
+  --btn-fg: var(--color-base-100);
+  --btn-p: 1rem;
+  --size: 2.75rem;
+  --fontsize: 0.75rem;
+  border-color: var(--color-base-300);
+  font-weight: 900;
+  text-transform: uppercase;
+
+  @media (width >= 48rem) {
+    --size: 3rem;
+    --fontsize: 0.875rem;
+  }
+}
+
+/* Hard offset shadow of the retro skin. Reads --shadow, an extra token every theme sets. */
+@utility retro-shadow {
+  box-shadow: 6px 6px 0px 0px var(--shadow);
+}
+
+@utility retro-shadow-sm {
+  box-shadow: 3px 3px 0px 0px var(--shadow);
+}
+
+@utility retro-border {
+  border: var(--frame-border) solid var(--color-base-300);
+}

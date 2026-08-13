@@ -73,3 +73,30 @@
 @utility retro-border {
   border: var(--frame-border) solid var(--color-base-300);
 }
+
+/*
+ * daisyUI tooltip dressed as the retro skin's flat label: hard border, uppercase
+ * micro-type, no arrow. Replaces the hand-rolled span — and shows on keyboard
+ * focus, which the span never did.
+ */
+@utility tooltip-retro {
+  --tt-off: calc(100% + 0.875rem);
+
+  &:before {
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    background-color: var(--color-accent);
+    color: var(--color-accent-content);
+    border: var(--frame-border) solid var(--color-base-300);
+    border-radius: 0;
+    white-space: nowrap;
+    max-width: none;
+  }
+
+  &:after {
+    display: none;
+  }
+}

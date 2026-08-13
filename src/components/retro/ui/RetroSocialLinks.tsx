@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { iconFor } from "@/components/shared/Icons";
-import { RetroTooltip } from "./RetroTooltip";
 import { SocialLink } from "@/types/content";
 import { cn } from "@/lib/utils";
 
@@ -64,14 +63,13 @@ export function RetroSocialLinks({
               key={social.name}
               href={social.url}
               aria-label={social.name}
-              title={social.name}
+              data-tip={compact ? social.name : undefined}
               className={cn(
                 "retro-border bg-base-200 flex items-center justify-center hover:bg-accent hover:text-accent-content transition-all relative group retro-shadow-sm hover:retro-shadow-sm hover:-translate-y-1 active:translate-y-0 text-base-content",
-                compact ? "p-3 sm:p-4" : "p-4 sm:p-5"
+                compact ? "p-3 sm:p-4 tooltip tooltip-retro" : "p-4 sm:p-5"
               )}
             >
               <Icon size={compact ? 20 : 24} />
-              {compact && <RetroTooltip label={social.name} />}
             </Link>
           );
         }
@@ -81,10 +79,10 @@ export function RetroSocialLinks({
             key={social.name}
             href={social.url}
             aria-label={social.name}
-            className="retro-border bg-base-200 p-4 hover:bg-accent hover:text-accent-content transition-all relative group retro-shadow-sm hover:retro-shadow-sm hover:-translate-y-1 active:translate-y-0 text-base-content"
+            data-tip={social.name}
+            className="tooltip tooltip-retro retro-border bg-base-200 p-4 hover:bg-accent hover:text-accent-content transition-all relative group retro-shadow-sm hover:retro-shadow-sm hover:-translate-y-1 active:translate-y-0 text-base-content"
           >
             <Icon size={24} />
-            <RetroTooltip label={social.name} />
           </Link>
         );
       })}

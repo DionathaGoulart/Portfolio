@@ -3,6 +3,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Logo } from "@/components/shared/Logo";
 import { hubContent } from "@/data/hub-config";
+import { RetroCard } from "@/components/retro/ui/RetroCard";
 
 /** The two route cards. Each sets --hub-hover-bg so its hover colour follows its persona. */
 export function PersonaSwitcher() {
@@ -14,8 +15,9 @@ export function PersonaSwitcher() {
     >
       {Object.entries(hubContent.sections).map(([key, section]) => (
         <Link key={key} href={section.href} className="group">
-          <div
-            className="retro-border bg-base-200 p-1 retro-shadow-sm group-hover:retro-shadow transition-all transform group-hover:-translate-y-2 relative overflow-hidden group-hover:text-white"
+          <RetroCard
+            shadow="sm"
+            className="p-1 group-hover:retro-shadow transition-all transform group-hover:-translate-y-2 relative overflow-hidden group-hover:text-white"
             style={{ "--hub-hover-bg": section.hoverColor } as React.CSSProperties}
           >
             {/* Terminal Title Bar */}
@@ -52,7 +54,7 @@ export function PersonaSwitcher() {
                 <span className="text-xs font-black">{section.action}</span>
               </div>
             </div>
-          </div>
+          </RetroCard>
         </Link>
       ))}
     </motion.div>

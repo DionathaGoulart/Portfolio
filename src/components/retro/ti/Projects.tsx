@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { tiContent } from "@/data/ti-config";
 import { RetroSectionTitle } from "../ui/RetroSectionTitle";
 import { WindowDots } from "@/components/retro/ui/WindowDots";
+import { RetroCard } from "../ui/RetroCard";
+import { RetroBadge } from "../ui/RetroBadge";
 
 export default function Projects() {
   return (
@@ -15,9 +17,9 @@ export default function Projects() {
           <RetroSectionTitle title={tiContent.ui.projectsTitle} className="mb-4 md:mb-8" />
           <p className="text-lg md:text-xl font-bold opacity-60">{tiContent.ui.projectsSubtitle}</p>
         </div>
-        <div className="hidden md:block retro-border bg-base-200 p-6 retro-shadow-sm font-black text-2xl animate-bounce">
+        <RetroCard shadow="sm" className="hidden md:block p-6 font-black text-2xl animate-bounce">
           {tiContent.ui.projectsScrollHint}
-        </div>
+        </RetroCard>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-left">
@@ -30,7 +32,10 @@ export default function Projects() {
             transition={{ delay: i * 0.1 }}
             className="group"
           >
-            <div className="retro-border bg-base-200 overflow-hidden retro-shadow-sm group-hover:retro-shadow transition-all group-hover:-translate-x-1 group-hover:-translate-y-1 h-full flex flex-col">
+            <RetroCard
+              shadow="sm"
+              className="overflow-hidden group-hover:retro-shadow transition-all group-hover:-translate-x-1 group-hover:-translate-y-1 h-full"
+            >
               <div className="border-b-2 border-base-300 bg-base-100 p-3 md:p-4 flex justify-between items-center shrink-0">
                 <WindowDots size="responsive" className="md:gap-2" />
                 <span className="font-mono text-[10px] md:text-xs font-bold opacity-40 uppercase">
@@ -50,12 +55,9 @@ export default function Projects() {
 
                 <div className="flex flex-wrap gap-2 mt-auto">
                   {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="retro-border bg-base-100 px-2 py-1 md:px-3 md:py-1 text-[10px] md:text-xs font-black uppercase tracking-widest"
-                    >
+                    <RetroBadge variant="tag" key={tag}>
                       {tag}
-                    </span>
+                    </RetroBadge>
                   ))}
                 </div>
 
@@ -91,7 +93,7 @@ export default function Projects() {
                   ) : null}
                 </div>
               </div>
-            </div>
+            </RetroCard>
           </motion.div>
         ))}
       </div>

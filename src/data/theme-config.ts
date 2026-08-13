@@ -5,10 +5,9 @@
  *  - `terminal` -> /dev and /dev/cv          (shell / CRT aesthetic, visitor-selectable palette)
  *  - `retro`    -> /, /ti and /ti/cv         (neobrutalist, fixed palette per route family)
  *
- * The hex values here are display-only (swatch previews for the terminal `theme` command).
- * The colors that actually paint the app live in the `@plugin "daisyui/theme"` blocks in
- * globals.css — these must stay in sync with the `--color-base-100/-content/accent` of the
- * matching theme.
+ * The swatch values (bg/acc/fg) are display-only (previews for the terminal `theme`
+ * command) and reference the palette variables in src/styles/palettes.css — the same
+ * single source of color the themes are built from, so they can never drift.
  */
 
 export type Skin = "terminal" | "retro";
@@ -30,33 +29,33 @@ export const TERMINAL_LIGHT_THEMES: TerminalThemeOption[] = [
     palette: "p1",
     theme: "terminal-crimson",
     name: "Crimson Chalk",
-    bg: "#f2efe7",
-    acc: "#dc143c",
-    fg: "#1a0a0a",
+    bg: "var(--palette-cream)",
+    acc: "var(--palette-crimson)",
+    fg: "var(--palette-ink)",
   },
   {
     palette: "p2",
     theme: "terminal-frost",
     name: "Abyss Frost",
-    bg: "#e4f0f6",
-    acc: "#0a0f1e",
-    fg: "#0f172a",
+    bg: "var(--palette-frost-bg)",
+    acc: "var(--palette-abyss)",
+    fg: "var(--palette-frost-ink)",
   },
   {
     palette: "p3",
     theme: "terminal-forest",
     name: "Forest Mist",
-    bg: "#eef4ee",
-    acc: "#2d6a2d",
-    fg: "#1a2e1a",
+    bg: "var(--palette-forest-bg)",
+    acc: "var(--palette-forest-green)",
+    fg: "var(--palette-forest-ink)",
   },
   {
     palette: "p4",
     theme: "terminal-amber",
     name: "Sand Dusk",
-    bg: "#f5f0e8",
-    acc: "#b56a30",
-    fg: "#2a1a0a",
+    bg: "var(--palette-sand-bg)",
+    acc: "var(--palette-copper)",
+    fg: "var(--palette-sand-ink)",
   },
 ];
 
@@ -65,49 +64,49 @@ export const TERMINAL_DARK_THEMES: TerminalThemeOption[] = [
     palette: "d1",
     theme: "terminal-rose",
     name: "Noir Rose",
-    bg: "#121212",
-    acc: "#e8729a",
-    fg: "#f2efe7",
+    bg: "var(--palette-noir)",
+    acc: "var(--palette-rose)",
+    fg: "var(--palette-cream)",
   },
   {
     palette: "d2",
     theme: "terminal-gold",
     name: "Vault Gold",
-    bg: "#111111",
-    acc: "#c8a96e",
-    fg: "#e0e0e0",
+    bg: "var(--palette-graphite)",
+    acc: "var(--palette-gold)",
+    fg: "var(--palette-silver)",
   },
   {
     palette: "d3",
     theme: "terminal-ember",
     name: "Midnight Ember",
-    bg: "#0d1117",
-    acc: "#ff6b45",
-    fg: "#e0ffe0",
+    bg: "var(--palette-midnight)",
+    acc: "var(--palette-ember)",
+    fg: "var(--palette-mint)",
   },
   {
     palette: "d4",
     theme: "terminal-cyan",
     name: "Cyber Teal",
-    bg: "#0a0f14",
-    acc: "#00e5ff",
-    fg: "#e0f4ff",
+    bg: "var(--palette-cyan-bg)",
+    acc: "var(--palette-cyan)",
+    fg: "var(--palette-cyan-mist)",
   },
   {
     palette: "d5",
     theme: "terminal-violet",
     name: "Velvet Purple",
-    bg: "#0e0a14",
-    acc: "#b47aff",
-    fg: "#ede0ff",
+    bg: "var(--palette-violet-bg)",
+    acc: "var(--palette-violet)",
+    fg: "var(--palette-violet-mist)",
   },
   {
     palette: "d6",
     theme: "terminal-matrix",
     name: "Neon Matrix",
-    bg: "#000000",
-    acc: "#00ff66",
-    fg: "#d7ffd7",
+    bg: "var(--palette-black)",
+    acc: "var(--palette-matrix-green)",
+    fg: "var(--palette-matrix-mist)",
   },
 ];
 
@@ -122,8 +121,8 @@ export const MODE_STORAGE_KEY = "theme";
 
 /**
  * Browser chrome color. A meta tag cannot read a CSS variable, so these two literals are
- * the one place a theme color is repeated — keep them equal to `--color-base-100` of
- * retro-hub-light and retro-hub-dark in globals.css.
+ * the one place a color is repeated — keep them equal to --palette-cream and
+ * --palette-noir in src/styles/palettes.css.
  */
 export const THEME_COLOR_LIGHT = "#f2efe7";
 export const THEME_COLOR_DARK = "#121212";

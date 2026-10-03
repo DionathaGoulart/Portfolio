@@ -111,6 +111,15 @@ export const viewport: Viewport = {
 
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import { SkinProvider } from "@/components/shared/SkinProvider";
+import { ShellModeProvider } from "@/context/ShellModeContext";
+import dynamic from "next/dynamic";
+
+// Import estatico mandaria o painel no bundle de producao (a referencia de client component
+// entra no manifest mesmo com o JSX desligado). Com o ternario constante, o import() some.
+const DevTools =
+  process.env.NODE_ENV === "development"
+    ? dynamic(() => import("@/components/shared/DevTools").then((m) => m.DevTools))
+    : () => null;
 import { MODE_STORAGE_KEY, THEME_INIT_SCRIPT } from "@/data/theme-config";
 
 export default function RootLayout({
@@ -123,6 +132,26 @@ export default function RootLayout({
       <head>
         {/* Stamps data-theme/data-skin before first paint so dark visitors never see a light flash. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        {process.env.NODE_ENV === "development" && (
+          // Mata service workers orfaos deixados por outro projeto que ja usou esta porta.
+          // Um SW estranho intercepta os chunks de HMR do Next e joga o navegador num loop
+          // de full reload. Ver public/sw.js.
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(){
+  if (!('serviceWorker' in navigator)) return;
+  navigator.serviceWorker.getRegistrations().then(function(rs){
+    rs.forEach(function(r){ r.unregister(); });
+  }).catch(function(){});
+  if (window.caches && caches.keys) {
+    caches.keys().then(function(ks){
+      ks.forEach(function(k){ caches.delete(k); });
+    }).catch(function(){});
+  }
+})();`,
+            }}
+          />
+        )}
         {/*
           Framer Motion renders its `initial` state as an inline style, so server output
           carries opacity:0 on every reveal and the content stayed invisible when scripts
@@ -139,7 +168,13 @@ export default function RootLayout({
           enableSystem
           storageKey={MODE_STORAGE_KEY}
         >
-          <SkinProvider>{children}</SkinProvider>
+          <SkinProvider>
+            {/* The terminal skin offers the shell on every page, so the mode lives here. */}
+            <ShellModeProvider>
+              {children}
+              <DevTools />
+            </ShellModeProvider>
+          </SkinProvider>
         </ThemeProvider>
       </body>
     </html>

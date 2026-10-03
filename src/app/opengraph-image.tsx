@@ -42,7 +42,7 @@ export default function Image() {
       </div>
       <div style={{ display: "flex", marginTop: 32 }}>
         <div style={{ background: ACCENT, color: BG, padding: "12px 24px", fontSize: 30 }}>
-          Software Engineer + IT Operations
+          Desenvolvedor Fullstack
         </div>
       </div>
     </div>,

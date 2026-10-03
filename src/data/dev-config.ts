@@ -1,8 +1,10 @@
-import { DevContent } from "@/types/content";
+import { PersonaContent } from "@/types/content";
+import { showcaseProjects } from "./projects-config";
 
-export const devContent: DevContent = {
+export const devContent: PersonaContent = {
+  persona: "dev",
   name: "Dionatha Goulart",
-  role: "Software Engineer | Fullstack Developer",
+  role: "Desenvolvedor Fullstack — React, Next.js, Node.js",
   email: "dionatha.work@gmail.com",
 
   // ─── System Meta ─────────────────────────────────────────────────────────────
@@ -19,7 +21,7 @@ export const devContent: DevContent = {
     about: { enabled: true },
     projects: { enabled: true },
     experience: { enabled: true },
-    contact: { enabled: false },
+    contact: { enabled: true },
   },
 
   // ─── Hero ─────────────────────────────────────────────────────────────────────
@@ -31,8 +33,9 @@ export const devContent: DevContent = {
     uptime: "3 years, 128 days, 4 hours",
     status: "Available_to_Code",
     expertise: "Fullstack_Dev",
-    location: "Rio_Grande_do_Sul",
     yearsOfExperience: "3+ Years",
+    workplace: "Alvorada/RS · Remoto",
+    badges: ["3+ YEARS", "FULLSTACK"],
   },
 
   // ─── About ───────────────────────────────────────────────────────────────────
@@ -78,78 +81,9 @@ export const devContent: DevContent = {
   },
 
   // ─── Projects ────────────────────────────────────────────────────────────────
-  projects: [
-    {
-      title: "Mil Ideias®",
-      description:
-        "Plataforma premium para catálogo de produtos e geração de orçamentos personalizados.",
-      tags: ["Next.js", "PostgreSQL", "Tailwind"],
-      link: "https://milideias.com.br",
-      github: "https://github.com/DionathaGoulart",
-      status: "PRODUCTION",
-      role: "Fullstack Developer",
-      features: [
-        "Catálogo de produtos interativo com carregamento instantâneo",
-        "Geração automatizada de orçamentos personalizados em PDF",
-        "Painel administrativo robusto para controle de inventário e vendas",
-        "Integração com gateways de pagamento locais e analytics",
-      ],
-      details:
-        "Uma solução completa desenvolvida para digitalizar e otimizar as operações comerciais de catálogos e orçamentos, reduzindo o tempo de fechamento de vendas em mais de 40%.",
-    },
-    {
-      title: "XR Card",
-      description: "Plataforma de benefícios de saúde e telemedicina com alta conversão.",
-      tags: ["React", "Node.js", "Supabase"],
-      link: "https://xrcard.com.br",
-      github: "https://github.com/DionathaGoulart",
-      status: "STABLE",
-      role: "Lead Fullstack Developer",
-      features: [
-        "Fluxo de onboarding ultra-otimizado com alta conversão",
-        "Integração direta com APIs de telemedicina e agendamento",
-        "Assinatura digital de contratos e pagamentos recorrentes",
-        "Dashboard do paciente com histórico clínico e carteira virtual",
-      ],
-      details:
-        "Plataforma desenvolvida para simplificar o acesso a benefícios de saúde e telemedicina, focada em entregar uma experiência de usuário limpa, rápida e sem atritos para o usuário final.",
-    },
-    {
-      title: "Detcheler",
-      description: "Sincronização inteligente com Tiny ERP e automação via WhatsApp.",
-      tags: ["Node.js", "ERP API", "Automation"],
-      link: "#",
-      github: "private",
-      status: "ACTIVE",
-      role: "Backend & Integration Specialist",
-      fileExtension: ".ts",
-      features: [
-        "Sincronização bidirecional de estoque e pedidos em tempo real",
-        "Disparo automatizado de notificações de rastreamento via WhatsApp",
-        "Processamento de filas de mensagens com retry automático",
-        "Relatórios de consistência de dados entre ERP e e-commerce",
-      ],
-      details:
-        "Um middleware de alto desempenho projetado para unificar sistemas ERP com canais de comunicação direta, automatizando a jornada de pós-venda e eliminando erros manuais de sincronização.",
-    },
-    {
-      title: "Containner®",
-      description: "Showcase imersivo com geradores de patterns dinâmicos e monorepo.",
-      tags: ["React", "Turborepo", "Framer Motion"],
-      link: "https://containner.com.br",
-      github: "https://github.com/DionathaGoulart",
-      status: "STABLE",
-      role: "Fullstack Developer",
-      features: [
-        "Gerador algorítmico de patterns visuais dinâmicos em SVG/CSS",
-        "Arquitetura Monorepo escalável usando Turborepo e pnpm",
-        "Animações fluidas a 60fps usando Framer Motion e Tailwind",
-        "Sistema modular de componentes compartilhados reutilizáveis",
-      ],
-      details:
-        "Um showcase interativo premium e imersivo construído sobre uma arquitetura de monorepo de última geração, integrando design arrojado e performance técnica extrema.",
-    },
-  ],
+  // The professional projects live in projects-config, next to the personal ones, so
+  // /projetos and this showcase describe the same work from a single entry.
+  projects: showcaseProjects(),
 
   // ─── Experience ──────────────────────────────────────────────────────────────
   experience: [
@@ -176,21 +110,46 @@ export const devContent: DevContent = {
       { name: "LinkedIn", url: "https://linkedin.com/in/dionathagoulart" },
       { name: "GitHub", url: "https://github.com/DionathaGoulart" },
       { name: "Gmail", url: "mailto:dionatha.work@gmail.com" },
+      { name: "WhatsApp", url: "https://wa.me/5551986485232" },
     ],
   },
 
   // ─── UI / App Strings ────────────────────────────────────────────────────────
   ui: {
-    aboutTitle: "// System_Overview",
-    experienceTitle: "operational_history",
-    projectsTitle: "projects_repo",
-    projectsHintNavigate: "NAVEGAR ENTRE PROJETOS",
-    projectsHintOpen: "ABRIR VERSÃO PRODUÇÃO (LIVE)",
-    projectsHintSource: "VISITAR CÓDIGO FONTE (GITHUB)",
-    aboutSubtitle: "Hardware & Cognitive Specs v4.0",
-    aboutModuleBio: "MODULE: PRIMARY_BIO",
-    aboutModuleEnv: "MODULE: ENV_CONFIG",
-    aboutModuleSys: "MODULE: SYSTEM_SERVICES",
-    aboutSysHtop: "HTOP / CORE_MODULES",
+    terminal: {
+      aboutTitle: "// System_Overview",
+      experienceTitle: "operational_history",
+      projectsTitle: "projects_repo",
+      projectsHintNavigate: "NAVEGAR ENTRE PROJETOS",
+      projectsHintOpen: "ABRIR VERSÃO PRODUÇÃO (LIVE)",
+      projectsHintSource: "VISITAR CÓDIGO FONTE (GITHUB)",
+      aboutSubtitle: "Hardware & Cognitive Specs v4.0",
+      aboutModuleBio: "MODULE: PRIMARY_BIO",
+      aboutModuleEnv: "MODULE: ENV_CONFIG",
+      aboutModuleSys: "MODULE: SYSTEM_SERVICES",
+      aboutSysHtop: "HTOP / CORE_MODULES",
+      projectsPersonalLink: "ls ~/projetos-pessoais",
+    },
+    retro: {
+      heroProjectsButton: "Ver Projetos",
+      heroContactButton: "Falar Comigo",
+      heroCvButton: "Currículo",
+      aboutBadge: "Sobre",
+      aboutTitlePrefix: "Transformando ideias em ",
+      aboutTitleHighlight: "Produtos Reais.",
+      aboutStackTitle: "Stack_Principal",
+      projectsTitle: "PROJETOS SELECIONADOS",
+      projectsSubtitle: "Aplicações em produção, do banco de dados à interface.",
+      projectsScrollHint: "SCROLL ↓",
+      projectsDeployButton: "Deploy Production",
+      projectsOfflineButton: "Offline",
+      projectsPrivateButton: "GitHub Privado",
+      projectsRepoButton: "GitHub Repo",
+      projectsPersonalLink: "Ver projetos pessoais",
+      experienceTitle: "EXPERIÊNCIA",
+      contactPrompt: "Iniciar protocolo de contato",
+      contactFooterText: "Connection encrypted • Protocol active",
+      contactStatus: "Online",
+    },
   },
 };

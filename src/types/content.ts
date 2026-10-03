@@ -40,7 +40,7 @@ export interface EnvVar {
   href?: string;
 }
 
-/** Shape both personas share. Persona-specific extras live in DevContent / TiContent. */
+/** Core both skins read. The per-skin extras live in PersonaContent. */
 export interface PortfolioContent {
   name: string;
   role: string;
@@ -70,10 +70,11 @@ export interface PortfolioContent {
 }
 
 /**
- * UI strings are typed per persona rather than Record<string, string>, so a typo in a key
- * is a compile error and every key is provably rendered somewhere.
+ * UI strings are typed per skin rather than Record<string, string>, so a typo in a key is a
+ * compile error and every key is provably rendered somewhere. Every persona carries both
+ * sets, because every page renders in either skin.
  */
-export interface DevUiStrings {
+export interface TerminalUiStrings {
   aboutTitle: string;
   experienceTitle: string;
   projectsTitle: string;
@@ -85,11 +86,13 @@ export interface DevUiStrings {
   aboutModuleEnv: string;
   aboutModuleSys: string;
   aboutSysHtop: string;
+  projectsPersonalLink: string;
 }
 
-export interface TiUiStrings {
+export interface RetroUiStrings {
   heroProjectsButton: string;
   heroContactButton: string;
+  heroCvButton: string;
   aboutBadge: string;
   aboutTitlePrefix: string;
   aboutTitleHighlight: string;
@@ -101,18 +104,22 @@ export interface TiUiStrings {
   projectsOfflineButton: string;
   projectsPrivateButton: string;
   projectsRepoButton: string;
+  projectsPersonalLink: string;
   experienceTitle: string;
   contactPrompt: string;
   contactFooterText: string;
   contactStatus: string;
 }
 
+export type Persona = "dev";
+
 /**
- * The dev skin renders a fake shell, so it carries system metadata and env variables the
- * ti skin has no surface for. These used to sit on the shared type, which forced ti-config
- * to invent values that were never rendered.
+ * The portfolio (/dev) in full. The terminal skin renders a fake shell, so it reads
+ * the system metadata and env variables; the retro skin reads the badges and its own UI
+ * strings. Both skins read the shared PortfolioContent core.
  */
-export interface DevContent extends PortfolioContent {
+export interface PersonaContent extends PortfolioContent {
+  persona: Persona;
   email: string;
   meta: {
     username: string; // e.g. "dionatha_goulart"
@@ -126,18 +133,93 @@ export interface DevContent extends PortfolioContent {
     uptime: string; // e.g. "3 years, 128 days, 4 hours"
     status: string; // e.g. "Available_to_Code"
     expertise: string; // e.g. "Fullstack_Dev"
-    location: string; // e.g. "Rio_Grande_do_Sul"
     yearsOfExperience: string; // e.g. "3+ Years"
+    workplace: string; // e.g. "Alvorada/RS · Remoto"
   };
   about: PortfolioContent["about"] & {
     subtitle: string; // e.g. "Engenheiro de Software Fullstack"
     envVars: EnvVar[]; // contact/env variables shown in ENV_CONFIG module
   };
-  ui: DevUiStrings;
+  ui: {
+    terminal: TerminalUiStrings;
+    retro: RetroUiStrings;
+  };
 }
 
-export interface TiContent extends PortfolioContent {
-  ui: TiUiStrings;
+/** Where a project's action button goes. Picks the button's label and icon. */
+export type ProjectLinkKind = "demo" | "repo" | "download" | "store" | "site";
+
+export interface ProjectLink {
+  kind: ProjectLinkKind;
+  /** Button text, e.g. "Testar demo", "Baixar para Windows". */
+  label: string;
+  href: string;
+}
+
+export type ProjectStatus = "wip" | "beta" | "stable";
+
+/**
+ * Who a project was built for. `/projetos` filters the list on it, and the portfolio
+ * (/dev) shows only the professional ones.
+ */
+export type ProjectKind = "pessoal" | "profissional";
+
+/**
+ * Fields only the /dev showcase renders. They stay out of the project page, which reads
+ * the shared fields above, and out of the personal projects, which have no client.
+ */
+export interface ProjectShowcase {
+  /** Status chip of the /dev repo view, e.g. "PRODUCTION". Free text, unlike `status`. */
+  status: string;
+  /** e.g. "Lead Fullstack Developer". */
+  role: string;
+  /** Repository that is not a public link: "private" renders as a disabled button. */
+  github?: string;
+  /** Extension shown in the terminal file listing. Defaults to `.tsx`. */
+  fileExtension?: string;
+}
+
+/** A project: one card on /projetos and one page at /projetos/<slug>. */
+export interface PersonalProject {
+  /** URL segment: /projetos/<slug>, plus the short link /<slug>. Lowercase, digits and dashes. */
+  slug: string;
+  title: string;
+  /** One line: what it is. Shown on cards and under the title. */
+  tagline: string;
+  /** The project page body. Paragraphs split on blank lines. */
+  description: string;
+  tags: string[];
+  status: ProjectStatus;
+  kind: ProjectKind;
+  /** When work started, e.g. "2025". */
+  year: string;
+  /** Last update (YYYY-MM-DD). Orders the list and picks the hub's "agora: construindo" line. */
+  updated: string;
+  /** Screenshot under /public, e.g. "/projects/linkspace.png". Without it a generated cover is drawn. */
+  image?: string;
+  highlights?: string[];
+  links: ProjectLink[];
+  /** Present on professional projects; drives their card in the /dev showcase. */
+  showcase?: ProjectShowcase;
+}
+
+export interface ProjectsContent {
+  title: string;
+  subtitle: string;
+  statusLabels: Record<ProjectStatus, string>;
+  ui: {
+    backToList: string;
+    highlightsTitle: string;
+    stackTitle: string;
+    aboutTitle: string;
+    emptyLinks: string;
+    openProject: string;
+    /** Label of the kind filter, one per ProjectKind. */
+    filters: Record<ProjectKind, string>;
+    /** Shown when the selected kind has no project yet. */
+    emptyFilter: string;
+  };
+  projects: PersonalProject[];
 }
 
 export interface HubContent {
@@ -146,6 +228,24 @@ export interface HubContent {
   description: string;
   profileImage: string;
   socials: (SocialLink & { type: string })[];
+  /** Prefix of the "currently building" line; the project comes from projects-config. */
+  nowLabel: string;
+  /**
+   * Chrome shared by every page: the top bar's back button and the terminal skin's
+   * graphic/shell toggle, which both live outside any single page's content.
+   */
+  nav: {
+    back: string;
+    /** Tooltip / aria-label, e.g. "Voltar para o hub". */
+    backTitle: string;
+    /** Short labels of the shell toggle, for the header bar. */
+    shell: string;
+    graphic: string;
+    /** Full sentences of the same toggle, for the mobile menu and the tooltips. */
+    shellLong: string;
+    graphicLong: string;
+  };
+  /** One card per entry, in order. `{count}` in `status` becomes the number of projects. */
   sections: {
     [key: string]: {
       title: string;

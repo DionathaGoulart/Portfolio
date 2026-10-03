@@ -1,14 +1,18 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Logo } from "@/components/shared/Logo";
 import { RetroSocialLinks } from "@/components/retro/ui/RetroSocialLinks";
 import { RetroCard } from "@/components/retro/ui/RetroCard";
 import { TypingText } from "@/components/shared/TypingText";
 import { hubContent } from "@/data/hub-config";
+import { currentProject } from "@/data/projects-config";
 
 /** Photo, name plate and the typed manifest — the left half of the hub. */
 export function ProfileCard() {
+  const now = currentProject();
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -50 }}
@@ -52,7 +56,7 @@ export function ProfileCard() {
         </div>
 
         <RetroCard className="bg-accent p-6 md:p-8 inline-block flex-1">
-          <h1 className="text-5xl sm:text-7xl md:text-8xl font-black text-accent-content tracking-tighter leading-[0.85] uppercase italic whitespace-pre-line">
+          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-7xl 2xl:text-8xl font-black text-accent-content tracking-tighter leading-[0.85] uppercase italic whitespace-pre-line">
             {hubContent.name.replace(" ", " \n ")}
           </h1>
         </RetroCard>
@@ -71,6 +75,18 @@ export function ProfileCard() {
         <p className="text-lg sm:text-xl font-bold opacity-70 leading-tight max-w-2xl uppercase tracking-tighter">
           {hubContent.description}
         </p>
+        {now && (
+          <p className="font-mono text-xs sm:text-sm uppercase tracking-widest pt-2">
+            <span className="text-accent">{">"}</span>{" "}
+            <span className="opacity-50">{hubContent.nowLabel}</span>{" "}
+            <Link
+              href={`/projetos/${now.slug}`}
+              className="font-black text-accent hover:bg-accent hover:text-accent-content px-1 transition-colors"
+            >
+              {now.title}
+            </Link>
+          </p>
+        )}
       </RetroCard>
     </motion.div>
   );

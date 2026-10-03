@@ -1,6 +1,5 @@
 import { Fragment } from "react";
-import { devContent } from "@/data/dev-config";
-import type { Project } from "@/types/content";
+import type { PersonaContent, Project } from "@/types/content";
 import type { TerminalThemeOption } from "@/data/theme-config";
 import { asciiBar, fakeCommitHash, skillFilename } from "@/lib/terminal";
 import { slugify } from "@/lib/slug";
@@ -9,7 +8,7 @@ import { HELP_TEXT } from "./constants";
 /**
  * Rendered bodies of every terminal command.
  *
- * These are pure: they read from the config and take no terminal state, so the shell keeps
+ * These are pure: they read the persona content and take no terminal state, so the shell keeps
  * only dispatch and side effects.
  */
 
@@ -25,18 +24,20 @@ export function HelpOutput() {
   );
 }
 
-export function WhoamiOutput() {
+export function WhoamiOutput({ content }: { content: PersonaContent }) {
+  const status =
+    content.about.envVars.find((env) => env.key === "DG_STATUS")?.value ?? content.hero.status;
   const rows: [string, React.ReactNode][] = [
-    ["USER", devContent.meta.username],
-    ["ROLE", devContent.role],
-    ["HOST", devContent.meta.host],
-    ["KERNEL", devContent.meta.kernel],
-    ["SHELL", <Fragment key="shell">{devContent.meta.shell} → DG-OS terminal</Fragment>],
-    ["UPTIME", devContent.hero.uptime],
+    ["USER", content.meta.username],
+    ["ROLE", content.role],
+    ["HOST", content.meta.host],
+    ["KERNEL", content.meta.kernel],
+    ["SHELL", <Fragment key="shell">{content.meta.shell} → DG-OS terminal</Fragment>],
+    ["UPTIME", content.hero.uptime],
     [
       "STATUS",
       <span key="status" className="text-green-400 animate-pulse">
-        READY_FOR_DEPLOYMENT
+        {status}
       </span>,
     ],
   ];
@@ -52,8 +53,8 @@ export function WhoamiOutput() {
   );
 }
 
-export function LsOutput() {
-  const { sections } = devContent;
+export function LsOutput({ content }: { content: PersonaContent }) {
+  const { sections } = content;
   const dirs = [
     ...(sections.about.enabled ? ["about/"] : []),
     ...(sections.projects.enabled ? ["projects/"] : []),
@@ -74,21 +75,21 @@ export function LsOutput() {
   );
 }
 
-export function AboutOutput() {
+export function AboutOutput({ content }: { content: PersonaContent }) {
   return (
     <div className="text-xs font-mono space-y-2">
       <SectionHeading># PRIMARY_BIO</SectionHeading>
-      <p className="text-base-content/90 leading-relaxed max-w-2xl">{devContent.about.text}</p>
+      <p className="text-base-content/90 leading-relaxed max-w-2xl">{content.about.text}</p>
     </div>
   );
 }
 
-export function SkillsOutput() {
+export function SkillsOutput({ content }: { content: PersonaContent }) {
   return (
     <div className="text-xs font-mono space-y-2">
       <SectionHeading># SYSTEM_SERVICES --status --all</SectionHeading>
       <div className="space-y-2">
-        {devContent.about.stacks.map((s) => (
+        {content.about.stacks.map((s) => (
           <div key={s.name} className="flex items-center gap-3">
             <span className="w-40 text-base-content">{skillFilename(s.name)}</span>
             <span className="text-accent font-black w-10">{s.level}%</span>
@@ -101,17 +102,17 @@ export function SkillsOutput() {
   );
 }
 
-export function ProjectsOutput() {
+export function ProjectsOutput({ content }: { content: PersonaContent }) {
   return (
     <div className="text-xs font-mono space-y-3">
       <SectionHeading># PROJECTS_REPOSITORY</SectionHeading>
-      {devContent.projects.map((p, i) => (
+      {content.projects.map((p, i) => (
         <div key={p.title} className="border-l-2 border-accent/30 pl-3 space-y-1">
           <p>
             <span className="text-accent font-black">[{String(i + 1).padStart(2, "0")}]</span>{" "}
             <span className="text-base-content font-bold uppercase">{p.title}</span>{" "}
             <span className="text-accent/50 ml-2 text-[10px] border border-accent/20 px-1">
-              {p.status}
+              {p.status || "STABLE"}
             </span>
           </p>
           <p className="text-base-content/70">{p.description}</p>
@@ -122,11 +123,11 @@ export function ProjectsOutput() {
   );
 }
 
-export function ExperienceOutput() {
+export function ExperienceOutput({ content }: { content: PersonaContent }) {
   return (
     <div className="text-xs font-mono space-y-4">
       <SectionHeading># git log --stat --color</SectionHeading>
-      {devContent.experience.map((e) => (
+      {content.experience.map((e) => (
         <div key={e.company} className="border-l-2 border-accent/30 pl-3 space-y-1">
           <p className="text-yellow-400/90 font-bold">
             commit {fakeCommitHash(e.company + e.period)}
@@ -149,12 +150,10 @@ export function ProjectDetailOutput({ project }: { project: Project }) {
       <div className="border-l-4 border-accent pl-3 space-y-1">
         <p className="text-accent/60 uppercase text-[10px] font-black tracking-widest">
           {"PROJECTS_REPOSITORY // "}
-          {project.status}
+          {project.status || "STABLE"}
         </p>
         <p className="text-accent font-black text-lg uppercase">{project.title}</p>
-        <p className="text-base-content/60 italic">
-          Função: {project.role || "Fullstack Developer"}
-        </p>
+        {project.role && <p className="text-base-content/60 italic">Função: {project.role}</p>}
       </div>
       <p className="text-base-content/90 leading-relaxed">{project.description}</p>
       {project.details && (
@@ -249,12 +248,12 @@ export function PaletteList({ label, themes, current, title }: PaletteListProps)
 }
 
 /** Commands whose entire response is static markup, dispatched by name in the shell. */
-export const COMMAND_OUTPUTS: Record<string, () => React.ReactNode> = {
+export const COMMAND_OUTPUTS: Record<string, (content: PersonaContent) => React.ReactNode> = {
   help: () => <HelpOutput />,
-  whoami: () => <WhoamiOutput />,
-  ls: () => <LsOutput />,
-  "cat about": () => <AboutOutput />,
-  "cat skills": () => <SkillsOutput />,
-  "cat projects": () => <ProjectsOutput />,
-  "cat experience": () => <ExperienceOutput />,
+  whoami: (content) => <WhoamiOutput content={content} />,
+  ls: (content) => <LsOutput content={content} />,
+  "cat about": (content) => <AboutOutput content={content} />,
+  "cat skills": (content) => <SkillsOutput content={content} />,
+  "cat projects": (content) => <ProjectsOutput content={content} />,
+  "cat experience": (content) => <ExperienceOutput content={content} />,
 };

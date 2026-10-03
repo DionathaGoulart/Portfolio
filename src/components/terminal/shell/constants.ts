@@ -1,4 +1,4 @@
-import { devContent } from "@/data/dev-config";
+import type { PersonaContent } from "@/types/content";
 import { slugify } from "@/lib/slug";
 
 export type OutputLine = {
@@ -26,9 +26,7 @@ COMANDOS DISPONÍVEIS:
 Dica: Use [TAB] para auto-completar comandos.
 `;
 
-export const PROJECT_NAMES = devContent.projects.map((p) => slugify(p.title));
-
-export const ALL_COMMANDS = [
+const BASE_COMMANDS = [
   "help",
   "whoami",
   "ls",
@@ -45,9 +43,13 @@ export const ALL_COMMANDS = [
   "cd experience",
   "cd skills",
   "cd cv",
-  ...PROJECT_NAMES.map((n) => `cat ${n}`),
-  ...PROJECT_NAMES.map((n) => `cd ${n}`),
 ];
+
+/** Everything [TAB] can complete to: the fixed commands plus one `cat`/`cd` per project. */
+export function allCommands(content: PersonaContent): string[] {
+  const projects = content.projects.map((p) => slugify(p.title));
+  return [...BASE_COMMANDS, ...projects.map((n) => `cat ${n}`), ...projects.map((n) => `cd ${n}`)];
+}
 
 /** Lines kept in the scrollback. Older ones are dropped so a long session stays cheap. */
 export const MAX_OUTPUT_LINES = 200;

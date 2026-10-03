@@ -26,13 +26,34 @@ src/app/globals.css   imports + config do plugin (exclude!) + base
 src/components/
   retro/    ui/ (kit: RetroCard, RetroBadge, RetroSkillChip, RetroSocialLinks,
             RetroSectionTitle, RetroStatusFooter, RetroThemeToggle, WindowDots)
-            hub/ e ti/ (seções das rotas /, /ti, /ti/cv)
+            hub/ (RetroHub), persona/ (/dev e /dev/cv) e projects/ (/projetos)
   terminal/ ui/ (kit: TermWindow, TermModuleHeader, TermBadge, TermSocialLinks,
             TermSectionTitle, TermFooter, TermModeSwitch, WindowDots)
-            sections/ (rota /dev) e shell/ (modo terminal interativo)
+            hub/ (TermHub), sections/ (/dev e /dev/cv), projects/ (/projetos) e shell/
+            (shell interativo)
   shared/   skin-agnósticos de verdade (Logo, Icons, providers, CreditFooter...)
-src/data/theme-config.ts   rota -> tema, catálogo de paletas do wizard, script anti-flash
+src/data/theme-config.ts   skin -> tema, catálogo de paletas do wizard, script anti-flash
 ```
+
+## Skins
+
+Toda rota existe nas duas skins. A página entrega as duas views e `SkinView`
+(`shared/SkinProvider.tsx`) monta só a da skin ativa:
+
+```tsx
+<SkinView
+  retro={<RetroPersonaPage content={devContent} />}
+  terminal={<TermPersonaPage content={devContent} />}
+/>
+```
+
+- A skin é do visitante (localStorage `dg-skin`, padrão `retro`), trocada pelos botões
+  `RetroSkinToggle` / `TermSkinToggle` nos headers.
+- O servidor sempre renderiza a view retro (SEO e visitantes sem JS). `THEME_INIT_SCRIPT`
+  carimba o `data-skin` real antes do paint e `globals.css` deixa invisível a view que não
+  bate com ele até o React trocar — quem usa terminal não vê a retro piscar.
+- Os componentes do portfólio recebem `content: PersonaContent`, com strings de UI
+  por skin (`ui.retro`, `ui.terminal`).
 
 ## Receitas
 
@@ -49,7 +70,7 @@ Edite a variável em `palettes.css`. Termina aí — temas e swatches do wizard 
    obrigatórios, inclusive os extras `--shadow` e `--scanline-color`). Blocos novos vêm
    **depois** de `retro-hub-light` — ordem de fonte decide o cascade.
 3. Tema do skin terminal: registre em `TERMINAL_LIGHT_THEMES`/`DARK` no `theme-config.ts`
-   (o wizard e o anti-flash leem de lá). Tema retro: ajuste `resolveTheme`.
+   (o wizard e o anti-flash leem de lá). A skin retro resolve o tema pela rota: `RETRO_ROUTE_THEMES` mapeia prefixo → base (`retro-hub`, `retro-dev`, `retro-projetos`), e o accent de cada base tem de ser a mesma `--palette-*` do `--hub-*-hover` que aponta para aquela rota.
 
 ### Criar/alterar componente de uma skin
 

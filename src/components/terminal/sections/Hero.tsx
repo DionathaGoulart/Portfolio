@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { devContent } from "@/data/dev-config";
+import type { PersonaContent } from "@/types/content";
 import { TypingText } from "@/components/shared/TypingText";
 import { Logo } from "@/components/shared/Logo";
 import Image from "next/image";
@@ -8,12 +8,12 @@ import { LogoWatermark } from "@/components/shared/LogoWatermark";
 import { TermWindow } from "@/components/terminal/ui/TermWindow";
 import { TermBadge } from "@/components/terminal/ui/TermBadge";
 
-export default function Hero() {
+export default function Hero({ content }: { content: PersonaContent }) {
   const terminalLines = [
-    { cmd: "whoami", value: devContent.meta.username, color: "text-accent" },
-    { cmd: "fetch --role", value: devContent.role, isTyping: true },
-    { cmd: "git branch", value: devContent.hero.gitBranch },
-    { cmd: "uptime", value: devContent.hero.uptime },
+    { cmd: "whoami", value: content.meta.username, color: "text-accent" },
+    { cmd: "fetch --role", value: content.role, isTyping: true },
+    { cmd: "git branch", value: content.hero.gitBranch },
+    { cmd: "uptime", value: content.hero.uptime },
   ];
 
   return (
@@ -58,7 +58,7 @@ export default function Hero() {
                 <div className="pt-6 space-y-2">
                   <div className="pl-4 md:pl-6 border-l-2 border-accent/20">
                     <p className="text-base-content/80 leading-snug max-w-2xl uppercase font-bold tracking-tight text-base md:text-xl italic">
-                      {devContent.hero.description}
+                      {content.hero.description}
                     </p>
                   </div>
                 </div>
@@ -93,7 +93,7 @@ export default function Hero() {
                   {/* Photo */}
                   <Image
                     src="/me.png"
-                    alt={devContent.name}
+                    alt={content.name}
                     fill
                     priority
                     sizes="(max-width: 768px) 128px, 160px"
@@ -115,30 +115,28 @@ export default function Hero() {
                   <div className="flex justify-between items-center text-xs border-b border-accent/10 pb-1.5">
                     <span className="opacity-40 uppercase">User</span>
                     <span className="text-accent font-black">
-                      {devContent.meta.username.replace(/_/g, ".")}
+                      {content.meta.username.replace(/_/g, ".")}
                     </span>
                   </div>
                   <div className="flex justify-between items-center text-xs border-b border-accent/10 pb-1.5">
                     <span className="opacity-40 uppercase">Status</span>
                     <span className="text-accent font-black text-[10px] md:text-xs">
-                      {devContent.hero.status}
+                      {content.hero.status}
                     </span>
                   </div>
                   <div className="flex justify-between items-center text-xs border-b border-accent/10 pb-1.5">
                     <span className="opacity-40 uppercase">Expertise</span>
-                    <span className="text-accent font-black">{devContent.hero.expertise}</span>
+                    <span className="text-accent font-black">{content.hero.expertise}</span>
                   </div>
                   <div className="flex justify-between items-center text-xs border-b border-accent/10 pb-1.5">
                     <span className="opacity-40 uppercase">Location</span>
                     <span className="text-accent font-black text-[10px] md:text-xs">
-                      {devContent.hero.location}
+                      {content.hero.workplace}
                     </span>
                   </div>
                   <div className="flex justify-between items-center text-xs">
                     <span className="opacity-40 uppercase">Experience</span>
-                    <span className="text-accent font-black">
-                      {devContent.hero.yearsOfExperience}
-                    </span>
+                    <span className="text-accent font-black">{content.hero.yearsOfExperience}</span>
                   </div>
                 </div>
 

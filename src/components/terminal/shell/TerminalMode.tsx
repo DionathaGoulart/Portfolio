@@ -1,6 +1,7 @@
 "use client";
-import { useState, useRef, useEffect, KeyboardEvent } from "react";
+import { useState, useRef, useEffect, useMemo, KeyboardEvent } from "react";
 import { motion } from "framer-motion";
+import type { PersonaContent } from "@/types/content";
 import { devContent } from "@/data/dev-config";
 import { Logo } from "@/components/shared/Logo";
 import { useSkin } from "@/components/shared/SkinProvider";
@@ -8,10 +9,22 @@ import { TERMINAL_LIGHT_THEMES, TERMINAL_DARK_THEMES } from "@/data/theme-config
 import { slugify } from "@/lib/slug";
 import { TermWindow } from "@/components/terminal/ui/TermWindow";
 import { TermBadge } from "@/components/terminal/ui/TermBadge";
-import { ALL_COMMANDS, MAX_OUTPUT_LINES, type OutputLine } from "./constants";
+import { allCommands, MAX_OUTPUT_LINES, type OutputLine } from "./constants";
 import { COMMAND_OUTPUTS, PaletteList, ProjectDetailOutput } from "./output";
 
-export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => void }) {
+interface TerminalModeProps {
+  /**
+   * What the shell talks about. Defaults to the portfolio, so the pages that are not /dev
+   * get the same answers without pulling dev-config into their own bundle — this module is
+   * loaded lazily, the caller is not.
+   */
+  content?: PersonaContent;
+  onSwitchToGui: () => void;
+}
+
+export default function TerminalMode({ content = devContent, onSwitchToGui }: TerminalModeProps) {
+  const commands = useMemo(() => allCommands(content), [content]);
+  const prompt = `${content.meta.username.split("_")[0]}@dg-os:~$`;
   const inputRef = useRef<HTMLInputElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   // Per-instance line ids. This used to be a module-scope counter, so it leaked across
@@ -116,12 +129,12 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
 
     const staticOutput = COMMAND_OUTPUTS[cmd];
     if (staticOutput) {
-      result = [{ id: uid(), type: "output", content: staticOutput() }];
+      result = [{ id: uid(), type: "output", content: staticOutput(content) }];
     } else if (cmd === "cat cv") {
       result = [{ id: uid(), type: "success", content: "→ Abrindo currículo em nova aba..." }];
       pushLines([inputLine, ...result, { id: uid(), type: "blank", content: "" }]);
       setInput("");
-      setTimeout(() => window.open("/dev/cv", "_blank"), 400);
+      setTimeout(() => window.open(`/${content.persona}/cv`, "_blank"), 400);
       return;
     } else if (cmd === "theme") {
       // Start wizard — show light palette options
@@ -149,7 +162,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
       const catMatch = cmd.match(/^cat\s+(.+)$/);
       if (catMatch) {
         const slug = catMatch[1];
-        const project = devContent.projects.find((p) => slugify(p.title) === slug);
+        const project = content.projects.find((p) => slugify(p.title) === slug);
         if (project) {
           result = [
             {
@@ -285,7 +298,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
     } else if (e.key === "Tab") {
       e.preventDefault();
       if (!input.trim()) return;
-      const matches = ALL_COMMANDS.filter((c) => c.startsWith(input.toLowerCase()));
+      const matches = commands.filter((c) => c.startsWith(input.toLowerCase()));
       if (matches.length === 0) return;
       if (matches.length === 1) {
         // Complete immediately
@@ -361,9 +374,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
             >
               {line.type === "input" && (
                 <div className="flex items-start gap-2 text-base-content/90">
-                  <span className="text-accent font-black shrink-0">
-                    {devContent.meta.username.split("_")[0]}@dg-os:~$
-                  </span>
+                  <span className="text-accent font-black shrink-0">{prompt}</span>
                   <span>{line.content}</span>
                 </div>
               )}
@@ -391,7 +402,7 @@ export default function TerminalMode({ onSwitchToGui }: { onSwitchToGui: () => v
           <span className="text-accent font-black whitespace-nowrap">
             {wizardStep === "light" && `paleta-light[1–${TERMINAL_LIGHT_THEMES.length}]:`}
             {wizardStep === "dark" && `paleta-dark[1–${TERMINAL_DARK_THEMES.length}]:`}
-            {!wizardStep && `${devContent.meta.username.split("_")[0]}@dg-os:~$`}
+            {!wizardStep && prompt}
           </span>
           <input
             ref={inputRef}

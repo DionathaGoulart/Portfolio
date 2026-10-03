@@ -1,19 +1,20 @@
 "use client";
 import Link from "next/link";
 import { TermModeSwitch } from "../ui/TermModeSwitch";
+import { TermSkinToggle } from "../ui/TermSkinToggle";
 import { motion, AnimatePresence } from "framer-motion";
 import { Logo } from "@/components/shared/Logo";
 import { PrintButton } from "@/components/shared/PrintButton";
-import { devContent } from "@/data/dev-config";
+import type { PersonaContent } from "@/types/content";
 import { useNavigation } from "@/hooks/useNavigation";
-import { useDevMode } from "@/context/DevModeContext";
+import { TermShellToggle } from "../ui/TermShellToggle";
+import { cn } from "@/lib/utils";
 
-export function Header({ cvContent }: { cvContent?: string }) {
+export function Header({ content, cvContent }: { content: PersonaContent; cvContent?: string }) {
   const { isMenuOpen, setIsMenuOpen, isCV, scrollToTop, navLinks } = useNavigation(
-    devContent,
-    "dev"
+    content,
+    "terminal"
   );
-  const { mode, toggleMode } = useDevMode();
 
   return (
     <header className="fixed top-0 left-0 w-full z-[100] py-3 md:py-6 pointer-events-none">
@@ -21,14 +22,15 @@ export function Header({ cvContent }: { cvContent?: string }) {
       <nav className="relative z-50 max-w-7xl mx-auto px-4 sm:px-6 md:px-10 flex justify-between items-center pointer-events-auto">
         <div className="flex items-center gap-4">
           <Link
-            href="/dev"
+            href={`/${content.persona}`}
             onClick={scrollToTop}
             className="font-mono font-bold text-accent hover:bg-accent hover:text-accent-content px-2 py-1 transition-colors flex items-center gap-2 group"
           >
-            <span className="flex items-center gap-1.5">
+            <span className="flex items-center gap-1.5 whitespace-nowrap">
               <Logo className="w-4 h-4 text-accent group-hover:text-accent-content" />
-              <span className="hidden sm:inline">@SYSTEM:</span>
-              <span className="sm:hidden">@SYS:</span>
+              {/* The CV bar also carries the download button, so the long prompt waits for xl. */}
+              <span className={cn("hidden", isCV ? "xl:inline" : "sm:inline")}>@SYSTEM:</span>
+              <span className={isCV ? "xl:hidden" : "sm:hidden"}>@SYS:</span>
               <span className="text-base-content group-hover:text-accent-content">~ $</span>
               <span className="terminal-cursor group-hover:bg-white" />
             </span>
@@ -36,45 +38,27 @@ export function Header({ cvContent }: { cvContent?: string }) {
 
           {isCV && (
             <div className="hidden sm:block">
-              <PrintButton persona="DEV" content={cvContent} />
+              <PrintButton persona={content.persona} skin="terminal" content={cvContent} />
             </div>
           )}
 
-          <div className="hidden lg:flex gap-2 md:gap-4 items-center overflow-hidden font-mono uppercase">
-            <span className="text-base-300/30 text-[10px] md:text-base">|</span>
-            {isCV ? (
-              <span className="text-[9px] md:text-xs animate-pulse text-accent whitespace-nowrap flex items-center gap-1">
-                <span className="status h-1.5 w-1.5 rounded-full bg-accent" />
-                <span>CV_SESSION_ACTIVE</span>
-              </span>
-            ) : (
-              <button
-                onClick={toggleMode}
-                title={mode === "graphic" ? "Entrar no modo terminal" : "Voltar ao modo gráfico"}
-                className="group flex items-center gap-1.5 border border-accent/30 px-2 py-1 text-[9px] md:text-[10px] font-black tracking-wider hover:bg-accent hover:text-accent-content transition-all"
-              >
-                {mode === "graphic" ? (
-                  <>
-                    <span className="font-mono text-accent group-hover:text-accent-content">
-                      ▶_
-                    </span>
-                    <span className="text-accent group-hover:text-accent-content">TERMINAL</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="font-mono text-accent group-hover:text-accent-content">⊞</span>
-                    <span className="text-accent group-hover:text-accent-content">GRAPHIC</span>
-                  </>
-                )}
-              </button>
+          {/* On the CV the nav, download button and toggles already fill a laptop-width bar,
+              so the shell toggle only shows where there is room for it. */}
+          <div
+            className={cn(
+              "hidden gap-2 md:gap-4 items-center overflow-hidden font-mono uppercase",
+              isCV ? "2xl:flex" : "lg:flex"
             )}
+          >
+            <span className="text-base-300/30 text-[10px] md:text-base">|</span>
+            <TermShellToggle />
           </div>
         </div>
 
         <div className="flex gap-2 md:gap-4 items-center">
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center">
-            <div className="flex gap-6 font-mono text-sm uppercase mr-4">
+            <div className="flex gap-4 xl:gap-6 font-mono text-xs xl:text-sm uppercase mr-2 xl:mr-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -92,14 +76,15 @@ export function Header({ cvContent }: { cvContent?: string }) {
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-expanded={isMenuOpen}
-            aria-controls="dev-mobile-menu"
+            aria-controls="persona-mobile-menu"
             aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
             className="lg:hidden font-mono text-xs uppercase border border-accent/30 px-3 py-2 text-accent"
           >
             {isMenuOpen ? "[ X ]" : "[MENU]"}
           </button>
 
-          <div className="hidden lg:flex items-center">
+          <div className="hidden lg:flex items-center gap-2">
+            <TermSkinToggle />
             <TermModeSwitch />
           </div>
         </div>
@@ -109,7 +94,7 @@ export function Header({ cvContent }: { cvContent?: string }) {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            id="dev-mobile-menu"
+            id="persona-mobile-menu"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -129,30 +114,13 @@ export function Header({ cvContent }: { cvContent?: string }) {
               ))}
 
               <div className="mt-auto flex flex-col gap-3 pt-4">
-                {!isCV && (
-                  <button
-                    onClick={() => {
-                      toggleMode();
-                      setIsMenuOpen(false);
-                    }}
-                    className="flex items-center justify-center gap-3 border border-accent/30 px-4 py-3 text-sm font-black tracking-wider text-accent hover:bg-accent hover:text-accent-content transition-all w-full"
-                  >
-                    {mode === "graphic" ? (
-                      <>
-                        <span className="font-mono">▶_</span>
-                        <span>IR PARA O TERMINAL</span>
-                      </>
-                    ) : (
-                      <>
-                        <span className="font-mono">⊞</span>
-                        <span>IR PARA O GRÁFICO</span>
-                      </>
-                    )}
-                  </button>
-                )}
+                <TermShellToggle variant="block" onToggled={() => setIsMenuOpen(false)} />
                 <div className="flex justify-between items-center border border-accent/30 px-4 py-3 text-sm">
                   <span className="text-accent uppercase tracking-widest font-black">THEME</span>
-                  <TermModeSwitch />
+                  <div className="flex items-center gap-2">
+                    <TermSkinToggle />
+                    <TermModeSwitch />
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { devContent } from "@/data/dev-config";
+import type { PersonaContent } from "@/types/content";
 import { TermSectionTitle } from "../ui/TermSectionTitle";
 import { projectFilename } from "@/lib/slug";
 import { LogoWatermark } from "@/components/shared/LogoWatermark";
@@ -13,13 +14,13 @@ import { TermBadge } from "@/components/terminal/ui/TermBadge";
 const TERMINAL_PATH = "root@dg-os: ~/workspace/projects-repository";
 const FILE_PERMISSIONS = "-rwxr-xr-x";
 
-export default function Projects() {
+export default function Projects({ content }: { content: PersonaContent }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<HTMLDivElement>(null);
 
-  const projects = devContent.projects;
+  const projects = content.projects;
   const activeProject = projects[activeIndex];
 
   // Auto-cycle through projects if not paused
@@ -88,7 +89,7 @@ export default function Projects() {
 
   return (
     <section ref={sectionRef} className="relative w-full" id="projects">
-      <TermSectionTitle number="03" title={devContent.ui.projectsTitle} />
+      <TermSectionTitle number="03" title={content.ui.terminal.projectsTitle} />
 
       {/* Main Terminal Window */}
       <TermWindow
@@ -179,9 +180,11 @@ export default function Projects() {
 
             {/* Terminal Shortcuts Legend Footer */}
             <div className="p-4 border-t border-accent/15 font-mono text-[9px] text-accent/50 leading-relaxed space-y-0.5 select-none bg-accent/[0.005]">
-              <p className="hidden lg:block">● [↑ / ↓] {devContent.ui.projectsHintNavigate}</p>
-              <p>● [ENTER] {devContent.ui.projectsHintOpen}</p>
-              <p>● [G] {devContent.ui.projectsHintSource}</p>
+              <p className="hidden lg:block">
+                ● [↑ / ↓] {content.ui.terminal.projectsHintNavigate}
+              </p>
+              <p>● [ENTER] {content.ui.terminal.projectsHintOpen}</p>
+              <p>● [G] {content.ui.terminal.projectsHintSource}</p>
             </div>
           </div>
 
@@ -216,9 +219,11 @@ export default function Projects() {
                         <h3 className="text-2xl md:text-3xl font-black text-accent uppercase tracking-tight">
                           {activeProject.title}
                         </h3>
-                        <p className="text-xs text-base-content/60 italic font-medium">
-                          Função: {activeProject.role || "Fullstack Developer"}
-                        </p>
+                        {activeProject.role && (
+                          <p className="text-xs text-base-content/60 italic font-medium">
+                            Função: {activeProject.role}
+                          </p>
+                        )}
                       </div>
 
                       {/* Brief description */}
@@ -316,6 +321,13 @@ export default function Projects() {
           </div>
         </div>
       </TermWindow>
+
+      <Link
+        href="/projetos"
+        className="mt-4 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-accent border border-accent/20 px-3 py-2 hover:bg-accent hover:text-accent-content transition-colors"
+      >
+        <span className="opacity-50">$</span> {content.ui.terminal.projectsPersonalLink} →
+      </Link>
     </section>
   );
 }

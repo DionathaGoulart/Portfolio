@@ -1,19 +1,31 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
-import { usePathname } from "next/navigation";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
 import {
   DEFAULT_DARK_PALETTE,
   DEFAULT_LIGHT_PALETTE,
+  DEFAULT_SKIN,
+  isSkin,
   PALETTE_STORAGE_KEY,
   resolveTheme,
-  skinForPathname,
+  SKIN_STORAGE_KEY,
   type Skin,
 } from "@/data/theme-config";
 
 interface SkinContextValue {
+  /** The skin to render. `DEFAULT_SKIN` on the server and during hydration. */
   skin: Skin;
+  setSkin: (skin: Skin) => void;
   lightPalette: string;
   darkPalette: string;
   setLightPalette: (palette: string) => void;
@@ -47,29 +59,71 @@ function readStoredPalettes(): StoredPalettes {
   }
 }
 
+/*
+ * The skin lives in localStorage and is read through useSyncExternalStore: the server
+ * snapshot is `null` ("not known yet"), so hydration renders the default skin exactly like
+ * the server HTML did, and the stored skin takes over right after. THEME_INIT_SCRIPT has
+ * already stamped the right `data-skin` before paint, and globals.css hides the view that
+ * does not match it, so a terminal visitor never sees the retro page flash by.
+ */
+const SKIN_CHANGE_EVENT = "dg-skin-change";
+
+function readStoredSkin(): Skin {
+  try {
+    const saved = window.localStorage.getItem(SKIN_STORAGE_KEY);
+    return isSkin(saved) ? saved : DEFAULT_SKIN;
+  } catch {
+    return DEFAULT_SKIN;
+  }
+}
+
+function subscribeSkin(onChange: () => void) {
+  window.addEventListener(SKIN_CHANGE_EVENT, onChange);
+  window.addEventListener("storage", onChange);
+  return () => {
+    window.removeEventListener(SKIN_CHANGE_EVENT, onChange);
+    window.removeEventListener("storage", onChange);
+  };
+}
+
+const serverSkin = () => null;
+
+function writeSkin(skin: Skin) {
+  try {
+    window.localStorage.setItem(SKIN_STORAGE_KEY, skin);
+  } catch {
+    // Private mode or blocked storage — the choice just will not survive a reload.
+  }
+  window.dispatchEvent(new Event(SKIN_CHANGE_EVENT));
+}
+
 /**
- * Keeps `data-theme` / `data-skin` on <html> in sync with route, mode and palette.
+ * Owns the visitor's skin and terminal palettes, and keeps `data-theme` / `data-skin` on
+ * <html> in sync with them and the light/dark mode.
  *
  * The first value is stamped before paint by THEME_INIT_SCRIPT; this provider only takes
- * over once next-themes has resolved the mode, so it never overwrites a correct dark theme
- * with a light one during hydration.
+ * over once both next-themes and the stored skin are known, so it never overwrites a
+ * correct theme with a default one during hydration.
  */
 export function SkinProvider({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
   const { resolvedTheme } = useTheme();
+  // The retro skin has one accent per route, so the theme has to follow client-side
+  // navigation too — THEME_INIT_SCRIPT only covers the first paint.
+  const pathname = usePathname();
   const [palettes, setPalettes] = useState<StoredPalettes>(readStoredPalettes);
+  const storedSkin = useSyncExternalStore(subscribeSkin, readStoredSkin, serverSkin);
 
-  const skin = skinForPathname(pathname);
+  const skin = storedSkin ?? DEFAULT_SKIN;
 
   useEffect(() => {
-    if (!resolvedTheme) return;
+    if (!resolvedTheme || !storedSkin) return;
     const root = document.documentElement;
     root.setAttribute(
       "data-theme",
-      resolveTheme(pathname, resolvedTheme === "dark", palettes.lp, palettes.dp)
+      resolveTheme(storedSkin, resolvedTheme === "dark", palettes.lp, palettes.dp, pathname)
     );
-    root.setAttribute("data-skin", skin);
-  }, [pathname, resolvedTheme, palettes, skin]);
+    root.setAttribute("data-skin", storedSkin);
+  }, [resolvedTheme, palettes, storedSkin, pathname]);
 
   const persist = useCallback((next: StoredPalettes) => {
     setPalettes(next);
@@ -94,6 +148,7 @@ export function SkinProvider({ children }: { children: ReactNode }) {
     <SkinContext.Provider
       value={{
         skin,
+        setSkin: writeSkin,
         lightPalette: palettes.lp,
         darkPalette: palettes.dp,
         setLightPalette,
@@ -109,4 +164,18 @@ export function useSkin(): SkinContextValue {
   const ctx = useContext(SkinContext);
   if (!ctx) throw new Error("useSkin must be used inside <SkinProvider>");
   return ctx;
+}
+
+/**
+ * Renders the view of the active skin. Both views are passed in by the page; only one is
+ * mounted. The wrapper carries `data-skin-view` so globals.css can keep it invisible until
+ * `data-skin` on <html> agrees with it (see the note above SKIN_CHANGE_EVENT).
+ */
+export function SkinView({ retro, terminal }: { retro: ReactNode; terminal: ReactNode }) {
+  const { skin } = useSkin();
+  return (
+    <div data-skin-view={skin} className="contents">
+      {skin === "terminal" ? terminal : retro}
+    </div>
+  );
 }

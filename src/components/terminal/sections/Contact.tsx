@@ -1,9 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
-import { devContent } from "@/data/dev-config";
+import type { PersonaContent } from "@/types/content";
 import { TermSocialLinks } from "../ui/TermSocialLinks";
 
-export default function Contact() {
+export default function Contact({ content }: { content: PersonaContent }) {
   return (
     <section className="relative w-full" id="contact">
       <motion.div
@@ -19,15 +19,15 @@ export default function Contact() {
         <div className="p-6 md:p-12 space-y-10">
           <div className="space-y-4">
             <h2 className="text-3xl md:text-6xl font-black text-accent uppercase terminal-glow">
-              {devContent.contact.title}
+              {content.contact.title}
             </h2>
             <p className="text-sm md:text-base opacity-60 max-w-2xl font-bold uppercase leading-tight">
-              {devContent.contact.description}
+              {content.contact.description}
             </p>
           </div>
 
           <TermSocialLinks
-            socials={devContent.contact.socials}
+            socials={content.contact.socials}
             className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full"
           />
 

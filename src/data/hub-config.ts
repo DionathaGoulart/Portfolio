@@ -2,9 +2,18 @@ import { HubContent } from "@/types/content";
 
 export const hubContent: HubContent = {
   name: "Dionatha Goulart",
-  typingText: "Sistemas de Ponta a Ponta.",
+  typingText: "Desenvolvedor Fullstack.",
   description:
-    "Engenharia de Software e Operações de TI fundidas em uma única experiência técnica de alta performance.",
+    "React, Next.js e Node.js. Aqui ficam meus projetos, meu portfólio e tudo o que eu construo.",
+  nowLabel: "agora: construindo",
+  nav: {
+    back: "Voltar",
+    backTitle: "Voltar",
+    shell: "SHELL",
+    graphic: "GRAPHIC",
+    shellLong: "Abrir o shell interativo",
+    graphicLong: "Voltar ao modo gráfico",
+  },
   profileImage: "/me.png",
   socials: [
     { name: "LinkedIn", url: "https://linkedin.com/in/dionathagoulart", type: "linkedin" },
@@ -13,23 +22,23 @@ export const hubContent: HubContent = {
     { name: "Celular", url: "https://wa.me/5551986485232", type: "whatsapp" },
   ],
   sections: {
-    dev: {
-      title: "Dev_Portfolio",
-      subtitle: "SOFTWARE_ENG.EXE",
-      tags: "SaaS • Next.js • Fullstack • UX",
-      status: "Status: Stable",
-      action: "RUN >>",
+    portfolio: {
+      title: "Portfólio",
+      subtitle: "PORTFOLIO.EXE",
+      tags: "Stack • Experiência • Currículo",
+      status: "Profissional",
+      action: "ABRIR >>",
       href: "/dev",
       hoverColor: "var(--hub-dev-hover)",
     },
-    ti: {
-      title: "Ops_Terminal",
-      subtitle: "IT_OPERATIONS.SH",
-      tags: "Infra • Redes • Linux • Auto",
-      status: "Active_Session",
-      action: "SSH >>",
-      href: "/ti",
-      hoverColor: "var(--hub-ti-hover)",
+    projects: {
+      title: "Projetos",
+      subtitle: "PROJECTS.SH",
+      tags: "Demos • Código • Downloads",
+      status: "{count} projetos",
+      action: "VER >>",
+      href: "/projetos",
+      hoverColor: "var(--hub-projects-hover)",
     },
   },
   footer: {

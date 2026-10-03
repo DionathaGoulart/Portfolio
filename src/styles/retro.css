@@ -1,5 +1,5 @@
 /*
- * Utilities of the retro skin (neobrutalist): /, /ti, /ti/cv.
+ * Utilities of the retro skin (neobrutalist), the default skin on every route.
  *
  * Button variants are written as daisyUI button tokens rather than as utilities layered
  * on top of `btn`. `.btn` reads height from --size, horizontal padding from --btn-p,

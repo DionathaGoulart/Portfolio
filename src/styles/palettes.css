@@ -45,7 +45,7 @@
   --palette-sand-ink: #2a1a0a;
   --palette-copper: #b56a30;
 
-  /* Midnight / mint family (retro-ti-dark, terminal-ember) */
+  /* Midnight / mint family (terminal-ember) */
   --palette-midnight: #0d1117;
   --palette-midnight-raised: #121a12;
   --palette-mint: #e0ffe0;
@@ -67,6 +67,11 @@
   --palette-matrix-green: #00ff66;
   --palette-matrix-mist: #d7ffd7;
   --palette-matrix-ink: #001a08;
+
+  /* Voltage family (terminal-voltage, terminal-voltage-noir) */
+  --palette-voltage: #fbee23;
+  --palette-voltage-noir-raised: #0a0a0a;
+  --palette-voltage-mist: #f5f2dc;
 
   /* Status colors — full-strength on light themes, soft on dark */
   --palette-info: #2563eb;

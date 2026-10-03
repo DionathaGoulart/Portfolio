@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { devContent } from "@/data/dev-config";
+import type { PersonaContent } from "@/types/content";
 import { asciiBar, skillFilename } from "@/lib/terminal";
 import { LogoWatermark } from "@/components/shared/LogoWatermark";
 import { TermModuleHeader } from "../ui/TermModuleHeader";
@@ -30,11 +30,11 @@ function UptimeCounter() {
   return <>{`${pad(h)}:${pad(m)}:${pad(s)}`}</>;
 }
 
-export default function About() {
+export default function About({ content }: { content: PersonaContent }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
-  const envVars = devContent.about.envVars;
+  const envVars = content.about.envVars;
 
   return (
     <section ref={sectionRef} className="relative w-full" id="about">
@@ -42,10 +42,10 @@ export default function About() {
       <div className="mb-6 md:mb-8 flex items-center justify-between border-b-2 border-accent/20 pb-4">
         <div>
           <h2 className="font-mono text-2xl md:text-4xl font-black text-accent tracking-tighter uppercase">
-            {devContent.ui.aboutTitle}
+            {content.ui.terminal.aboutTitle}
           </h2>
           <p className="font-mono text-xs md:text-sm text-base-content/60 mt-2 tracking-widest uppercase">
-            {devContent.ui.aboutSubtitle}
+            {content.ui.terminal.aboutSubtitle}
           </p>
         </div>
         <div className="hidden md:block text-right font-mono text-xs text-accent/50">
@@ -67,7 +67,7 @@ export default function About() {
         >
           <TermModuleHeader
             className="z-20"
-            label={devContent.ui.aboutModuleBio}
+            label={content.ui.terminal.aboutModuleBio}
             right="PID: 001"
           />
 
@@ -75,24 +75,24 @@ export default function About() {
             <div className="space-y-3 font-mono">
               <div>
                 <h3 className="text-xl md:text-3xl font-black text-base-content uppercase tracking-tight">
-                  {devContent.name.toLowerCase()}
+                  {content.name.toLowerCase()}
                 </h3>
                 <p className="text-accent text-xs tracking-widest uppercase mt-1">
-                  {devContent.about.subtitle}
+                  {content.about.subtitle}
                 </p>
               </div>
               <p className="text-sm text-base-content/80 leading-relaxed max-w-2xl font-sans">
-                {devContent.about.text}
+                {content.about.text}
               </p>
               <div className="flex flex-wrap gap-3 text-[10px] text-base-content/50 border-t border-accent/10 pt-3 mt-2">
                 <p>
-                  <span className="text-accent font-bold">HOST:</span> {devContent.meta.host}
+                  <span className="text-accent font-bold">HOST:</span> {content.meta.host}
                 </p>
                 <p>
-                  <span className="text-accent font-bold">KERNEL:</span> {devContent.meta.kernel}
+                  <span className="text-accent font-bold">KERNEL:</span> {content.meta.kernel}
                 </p>
                 <p>
-                  <span className="text-accent font-bold">SHELL:</span> {devContent.meta.shell}
+                  <span className="text-accent font-bold">SHELL:</span> {content.meta.shell}
                 </p>
               </div>
             </div>
@@ -109,7 +109,7 @@ export default function About() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="md:col-span-12 lg:col-span-5 retro-border bg-base-200 retro-shadow-sm flex flex-col relative z-10"
         >
-          <TermModuleHeader label={devContent.ui.aboutModuleEnv} right="PRINTENV" />
+          <TermModuleHeader label={content.ui.terminal.aboutModuleEnv} right="PRINTENV" />
           <div className="p-5 flex-1 flex flex-col justify-center">
             <div className="space-y-2">
               {envVars.map((env) => (
@@ -150,8 +150,8 @@ export default function About() {
         >
           <TermModuleHeader
             className="relative z-20"
-            label={devContent.ui.aboutModuleSys}
-            right={devContent.ui.aboutSysHtop}
+            label={content.ui.terminal.aboutModuleSys}
+            right={content.ui.terminal.aboutSysHtop}
           />
 
           {/* Decorative Logo Background Watermark */}
@@ -169,7 +169,7 @@ export default function About() {
 
               {/* Table Rows */}
               <div className="space-y-3">
-                {devContent.about.stacks.map((skill, i) => {
+                {content.about.stacks.map((skill, i) => {
                   const barStr = asciiBar(skill.level);
 
                   return (

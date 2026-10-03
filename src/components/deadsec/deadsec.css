@@ -1,0 +1,440 @@
+/*
+ * DEADSEC — temporary visual study (/deadsec). Self-contained on purpose: everything is
+ * scoped under `.deadsec`, so deleting this file, the component folder and the route
+ * removes the experiment without a trace. If it becomes a skin, these colors move into
+ * src/styles/palettes.css and a daisyUI theme like every other skin.
+ *
+ * The direction follows Watch Dogs 2's DedSec: dithering, ASCII, pixel art and glitch
+ * art; a clean bright "corporate" UI defaced by a dark underground one; spray-painted
+ * tags; LED emoticon eyes; a colourful, playful tone rather than grim cyberpunk.
+ */
+.deadsec {
+  --ds-black: #070708;
+  --ds-ink: #0f0f14;
+  --ds-panel: #14141c;
+  --ds-white: #f4f1ea;
+  --ds-paper: #e9e6df;
+  --ds-magenta: #ff1f8e;
+  --ds-cyan: #19f7ff;
+  --ds-yellow: #fff200;
+  --ds-violet: #7b2cff;
+  --ds-red: #ff3131;
+
+  background: var(--ds-black);
+  color: var(--ds-white);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  font-family: var(--font-jetbrains-mono), monospace;
+}
+
+.deadsec ::selection {
+  background: var(--ds-magenta);
+  color: var(--ds-black);
+}
+
+.ds-display {
+  font-family: var(--font-ds-glitch), var(--font-jetbrains-mono), monospace;
+}
+.ds-pixel {
+  font-family: var(--font-ds-pixel), var(--font-jetbrains-mono), monospace;
+}
+.ds-tagfont {
+  font-family: var(--font-ds-tag), cursive;
+}
+.ds-8bit {
+  font-family: var(--font-ds-8bit), var(--font-jetbrains-mono), monospace;
+}
+
+/* ── Glitch text: two colored copies sliced and jittered over the original ── */
+.ds-glitch {
+  position: relative;
+  display: inline-block;
+}
+.ds-glitch::before,
+.ds-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ds-glitch::before {
+  color: var(--ds-cyan);
+  transform: translate(-3px, 0);
+  mix-blend-mode: screen;
+  animation: ds-slice-a 2.4s infinite steps(1);
+}
+.ds-glitch::after {
+  color: var(--ds-magenta);
+  transform: translate(3px, 0);
+  mix-blend-mode: screen;
+  animation: ds-slice-b 3.1s infinite steps(1);
+}
+@keyframes ds-slice-a {
+  0%,
+  100% {
+    clip-path: inset(0 0 85% 0);
+  }
+  20% {
+    clip-path: inset(40% 0 35% 0);
+    transform: translate(-6px, 1px);
+  }
+  40% {
+    clip-path: inset(75% 0 5% 0);
+  }
+  60% {
+    clip-path: inset(10% 0 70% 0);
+    transform: translate(-2px, -1px);
+  }
+  80% {
+    clip-path: inset(55% 0 25% 0);
+  }
+}
+@keyframes ds-slice-b {
+  0%,
+  100% {
+    clip-path: inset(80% 0 0 0);
+  }
+  25% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(5px, -1px);
+  }
+  50% {
+    clip-path: inset(60% 0 20% 0);
+  }
+  75% {
+    clip-path: inset(5% 0 80% 0);
+    transform: translate(2px, 1px);
+  }
+}
+
+/* Block glitch (datamosh-ish): a whole card tears on hover */
+.ds-tear:hover {
+  animation: ds-tear 0.35s steps(2) infinite;
+}
+@keyframes ds-tear {
+  0% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0);
+    filter: none;
+  }
+  25% {
+    clip-path: inset(12% 0 58% 0);
+    transform: translate(-8px, 0);
+    filter: hue-rotate(90deg);
+  }
+  50% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(4px, 0);
+  }
+  75% {
+    clip-path: inset(62% 0 8% 0);
+    transform: translate(10px, 0);
+    filter: hue-rotate(-60deg) saturate(2);
+  }
+}
+
+/* RGB split on a static element (images, marks) */
+.ds-rgb {
+  filter: drop-shadow(-3px 0 0 var(--ds-cyan)) drop-shadow(3px 0 0 var(--ds-magenta));
+}
+
+/* ── Dither: ordered-dither dot screens as backgrounds ── */
+.ds-dither {
+  background-image:
+    radial-gradient(var(--ds-dot, var(--ds-magenta)) 1px, transparent 1.2px),
+    radial-gradient(var(--ds-dot, var(--ds-magenta)) 1px, transparent 1.2px);
+  background-size: 6px 6px;
+  background-position:
+    0 0,
+    3px 3px;
+}
+.ds-dither-fade {
+  -webkit-mask-image: linear-gradient(to right, #000, transparent);
+  mask-image: linear-gradient(to right, #000, transparent);
+}
+
+/* ── Overlays ── */
+.ds-scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.03) 0 1px,
+    transparent 1px 3px
+  );
+}
+.ds-noise {
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  z-index: 51;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: ds-noise 0.6s steps(3) infinite;
+}
+@keyframes ds-noise {
+  0% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(-3%, 2%);
+  }
+  66% {
+    transform: translate(2%, -3%);
+  }
+}
+.ds-vhs-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 80px;
+  pointer-events: none;
+  z-index: 52;
+  background: linear-gradient(transparent, rgba(255, 31, 142, 0.06), transparent);
+  animation: ds-vhs 7s linear infinite;
+}
+@keyframes ds-vhs {
+  from {
+    top: -80px;
+  }
+  to {
+    top: 100%;
+  }
+}
+
+/* ── Surfaces ── */
+.ds-panel {
+  background: var(--ds-panel);
+  border: 2px solid var(--ds-white);
+  position: relative;
+}
+.ds-panel-glow {
+  box-shadow:
+    0 0 0 2px var(--ds-black),
+    6px 6px 0 0 var(--ds-magenta),
+    -6px -6px 0 0 var(--ds-cyan);
+}
+.ds-cut {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 18px) 0,
+    100% 18px,
+    100% 100%,
+    18px 100%,
+    0 calc(100% - 18px)
+  );
+}
+.ds-grid-bg {
+  background-image:
+    linear-gradient(rgba(25, 247, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(25, 247, 255, 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.ds-duotone {
+  background: linear-gradient(135deg, var(--ds-magenta), var(--ds-violet) 55%, var(--ds-cyan));
+}
+
+/* ── Buttons ── */
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  transform: skewX(-8deg);
+  transition:
+    transform 0.12s,
+    box-shadow 0.12s,
+    background 0.12s;
+  cursor: pointer;
+}
+.ds-btn > span {
+  display: inline-block;
+  transform: skewX(8deg);
+}
+.ds-btn-solid {
+  background: var(--ds-magenta);
+  color: var(--ds-black);
+  box-shadow: 4px 4px 0 var(--ds-cyan);
+}
+.ds-btn-solid:hover {
+  transform: skewX(-8deg) translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--ds-cyan);
+}
+.ds-btn-outline {
+  border: 2px solid var(--ds-cyan);
+  color: var(--ds-cyan);
+}
+.ds-btn-outline:hover {
+  background: var(--ds-cyan);
+  color: var(--ds-black);
+}
+.ds-btn-yellow {
+  background: var(--ds-yellow);
+  color: var(--ds-black);
+  box-shadow: 4px 4px 0 var(--ds-magenta);
+}
+.ds-btn-yellow:hover {
+  animation: ds-shake 0.25s steps(2) infinite;
+}
+@keyframes ds-shake {
+  0% {
+    transform: skewX(-8deg) translate(1px, -1px);
+  }
+  50% {
+    transform: skewX(-8deg) translate(-2px, 1px);
+  }
+}
+
+/* ── Patches and pins (Wrench's vest) ── */
+.ds-patch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.9rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  outline: 2px dashed currentColor;
+  outline-offset: -6px;
+  border: 3px solid var(--ds-black);
+  box-shadow: 0 0 0 3px var(--ds-white);
+  transition: transform 0.2s;
+}
+.ds-pin {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  border: 3px solid var(--ds-black);
+  box-shadow:
+    0 0 0 3px var(--ds-white),
+    inset -6px -6px 0 rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s;
+}
+.ds-patch:hover,
+.ds-pin:hover {
+  transform: rotate(0deg) scale(1.08) !important;
+}
+
+/* ── LED mask eyes: square bulbs ── */
+.ds-bulb {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #1c1c24;
+  border-radius: 2px;
+  transition:
+    background 0.08s,
+    box-shadow 0.08s;
+}
+.ds-bulb.on {
+  background: var(--ds-led, var(--ds-cyan));
+  box-shadow:
+    0 0 6px var(--ds-led, var(--ds-cyan)),
+    0 0 14px var(--ds-led, var(--ds-cyan));
+}
+
+/* ── Spray paint tags ── */
+.ds-spray {
+  filter: url(#ds-spray-rough);
+  text-shadow:
+    0 0 6px currentColor,
+    0 0 18px currentColor;
+}
+.ds-drip {
+  position: absolute;
+  width: 3px;
+  border-radius: 0 0 3px 3px;
+  background: currentColor;
+  animation: ds-drip 3s ease-in forwards;
+  transform-origin: top;
+}
+@keyframes ds-drip {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* ── Network hack graph ── */
+.ds-link {
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  animation: ds-link 6s ease-in-out infinite;
+}
+@keyframes ds-link {
+  0%,
+  10% {
+    stroke-dashoffset: 220;
+  }
+  45%,
+  85% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -220;
+  }
+}
+.ds-node-pulse {
+  animation: ds-node 6s ease-in-out infinite;
+}
+@keyframes ds-node {
+  0%,
+  40% {
+    fill: var(--ds-panel);
+  }
+  50%,
+  85% {
+    fill: var(--ds-magenta);
+  }
+  100% {
+    fill: var(--ds-panel);
+  }
+}
+
+/* ── Misc ── */
+.ds-marquee {
+  display: flex;
+  width: max-content;
+  animation: ds-marquee 22s linear infinite;
+}
+@keyframes ds-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.ds-blink {
+  animation: ds-blink 1s steps(1) infinite;
+}
+@keyframes ds-blink {
+  50% {
+    opacity: 0;
+  }
+}
+.ds-tracking {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 40%,
+    rgba(255, 255, 255, 0.12) 40% 42%,
+    transparent 42% 100%
+  );
+  animation: ds-track 4s steps(8) infinite;
+}
+@keyframes ds-track {
+  to {
+    background-position: 0 100%;
+  }
+}
+.ds-pixelated {
+  image-rendering: pixelated;
+}

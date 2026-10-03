@@ -37,6 +37,17 @@ body {
     color 0.3s ease;
 }
 
+/*
+ * Skin switch without a flash: the server always renders the default (retro) view, and
+ * THEME_INIT_SCRIPT stamps the visitor's real skin on <html> before paint. Until React swaps
+ * in the matching view, the mismatched one stays invisible instead of flashing by.
+ * No JS -> no data-skin -> nothing is hidden.
+ */
+html[data-skin="terminal"] [data-skin-view="retro"],
+html[data-skin="retro"] [data-skin-view="terminal"] {
+  visibility: hidden;
+}
+
 /* Keyboard focus. Several interactive elements had no visible focus state at all. */
 :focus-visible {
   outline: 2px solid var(--color-accent);

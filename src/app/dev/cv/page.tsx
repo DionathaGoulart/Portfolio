@@ -1,13 +1,12 @@
 import fs from "fs";
 import { notFound } from "next/navigation";
 import path from "path";
-import DevCVViewer from "@/components/terminal/sections/DevCVViewer";
 import { Metadata } from "next";
-import { Header } from "@/components/terminal/sections/Header";
 import { generatePersonSchema } from "@/lib/schema";
-import { PageTransition } from "@/components/shared/PageTransition";
-import { CreditFooter } from "@/components/shared/CreditFooter";
 import { devContent } from "@/data/dev-config";
+import { SkinView } from "@/components/shared/SkinProvider";
+import { RetroCVPage } from "@/components/retro/persona/RetroCVPage";
+import { TermCVPage } from "@/components/terminal/sections/TermCVPage";
 
 export const metadata: Metadata = {
   title: "CV | Software Engineer",
@@ -35,20 +34,18 @@ export default function DevCVPage() {
   } catch {
     notFound();
   }
-  const schema = generatePersonSchema("DEV");
+  const schema = generatePersonSchema();
 
   return (
-    <div className="selection:bg-accent selection:text-accent-content">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
-      <Header cvContent={content} />
-      <PageTransition className="max-w-7xl mx-auto px-6 md:px-10 pb-20 pt-28 md:pt-32">
-        <DevCVViewer content={content} />
-
-        <CreditFooter name={devContent.name} className="mt-20" />
-      </PageTransition>
-    </div>
+      <SkinView
+        retro={<RetroCVPage content={devContent} cv={content} />}
+        terminal={<TermCVPage content={devContent} cv={content} />}
+      />
+    </>
   );
 }

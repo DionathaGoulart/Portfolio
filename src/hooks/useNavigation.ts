@@ -1,9 +1,13 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { PortfolioContent } from "@/types/content";
+import type { PersonaContent } from "@/types/content";
+import type { Skin } from "@/data/theme-config";
 
-export function useNavigation(content: PortfolioContent, persona: "dev" | "ti") {
+/** Nav links of a persona page. Labels follow the skin: shell paths or plain words. */
+export function useNavigation(content: PersonaContent, skin: Skin) {
+  const { persona } = content;
+  const shell = skin === "terminal";
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -28,35 +32,35 @@ export function useNavigation(content: PortfolioContent, persona: "dev" | "ti") 
     {
       id: "about",
       href: `/${persona}#about`,
-      label: persona === "dev" ? "./sobre" : "Sobre",
+      label: shell ? "./sobre" : "Sobre",
       scroll: true,
       enabled: content.sections.about.enabled,
     },
     {
       id: "projects",
       href: `/${persona}#projects`,
-      label: persona === "dev" ? "./projetos" : "Projetos",
+      label: shell ? "./projetos" : "Projetos",
       scroll: true,
       enabled: content.sections.projects.enabled,
     },
     {
       id: "experience",
       href: `/${persona}#experience`,
-      label: persona === "dev" ? "./exp" : "Experiência",
+      label: shell ? "./exp" : "Experiência",
       scroll: true,
       enabled: content.sections.experience.enabled,
     },
     {
       id: "contact",
       href: `/${persona}#contact`,
-      label: persona === "dev" ? "./contato" : "Contato",
+      label: shell ? "./contato" : "Contato",
       scroll: true,
       enabled: content.sections.contact.enabled,
     },
     {
       id: "cv",
       href: `/${persona}/cv`,
-      label: persona === "dev" ? "./cv" : "Currículo",
+      label: shell ? "./cv" : "Currículo",
       scroll: false,
       enabled: true,
     },

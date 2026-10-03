@@ -2,8 +2,8 @@
  * Theme catalog — every theme assembled from the variables in palettes.css.
  *
  * Two skins share these themes (see src/data/theme-config.ts):
- *   retro-*    -> /, /ti, /ti/cv   (neobrutalist; hub and ti diverge in dark mode)
- *   terminal-* -> /dev, /dev/cv    (visitor picks one light and one dark palette)
+ *   retro-*    -> default skin on every route (neobrutalist)
+ *   terminal-* -> alternative skin  (visitor picks one light and one dark palette)
  *
  * Beyond the daisyUI tokens each block carries two extras: `--shadow` (the hard
  * offset shadow of the retro skin) and `--scanline-color` (CRT overlay).
@@ -54,8 +54,10 @@
 
   --shadow: var(--palette-ink);
   --scanline-color: var(--palette-scanline-light);
-  --hub-dev-hover: var(--palette-abyss);
-  --hub-ti-hover: var(--palette-crimson);
+  /* Light has a single accent site-wide, so both cards preview the same crimson;
+     the two destinations only diverge in dark (gold / ember). */
+  --hub-dev-hover: var(--palette-crimson);
+  --hub-projects-hover: var(--palette-crimson);
 
   /*
    * Width of the window frames `.retro-border` draws, inherited by every other theme.
@@ -102,23 +104,30 @@
   --shadow: var(--palette-rose);
   --scanline-color: var(--palette-scanline-dark);
   --hub-dev-hover: var(--palette-gold);
-  --hub-ti-hover: var(--palette-ember);
+  --hub-projects-hover: var(--palette-ember);
 }
 
+/*
+ * Per-route retro themes. The hub's cards announce where they lead by painting their hover
+ * with the destination's accent (--hub-dev-hover / --hub-projects-hover above), so the
+ * destination has to answer with that same accent — otherwise the hover promises a colour
+ * the page never shows. Each pair below reuses the exact palette variable the matching
+ * --hub-*-hover points at, so the two can only drift if someone edits one of them alone.
+ *
+ * Everything else is the retro-hub-* base: only the accent (and the shadow that follows it
+ * in dark mode) changes per route.
+ */
+
 @plugin "daisyui/theme" {
-  name: "retro-ti-light";
+  name: "retro-dev-light";
   color-scheme: light;
 
   --color-base-100: var(--palette-cream);
   --color-base-200: var(--palette-white);
   --color-base-300: var(--palette-ink);
   --color-base-content: var(--palette-ink);
-  --color-primary: var(--palette-crimson);
-  --color-primary-content: var(--palette-white);
   --color-secondary: var(--palette-ink);
   --color-secondary-content: var(--palette-cream);
-  --color-accent: var(--palette-crimson);
-  --color-accent-content: var(--palette-white);
   --color-neutral: var(--palette-ink);
   --color-neutral-content: var(--palette-cream);
   --color-info: var(--palette-info);
@@ -129,6 +138,10 @@
   --color-warning-content: var(--palette-white);
   --color-error: var(--palette-error);
   --color-error-content: var(--palette-white);
+  --color-primary: var(--palette-crimson);
+  --color-primary-content: var(--palette-white);
+  --color-accent: var(--palette-crimson);
+  --color-accent-content: var(--palette-white);
 
   --radius-selector: 0rem;
   --radius-field: 0rem;
@@ -144,21 +157,17 @@
 }
 
 @plugin "daisyui/theme" {
-  name: "retro-ti-dark";
+  name: "retro-dev-dark";
   color-scheme: dark;
 
-  --color-base-100: var(--palette-midnight);
-  --color-base-200: var(--palette-midnight-raised);
-  --color-base-300: var(--palette-ember);
-  --color-base-content: var(--palette-mint);
-  --color-primary: var(--palette-ember);
-  --color-primary-content: var(--palette-white);
-  --color-secondary: var(--palette-mint);
-  --color-secondary-content: var(--palette-midnight);
-  --color-accent: var(--palette-ember);
-  --color-accent-content: var(--palette-white);
-  --color-neutral: var(--palette-mint);
-  --color-neutral-content: var(--palette-midnight);
+  --color-base-100: var(--palette-noir);
+  --color-base-200: var(--palette-noir-raised);
+  --color-base-300: var(--palette-cream);
+  --color-base-content: var(--palette-cream);
+  --color-secondary: var(--palette-cream);
+  --color-secondary-content: var(--palette-noir);
+  --color-neutral: var(--palette-cream);
+  --color-neutral-content: var(--palette-noir);
   --color-info: var(--palette-info-soft);
   --color-info-content: var(--palette-near-black);
   --color-success: var(--palette-success-soft);
@@ -167,6 +176,86 @@
   --color-warning-content: var(--palette-near-black);
   --color-error: var(--palette-error-soft);
   --color-error-content: var(--palette-near-black);
+  --color-primary: var(--palette-gold);
+  --color-primary-content: var(--palette-white);
+  --color-accent: var(--palette-gold);
+  --color-accent-content: var(--palette-white);
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 2px;
+  --depth: 0;
+  --noise: 0;
+
+  --shadow: var(--palette-gold);
+  --scanline-color: var(--palette-scanline-dark);
+}
+
+@plugin "daisyui/theme" {
+  name: "retro-projetos-light";
+  color-scheme: light;
+
+  --color-base-100: var(--palette-cream);
+  --color-base-200: var(--palette-white);
+  --color-base-300: var(--palette-ink);
+  --color-base-content: var(--palette-ink);
+  --color-secondary: var(--palette-ink);
+  --color-secondary-content: var(--palette-cream);
+  --color-neutral: var(--palette-ink);
+  --color-neutral-content: var(--palette-cream);
+  --color-info: var(--palette-info);
+  --color-info-content: var(--palette-white);
+  --color-success: var(--palette-success);
+  --color-success-content: var(--palette-white);
+  --color-warning: var(--palette-warning);
+  --color-warning-content: var(--palette-white);
+  --color-error: var(--palette-error);
+  --color-error-content: var(--palette-white);
+  --color-primary: var(--palette-crimson);
+  --color-primary-content: var(--palette-white);
+  --color-accent: var(--palette-crimson);
+  --color-accent-content: var(--palette-white);
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 2px;
+  --depth: 0;
+  --noise: 0;
+
+  --shadow: var(--palette-ink);
+  --scanline-color: var(--palette-scanline-light);
+}
+
+@plugin "daisyui/theme" {
+  name: "retro-projetos-dark";
+  color-scheme: dark;
+
+  --color-base-100: var(--palette-noir);
+  --color-base-200: var(--palette-noir-raised);
+  --color-base-300: var(--palette-cream);
+  --color-base-content: var(--palette-cream);
+  --color-secondary: var(--palette-cream);
+  --color-secondary-content: var(--palette-noir);
+  --color-neutral: var(--palette-cream);
+  --color-neutral-content: var(--palette-noir);
+  --color-info: var(--palette-info-soft);
+  --color-info-content: var(--palette-near-black);
+  --color-success: var(--palette-success-soft);
+  --color-success-content: var(--palette-near-black);
+  --color-warning: var(--palette-warning-soft);
+  --color-warning-content: var(--palette-near-black);
+  --color-error: var(--palette-error-soft);
+  --color-error-content: var(--palette-near-black);
+  --color-primary: var(--palette-ember);
+  --color-primary-content: var(--palette-white);
+  --color-accent: var(--palette-ember);
+  --color-accent-content: var(--palette-white);
 
   --radius-selector: 0rem;
   --radius-field: 0rem;
@@ -330,6 +419,44 @@
   --noise: 0;
 
   --shadow: var(--palette-copper);
+  --scanline-color: var(--palette-scanline-light);
+}
+
+@plugin "daisyui/theme" {
+  name: "terminal-voltage";
+  color-scheme: light;
+
+  --color-base-100: var(--palette-voltage);
+  --color-base-200: var(--palette-white);
+  --color-base-300: var(--palette-black);
+  --color-base-content: var(--palette-black);
+  --color-primary: var(--palette-black);
+  --color-primary-content: var(--palette-voltage);
+  --color-secondary: var(--palette-black);
+  --color-secondary-content: var(--palette-voltage);
+  --color-accent: var(--palette-black);
+  --color-accent-content: var(--palette-voltage);
+  --color-neutral: var(--palette-black);
+  --color-neutral-content: var(--palette-voltage);
+  --color-info: var(--palette-info);
+  --color-info-content: var(--palette-white);
+  --color-success: var(--palette-success);
+  --color-success-content: var(--palette-white);
+  --color-warning: var(--palette-warning);
+  --color-warning-content: var(--palette-white);
+  --color-error: var(--palette-error);
+  --color-error-content: var(--palette-white);
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+
+  --shadow: var(--palette-black);
   --scanline-color: var(--palette-scanline-light);
 }
 
@@ -558,5 +685,43 @@
   --noise: 0;
 
   --shadow: var(--palette-matrix-green);
+  --scanline-color: var(--palette-scanline-dark);
+}
+
+@plugin "daisyui/theme" {
+  name: "terminal-voltage-noir";
+  color-scheme: dark;
+
+  --color-base-100: var(--palette-black);
+  --color-base-200: var(--palette-voltage-noir-raised);
+  --color-base-300: var(--palette-voltage);
+  --color-base-content: var(--palette-voltage-mist);
+  --color-primary: var(--palette-voltage);
+  --color-primary-content: var(--palette-black);
+  --color-secondary: var(--palette-voltage-mist);
+  --color-secondary-content: var(--palette-black);
+  --color-accent: var(--palette-voltage);
+  --color-accent-content: var(--palette-black);
+  --color-neutral: var(--palette-voltage-mist);
+  --color-neutral-content: var(--palette-black);
+  --color-info: var(--palette-info-soft);
+  --color-info-content: var(--palette-near-black);
+  --color-success: var(--palette-success-soft);
+  --color-success-content: var(--palette-near-black);
+  --color-warning: var(--palette-warning-soft);
+  --color-warning-content: var(--palette-near-black);
+  --color-error: var(--palette-error-soft);
+  --color-error-content: var(--palette-near-black);
+
+  --radius-selector: 0rem;
+  --radius-field: 0rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+
+  --shadow: var(--palette-voltage);
   --scanline-color: var(--palette-scanline-dark);
 }

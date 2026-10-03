@@ -1,5 +1,5 @@
 export const seoGlobal = {
-  siteName: "Dionatha Goulart | Hub Profissional",
+  siteName: "Dionatha Goulart",
   author: "Dionatha Goulart",
   url: "https://dionatha.com.br",
   github: "https://github.com/DionathaGoulart",
@@ -13,28 +13,22 @@ export const seoGlobal = {
 };
 
 export const seoHub = {
-  title: "Dionatha Goulart | Software Engineer & IT Operations",
+  title: "Dionatha Goulart | Desenvolvedor Fullstack",
   description:
-    "Hub profissional de Dionatha Goulart - Especialista em Engenharia de Software e Operações de TI. Explore meu portfólio de desenvolvimento e infraestrutura.",
-  keywords: [
-    "Dionatha Goulart",
-    "Software Engineer",
-    "Fullstack Developer",
-    "IT Operations",
-    "Portfolio",
-  ],
+    "Hub de Dionatha Goulart, desenvolvedor fullstack (React, Next.js, Node.js): projetos, portfólio e redes.",
+  keywords: ["Dionatha Goulart", "Desenvolvedor Fullstack", "React", "Next.js", "Projetos"],
 };
 
 export const seoDev = {
-  title: "Desenvolvedor Fullstack",
+  title: "Desenvolvedor Fullstack | Portfólio",
   description:
     "Portfólio de Engenharia de Software focado em aplicações SaaS, Next.js e experiências digitais de alta performance.",
   keywords: ["Fullstack Developer", "React", "Next.js", "SaaS", "TypeScript"],
 };
 
-export const seoTi = {
-  title: "Operações de TI & Infraestrutura",
+export const seoProjects = {
+  title: "Projetos",
   description:
-    "Especialista em infraestrutura, redes e automação de sistemas. Focado em resiliência e performance operacional.",
-  keywords: ["IT Operations", "Infrastructure", "Networks", "Automation", "Linux"],
+    "Projetos pessoais de Dionatha Goulart: código aberto, demos para testar e downloads.",
+  keywords: ["Projetos", "Open Source", "Next.js", "React", "Electron"],
 };

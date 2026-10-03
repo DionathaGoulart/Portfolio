@@ -1,17 +1,17 @@
 "use client";
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { devContent } from "@/data/dev-config";
+import type { PersonaContent } from "@/types/content";
 import { TermSectionTitle } from "../ui/TermSectionTitle";
 import { LogoWatermark } from "@/components/shared/LogoWatermark";
 import { TermWindow } from "@/components/terminal/ui/TermWindow";
 
-export default function Experience() {
+export default function Experience({ content }: { content: PersonaContent }) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   return (
     <section ref={sectionRef} className="relative w-full" id="experience">
-      <TermSectionTitle number="02" title={devContent.ui.experienceTitle} />
+      <TermSectionTitle number="02" title={content.ui.terminal.experienceTitle} />
 
       {/* Main Terminal Window (Like Projects.tsx) */}
       <TermWindow
@@ -19,7 +19,7 @@ export default function Experience() {
         className="relative h-auto"
         barClassName="relative z-20"
         title="root@dg-os: ~/workspace/experience-logs"
-        right={<span className="hidden sm:inline opacity-30">(C) {devContent.meta.copyright}</span>}
+        right={<span className="hidden sm:inline opacity-30">(C) {content.meta.copyright}</span>}
       >
         {/* Decorative Logo Background Watermark */}
         <LogoWatermark className="mt-8" />
@@ -28,7 +28,7 @@ export default function Experience() {
         <div className="p-4 md:p-8 font-mono relative z-10 bg-transparent overflow-hidden text-ellipsis">
           <div className="w-full break-words">
             <div className="space-y-10">
-              {devContent.experience.map((exp, i) => {
+              {content.experience.map((exp, i) => {
                 return (
                   <motion.div
                     key={exp.company}
@@ -42,8 +42,8 @@ export default function Experience() {
                     <div className="grid grid-cols-[60px_1fr] md:grid-cols-[80px_1fr] gap-x-2 gap-y-1 mb-5 text-[11px] md:text-xs">
                       <div className="text-base-content/50">Author:</div>
                       <div className="text-base-content/90">
-                        {devContent.name} {"<"}
-                        {devContent.email}
+                        {content.name} {"<"}
+                        {content.email}
                         {">"}
                       </div>
 

@@ -1,0 +1,94 @@
+"use client";
+import { motion } from "framer-motion";
+import type { PersonaContent } from "@/types/content";
+import Image from "next/image";
+import Link from "next/link";
+import { Logo } from "@/components/shared/Logo";
+
+export default function Hero({ content }: { content: PersonaContent }) {
+  return (
+    <section className="min-h-[90vh] flex flex-col justify-center py-12 md:py-20 relative overflow-x-hidden">
+      <div className="w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="retro-border bg-base-200 p-6 sm:p-8 md:p-12 lg:p-16 retro-shadow relative overflow-hidden flex flex-col lg:flex-row items-center gap-12 lg:gap-16"
+        >
+          {/* Decorative Corner */}
+          <div className="absolute top-0 right-0 w-16 h-16 bg-accent rotate-45 translate-x-8 -translate-y-8" />
+
+          {/* Left: Text Content */}
+          <div className="flex-1 order-2 lg:order-1 w-full z-10 flex flex-col items-center text-center lg:items-start lg:text-left">
+            <span className="font-mono text-accent font-bold uppercase tracking-widest mb-4 md:mb-6 block text-xs sm:text-base">
+              {">"} {content.role}
+            </span>
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-black mb-6 leading-[1.1] md:leading-[1.05] tracking-tighter uppercase">
+              {content.hero.title}
+            </h1>
+
+            <p className="text-base sm:text-lg md:text-xl font-medium text-base-content/70 max-w-2xl mb-4 leading-relaxed">
+              {content.hero.description}
+            </p>
+            <p className="font-mono text-xs sm:text-sm font-bold uppercase tracking-widest text-base-content/50 mb-8 md:mb-10">
+              {content.hero.workplace}
+            </p>
+
+            <div className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-4 w-full sm:w-auto">
+              <a href="#projects" className="btn btn-retro hover:bg-base-content">
+                {content.ui.retro.heroProjectsButton}
+              </a>
+              {content.sections.contact.enabled && (
+                <a
+                  href="#contact"
+                  className="btn btn-retro-outline hover:bg-accent hover:text-accent-content"
+                >
+                  {content.ui.retro.heroContactButton}
+                </a>
+              )}
+              <Link
+                href={`/${content.persona}/cv`}
+                className="btn btn-retro-outline hover:bg-accent hover:text-accent-content"
+              >
+                {content.ui.retro.heroCvButton}
+              </Link>
+            </div>
+          </div>
+
+          {/* Right: Radar/Avatar Profile */}
+          <div className="order-1 lg:order-2 shrink-0 relative group w-64 h-64 md:w-80 md:h-80 flex items-center justify-center">
+            {/* Outer Decorative Ring */}
+            <div className="absolute inset-0 border-2 border-dashed border-accent/20 rounded-full animate-[spin_40s_linear_infinite]" />
+            <div className="absolute inset-4 border border-accent/10 rounded-full animate-[spin_20s_linear_infinite_reverse]" />
+
+            {/* Spinning Logo Background */}
+            <div className="absolute inset-8 flex items-center justify-center opacity-10 group-hover:opacity-30 transition-opacity duration-700">
+              <Logo className="w-full h-full text-accent animate-[spin_30s_linear_infinite]" />
+            </div>
+
+            {/* Center Image Container */}
+            <div className="relative w-48 h-48 md:w-60 md:h-60 rounded-full border-4 border-accent/20 bg-base-200 overflow-hidden z-10 group-hover:border-accent/60 transition-colors duration-500 shadow-[0_0_30px_color-mix(in_srgb,var(--color-accent)_10%,transparent)] group-hover:shadow-[0_0_50px_color-mix(in_srgb,var(--color-accent)_20%,transparent)]">
+              <Image
+                src="/me.png"
+                alt={content.name}
+                fill
+                priority
+                sizes="(max-width: 768px) 192px, 240px"
+                className="object-cover grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+              />
+            </div>
+
+            {/* Overlay Tags */}
+            <div className="absolute top-4 right-4 z-20 retro-border bg-base-100 px-2 py-1 text-[10px] font-mono text-accent shadow-sm translate-x-4">
+              {content.hero.badges?.[0] ?? content.hero.yearsOfExperience}
+            </div>
+            <div className="absolute bottom-8 -left-4 z-20 retro-border bg-base-100 px-2 py-1 text-[10px] font-mono text-accent shadow-sm -translate-x-2">
+              {content.hero.badges?.[1] ?? content.hero.status}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

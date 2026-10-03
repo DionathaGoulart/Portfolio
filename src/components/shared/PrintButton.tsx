@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import type { Persona } from "@/types/content";
+import type { Skin } from "@/data/theme-config";
 
 interface MarkdownRenderer {
   ReactMarkdown: typeof import("react-markdown").default;
@@ -18,8 +20,16 @@ interface MarkdownRenderer {
  * and the effect below — which runs after that commit — produces the file. The markup fed
  * to html2pdf is unchanged, so the PDF is identical to the statically imported version.
  */
-export function PrintButton({ persona, content }: { persona: "DEV" | "TI"; content?: string }) {
-  const isDev = persona === "DEV";
+interface PrintButtonProps {
+  /** Picks the PDF file name. */
+  persona: Persona;
+  /** Picks the button's look; the PDF itself is the same in both skins. */
+  skin: Skin;
+  content?: string;
+}
+
+export function PrintButton({ persona, skin, content }: PrintButtonProps) {
+  const isShell = skin === "terminal";
   const hiddenRef = useRef<HTMLDivElement>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [markdown, setMarkdown] = useState<MarkdownRenderer | null>(null);
@@ -60,7 +70,7 @@ export function PrintButton({ persona, content }: { persona: "DEV" | "TI"; conte
         await html2pdf()
           .set({
             margin: [15, 15] as [number, number],
-            filename: isDev ? "cv-dev-dionatha-goulart.pdf" : "cv-ti-dionatha-goulart.pdf",
+            filename: `cv-${persona}-dionatha-goulart.pdf`,
             image: { type: "jpeg", quality: 0.98 },
             html2canvas: { scale: 2, useCORS: true, letterRendering: true },
             jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
@@ -77,7 +87,7 @@ export function PrintButton({ persona, content }: { persona: "DEV" | "TI"; conte
     return () => {
       cancelled = true;
     };
-  }, [saveRequest, markdown, isDev]);
+  }, [saveRequest, markdown, persona]);
 
   return (
     <>
@@ -86,16 +96,16 @@ export function PrintButton({ persona, content }: { persona: "DEV" | "TI"; conte
         disabled={isGenerating}
         className={cn(
           "uppercase transition-all duration-200 disabled:opacity-50 cursor-pointer flex items-center gap-2 group",
-          isDev
+          isShell
             ? "border border-accent/30 bg-accent/5 px-3 py-1.5 md:px-4 md:py-2 text-accent hover:bg-accent hover:text-accent-content text-[10px] md:text-xs font-mono"
             : "retro-border bg-base-200 px-4 py-2 retro-shadow-sm font-bold text-sm hover:bg-accent hover:text-accent-content"
         )}
       >
         {isGenerating ? (
-          <span className="animate-pulse">{isDev ? "_EXECUTING..." : "Gerando..."}</span>
+          <span className="animate-pulse">{isShell ? "_EXECUTING..." : "Gerando..."}</span>
         ) : (
           <>
-            {isDev ? (
+            {isShell ? (
               <>
                 <span className="opacity-40 group-hover:opacity-100">{">"}</span>
                 <span>DOWNLOAD_CV.SH</span>

@@ -1,6 +1,9 @@
 import { Metadata } from "next";
 import { seoGlobal, seoDev } from "@/data/seo-config";
-import DevPageClient from "@/components/terminal/sections/DevPageClient";
+import { devContent } from "@/data/dev-config";
+import { SkinView } from "@/components/shared/SkinProvider";
+import RetroPersonaPage from "@/components/retro/persona/RetroPersonaPage";
+import TermPersonaPage from "@/components/terminal/sections/TermPersonaPage";
 
 export const metadata: Metadata = {
   title: seoDev.title,
@@ -19,5 +22,10 @@ export const metadata: Metadata = {
 };
 
 export default function DevPage() {
-  return <DevPageClient />;
+  return (
+    <SkinView
+      retro={<RetroPersonaPage content={devContent} />}
+      terminal={<TermPersonaPage content={devContent} />}
+    />
+  );
 }
